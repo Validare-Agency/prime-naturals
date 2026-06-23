@@ -48,6 +48,43 @@
     
     {{ content_for_header }}
 
+    <script>
+      window.Shopify = window.Shopify || {theme: {id: {{ theme.id }}, role: '{{ theme.role }}' } };
+      window._template = {
+          directory: "{{ template.directory }}",
+          name: "{{ template.name }}",
+          suffix: "{{ template.suffix }}"
+      };
+      window.__productIdFromTemplate = {{ product.id | json }};
+      window.__plpCollectionIdFromTemplate = {{ collection.id | json }};
+      window.igProductData = (function() {
+        const data = {};
+        {%- if template.name == 'collection' -%}
+          {%- for product in collection.products -%}
+            data["{{ product.id }}"] = {
+              productId: {{ product.id | json }},
+              handle: {{ product.handle | json }},
+              tags: {{ product.tags | json }},
+              collectionIds: [{% for col in product.collections %}{{ col.id }}{% unless forloop.last %},{% endunless %}{% endfor %}],
+              inventory: {% assign total = 0 %}{% for v in product.variants %}{% assign total = total | plus: v.inventory_quantity %}{% endfor %}{{ total }},
+              lowestVariantPrice: {{ product.price_min }}
+            };
+          {%- endfor -%}
+        {%- elsif template.name == 'product' -%}
+          data["{{ product.id }}"] = {
+            productId: {{ product.id | json }},
+            handle: {{ product.handle | json }},
+            tags: {{ product.tags | json }},
+            collectionIds: [{% for col in product.collections %}{{ col.id }}{% unless forloop.last %},{% endunless %}{% endfor %}],
+            inventory: {% assign total = 0 %}{% for v in product.variants %}{% assign total = total | plus: v.inventory_quantity %}{% endfor %}{{ total }},
+            lowestVariantPrice: {{ product.price_min }}
+          };
+        {%- endif -%}
+        return data;
+      })();
+    </script>
+    <script type="module" blocking="render" fetchpriority="high" src="https://cdn.intelligems.io/esm/79a8c1c84c76/bundle.js" data-em-disable async></script>
+
     {%- liquid
       assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
       assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
