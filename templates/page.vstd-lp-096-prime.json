@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "vstd-lp-096-prime",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
