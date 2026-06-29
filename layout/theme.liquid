@@ -487,12 +487,6 @@
       }
     </script>
   </head>
-<script src="{{ 'cart_counter.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'product_variant_selector.js' | asset_url }}" ></script>
-  <script src="{{ 'product_stock_alert.js' | asset_url }}" ></script>
-    
-{% if template == "index" %} <script src="{{ 'product_price.js' | asset_url }}" ></script>{% else %}  <script src="{{ 'slideshow_thumbnails.js' | asset_url }}" ></script>{% endif %}
-
 
   <body class="gradient link-btns--{{ settings.link_btn_hover }} action-btns--{{ settings.action_btn_hover }}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
