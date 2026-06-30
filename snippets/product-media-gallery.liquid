@@ -124,7 +124,7 @@
           %}
         </li>
       {%- endif -%}
-      {%- for media in product.media -%}
+      {%- for media in product.media -%} 
         {%- if media.id != product.selected_or_first_available_variant.featured_media.id or section.settings.display_variant_image_first == false -%}
           {%- liquid
             assign media_position = media_position | default: 0 | plus: 1
