@@ -88,8 +88,8 @@
         return data;
       })();
     </script>
-    {% comment %} <script type="module" blocking="render" fetchpriority="high" src="https://cdn.intelligems.io/esm/79a8c1c84c76/bundle.js" data-em-disable async></script>
-    <script src="{{ 'c-intelligems-tests.js' | asset_url }}" fetchpriority="high"></script> {% endcomment %}
+    <script type="module" blocking="render" fetchpriority="high" src="https://cdn.intelligems.io/esm/79a8c1c84c76/bundle.js" data-em-disable async></script>
+    <script src="{{ 'c-intelligems-tests.js' | asset_url }}" fetchpriority="high"></script>
 
     {%- liquid
       assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
