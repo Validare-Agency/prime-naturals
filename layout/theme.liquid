@@ -85,7 +85,7 @@
       })();
     </script>
     <script type="module" blocking="render" fetchpriority="high" src="https://cdn.intelligems.io/esm/79a8c1c84c76/bundle.js" data-em-disable async></script>
-    <script src="{{ 'c-intelligems-tests.js' | asset_url }}" fetchpriority="high" defer></script>
+    <script src="{{ 'c-intelligems-tests.js' | asset_url }}" fetchpriority="high"></script>
 
     {%- liquid
       assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
@@ -464,6 +464,7 @@
 
     
     {{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'c-custom.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>

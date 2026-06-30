@@ -1,0 +1,43 @@
+/* <-------------------V_PRIME_CART_02: Cart Trust Assurance Policies-----------------> */
+
+/* Test Setup */
+.c-primeCart02Control .c-prime-cart-02__trust-policies {
+  display: none;
+}
+.c-primeCart02VarA .c-prime-cart-02__trust-policies {
+  display: flex;
+}
+.c-primeCart02VarA cart-drawer .product__text-container {
+  display: none;
+}
+
+/* Test Design */
+.c-prime-cart-02__trust-policies {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 1rem 1.6rem;
+  background: #fdf8f0;
+  margin-top: 1.2rem;
+}
+
+.c-prime-cart-02__trust-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.c-prime-cart-02__trust-icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+.c-prime-cart-02__trust-text {
+  font-weight: 700;
+  font-size: 15px;
+  color: #000000;
+  white-space: nowrap;
+  margin-bottom: 3px;
+}
