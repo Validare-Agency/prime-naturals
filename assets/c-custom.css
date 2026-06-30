@@ -7,6 +7,9 @@
 .c-primeCart02VarA .c-prime-cart-02__trust-policies {
   display: flex;
 }
+.c-primeCart02VarA cart-drawer .product__text-container {
+  display: none;
+}
 
 /* Test Design */
 .c-prime-cart-02__trust-policies {
