@@ -10,11 +10,7 @@
     const slides = carousel.querySelectorAll('.pib-slide');
     if (!slides.length) return;
 
-    // Primary stop: exposed clear function from the template patch
-    if (typeof window.__pibClearAutoScroll === 'function') {
-      window.__pibClearAutoScroll();
-    }
-    // Secondary stop: flag checked inside the IIFE's setInterval callback (template patch)
+    // Flag checked inside the IIFE's setInterval callback to prevent auto-scroll
     window['__pibVarA'] = true;
 
     // Always read active state from DOM — single source of truth
