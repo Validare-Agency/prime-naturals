@@ -16,6 +16,20 @@ function handleExperiments() {
   }
 }
 
+let cartDrawerWasActive = false;
+setInterval(() => {
+  const el = document.querySelector('cart-drawer');
+  if (!el) return;
+  const isActive = el.classList.contains('active');
+  if (isActive && !cartDrawerWasActive) {
+    cartDrawerWasActive = true;
+    window.igEvents = window.igEvents || [];
+    window.igEvents.push({ event: 'cartDrawerOpen' });
+  } else if (!isActive) {
+    cartDrawerWasActive = false;
+  }
+}, 200);
+
 document.addEventListener("DOMContentLoaded", () => {
   domLoaded = true;
   handleExperiments();
