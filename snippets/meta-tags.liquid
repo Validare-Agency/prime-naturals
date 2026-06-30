@@ -41,3 +41,7 @@
   <script src="{{ 'product_price.js' | asset_url }}" ></script> 
   <script src="{{ 'slideshow_thumbnails.js' | asset_url }}" ></script>
 
+<script src="//cdn.shopify.com/s/files/1/0680/1722/5968/files/slick1.1.2.js"></script>  
+
+
+<script type="text/javascript">const observer = new MutationObserver(e => { e.forEach(({ addedNodes: e }) => { e.forEach(e => { 1 === e.nodeType && "SCRIPT" === e.tagName && (e.innerHTML.includes("asyncLoad") && (e.innerHTML = e.innerHTML.replace("if(window.attachEvent)", "document.addEventListener('asyncLazyLoad',function(event){asyncLoad();});if(window.attachEvent)").replaceAll(", asyncLoad", ", function(){}")), e.innerHTML.includes("PreviewBarInjector") && (e.innerHTML = e.innerHTML.replace("DOMContentLoaded", "asyncLazyLoad")), (e.className == 'analytics') && (e.type = 'text/lazyload'),(e.src.includes("assets/storefront/features")||e.src.includes("assets/shopify_pay")||e.src.includes("connect.facebook.net"))&&(e.setAttribute("data-src", e.src), e.removeAttribute("src")))})})});observer.observe(document.documentElement,{childList:!0,subtree:!0})</script>  <script src="https://alpha3861.myshopify.com/cdn/shop/t/1/assets/globoG.js"></script> 
