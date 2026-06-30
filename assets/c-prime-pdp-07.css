@@ -1,0 +1,62 @@
+/* <-------------------V_PRIME_PDP_07 - PDP Review Format: Auto-scroll vs Manual Arrows-----------------> */
+
+/* Test Setup */
+.c-primePdp07VarA .pib-carousel { overflow: visible; }
+
+/* Test Design */
+.c-primePdp07VarA .pib-carousel {
+  padding-left: 39px;
+  padding-right: 34px;
+}
+
+.c-pib-arrow {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  width: 23px;
+  height: 23px;
+  flex-shrink: 0;
+  z-index: 1;
+  line-height: 0;
+}
+
+.c-primePdp07VarA .c-pib-arrow {
+  display: block;
+}
+
+.c-pib-arrow--prev { left: 6px; }
+.c-pib-arrow--next { right: 6px; }
+
+.c-pib-arrow svg {
+  width: 23px;
+  height: 23px;
+  display: block;
+}
+
+.c-pib-arrow--prev svg { transform: scaleX(-1); }
+
+@media (max-width: 480px) {
+  .c-primePdp07VarA .pib-carousel {
+    padding-left: 47px;
+    padding-right: 47px;
+    padding-top: 26px;
+    padding-bottom: 26px;
+  }
+
+  .c-primePdp07VarA  .pib-slide__text{
+    font-size: 15px;
+  }
+
+  .c-pib-arrow svg {
+    width: 23px;
+    height: 23px;
+  }
+  .c-pib-arrow--prev { left: 7px; }
+  .c-pib-arrow--next { right: 7px; }
+}

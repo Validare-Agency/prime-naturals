@@ -14,17 +14,25 @@ function handleExperiments() {
   } else {
     document.body.classList.add("c-primeCart02Control");
   }
+
+  // Test: V_PRIME_PDP_07 | PDP review format: auto-scroll vs manual arrows
+  const primePdp07 = window.igData?.user.getTestGroup(
+    "ec0d5412-f677-4267-b944-7cb74ffda215"
+  );
+  if (primePdp07?.name === "Var A") {
+    document.body.classList.add("c-primePdp07VarA");
+  }
 }
 
 let cartDrawerWasActive = false;
 setInterval(() => {
-  const el = document.querySelector('cart-drawer');
+  const el = document.querySelector("cart-drawer");
   if (!el) return;
-  const isActive = el.classList.contains('active');
+  const isActive = el.classList.contains("active");
   if (isActive && !cartDrawerWasActive) {
     cartDrawerWasActive = true;
     window.igEvents = window.igEvents || [];
-    window.igEvents.push({ event: 'cartDrawerOpen' });
+    window.igEvents.push({ event: "cartDrawerOpen" });
   } else if (!isActive) {
     cartDrawerWasActive = false;
   }
