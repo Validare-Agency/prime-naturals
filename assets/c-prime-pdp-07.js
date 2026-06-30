@@ -45,7 +45,7 @@
       slides[next].classList.add('active');
       if (liveDots[next]) liveDots[next].classList.add('active');
       window['igEvents'] = window['igEvents'] || [];
-      window['igEvents'].push({ event: 'myCustomEvent' });
+      window['igEvents'].push({ event: 'review_carousel_click' });
     }
 
     const prevBtn = document.createElement('button');
