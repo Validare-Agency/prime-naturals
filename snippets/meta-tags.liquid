@@ -43,3 +43,72 @@
  <script src="{{ 'product_price.js' | asset_url }}" ></script> 
  <script src="{{ 'slideshow_thumbnails.js' | asset_url }}" ></script>
 
+<script type="text/javascript">
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(({ addedNodes }) => {
+      addedNodes.forEach(node => {
+        // Sirf SCRIPT tags ko target karein
+        if (node.nodeType === 1 && node.tagName === "SCRIPT") {
+          const content = node.innerHTML || "";
+          const src = node.src || "";
+
+          // 1. Analytics aur Facebook ko SKIP karein (Inhein delay nahi karna)
+          if (
+            src.includes("connect.facebook.net") || 
+            src.includes("google-analytics") || 
+            src.includes("googletagmanager") || 
+            node.classList.contains('analytics')
+          ) {
+            return; // In scripts ko mat chhairrein
+          }
+
+          // 2. Shopify ki non-essential scripts ko lazy load karein
+          if (content.includes("asyncLoad")) {
+            node.innerHTML = content.replace(
+              "if(window.attachEvent)", 
+              "document.addEventListener('asyncLazyLoad',function(event){asyncLoad();});if(window.attachEvent)"
+            ).replaceAll(", asyncLoad", ", function(){}");
+          }
+
+          // 3. Preview Bar ko smooth rakhein (Design mode check)
+          if (content.includes("PreviewBarInjector") && !Shopify.designMode) {
+            node.innerHTML = content.replace("DOMContentLoaded", "asyncLazyLoad");
+          }
+
+          // 4. Baqi external features ko delay karein (Shopify Pay, etc.)
+          if (src.includes("assets/shopify_pay") || src.includes("assets/storefront/features")) {
+            node.setAttribute("data-src", src);
+            node.removeAttribute("src");
+          }
+        }
+      });
+    });
+  });
+
+  observer.observe(document.documentElement, { child { childList: true, subtree: true });
+
+  // 5. User action par scripts ko trigger karne ka function
+  const triggerScripts = () => {
+    if (window.scriptsTriggered) return;
+    window.scriptsTriggered = true;
+    
+    // Custom event fire karein
+    document.dispatchEvent(new CustomEvent('asyncLazyLoad'));
+    
+    // data-src wali scripts ko load karein
+    document.querySelectorAll('script[data-src]').forEach(s => {
+      s.src = s.getAttribute('data-src');
+      s.removeAttribute('data-src');
+    });
+    
+    // Listeners remove karein
+    ['touchstart', 'mousemove', 'scroll', 'keydown'].forEach(e => 
+      window.removeEventListener(e, triggerScripts)
+    );
+  };
+
+  // User activity ka intezar karein
+  ['touchstart', 'mousemove', 'scroll', 'keydown'].forEach(e => 
+    window.addEventListener(e, triggerScripts, { passive: true })
+  );
+</script>
