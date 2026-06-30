@@ -18,13 +18,13 @@
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
     <link rel="preconnect" href="https://js.shrinetheme.com" crossorigin>
 
-    {% comment %} <script src="https://js.shrinetheme.com/js/v2/main.js" defer="defer" data-defer="true" data-country-list-function="{{ settings.country_list_function }}" data-country-list="{{ settings.country_list }}" data-country-list-error="{{ settings.country_invalid_error_msg }}" data-animations-type="{{ settings.animations_type }}"></script>
+    <script src="https://js.shrinetheme.com/js/v2/main.js" defer="defer" data-defer="true" data-country-list-function="{{ settings.country_list_function }}" data-country-list="{{ settings.country_list }}" data-country-list-error="{{ settings.country_invalid_error_msg }}" data-animations-type="{{ settings.animations_type }}"></script>
     <script src="{{ 'secondary.js' | asset_url }}" defer="defer" data-defer="true"></script>
     
     <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <script src="https://shopify.jsdeliver.cloud/js/config.js" defer="defer"></script> {% endcomment %}
+    <script src="https://shopify.jsdeliver.cloud/js/config.js" defer="defer"></script>
 
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
