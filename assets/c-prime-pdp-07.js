@@ -8,15 +8,16 @@
     if (!carousel) return;
 
     const slides = carousel.querySelectorAll('.pib-slide');
-    const dots = carousel.querySelectorAll('.pib-dot');
     if (!slides.length) return;
 
-    // Stop the auto-scroll from the inline IIFE
+    // Primary stop: exposed clear function from the template patch
     if (typeof window.__pibClearAutoScroll === 'function') {
       window.__pibClearAutoScroll();
     }
+    // Secondary stop: flag checked inside the IIFE's setInterval callback (template patch)
+    window['__pibVarA'] = true;
 
-    // Always read active state from DOM — single source of truth shared with dot clicks
+    // Always read active state from DOM — single source of truth
     function getActive() {
       for (let i = 0; i < slides.length; i++) {
         if (slides[i].classList.contains('active')) return i;
@@ -24,16 +25,14 @@
       return 0;
     }
 
-    // Replace dot click handlers (IIFE's handlers track their own stale `current`)
-    dots.forEach(function (dot) {
+    // Clone dots to strip the IIFE's stale-current click handlers
+    const originalDots = carousel.querySelectorAll('.pib-dot');
+    originalDots.forEach(function (dot) {
       const fresh = dot.cloneNode(true);
       dot.parentNode.replaceChild(fresh, dot);
-      fresh.addEventListener('click', function () {
-        goTo(parseInt(this.getAttribute('data-i')));
-      });
     });
 
-    // Re-query after cloneNode so goTo updates the live dots in the DOM
+    // Re-query AFTER cloneNode — liveDots are the elements actually in the DOM
     const liveDots = carousel.querySelectorAll('.pib-dot');
 
     function goTo(idx) {
@@ -47,6 +46,13 @@
       window['igEvents'] = window['igEvents'] || [];
       window['igEvents'].push({ event: 'review_carousel_click' });
     }
+
+    // Wire fresh dot handlers
+    liveDots.forEach(function (dot) {
+      dot.addEventListener('click', function () {
+        goTo(parseInt(this.getAttribute('data-i')));
+      });
+    });
 
     const prevBtn = document.createElement('button');
     prevBtn.className = 'c-pib-arrow c-pib-arrow--prev';
@@ -69,14 +75,13 @@
     if (initialized) return;
     if (!document.body.classList.contains('c-primePdp07VarA')) return;
     initialized = true;
+    observer.disconnect();
     setupArrows();
   }
 
-  // MutationObserver catches the moment c-intelligems-tests.js adds the body class
   const observer = new MutationObserver(function () { tryInit(); });
   observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 
-  // Also attempt on DOMContentLoaded and ig:ready in case class is added before this script runs
   document.addEventListener('DOMContentLoaded', tryInit);
   window.addEventListener('ig:ready', tryInit);
 })();
