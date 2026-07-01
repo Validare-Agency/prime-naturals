@@ -1,0 +1,202 @@
+{%- comment -%}
+  A/B Test: V_PRIME_HP_05 | Testimonials - Homepage
+  Var A: New testimonials carousel section inserted between hero and contact form.
+  Control: This section is hidden via CSS (.c-primeHp05VarA controls visibility).
+{%- endcomment -%}
+
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-hp-05.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-hp-05.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
+<section class="c-prime-hp-05 color-{{ section.settings.color_scheme }}">
+  <div class="c-prime-hp-05__inner page-width">
+
+    <div class="c-prime-hp-05__heading-wrap">
+      <h2 class="c-prime-hp-05__heading">
+        {{ section.settings.heading_dark }}<em class="c-prime-hp-05__heading-italic"> {{ section.settings.heading_italic }}</em>
+      </h2>
+    </div>
+
+    <div class="c-prime-hp-05__carousel-wrap">
+      <button class="c-prime-hp-05__arrow c-prime-hp-05__arrow--prev" aria-label="Previous testimonial">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+
+      <div class="c-prime-hp-05__track-outer">
+        <ul class="c-prime-hp-05__track" aria-live="polite">
+          {%- for block in section.blocks -%}
+            <li class="c-prime-hp-05__slide{% if forloop.first %} c-prime-hp-05__slide--active{% endif %}" role="group" aria-label="Testimonial {{ forloop.index }} of {{ section.blocks.size }}" {{ block.shopify_attributes }}>
+              <div class="c-prime-hp-05__card">
+                <div class="c-prime-hp-05__stars" aria-label="5 out of 5 stars">★★★★★</div>
+                <blockquote class="c-prime-hp-05__quote">
+                  <p>{{ block.settings.quote }}</p>
+                </blockquote>
+                <div class="c-prime-hp-05__reviewer">
+                  <span class="c-prime-hp-05__reviewer-name">{{ block.settings.reviewer_name }}</span>
+                  {%- if block.settings.reviewer_meta != blank -%}
+                    <span class="c-prime-hp-05__reviewer-meta">{{ block.settings.reviewer_meta }}</span>
+                  {%- endif -%}
+                </div>
+                <div class="c-prime-hp-05__badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1L15.09 7.26L22 8.27L17 13.14L18.18 20.02L12 16.77L5.82 20.02L7 13.14L2 8.27L8.91 7.26L12 1Z"/></svg>
+                  Verified Buyer
+                </div>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <button class="c-prime-hp-05__arrow c-prime-hp-05__arrow--next" aria-label="Next testimonial">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+
+    <div class="c-prime-hp-05__pagination" role="tablist" aria-label="Testimonial navigation">
+      {%- for block in section.blocks -%}
+        <button
+          class="c-prime-hp-05__dot{% if forloop.first %} c-prime-hp-05__dot--active{% endif %}"
+          role="tab"
+          aria-label="Go to testimonial {{ forloop.index }}"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          data-index="{{ forloop.index0 }}"
+        ></button>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+<script src="{{ 'c-prime-hp-05.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "C - HP Testimonials",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_dark",
+      "label": "Heading (dark text)",
+      "default": "What Parents Are"
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "Heading (italic script)",
+      "default": "Saying"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "background-1", "label": "Background 1" },
+        { "value": "background-2", "label": "Background 2" },
+        { "value": "accent-1", "label": "Accent 1" },
+        { "value": "accent-2", "label": "Accent 2" }
+      ],
+      "default": "background-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 52
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "This product completely changed our daily routine. Our kids absolutely love it!"
+        },
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer name",
+          "default": "Sarah M."
+        },
+        {
+          "type": "text",
+          "id": "reviewer_meta",
+          "label": "Reviewer meta (e.g. location, age of child)",
+          "default": "Mom of 2 · Texas"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "C - HP Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "My daughter carries this everywhere. She's constantly asking questions and looking up answers herself — it's incredible to watch her curiosity grow!",
+            "reviewer_name": "Sarah M.",
+            "reviewer_meta": "Mom of 2 · Texas"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "We bought this for our 8-year-old and he hasn't put it down. Best educational purchase we've ever made. Worth every penny!",
+            "reviewer_name": "James R.",
+            "reviewer_meta": "Dad of 3 · California"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "The quality is outstanding and the content is perfectly pitched for kids. My son loves reading it before bed — it's replaced screen time completely.",
+            "reviewer_name": "Emily T.",
+            "reviewer_meta": "Mom of 1 · New York"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I was skeptical at first but this exceeded all my expectations. My twins fight over who gets to read it next. Highly recommend!",
+            "reviewer_name": "Maria L.",
+            "reviewer_meta": "Mom of twins · Florida"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Fantastic book that really does spark curiosity. My kids are learning so much and genuinely enjoying every page. A must-have for any family.",
+            "reviewer_name": "David K.",
+            "reviewer_meta": "Dad of 2 · Ohio"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
