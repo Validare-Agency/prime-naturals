@@ -1,6 +1,43 @@
 let domLoaded = false;
 let igReady = false;
 
+// Test: V_PRIME_SITE_01 | Sitewide - Price Test
+const PRIME_SITE_01_PRODUCTS = {
+  "/products/murphys-law-for-kids":           { vara: "7640277811334", varb: "7640284823686" },
+  "/products/murphys-law-for-kids-copy":      { vara: "7640287772806", varb: "7640287871110" },
+  "/products/kidss-encyclopedia-10-000-whys": { vara: "7640288002182", varb: "7640288100486" },
+};
+
+// Kaching reads product-id via getAttribute on a plain HTML element (not a custom element).
+// Intercept Element.prototype.getAttribute so any read of product-id on kaching-bundle
+// returns our target ID — set up synchronously before any deferred scripts run.
+(function () {
+  const config = PRIME_SITE_01_PRODUCTS[window.location.pathname];
+  if (!config) return;
+
+  // Replace { name: "Var A" } with window.igData?.user.getTestGroup("UUID") when ready.
+  const group = { name: "Var A" };
+  let productId = null;
+  if (group?.name === "Var A") productId = config.vara;
+  if (group?.name === "Var B") productId = config.varb;
+  if (!productId) return;
+
+  const _getAttribute = Element.prototype.getAttribute;
+  Element.prototype.getAttribute = function (name) {
+    if (this.tagName.toLowerCase() === "kaching-bundle" && name === "product-id") {
+      return productId;
+    }
+    return _getAttribute.call(this, name);
+  };
+
+  // Also set the actual attribute at DOM-ready so it stays consistent.
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("kaching-bundle").forEach((el) => {
+      el.setAttribute("product-id", productId);
+    });
+  });
+})();
+
 function handleExperiments() {
   if (!domLoaded || !igReady) return;
 
@@ -22,6 +59,10 @@ function handleExperiments() {
   if (primePdp07?.name === "Var A") {
     document.body.classList.add("c-primePdp07VarA");
   }
+
+  // Test: V_PRIME_SITE_01 | Sitewide - Price Test
+  // Bundle swap is handled via the customElements.define interceptor above.
+  // When UUID is ready, update the group value in that IIFE.
 }
 
 let cartDrawerWasActive = false;
