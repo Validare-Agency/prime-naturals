@@ -98,6 +98,15 @@ function handleExperiments() {
         if (pibSaving) pibSaving.textContent = prices.saving;
       }
     }
+
+    // Kaching may have read product-id before igData was ready (interceptor fell back to control).
+    // Force re-init by replacing the element — interceptor now has igData and returns the correct ID.
+    if (primeSite01?.name === "Var A" || primeSite01?.name === "Var B") {
+      const kachingEl = document.querySelector("kaching-bundle");
+      if (kachingEl) {
+        kachingEl.parentNode.replaceChild(kachingEl.cloneNode(false), kachingEl);
+      }
+    }
   }
 }
 
