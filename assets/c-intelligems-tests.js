@@ -107,10 +107,12 @@ function handleExperiments() {
         const clone = kachingEl.cloneNode(false);
         clone.removeAttribute("data-initialized");
         clone.style.visibility = "hidden";
-        // Reveal once Kaching injects bundle content
+        // Reveal once Kaching injects bundle content; fallback after 3s
+        const fallback = setTimeout(() => { clone.style.visibility = ""; obs.disconnect(); }, 3000);
         const obs = new MutationObserver(() => {
           if (clone.children.length > 0) {
             clone.style.visibility = "";
+            clearTimeout(fallback);
             obs.disconnect();
           }
         });
