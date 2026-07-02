@@ -20,9 +20,9 @@ const PRIME_SITE_01_PRODUCTS = {
     if (this.tagName.toLowerCase() === "kaching-bundle" && name === "product-id") {
       // Evaluated lazily so igData is available if Intelligems has already run.
       const group = window.igData?.user.getTestGroup("3035373f-de77-42d2-942f-de88525a835d");
-      if (group?.name === "Var A - $44.90") {
+      if (group?.name === "Var A") {
         return config.vara;
-      } else if (group?.name === "Var B - $49.90") {
+      } else if (group?.name === "Var B") {
         return config.varb;
       } else {
         return config.control;
