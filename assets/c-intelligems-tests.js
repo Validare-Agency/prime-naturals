@@ -19,9 +19,9 @@ const PRIME_SITE_01_PRODUCTS = {
       // Evaluated lazily so igData is available if Intelligems has already run.
       const group = window.igData?.user.getTestGroup("3035373f-de77-42d2-942f-de88525a835d");
       document.body.classList.add("c-priceTestV1");
-      if (group?.name === "Var A") {
+      if (group?.name === "Var A - $44.90") {
         return config.vara;
-      } else if (group?.name === "Var B") {
+      } else if (group?.name === "Var B - $49.90") {
         return config.varb;
       } else {
         return config.control;
@@ -58,7 +58,7 @@ function handleExperiments() {
   document.body.classList.add("c-priceTestV2");
   window.applyPriceUpdates?.(primeSite01?.name);
   const pdpConfig = PRIME_SITE_01_PRODUCTS[window.location.pathname];
-  if (pdpConfig && (primeSite01?.name === "Var A" || primeSite01?.name === "Var B")) {
+  if (pdpConfig && (primeSite01?.name === "Var A - $44.90" || primeSite01?.name === "Var B - $49.90")) {
     const kachingEl = document.querySelector("kaching-bundle");
     if (kachingEl) {
       const clone = kachingEl.cloneNode(false);

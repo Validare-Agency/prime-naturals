@@ -42,37 +42,37 @@
 
   var PDP_PRICES = {
     "/products/murphys-law-for-kids": {
-      "Var A": { current: "$34.90", orig: "$69.80", saving: "$34.90" },
-      "Var B": { current: "$39.90", orig: "$79.80", saving: "$39.90" },
+      "Var A - $44.90": { current: "$34.90", orig: "$69.80", saving: "$34.90" },
+      "Var B - $49.90": { current: "$39.90", orig: "$79.80", saving: "$39.90" },
     },
     "/products/murphys-law-for-kids-copy": {
-      "Var A": { current: "$34.90", orig: "$69.80", saving: "$34.90" },
-      "Var B": { current: "$39.90", orig: "$79.80", saving: "$39.90" },
+      "Var A - $44.90": { current: "$34.90", orig: "$69.80", saving: "$34.90" },
+      "Var B - $49.90": { current: "$39.90", orig: "$79.80", saving: "$39.90" },
     },
     "/products/kidss-encyclopedia-10-000-whys": {
-      "Var A": { current: "$44.90", orig: "$89.80", saving: "$44.90" },
-      "Var B": { current: "$49.90", orig: "$99.80", saving: "$49.90" },
+      "Var A - $44.90": { current: "$44.90", orig: "$89.80", saving: "$44.90" },
+      "Var B - $49.90": { current: "$49.90", orig: "$99.80", saving: "$49.90" },
     },
   };
 
   var CARD_PRICES = {
     "/products/murphys-law-for-kids": {
-      "Var A": { sale: "$34.90", compare: "$69.80", badge: "SAVE $34.90" },
-      "Var B": { sale: "$39.90", compare: "$79.80", badge: "SAVE $39.90" },
+      "Var A - $44.90": { sale: "$34.90", compare: "$69.80", badge: "SAVE $34.90" },
+      "Var B - $49.90": { sale: "$39.90", compare: "$79.80", badge: "SAVE $39.90" },
     },
     "/products/murphys-law-for-kids-copy": {
-      "Var A": { sale: "$34.90", compare: "$69.80", badge: "SAVE $34.90" },
-      "Var B": { sale: "$39.90", compare: "$79.80", badge: "SAVE $39.90" },
+      "Var A - $44.90": { sale: "$34.90", compare: "$69.80", badge: "SAVE $34.90" },
+      "Var B - $49.90": { sale: "$39.90", compare: "$79.80", badge: "SAVE $39.90" },
     },
     "/products/kidss-encyclopedia-10-000-whys": {
-      "Var A": { sale: "$44.90", compare: "$89.80", badge: "SAVE $44.90" },
-      "Var B": { sale: "$49.90", compare: "$99.80", badge: "SAVE $49.90" },
+      "Var A - $44.90": { sale: "$44.90", compare: "$89.80", badge: "SAVE $44.90" },
+      "Var B - $49.90": { sale: "$49.90", compare: "$99.80", badge: "SAVE $49.90" },
     },
   };
 
   var HERO_PRICES = {
-    "Var A": { price: "$44.90", orig: "$89.80" },
-    "Var B": { price: "$49.90", orig: "$99.80" },
+    "Var A - $44.90": { price: "$44.90", orig: "$89.80" },
+    "Var B - $49.90": { price: "$49.90", orig: "$99.80" },
   };
 
   window.applyPriceUpdates = function (variantName) {
