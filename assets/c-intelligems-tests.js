@@ -3,9 +3,18 @@ let igReady = false;
 
 // Test: V_PRIME_SITE_01 | Sitewide - Price Test
 const PRIME_SITE_01_PRODUCTS = {
-  "/products/murphys-law-for-kids":           { vara: "7640277811334", varb: "7640284823686", control: "7568898293894" },
-  "/products/murphys-law-for-kids-copy":      { vara: "7640287772806", varb: "7640287871110", control: "7587123658886" },
-  "/products/kidss-encyclopedia-10-000-whys": { vara: "7640288002182", varb: "7640288100486", control: "7590728794246" },
+  "/products/murphys-law-for-kids": {
+    vara: "7640277811334", varb: "7640284823686", control: "7568898293894",
+    prices: { vara: { current: "$34.90", orig: "$69.80", saving: "$34.90" }, varb: { current: "$39.90", orig: "$79.80", saving: "$39.90" } },
+  },
+  "/products/murphys-law-for-kids-copy": {
+    vara: "7640287772806", varb: "7640287871110", control: "7587123658886",
+    prices: { vara: { current: "$34.90", orig: "$69.80", saving: "$34.90" }, varb: { current: "$39.90", orig: "$79.80", saving: "$39.90" } },
+  },
+  "/products/kidss-encyclopedia-10-000-whys": {
+    vara: "7640288002182", varb: "7640288100486", control: "7590728794246",
+    prices: { vara: { current: "$44.90", orig: "$89.80", saving: "$44.90" }, varb: { current: "$49.90", orig: "$99.80", saving: "$49.90" } },
+  },
 };
 
 // Kaching reads product-id via getAttribute on a plain HTML element (not a custom element).
@@ -20,6 +29,7 @@ const PRIME_SITE_01_PRODUCTS = {
     if (this.tagName.toLowerCase() === "kaching-bundle" && name === "product-id") {
       // Evaluated lazily so igData is available if Intelligems has already run.
       const group = window.igData?.user.getTestGroup("3035373f-de77-42d2-942f-de88525a835d");
+      document.body.classList.add("Price Test v1");
       if (group?.name === "Var A") {
         return config.vara;
       } else if (group?.name === "Var B") {
@@ -57,6 +67,38 @@ function handleExperiments() {
   // Test: V_PRIME_SITE_01 | Sitewide - Price Test (3035373f-de77-42d2-942f-de88525a835d)
   // Var A: $44.90 | Var B: $49.90
   // Bundle swap handled via Element.prototype.getAttribute interceptor above.
+  // Homepage hero price row — only update for non-control variants.
+  const primeSite01 = window.igData?.user.getTestGroup("3035373f-de77-42d2-942f-de88525a835d");
+  document.body.classList.add("Price Test v1");
+  const heroPrice = document.querySelector(".hero-price");
+  const heroPriceOrig = document.querySelector(".hero-price-orig s");
+  if (heroPrice && heroPriceOrig) {
+    if (primeSite01?.name === "Var A") {
+      heroPrice.textContent = "$44.90";
+      heroPriceOrig.textContent = "$89.80";
+    } else if (primeSite01?.name === "Var B") {
+      heroPrice.textContent = "$49.90";
+      heroPriceOrig.textContent = "$99.80";
+    }
+  }
+
+  // PDP pib-price-row — only update on test product pages.
+  const pdpConfig = PRIME_SITE_01_PRODUCTS[window.location.pathname];
+  if (pdpConfig) {
+    const pibPrice = document.querySelector(".pib-price-current");
+    const pibPriceOrig = document.querySelector(".pib-price-original s");
+    const pibSaving = document.querySelector(".pib-price-note strong");
+    if (pibPrice && pibPriceOrig) {
+      let prices = null;
+      if (primeSite01?.name === "Var A") prices = pdpConfig.prices.vara;
+      else if (primeSite01?.name === "Var B") prices = pdpConfig.prices.varb;
+      if (prices) {
+        pibPrice.textContent = prices.current;
+        pibPriceOrig.textContent = prices.orig;
+        if (pibSaving) pibSaving.textContent = prices.saving;
+      }
+    }
+  }
 }
 
 let cartDrawerWasActive = false;
