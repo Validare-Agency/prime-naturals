@@ -85,10 +85,10 @@
     {%- if has_video_modal or media.media_type == 'external_video' -%}
       <span class="product__media-icon motion-reduce quick-add-hidden">{% render 'icon-play' %}</span>
       <div class="product__media media">
-        {{ media.preview_image | image_url: width: 1946 | image_tag:
+        {{ media.preview_image | image_url: width: 990 | image_tag:
           loading: lazy,
           sizes: sizes,
-          widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
+          widths: '246, 493, 600, 713, 823, 990'
         }}
       </div>
       <a href="{% if media.media_type == 'video' %}{{ media.sources[1].url }}{% else %}{{ media | external_video_url }}{% endif %}" class="product__media-toggle">
@@ -96,10 +96,10 @@
       </a>
     {%- else -%}
       <div class="product__media media">
-        {{ media.preview_image | image_url: width: 1946 | image_tag:
+        {{ media.preview_image | image_url: width: 990 | image_tag:
           loading: lazy,
           sizes: sizes,
-          widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
+          widths: '246, 493, 600, 713, 823, 990'
         }}
       </div>
     {%- endif -%}
@@ -178,11 +178,11 @@
           {% endif %}
         </internal-video>
       {% else %}
-        {{ media.preview_image | image_url: width: 1946 | image_tag:
+        {{ media.preview_image | image_url: width: 990 | image_tag:
           class: image_class,
           loading: lazy,
           sizes: sizes,
-          widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
+          widths: '246, 493, 600, 713, 823, 990'
         }}
       {% endif %}
     </div>
@@ -209,10 +209,10 @@
           {%- render 'icon-play' -%}
         {%- endif -%}
       </span>
-      {{ media.preview_image | image_url: width: 1946 | image_tag:
+      {{ media.preview_image | image_url: width: 990 | image_tag:
         loading: lazy,
         sizes: sizes,
-        widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
+        widths: '246, 493, 600, 713, 823, 990'
       }}
     </button>
     <template>

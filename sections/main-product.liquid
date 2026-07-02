@@ -829,8 +829,8 @@
                     {%- endcapture -%}
                     {{
                       block.settings.image
-                      | image_url: width: 1500
-                      | image_tag: loading: 'lazy', sizes: sizes, widths: '165, 360, 535, 750, 1070, 1250, 1500'
+                      | image_url: width: 750
+                      | image_tag: loading: 'lazy', sizes: sizes, widths: '165, 360, 535, 750'
                     }}
                   </div>
                 {% else %}
@@ -1035,7 +1035,7 @@
               {{
                 block.settings.top_image
                 | image_url: width: 1500
-                | image_tag: loading: 'lazy', sizes: sizes, widths: '165, 360, 535, 750, 1070, 1250, 1500'
+                | image_tag: loading: 'lazy', sizes: sizes, widths: '165, 360, 535, 750, 1070'
               }}
             </div>
           {% endif %}
@@ -1084,7 +1084,7 @@
               {{
                 block.settings.bottom_image
                 | image_url: width: 1500
-                | image_tag: loading: 'lazy', sizes: sizes, widths: '165, 360, 535, 750, 1070, 1250, 1500'
+                | image_tag: loading: 'lazy', sizes: sizes, widths: '165, 360, 535, 750, 1070'
               }}
             </div>
           {% endif %}

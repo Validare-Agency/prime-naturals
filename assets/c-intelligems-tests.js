@@ -53,6 +53,15 @@ function handleExperiments() {
     document.body.classList.add("c-primePdp07VarA");
   }
 
+  // Test: V_PRIME_HP_09 | HP - Banner Image - Repositioning
+  const primeHp09 = window.igData?.user.getTestGroup(
+    "d289d23b-c68c-48f7-b0b4-f39d3882426c"
+  );
+
+  if (primeHp09?.name === "Var A") {
+    document.body.classList.add("c-primeHp09VarA");
+  }
+
   // Test: V_PRIME_SITE_01 | Sitewide - Price Test (3035373f-de77-42d2-942f-de88525a835d)
   const primeSite01 = window.igData?.user.getTestGroup("3035373f-de77-42d2-942f-de88525a835d");
   document.body.classList.add("c-priceTestV2");
