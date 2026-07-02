@@ -100,11 +100,23 @@ function handleExperiments() {
     }
 
     // Kaching may have read product-id before igData was ready (interceptor fell back to control).
-    // Force re-init by replacing the element — interceptor now has igData and returns the correct ID.
+    // Force re-init: replace element without data-initialized so Kaching treats it as fresh.
     if (primeSite01?.name === "Var A" || primeSite01?.name === "Var B") {
       const kachingEl = document.querySelector("kaching-bundle");
       if (kachingEl) {
-        kachingEl.parentNode.replaceChild(kachingEl.cloneNode(false), kachingEl);
+        const clone = kachingEl.cloneNode(false);
+        clone.removeAttribute("data-initialized");
+        clone.style.visibility = "hidden";
+        // Reveal once Kaching injects bundle content
+        const obs = new MutationObserver(() => {
+          if (clone.children.length > 0) {
+            clone.style.visibility = "";
+            obs.disconnect();
+          }
+        });
+        obs.observe(clone, { childList: true });
+        kachingEl.style.visibility = "hidden";
+        kachingEl.parentNode.replaceChild(clone, kachingEl);
       }
     }
   }
