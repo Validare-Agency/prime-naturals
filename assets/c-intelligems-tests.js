@@ -17,6 +17,7 @@ function handleExperiments() {
 
   // Test: V_PRIME_PDP_07 | PDP review format: auto-scroll vs manual arrows
   const primePdp07 = window.igData?.user.getTestGroup(
+    
     "ec0d5412-f677-4267-b944-7cb74ffda215"
   );
   if (primePdp07?.name === "Var A") {
@@ -30,6 +31,13 @@ function handleExperiments() {
 
   if (primeHp09?.name === "Var A") {
     document.body.classList.add("c-primeHp09VarA");
+  }
+
+  // Test: V_PRIME_SITE_11 | Sitewide Typography Scale Increase
+  // TODO: replace with window.igData?.user.getTestGroup("experimentId") once the experiment is created in Intelligems
+  const primeSite11 = { name: "Var A" };
+  if (primeSite11?.name === "Var A") {
+    document.body.classList.add("c-primeSite11VarA");
   }
 }
 

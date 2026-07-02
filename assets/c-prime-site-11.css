@@ -1,0 +1,187 @@
+/* <-------------------V_PRIME_SITE_11 | Sitewide Typography Scale Increase-----------------> */
+
+/* Test Setup */
+/* No elements are hidden/shown for this test — Control renders default sitewide typography, Var A applies larger mobile-only font sizes below. */
+
+/* Test Design */
+@media screen and (max-width: 749px) {
+  /* Product title (H1) — sitewide, all templates */
+  body.c-primeSite11VarA h1,
+  body.c-primeSite11VarA .h1 {
+    font-size: 26px;
+  }
+
+  /* Body copy — sitewide base text size */
+  body.c-primeSite11VarA {
+    font-size: 16px;
+  }
+
+  body.c-primeSite11VarA .text-body {
+    font-size: 16px;
+  }
+
+  /* Review / testimonial text */
+  body.c-primeSite11VarA .review-item__text p {
+    font-size: 16px;
+  }
+
+  body.c-primeSite11VarA .pib-slide__text {
+    font-size: 16px;
+  }
+
+  /* USP bullet labels (icon-with-text blocks) */
+  body.c-primeSite11VarA .icon-with-text .h4 {
+    font-size: 16px;
+  }
+
+  /* Trust-strip microcopy (text-with-icon blocks) */
+  body.c-primeSite11VarA .product__text-container {
+    font-size: 14px;
+  }
+
+  /* Stat numbers (results section, e.g. 94%, 97%) */
+  body.c-primeSite11VarA .results__percentage {
+    width: 100px;
+    height: 100px;
+    --border-width: 10px;
+  }
+
+  body.c-primeSite11VarA .results__percentage p {
+    font-size: 43px;
+  }
+
+  /* Add to Cart button label */
+  body.c-primeSite11VarA .product-form__submit {
+    font-size: 24px;
+  }
+
+  /* "Why families chose this" custom_liquid block (.imt-*) — left aligned */
+  body.c-primeSite11VarA .imt-eyebrow {
+    font-size: 13px;
+  }
+
+  body.c-primeSite11VarA .imt-heading {
+    font-size: 24px;
+    text-align: left;
+  }
+
+  body.c-primeSite11VarA .imt-sub {
+    font-size: 16px;
+    text-align: left;
+  }
+
+  body.c-primeSite11VarA .imt-feature__title {
+    font-size: 18px;
+    text-align: left;
+  }
+
+  body.c-primeSite11VarA .imt-feature__desc {
+    font-size: 16px;
+    text-align: left;
+  }
+
+  body.c-primeSite11VarA .imt-proof__quote {
+    font-size: 16px;
+    text-align: left;
+  }
+
+  body.c-primeSite11VarA .imt-proof__author {
+    font-size: 16px;
+    text-align: left;
+  }
+
+  /* Stats custom_liquid block (.stats-*) — left aligned */
+  body.c-primeSite11VarA .stats-header {
+    text-align: left;
+  }
+
+  body.c-primeSite11VarA .stats-eyebrow {
+    font-size: 14px;
+  }
+
+  body.c-primeSite11VarA .stats-heading {
+    font-size: 24px;
+  }
+
+  body.c-primeSite11VarA .stats-subhead {
+    font-size: 16px;
+  }
+
+  body.c-primeSite11VarA .stats-desc {
+    font-size: 16px;
+    text-align: left;
+  }
+
+  /* "Everything inside" custom_liquid block — left aligned (overrides its default center) */
+  body.c-primeSite11VarA .inside-header {
+    text-align: left;
+  }
+
+  body.c-primeSite11VarA .inside-eyebrow {
+    font-size: 14px;
+  }
+
+  body.c-primeSite11VarA .inside-heading {
+    font-size: 24px;
+  }
+
+  body.c-primeSite11VarA .inside-sub {
+    font-size: 16px;
+  }
+
+  body.c-primeSite11VarA .inside-card__name {
+    font-size: 18px;
+  }
+
+  body.c-primeSite11VarA .inside-card__desc {
+    font-size: 14px;
+  }
+
+  /* Reviews custom_liquid block (.rev-*) */
+  body.c-primeSite11VarA .rev-heading {
+    font-size: 24px;
+  }
+
+  body.c-primeSite11VarA .rev-text {
+    font-size: 16px;
+  }
+
+  body.c-primeSite11VarA .rev-meta {
+    font-size: 14px;
+  }
+
+  body.c-primeSite11VarA .rev-name {
+    font-size: 15px;
+  }
+
+  /* CTA custom_liquid block — left aligned to match the rest of the test */
+  body.c-primeSite11VarA .cta-inner {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  /* PIB testimonial carousel — author name/meta */
+  body.c-primeSite11VarA .pib-slide__name {
+    font-size: 16px;
+  }
+
+  body.c-primeSite11VarA .pib-slide__meta {
+    font-size: 15px;
+  }
+
+  /* PIB rating row — everything inside uniform 15px */
+  body.c-primeSite11VarA .pib-stars-row,
+  body.c-primeSite11VarA .pib-stars-row * {
+    font-size: 15px;
+  }
+
+  /* PIB bullets — everything inside uniform 16px */
+  body.c-primeSite11VarA .pib-bullet {
+    font-size: 16px;
+  }
+
+  /* PIB trust strip */
+  body.c-primeSite11VarA .pib-guarantee-strip {
+    font-size: 14px;
+  }
+}
