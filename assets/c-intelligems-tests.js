@@ -69,7 +69,7 @@ function handleExperiments() {
   // Bundle swap handled via Element.prototype.getAttribute interceptor above.
   // Homepage hero price row — only update for non-control variants.
   const primeSite01 = window.igData?.user.getTestGroup("3035373f-de77-42d2-942f-de88525a835d");
-  document.body.classList.add("Price Test v1");
+  document.body.classList.add("Price Test v2");
   const heroPrice = document.querySelector(".hero-price");
   const heroPriceOrig = document.querySelector(".hero-price-orig s");
   if (heroPrice && heroPriceOrig) {
