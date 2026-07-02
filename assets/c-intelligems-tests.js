@@ -3,9 +3,9 @@ let igReady = false;
 
 // Test: V_PRIME_SITE_01 | Sitewide - Price Test
 const PRIME_SITE_01_PRODUCTS = {
-  "/products/murphys-law-for-kids":           { vara: "7640277811334", varb: "7640284823686" },
-  "/products/murphys-law-for-kids-copy":      { vara: "7640287772806", varb: "7640287871110" },
-  "/products/kidss-encyclopedia-10-000-whys": { vara: "7640288002182", varb: "7640288100486" },
+  "/products/murphys-law-for-kids":           { vara: "7640277811334", varb: "7640284823686", control: "7568898293894" },
+  "/products/murphys-law-for-kids-copy":      { vara: "7640287772806", varb: "7640287871110", control: "7587123658886" },
+  "/products/kidss-encyclopedia-10-000-whys": { vara: "7640288002182", varb: "7640288100486", control: "7590728794246" },
 };
 
 // Kaching reads product-id via getAttribute on a plain HTML element (not a custom element).
@@ -15,27 +15,21 @@ const PRIME_SITE_01_PRODUCTS = {
   const config = PRIME_SITE_01_PRODUCTS[window.location.pathname];
   if (!config) return;
 
-  // Replace { name: "Var A" } with window.igData?.user.getTestGroup("UUID") when ready.
-  const group = { name: "Var A" };
-  let productId = null;
-  if (group?.name === "Var A") productId = config.vara;
-  if (group?.name === "Var B") productId = config.varb;
-  if (!productId) return;
-
   const _getAttribute = Element.prototype.getAttribute;
   Element.prototype.getAttribute = function (name) {
     if (this.tagName.toLowerCase() === "kaching-bundle" && name === "product-id") {
-      return productId;
+      // Evaluated lazily so igData is available if Intelligems has already run.
+      const group = window.igData?.user.getTestGroup("3035373f-de77-42d2-942f-de88525a835d");
+      if (group?.name === "Var A - $44.90") {
+        return config.vara;
+      } else if (group?.name === "Var B - $49.90") {
+        return config.varb;
+      } else {
+        return config.control;
+      }
     }
     return _getAttribute.call(this, name);
   };
-
-  // Also set the actual attribute at DOM-ready so it stays consistent.
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll("kaching-bundle").forEach((el) => {
-      el.setAttribute("product-id", productId);
-    });
-  });
 })();
 
 function handleExperiments() {
@@ -60,9 +54,9 @@ function handleExperiments() {
     document.body.classList.add("c-primePdp07VarA");
   }
 
-  // Test: V_PRIME_SITE_01 | Sitewide - Price Test
-  // Bundle swap is handled via the customElements.define interceptor above.
-  // When UUID is ready, update the group value in that IIFE.
+  // Test: V_PRIME_SITE_01 | Sitewide - Price Test (3035373f-de77-42d2-942f-de88525a835d)
+  // Var A: $44.90 | Var B: $49.90
+  // Bundle swap handled via Element.prototype.getAttribute interceptor above.
 }
 
 let cartDrawerWasActive = false;
