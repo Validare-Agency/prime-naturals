@@ -22,6 +22,15 @@ function handleExperiments() {
   if (primePdp07?.name === "Var A") {
     document.body.classList.add("c-primePdp07VarA");
   }
+
+  // Test: V_PRIME_HP_09 | HP - Banner Image - Repositioning
+  const primeHp09 = window.igData?.user.getTestGroup(
+    "d289d23b-c68c-48f7-b0b4-f39d3882426c"
+  );
+
+  if (primeHp09?.name === "Var A") {
+    document.body.classList.add("c-primeHp09VarA");
+  }
 }
 
 let cartDrawerWasActive = false;
