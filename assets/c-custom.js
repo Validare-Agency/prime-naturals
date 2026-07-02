@@ -70,6 +70,22 @@
     },
   };
 
+  // handle → variant + price per variant group
+  var UPSELL_CONFIG = {
+    "murphys-law-for-kids": {
+      "Var A - $44.90": { regular: "$34.90", compare: "$69.80", variantId: "44124736454790" },
+      "Var B - $49.90": { regular: "$39.90", compare: "$79.80", variantId: "44124758835334" },
+    },
+    "murphys-law-for-kids-copy": {
+      "Var A - $44.90": { regular: "$34.90", compare: "$69.80", variantId: "44124769255558" },
+      "Var B - $49.90": { regular: "$39.90", compare: "$79.80", variantId: "44124769452166" },
+    },
+    "kidss-encyclopedia-10-000-whys": {
+      "Var A - $44.90": { regular: "$44.90", compare: "$89.80", variantId: "44124769747078" },
+      "Var B - $49.90": { regular: "$49.90", compare: "$99.80", variantId: "44124770041990" },
+    },
+  };
+
   var HERO_PRICES = {
     "Var A - $44.90": { price: "$44.90", orig: "$89.80" },
     "Var B - $49.90": { price: "$49.90", orig: "$99.80" },
@@ -119,7 +135,48 @@
       });
     });
 
+    applyUpsellUpdates(variantName);
+
     // Reveal all — prices are now correct for this variant (or unchanged for Control)
     revealPrices();
+  };
+
+  var currentVariantName = null;
+
+  function applyUpsellUpdates(variantName) {
+    if (!variantName) return;
+    Object.keys(UPSELL_CONFIG).forEach(function (handle) {
+      var upsellPrices = UPSELL_CONFIG[handle][variantName];
+      if (!upsellPrices) return;
+      document.querySelectorAll("[data-handle=\"" + handle + "\"]").forEach(function (el) {
+        var regularEl = el.querySelector(".regular-price");
+        var compareEl = el.querySelector(".compare-price");
+        var input = el.querySelector("input[name=\"id\"]");
+        if (regularEl) regularEl.textContent = upsellPrices.regular;
+        if (compareEl) {
+          compareEl.textContent = upsellPrices.compare;
+          compareEl.classList.remove("hidden");
+        }
+        if (input) input.value = upsellPrices.variantId;
+      });
+    });
+  }
+
+  // Re-apply upsell updates whenever the cart drawer re-renders (e.g. after add-to-cart).
+  document.addEventListener("DOMContentLoaded", function () {
+    var cartDrawer = document.querySelector("cart-drawer");
+    if (!cartDrawer) return;
+    var debounce;
+    var obs = new MutationObserver(function () {
+      clearTimeout(debounce);
+      debounce = setTimeout(function () { applyUpsellUpdates(currentVariantName); }, 50);
+    });
+    obs.observe(cartDrawer, { childList: true, subtree: true });
+  });
+
+  var _origApply = window.applyPriceUpdates;
+  window.applyPriceUpdates = function (variantName) {
+    currentVariantName = variantName;
+    _origApply(variantName);
   };
 })();
