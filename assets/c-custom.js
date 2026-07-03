@@ -344,6 +344,25 @@
       });
     });
 
+    // Swap ATC variant ID on collection cards — all visitors, all countries.
+    // The variant ID is the same regardless of currency; Shopify serves the right price.
+    var CARD_ATC_VARIANTS = {
+      "/products/murphys-law-for-kids":           { "Var A - $44.90": "44124736454790", "Var B - $49.90": "44124758835334" },
+      "/products/murphys-law-for-kids-copy":      { "Var A - $44.90": "44124769255558", "Var B - $49.90": "44124769452166" },
+      "/products/kidss-encyclopedia-10-000-whys": { "Var A - $44.90": "44124769747078", "Var B - $49.90": "44124770041990" },
+    };
+    Object.keys(CARD_ATC_VARIANTS).forEach(function (productPath) {
+      var targetVariantId = CARD_ATC_VARIANTS[productPath][variantName];
+      if (!targetVariantId) return;
+      document.querySelectorAll("a[href^=\"" + productPath + "\"]").forEach(function (link) {
+        if (link.getAttribute("href").split("?")[0] !== productPath) return;
+        var card = link.closest(".card-wrapper");
+        if (!card) return;
+        var atcInput = card.querySelector("input[name=\"id\"]");
+        if (atcInput) atcInput.value = targetVariantId;
+      });
+    });
+
     applyUpsellUpdates(variantName);
 
     // Reveal all — prices are now correct for this variant (or unchanged for Control)
