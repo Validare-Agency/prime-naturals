@@ -34,8 +34,10 @@ function handleExperiments() {
   }
 
   // Test: V_PRIME_SITE_11 | Sitewide Typography Scale Increase
-  // TODO: replace with window.igData?.user.getTestGroup("experimentId") once the experiment is created in Intelligems
-  const primeSite11 = { name: "Var A" };
+  const primeSite11 = window.igData?.user.getTestGroup(
+    "0852104b-e9e7-4343-ae4d-ad36fb8a3ea8"
+  );
+
   if (primeSite11?.name === "Var A") {
     document.body.classList.add("c-primeSite11VarA");
   }

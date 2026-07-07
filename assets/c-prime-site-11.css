@@ -180,8 +180,13 @@
     font-size: 16px;
   }
 
-  /* PIB trust strip */
+  /* PIB trust strip — centered (the only pib-* block that should be) */
   body.c-primeSite11VarA .pib-guarantee-strip {
     font-size: 14px;
+    justify-content: center;
+  }
+
+  body.c-primeSite11VarA .pib-payment-row {
+    justify-content: center;
   }
 }
