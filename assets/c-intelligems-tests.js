@@ -32,6 +32,15 @@ function handleExperiments() {
     document.body.classList.add("c-primeHp09VarA");
   }
 
+  // Test: V_PRIME_HP_05 | Testimonials - Homepage
+  const primeHp05 = window.igData?.user.getTestGroup(
+    "17369126-c2d8-4bd2-a678-994de7489a47"
+  );
+
+  if (primeHp05?.name === "Var A") {
+    document.body.classList.add("c-primeHp05VarA");
+  }
+
   // Test: V_PRIME_PDP_10 | Gallery Images Optimization
   const primePdp10 = window.igData?.user.getTestGroup(
     "5bacdd65-f916-4413-815f-bc4401969b33"
