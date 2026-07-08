@@ -467,6 +467,7 @@
     {{ 'c-custom.css' | asset_url | stylesheet_tag }}
     {%- comment -%} Test: V_PRIME_SITE_11 | Sitewide Typography Scale Increase (sitewide, mobile-only — loaded globally since it spans every template) {%- endcomment -%}
     {{ 'c-prime-site-11.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'c-custom.js' | asset_url }}" defer></script>
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>

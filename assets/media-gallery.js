@@ -12,6 +12,15 @@ if (!customElements.get('media-gallery')) {
       this.prependMedia = this.dataset.disablePrepend != 'true';
       if (this.productInfo && Shopify.postLinksRetry) this.productInfo.initShareLinks();
       this.filteringOption = this.dataset.filteringOption;
+
+      // Media items can have different aspect ratios (e.g. a tall portrait image mixed with
+      // square ones). Since every slide lives in the same row, the row's height would otherwise
+      // be dictated by the tallest slide, leaving whitespace under shorter ones. Size the row to
+      // whichever slide is currently active instead.
+      this.elements.viewer.addEventListener('slideChanged', debounce(this.syncActiveSlideHeight.bind(this), 50));
+      window.addEventListener('resize', debounce(this.syncActiveSlideHeight.bind(this), 100));
+      requestAnimationFrame(this.syncActiveSlideHeight.bind(this));
+
       if (!this.elements.thumbnails) return;
 
       this.elements.viewer.addEventListener('slideChanged', debounce(this.onSlideChanged.bind(this), 500));
@@ -24,6 +33,24 @@ if (!customElements.get('media-gallery')) {
     onSlideChanged(event) {
       const thumbnail = this.elements.thumbnails.querySelector(`[data-target="${ event.detail.currentElement.dataset.mediaId }"]`);
       this.setActiveThumbnail(thumbnail);
+    }
+
+    syncActiveSlideHeight() {
+      const slider = this.elements.viewer.slider;
+      if (!slider) return;
+
+      // The gallery row only behaves as a single-active-slide slider on mobile, or on desktop
+      // when the thumbnail/thumbnail_slider layout is used. Other desktop layouts (stacked,
+      // grid) show every slide at once, so locking the row height would clip them.
+      const isSingleSlideLayout = !this.mql.matches || this.dataset.desktopLayout.includes('thumbnail');
+      if (!isSingleSlideLayout) {
+        slider.style.removeProperty('height');
+        return;
+      }
+
+      const activeSlide = slider.querySelector('.product__media-item.is-active') || slider.querySelector('.product__media-item');
+      if (!activeSlide) return;
+      slider.style.height = `${activeSlide.offsetHeight}px`;
     }
 
     setActiveMedia(mediaId, prepend, filtering = false, currentVariant = null) {
@@ -43,6 +70,7 @@ if (!customElements.get('media-gallery')) {
         element.classList.remove('is-active');
       });
       activeMedia.classList.add('is-active');
+      this.syncActiveSlideHeight();
 
       if (prepend && this.prependMedia) {
         activeMedia.parentElement.prepend(activeMedia);

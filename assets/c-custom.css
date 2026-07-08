@@ -1,3 +1,11 @@
+/* <-------------------Product gallery: prevent whitespace from mixed image aspect ratios-----------------> */
+
+/* media-gallery.js locks this row's height to the active slide so shorter images don't
+   inherit whitespace from a taller sibling; clip rather than let the row scroll vertically. */
+.product__media-list.slider--mobile {
+  overflow-y: hidden;
+}
+
 /* <-------------------V_PRIME_CART_02: Cart Trust Assurance Policies-----------------> */
 
 /* Test Setup */
