@@ -31,6 +31,27 @@ function handleExperiments() {
   if (primeHp09?.name === "Var A") {
     document.body.classList.add("c-primeHp09VarA");
   }
+<<<<<<< Updated upstream
+=======
+
+  // Test: V_PRIME_PDP_10 | Gallery Images Optimization
+  const primePdp10 = window.igData?.user.getTestGroup(
+    "5bacdd65-f916-4413-815f-bc4401969b33"
+  );
+
+  if (primePdp10?.name === "Var A : Sparks Curiosity") {
+    document.body.classList.add("c-primePdp10VarA");
+  } else if (primePdp10?.name === "Var B : Gift + Less Screen Time") {
+    document.body.classList.add("c-primePdp10VarB");
+  }
+
+  // Test: V_PRIME_HP_05 | Testimonials - Homepage
+  const primeHp05 = { name: "Var A" }
+
+  if (primeHp05?.name === "Var A") {
+    document.body.classList.add("c-primeHp05VarA");
+  }
+>>>>>>> Stashed changes
 }
 
 let cartDrawerWasActive = false;
