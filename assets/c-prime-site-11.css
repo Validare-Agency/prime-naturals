@@ -154,10 +154,22 @@
     font-size: 15px;
   }
 
-  /* CTA custom_liquid block — left aligned to match the rest of the test */
+  /* CTA custom_liquid block */
   body.c-primeSite11VarA .cta-inner {
-    align-items: flex-start;
-    text-align: left;
+    align-items: center;
+    text-align: center;
+  }
+
+  body.c-primeSite11VarA .cta-eyebrow {
+    font-size: 12px;
+  }
+
+  body.c-primeSite11VarA .cta-heading {
+    font-size: 24px;
+  }
+
+  body.c-primeSite11VarA .cta-sub {
+    font-size: 16px;
   }
 
   /* PIB testimonial carousel — author name/meta */
@@ -188,5 +200,24 @@
 
   body.c-primeSite11VarA .pib-payment-row {
     justify-content: center;
+  }
+
+  /* Spacing fixes for larger mobile typography */
+  body.c-primeSite11VarA .stats-wrap {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  body.c-primeSite11VarA .imt-wrap {
+    padding-bottom: 0;
+  }
+
+  body.c-primeSite11VarA .rev-card {
+    padding: 20px 13px 18px;
+  }
+
+  body.c-primeSite11VarA .rev-text {
+    letter-spacing: 0;
+    line-height: 1.5;
   }
 }
