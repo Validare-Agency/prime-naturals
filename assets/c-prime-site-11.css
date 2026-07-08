@@ -114,7 +114,7 @@
 
   /* "Everything inside" custom_liquid block — left aligned (overrides its default center) */
   body.c-primeSite11VarA .inside-header {
-    text-align: left;
+    text-align: center;
   }
 
   body.c-primeSite11VarA .inside-eyebrow {
@@ -123,10 +123,12 @@
 
   body.c-primeSite11VarA .inside-heading {
     font-size: 24px;
+    text-align: center;
   }
 
   body.c-primeSite11VarA .inside-sub {
     font-size: 16px;
+    text-align: center;
   }
 
   body.c-primeSite11VarA .inside-card__name {
@@ -170,6 +172,10 @@
 
   body.c-primeSite11VarA .cta-sub {
     font-size: 16px;
+  }
+
+  body.c-primeSite11VarA #cta-scroll-btn {
+    font-size: 20px;
   }
 
   /* PIB testimonial carousel — author name/meta */
@@ -219,5 +225,9 @@
   body.c-primeSite11VarA .rev-text {
     letter-spacing: 0;
     line-height: 1.5;
+  }
+
+  body.c-primeSite11VarA .stats-footnote {
+    font-size: 14px;
   }
 }
