@@ -1,1 +1,772 @@
-{"sections":{"main":{"type":"main-product","blocks":{"custom_liquid_PWYQA8":{"type":"custom_liquid","disabled":true,"settings":{"custom_liquid":""}},"rating_stars_fE9P9j":{"type":"rating_stars","disabled":true,"settings":{"rating":4.8,"star_color":"#ffd100","bg_stars_style":"outlined","bg_star_color":"#ececec","label":"Mit <strong>4,8<\/strong> von 4500+ Kunden bewertet!","size":14,"alignment":"flex-start","scroll_id":"","margin_top":15,"margin_bottom":15}},"custom_liquid_hKfVkc":{"type":"custom_liquid","settings":{"custom_liquid":"{% comment %}\n  ================================================================\n  GEO PRICING — pure Shopify Liquid, no app, no external API\n  Uses Shopify's built-in localization.country.iso_code\n  Add or edit countries in the {% case %} block below\n  ================================================================\n{% endcomment %}\n\n{% assign _cc = localization.country.iso_code %}\n\n{% case _cc %}\n\n  {% when 'GB' %}\n    {% assign _sym  = '£'   %}\n    {% assign _cur  = '32.90' %}\n    {% assign _was  = '65.80' %}\n    {% assign _save = '32.90' %}\n\n  {% when 'AU' %}\n    {% assign _sym  = 'A$'  %}\n    {% assign _cur  = '59.90' %}\n    {% assign _was  = '119.80' %}\n    {% assign _save = '59.90' %}\n\n  {% when 'NZ' %}\n    {% assign _sym  = 'NZ$' %}\n    {% assign _cur  = '64.90' %}\n    {% assign _was  = '129.80' %}\n    {% assign _save = '64.90' %}\n\n  {% when 'CA' %}\n    {% assign _sym  = 'C$'  %}\n    {% assign _cur  = '54.90' %}\n    {% assign _was  = '109.80' %}\n    {% assign _save = '54.90' %}\n\n  {% when 'SG' %}\n    {% assign _sym  = 'S$'  %}\n    {% assign _cur  = '54.90' %}\n    {% assign _was  = '109.80' %}\n    {% assign _save = '54.90' %}\n\n  {% when 'AE', 'SA', 'QA', 'KW', 'BH', 'OM' %}\n    {% assign _sym  = 'AED ' %}\n    {% assign _cur  = '149' %}\n    {% assign _was  = '298' %}\n    {% assign _save = '149' %}\n\n  {% when 'ZA' %}\n    {% assign _sym  = 'R'   %}\n    {% assign _cur  = '749' %}\n    {% assign _was  = '1498' %}\n    {% assign _save = '749' %}\n\n  {% when 'DE', 'FR', 'IT', 'ES', 'NL', 'BE', 'AT', 'PT',\n           'PL', 'SE', 'DK', 'FI', 'IE', 'NO', 'GR', 'CZ',\n           'RO', 'HU', 'BG', 'HR', 'SK', 'SI', 'EE', 'LV',\n           'LT', 'LU', 'MT', 'CY' %}\n    {% assign _sym  = '€'   %}\n    {% assign _cur  = '36.90' %}\n    {% assign _was  = '73.80' %}\n    {% assign _save = '36.90' %}\n\n  {% else %}\n    {% comment %} Default — USD for US and all unmatched countries {% endcomment %}\n    {% assign _sym  = '$'   %}\n    {% assign _cur  = '39.90' %}\n    {% assign _was  = '79.80' %}\n    {% assign _save = '39.90' %}\n\n{% endcase %}\n\n<div class=\"pib-wrap\">\n\n  <!-- TESTIMONIAL CAROUSEL -->\n  <div class=\"pib-carousel\">\n    <div class=\"pib-carousel__bg-quote\">\"<\/div>\n    <div class=\"pib-slides\">\n\n      <div class=\"pib-slide active\">\n        <p class=\"pib-slide__text\">\"Best money I've spent on my kids' education outside of school. The conversations it starts are priceless.\"<\/p>\n        <div class=\"pib-slide__author\">\n          <img class=\"pib-slide__avatar\" src=\"https:\/\/i.pravatar.cc\/150?img=47\" alt=\"Jennifer L.\" \/>\n          <div>\n            <div class=\"pib-slide__name\">Jennifer L.<\/div>\n            <div class=\"pib-slide__meta\">Mom of three &nbsp;·&nbsp; <span class=\"pib-slide__stars\">★★★★★<\/span><\/div>\n          <\/div>\n        <\/div>\n      <\/div>\n\n      <div class=\"pib-slide\">\n        <p class=\"pib-slide__text\">\"My son is a screen kid. He read this until 9pm without me saying a word. I bought two more for his cousins.\"<\/p>\n        <div class=\"pib-slide__author\">\n          <img class=\"pib-slide__avatar\" src=\"https:\/\/i.pravatar.cc\/150?img=12\" alt=\"David K.\" \/>\n          <div>\n            <div class=\"pib-slide__name\">David K.<\/div>\n            <div class=\"pib-slide__meta\">Father of two &nbsp;·&nbsp; <span class=\"pib-slide__stars\">★★★★★<\/span><\/div>\n          <\/div>\n        <\/div>\n      <\/div>\n\n      <div class=\"pib-slide\">\n        <p class=\"pib-slide__text\">\"My daughter explained tectonic plates to my mother-in-law. She's 8. We were completely speechless.\"<\/p>\n        <div class=\"pib-slide__author\">\n          <img class=\"pib-slide__avatar\" src=\"https:\/\/i.pravatar.cc\/150?img=32\" alt=\"Rachel M.\" \/>\n          <div>\n            <div class=\"pib-slide__name\">Rachel M.<\/div>\n            <div class=\"pib-slide__meta\">Mom of two &nbsp;·&nbsp; <span class=\"pib-slide__stars\">★★★★★<\/span><\/div>\n          <\/div>\n        <\/div>\n      <\/div>\n\n    <\/div>\n    <div class=\"pib-dots\">\n      <span class=\"pib-dot active\" data-i=\"0\"><\/span>\n      <span class=\"pib-dot\" data-i=\"1\"><\/span>\n      <span class=\"pib-dot\" data-i=\"2\"><\/span>\n    <\/div>\n  <\/div>\n\n  <!-- SCARCITY BADGE -->\n  <div class=\"pib-scarcity\">\n    <span class=\"pib-scarcity__pulse\"><\/span>\n    Limited stock — schools are ordering 20+ at a time\n  <\/div>\n\n  <!-- TITLE -->\n  <h1 class=\"pib-title\">Kid's Encyclopedia \"10,000 Whys\" — Unlock Your Child's Full Potential<\/h1>\n\n  <!-- STARS -->\n  <div class=\"pib-stars-row\">\n    <span class=\"pib-stars\">★★★★★<\/span>\n    <span class=\"pib-rating-num\">4.9<\/span>\n    <span class=\"pib-review-sep\">·<\/span>\n    <a href=\"#reviews\" class=\"pib-review-count\">2,847 reviews<\/a>\n  <\/div>\n\n  <!-- DIVIDER -->\n  <div class=\"pib-divider\"><\/div>\n\n  <!-- PRICE — output from Liquid variables above -->\n  <div class=\"pib-price-block\">\n    <div class=\"pib-price-row\">\n      <span class=\"pib-price-current\">{{ _sym }}{{ _cur }}<\/span>\n      <span class=\"pib-price-original\"><s>{{ _sym }}{{ _was }}<\/s><\/span>\n      <span class=\"pib-price-badge\">50% OFF<\/span>\n    <\/div>\n    <div class=\"pib-price-note\">\n      🎉 You save <strong>{{ _sym }}{{ _save }}<\/strong> today only\n    <\/div>\n  <\/div>\n\n  <!-- DIVIDER -->\n  <div class=\"pib-divider\"><\/div>\n\n  <!-- BULLETS -->\n  <ul class=\"pib-bullets\">\n    <li class=\"pib-bullet\">\n      <span class=\"pib-check\" aria-hidden=\"true\">✔<\/span>\n      <span>Rewires curiosity into a lifelong learning habit<\/span>\n    <\/li>\n    <li class=\"pib-bullet\">\n      <span class=\"pib-check\" aria-hidden=\"true\">✔<\/span>\n      <span>Boosts school performance, vocabulary &amp; memory<\/span>\n    <\/li>\n    <li class=\"pib-bullet\">\n      <span class=\"pib-check\" aria-hidden=\"true\">✔<\/span>\n      <span>Competes with screens — kids choose it over YouTube<\/span>\n    <\/li>\n    <li class=\"pib-bullet\">\n      <span class=\"pib-check\" aria-hidden=\"true\">✔<\/span>\n      <span>Perfect for ages 6–12, gift-ready hardcover packaging<\/span>\n    <\/li>\n  <\/ul>\n\n<\/div>\n\n<style>\n\n  .pib-wrap *,\n  .pib-wrap *::before,\n  .pib-wrap *::after {\n    box-sizing: border-box;\n  }\n\n  .pib-wrap {\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    color: #0d1b3e;\n    width: 100%;\n    max-width: 560px;\n  }\n\n  .pib-carousel {\n    position: relative;\n    background: #ffffff;\n    border: 1px solid rgba(13,27,62,0.08);\n    border-radius: 14px;\n    padding: 22px 22px 16px 22px;\n    margin-bottom: 22px;\n    overflow: hidden;\n    box-shadow:\n      0 1px 3px rgba(13,27,62,0.04),\n      0 4px 16px rgba(13,27,62,0.06);\n  }\n\n  .pib-carousel__bg-quote {\n    position: absolute;\n    top: -10px;\n    right: 14px;\n    font-size: 100px;\n    font-family: Georgia, serif;\n    color: rgba(13,27,62,0.04);\n    line-height: 1;\n    pointer-events: none;\n    user-select: none;\n  }\n\n  .pib-slides {\n    position: relative;\n    min-height: 96px;\n  }\n\n  .pib-slide {\n    display: none;\n    animation: pibFadeIn 0.5s ease;\n  }\n  .pib-slide.active {\n    display: block;\n  }\n\n  @keyframes pibFadeIn {\n    from { opacity: 0; transform: translateY(6px); }\n    to   { opacity: 1; transform: translateY(0); }\n  }\n\n  .pib-slide__text {\n    font-size: 14px;\n    font-style: italic;\n    color: #1a1a2e;\n    line-height: 1.65;\n    margin: 0 0 14px 0;\n  }\n\n  .pib-slide__author {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n  }\n\n  .pib-slide__avatar {\n    width: 36px;\n    height: 36px;\n    border-radius: 50%;\n    object-fit: cover;\n    border: 2px solid rgba(13,27,62,0.08);\n    flex-shrink: 0;\n    display: block;\n  }\n\n  .pib-slide__name {\n    font-size: 13px;\n    font-weight: 800;\n    color: #0d1b3e;\n    line-height: 1.2;\n    margin-bottom: 3px;\n  }\n\n  .pib-slide__meta {\n    font-size: 11.5px;\n    color: #9ca3af;\n    font-weight: 500;\n    line-height: 1;\n    display: flex;\n    align-items: center;\n    gap: 4px;\n    flex-wrap: wrap;\n  }\n\n  .pib-slide__stars {\n    color: #f59e0b;\n    font-size: 11px;\n    letter-spacing: 1px;\n    line-height: 1;\n  }\n\n  .pib-dots {\n    display: flex;\n    gap: 6px;\n    justify-content: center;\n    margin-top: 14px;\n  }\n  .pib-dot {\n    width: 7px;\n    height: 7px;\n    border-radius: 50%;\n    background: rgba(13,27,62,0.12);\n    cursor: pointer;\n    transition: background 0.25s ease, transform 0.25s ease;\n    display: inline-block;\n  }\n  .pib-dot.active {\n    background: #0d1b3e;\n    transform: scale(1.35);\n  }\n  .pib-dot:hover {\n    background: rgba(13,27,62,0.3);\n  }\n\n  .pib-scarcity {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    background: #fff3cd;\n    border: 1px solid #f5a623;\n    color: #92400e;\n    border-radius: 8px;\n    padding: 8px 14px;\n    font-size: 13px;\n    font-weight: 700;\n    margin-bottom: 18px;\n    line-height: 1;\n  }\n\n  .pib-scarcity__pulse {\n    width: 8px;\n    height: 8px;\n    border-radius: 50%;\n    background: #c0392b;\n    flex-shrink: 0;\n    display: inline-block;\n    animation: pibPulse 1.8s ease-in-out infinite;\n  }\n  @keyframes pibPulse {\n    0%   { box-shadow: 0 0 0 0 rgba(192,57,43,0.5); }\n    70%  { box-shadow: 0 0 0 7px rgba(192,57,43,0); }\n    100% { box-shadow: 0 0 0 0 rgba(192,57,43,0); }\n  }\n\n  .pib-title {\n    font-size: clamp(21px, 3.5vw, 27px);\n    font-weight: 900;\n    line-height: 1.18;\n    letter-spacing: -0.5px;\n    color: #0d1b3e;\n    margin: 0 0 16px 0;\n  }\n\n  .pib-stars-row {\n    display: flex;\n    align-items: center;\n    gap: 7px;\n    margin-bottom: 20px;\n    flex-wrap: wrap;\n  }\n  .pib-stars {\n    color: #f59e0b;\n    font-size: 16px;\n    letter-spacing: 1.5px;\n    line-height: 1;\n  }\n  .pib-rating-num {\n    font-size: 13.5px;\n    font-weight: 800;\n    color: #0d1b3e;\n  }\n  .pib-review-sep {\n    color: #d1d5db;\n    font-size: 13px;\n  }\n  .pib-review-count {\n    font-size: 13px;\n    color: #6b7280;\n    font-weight: 600;\n    text-decoration: underline;\n    text-underline-offset: 2px;\n    text-decoration-color: rgba(107,114,128,0.3);\n    transition: color 0.15s ease;\n  }\n  .pib-review-count:hover { color: #0d1b3e; }\n\n  .pib-divider {\n    width: 100%;\n    height: 1px;\n    background: rgba(13,27,62,0.07);\n    margin: 4px 0 20px 0;\n  }\n\n  .pib-price-block {\n    margin-bottom: 6px;\n  }\n\n  .pib-price-row {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    flex-wrap: wrap;\n    margin-bottom: 8px;\n  }\n\n  .pib-price-current {\n    font-size: clamp(36px, 7vw, 44px);\n    font-weight: 900;\n    color: #c0392b;\n    line-height: 1;\n    letter-spacing: -2px;\n  }\n\n  .pib-price-original {\n    line-height: 1;\n  }\n  .pib-price-original s {\n    font-size: 17px;\n    color: #9ca3af;\n    font-weight: 500;\n    text-decoration-color: #9ca3af;\n  }\n\n  .pib-price-badge {\n    background: #c0392b;\n    color: #fff;\n    border-radius: 5px;\n    padding: 5px 10px;\n    font-size: 12px;\n    font-weight: 900;\n    text-transform: uppercase;\n    letter-spacing: 0.07em;\n    line-height: 1;\n    white-space: nowrap;\n    align-self: center;\n  }\n\n  .pib-price-note {\n    display: flex;\n    align-items: center;\n    gap: 5px;\n    font-size: 13px;\n    color: #6b7280;\n    margin-bottom: 20px;\n  }\n  .pib-price-note strong {\n    color: #0d1b3e;\n    font-weight: 700;\n  }\n\n  .pib-bullets {\n    list-style: none;\n    padding: 0;\n    margin: 0;\n  }\n\n  .pib-bullet {\n    display: flex;\n    align-items: flex-start;\n    gap: 11px;\n    padding: 10px 0;\n    border-bottom: 1px solid rgba(13,27,62,0.06);\n    font-size: clamp(14px, 2vw, 15px);\n    color: #0d1b3e;\n    line-height: 1.5;\n  }\n  .pib-bullet:last-child {\n    border-bottom: none;\n  }\n\n  .pib-check {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 20px;\n    height: 20px;\n    min-width: 20px;\n    border-radius: 50%;\n    background: #dcfce7;\n    color: #166534;\n    font-size: 10px;\n    font-weight: 900;\n    flex-shrink: 0;\n    margin-top: 1px;\n    line-height: 1;\n  }\n\n  @media (max-width: 480px) {\n    .pib-wrap { max-width: 100%; }\n    .pib-carousel { padding: 18px 16px 14px; }\n    .pib-carousel__bg-quote { font-size: 72px; right: 10px; }\n    .pib-title { font-size: 20px; }\n    .pib-price-current { letter-spacing: -1.5px; }\n    .pib-scarcity { font-size: 12.5px; padding: 7px 12px; }\n    .pib-bullet { font-size: 14px; padding: 9px 0; }\n    .pib-slide__avatar { width: 32px; height: 32px; }\n  }\n\n<\/style>\n\n<script>\n(function () {\n  var slides  = document.querySelectorAll('.pib-slide');\n  var dots    = document.querySelectorAll('.pib-dot');\n  var current = 0;\n  var timer;\n\n  function goTo(idx) {\n    slides[current].classList.remove('active');\n    dots[current].classList.remove('active');\n    current = idx;\n    slides[current].classList.add('active');\n    dots[current].classList.add('active');\n  }\n\n  function startTimer() {\n    timer = setInterval(function () {\n      if (document.body.classList.contains('c-primePdp07VarA')) return;\n      goTo((current + 1) % slides.length);\n    }, 8000);\n  }\n\n  dots.forEach(function (dot) {\n    dot.addEventListener('click', function () {\n      clearInterval(timer);\n      goTo(parseInt(this.getAttribute('data-i')));\n      if (!document.body.classList.contains('c-primePdp07VarA')) startTimer();\n    });\n  });\n\n  startTimer();\n})();\n<\/script>"}},"price":{"type":"price","disabled":true,"settings":{"layout":"price_second","price_color":"accent-1","compare_price_color":"text","displayed_badge":"sale","icon_scale":130,"custom_badge_text":"SAVE $76","icon_1":"","filled_icon_1":false,"icon_2":"check_circle","filled_icon_2":false,"margin_top":12,"margin_bottom":21}},"buy_buttons":{"type":"buy_buttons","settings":{"show_dynamic_checkout":false,"skip_cart":false,"uppercase_text":true,"icon_scale":120,"icon_spacing":10,"display_price":true,"enable_custom_color":true,"custom_color":"#c0392b","enable_secondary_btn":false,"secondary_btn_label":"Buy It Now","secondary_btn_enable_custom_color":false,"secondary_btn_custom_color":"#dd1d1d","margin_top":24,"margin_bottom":24}},"custom_liquid_Jpc8rU":{"type":"custom_liquid","settings":{"custom_liquid":"<div class=\"pib-trust\">\n\n  <div class=\"pib-guarantee-strip\">\n    <span>🛡️ 30-day money-back guarantee<\/span>\n    <span class=\"pib-strip-sep\">|<\/span>\n    <span>🔒 Secure checkout<\/span>\n    <span class=\"pib-strip-sep\">|<\/span>\n    <span>📦 Free shipping<\/span>\n  <\/div>\n\n  <div class=\"pib-payment-row\">\n    <span class=\"pib-pay-icon\">VISA<\/span>\n    <span class=\"pib-pay-icon\">MC<\/span>\n    <span class=\"pib-pay-icon\">AMEX<\/span>\n    <span class=\"pib-pay-icon\">PayPal<\/span>\n    <span class=\"pib-pay-icon\">Apple Pay<\/span>\n    <span class=\"pib-pay-icon\">Shop Pay<\/span>\n  <\/div>\n\n<\/div>\n\n<style>\n  .pib-trust {\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    width: 100%;\n  }\n\n  .pib-guarantee-strip {\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    flex-wrap: wrap;\n    font-size: 13px;\n    font-weight: 600;\n    color: #4b5563;\n    margin-bottom: 10px;\n  }\n  .pib-strip-sep {\n    color: #d1d5db;\n    font-weight: 400;\n  }\n\n  .pib-payment-row {\n    display: flex;\n    align-items: center;\n    gap: 6px;\n    flex-wrap: wrap;\n  }\n  .pib-pay-icon {\n    background: #f3f4f6;\n    border: 1px solid #e5e7eb;\n    border-radius: 5px;\n    padding: 5px 10px;\n    font-size: 11px;\n    font-weight: 700;\n    color: #374151;\n    letter-spacing: 0.03em;\n    line-height: 1;\n  }\n<\/style>"}}},"block_order":["custom_liquid_PWYQA8","rating_stars_fE9P9j","custom_liquid_hKfVkc","price","buy_buttons","custom_liquid_Jpc8rU"],"custom_css":[],"settings":{"display_id":false,"enable_sticky_info":true,"display_variant_image_first":false,"disable_prepend":false,"hide_variants":false,"variant_image_filtering":"none","image_zoom":"none","arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","video_player":"play_btn","enable_video_looping":false,"autoplay_videos_pause_btn":false,"video_sound_btn":false,"video_timeline":false,"play_btn_color_scheme":"accent-1","sound_btn_color_scheme":"inverse","timeline_color":"accent-1","media_size":"medium","media_position":"left","gallery_layout":"thumbnail_slider","desktop_thumbnails_count":5,"constrain_to_viewport":true,"media_fit":"contain","desktop_arrows_position":"hidden","mobile_media_corner_radius":0,"mobile_spacing_pixels":0,"mobile_arrows_position":"sides","mobile_pagination":"hidden","mobile_thumbnails":"show","mobile_thumbnails_count":8,"mobile_scroll_padding_percentage":0,"mobile_scroll_padding_pixels":0,"enable_mobile_outher_spacing":false,"mobile_slides_container_width":100,"mobile_slides_inner_width":100,"trust_badge_position":"top-right","trust_badge_size":"medium","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36}},"custom_liquid_mwcE4N":{"type":"custom-liquid","name":"t:sections.custom-liquid.presets.name","settings":{"display_id":false,"visibility":"always-display","custom_liquid":"<div class=\"imt-wrap\">\n\n  <div class=\"imt-inner\">\n\n    <div class=\"imt-eyebrow\">\n      <span class=\"imt-eyebrow__dot\"><\/span>\n      Why 18,000+ families chose this book\n    <\/div>\n\n    <h2 class=\"imt-heading\">\n      The Book That Answers <span class=\"imt-highlight\">Every Question Your Child Has<\/span>Ever Asked\n    <\/h2>\n\n    <p class=\"imt-sub\">\n      Not a textbook. Not a reference tool. A book children pick up because they want to — and can't put down.\n    <\/p>\n\n    <ul class=\"imt-features\">\n      <li class=\"imt-feature\">\n        <div class=\"imt-feature__icon\">🧠<\/div>\n        <div class=\"imt-feature__body\">\n          <div class=\"imt-feature__title\">Real Questions Kids Actually Ask<\/div>\n          <div class=\"imt-feature__desc\">The ones children wonder about every single day — not what adults think they should know<\/div>\n        <\/div>\n      <\/li>\n      <li class=\"imt-feature\">\n        <div class=\"imt-feature__icon\">🚀<\/div>\n        <div class=\"imt-feature__body\">\n          <div class=\"imt-feature__title\">Everything In One Book<\/div>\n          <div class=\"imt-feature__desc\">Animals, space, the human body, nature, technology, daily life and more<\/div>\n        <\/div>\n      <\/li>\n      <li class=\"imt-feature\">\n        <div class=\"imt-feature__icon\">📵<\/div>\n        <div class=\"imt-feature__body\">\n          <div class=\"imt-feature__title\">Competes With Screens<\/div>\n          <div class=\"imt-feature__desc\">Kids choose it voluntarily — parents call it the only thing that works<\/div>\n        <\/div>\n      <\/li>\n      <li class=\"imt-feature\">\n        <div class=\"imt-feature__icon\">⭐<\/div>\n        <div class=\"imt-feature__body\">\n          <div class=\"imt-feature__title\">Ages 6–12<\/div>\n          <div class=\"imt-feature__desc\">Written simply, illustrated beautifully, built to be read for fun<\/div>\n        <\/div>\n      <\/li>\n    <\/ul>\n\n    <div class=\"imt-proof\">\n      <div class=\"imt-proof__stars\">★★★★★<\/div>\n      <p class=\"imt-proof__quote\">\"His teacher called to say he was the most engaged student in class. All from a book he found on the coffee table.\"<\/p>\n      <span class=\"imt-proof__author\">— Rachel M., Mom of two · Verified buyer<\/span>\n    <\/div>\n\n  <\/div>\n\n<\/div>\n\n<style>\n\n  .imt-wrap *,\n  .imt-wrap *::before,\n  .imt-wrap *::after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n  }\n\n  .imt-wrap {\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    width: 100%;\n    background: transparent;\n    color: #0d1b3e;\n    padding: 48px 16px;\n  }\n\n  .imt-inner {\n    display: flex;\n    flex-direction: column;\n    align-items: flex-start;\n    width: 100%;\n    max-width: 600px;\n    margin: 0 auto;\n  }\n\n  .imt-eyebrow {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    background: #dcfce7;\n    color: #166534;\n    font-size: 11px;\n    font-weight: 700;\n    letter-spacing: 0.05em;\n    text-transform: uppercase;\n    padding: 6px 14px;\n    border-radius: 100px;\n    margin-bottom: 16px;\n    line-height: 1;\n    flex-shrink: 0;\n  }\n\n  .imt-eyebrow__dot {\n    width: 6px;\n    height: 6px;\n    min-width: 6px;\n    border-radius: 50%;\n    background: #166534;\n    flex-shrink: 0;\n    display: block;\n  }\n\n  .imt-heading {\n    font-size: clamp(20px, 3vw, 28px);\n    font-weight: 900;\n    line-height: 1.22;\n    letter-spacing: -0.4px;\n    color: #0d1b3e;\n    margin-bottom: 12px;\n    width: 100%;\n    word-break: break-word;\n    hyphens: none;\n  }\n\n  .imt-highlight {\n    display: inline;\n    background: #f5a623;\n    color: #0d1b3e;\n    border-radius: 5px;\n    padding: 1px 7px;\n    font-style: normal;\n    font-weight: 900;\n    -webkit-box-decoration-break: clone;\n    box-decoration-break: clone;\n  }\n\n  .imt-sub {\n    font-size: clamp(13px, 1.6vw, 15px);\n    line-height: 1.7;\n    color: #6b7280;\n    margin-bottom: 24px;\n    width: 100%;\n  }\n\n  .imt-features {\n    list-style: none;\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 13px;\n    margin-bottom: 24px;\n  }\n\n  .imt-feature {\n    display: flex;\n    align-items: flex-start;\n    gap: 12px;\n    width: 100%;\n  }\n\n  .imt-feature__icon {\n    width: 38px;\n    height: 38px;\n    min-width: 38px;\n    background: #ffffff;\n    border: 1px solid rgba(13,27,62,0.08);\n    border-radius: 10px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 17px;\n    box-shadow: 0 1px 4px rgba(13,27,62,0.06);\n    flex-shrink: 0;\n    line-height: 1;\n  }\n\n  .imt-feature__body {\n    display: flex;\n    flex-direction: column;\n    gap: 4px;\n    padding-top: 2px;\n    min-width: 0;\n    flex: 1;\n  }\n\n  .imt-feature__title {\n    font-size: clamp(13px, 1.6vw, 14px);\n    font-weight: 800;\n    color: #0d1b3e;\n    line-height: 1.25;\n    word-break: break-word;\n  }\n\n  .imt-feature__desc {\n    font-size: clamp(12px, 1.4vw, 13px);\n    color: #6b7280;\n    line-height: 1.55;\n    font-weight: 500;\n    word-break: break-word;\n  }\n\n  .imt-proof {\n    width: 100%;\n    background: #ffffff;\n    border: 1px solid rgba(13,27,62,0.08);\n    border-left: 3px solid #c0392b;\n    border-radius: 0 12px 12px 0;\n    padding: 15px 16px;\n    box-shadow: 0 2px 8px rgba(13,27,62,0.06);\n  }\n\n  .imt-proof__stars {\n    color: #f59e0b;\n    font-size: 12.5px;\n    letter-spacing: 1.5px;\n    margin-bottom: 8px;\n    line-height: 1;\n    display: block;\n  }\n\n  .imt-proof__quote {\n    font-size: clamp(12.5px, 1.6vw, 13.5px);\n    font-style: italic;\n    color: #1a1a2e;\n    line-height: 1.68;\n    margin-bottom: 8px;\n    word-break: break-word;\n  }\n\n  .imt-proof__author {\n    font-size: clamp(11px, 1.3vw, 12px);\n    color: #9ca3af;\n    font-weight: 600;\n    display: block;\n    line-height: 1;\n  }\n\n  @media (max-width: 480px) {\n    .imt-wrap { padding: 36px 16px; }\n    .imt-eyebrow { font-size: 10.5px; padding: 5px 12px; margin-bottom: 14px; }\n    .imt-heading { font-size: 20px; letter-spacing: -0.3px; margin-bottom: 11px; }\n    .imt-sub { font-size: 13.5px; margin-bottom: 20px; }\n    .imt-features { gap: 12px; margin-bottom: 22px; }\n    .imt-feature__icon { width: 34px; height: 34px; min-width: 34px; font-size: 15px; border-radius: 8px; }\n    .imt-feature__title { font-size: 13px; }\n    .imt-feature__desc { font-size: 12px; }\n    .imt-proof { padding: 13px; border-radius: 0 10px 10px 0; }\n    .imt-proof__quote { font-size: 12.5px; }\n    .imt-proof__author { font-size: 11px; }\n  }\n\n  @media (max-width: 360px) {\n    .imt-wrap { padding: 32px 12px; }\n    .imt-heading { font-size: 19px; }\n    .imt-sub { font-size: 13px; }\n    .imt-feature__title { font-size: 12.5px; }\n    .imt-feature__desc { font-size: 11.5px; }\n  }\n\n<\/style>","color_scheme":"background-1","padding_top":0,"padding_bottom":32}},"custom_liquid_ycAyXQ":{"type":"custom-liquid","name":"t:sections.custom-liquid.presets.name","settings":{"display_id":false,"visibility":"always-display","custom_liquid":"<div class=\"stats-wrap\">\n\n  <div class=\"stats-inner\">\n\n    <div class=\"stats-header\">\n      <div class=\"stats-eyebrow\">\n        <span class=\"stats-eyebrow__dot\"><\/span>\n        The results speak for themselves\n      <\/div>\n      <h2 class=\"stats-heading\">Loved by <em>18,000+<\/em> Families Worldwide<\/h2>\n      <p class=\"stats-subhead\">Real parents. Real kids. Real results — tracked over 90 days.<\/p>\n    <\/div>\n\n    <div class=\"stats-grid\">\n\n      <div class=\"stats-card\">\n        <div class=\"stats-accent\"><\/div>\n        <div class=\"stats-pct\">94<span class=\"stats-sym\">%<\/span><\/div>\n        <p class=\"stats-desc\">of parents say their child's school performance improved within 60 days<\/p>\n        <div class=\"stats-divider\"><\/div>\n        <div class=\"stats-tag\">📈 School performance<\/div>\n      <\/div>\n\n      <div class=\"stats-card\">\n        <div class=\"stats-accent\"><\/div>\n        <div class=\"stats-pct\">97<span class=\"stats-sym\">%<\/span><\/div>\n        <p class=\"stats-desc\">of kids voluntarily picked up the book without being asked, after day 7<\/p>\n        <div class=\"stats-divider\"><\/div>\n        <div class=\"stats-tag\">📚 Voluntary reading<\/div>\n      <\/div>\n\n      <div class=\"stats-card\">\n        <div class=\"stats-accent\"><\/div>\n        <div class=\"stats-pct\">91<span class=\"stats-sym\">%<\/span><\/div>\n        <p class=\"stats-desc\">of parents said their child started asking deeper, more insightful questions<\/p>\n        <div class=\"stats-divider\"><\/div>\n        <div class=\"stats-tag\">🧠 Curiosity & thinking<\/div>\n      <\/div>\n\n    <\/div>\n\n    <p class=\"stats-footnote\">Results from a 90-day post-purchase survey of 1,200+ customers, December 2024 – February 2025.<\/p>\n\n  <\/div>\n\n<\/div>\n\n<style>\n\n  .stats-wrap *,\n  .stats-wrap *::before,\n  .stats-wrap *::after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n  }\n\n  \/* ── WRAP ── *\/\n  .stats-wrap {\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    width: 100%;\n    padding: 48px 16px;\n    color: #0d1b3e;\n    background: transparent;\n  }\n\n  \/* ── INNER ── *\/\n  .stats-inner {\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    max-width: 600px;\n    margin: 0 auto;\n  }\n\n  \/* ── HEADER ── *\/\n  .stats-header {\n    margin-bottom: 24px;\n  }\n\n  .stats-eyebrow {\n    display: inline-flex;\n    align-items: center;\n    gap: 7px;\n    background: #dcfce7;\n    color: #166534;\n    font-size: 11px;\n    font-weight: 700;\n    letter-spacing: 0.07em;\n    text-transform: uppercase;\n    padding: 5px 13px;\n    border-radius: 100px;\n    margin-bottom: 14px;\n    line-height: 1;\n  }\n\n  .stats-eyebrow__dot {\n    width: 6px;\n    height: 6px;\n    min-width: 6px;\n    border-radius: 50%;\n    background: #166534;\n    flex-shrink: 0;\n    display: block;\n  }\n\n  .stats-heading {\n    font-size: clamp(20px, 3vw, 28px);\n    font-weight: 900;\n    line-height: 1.2;\n    letter-spacing: -0.4px;\n    color: #0d1b3e;\n    margin-bottom: 10px;\n    word-break: break-word;\n    hyphens: none;\n  }\n\n  .stats-heading em {\n    font-style: italic;\n    color: #c0392b;\n    font-weight: 900;\n  }\n\n  .stats-subhead {\n    font-size: clamp(13px, 1.6vw, 14.5px);\n    color: #6b7280;\n    line-height: 1.65;\n    font-weight: 500;\n    word-break: break-word;\n  }\n\n  \/* ── GRID ── *\/\n  .stats-grid {\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    margin-bottom: 16px;\n    width: 100%;\n  }\n\n  \/* ── CARD ── *\/\n  .stats-card {\n    position: relative;\n    background: #ffffff;\n    border: 1px solid rgba(13,27,62,0.07);\n    border-radius: 14px;\n    padding: 28px 20px 22px;\n    text-align: center;\n    overflow: hidden;\n    width: 100%;\n    box-shadow:\n      0 1px 3px rgba(13,27,62,0.05),\n      0 6px 20px rgba(13,27,62,0.07);\n    transition: transform 0.22s ease, box-shadow 0.22s ease;\n  }\n\n  .stats-card:hover {\n    transform: translateY(-2px);\n    box-shadow:\n      0 2px 6px rgba(13,27,62,0.07),\n      0 12px 32px rgba(13,27,62,0.11);\n  }\n\n  \/* ── ACCENT ── *\/\n  .stats-accent {\n    position: absolute;\n    top: 0;\n    left: 50%;\n    transform: translateX(-50%);\n    width: 44px;\n    height: 3px;\n    background: #c0392b;\n    border-radius: 0 0 4px 4px;\n  }\n\n  \/* ── NUMBER ── *\/\n  .stats-pct {\n    font-size: clamp(48px, 13vw, 62px);\n    font-weight: 900;\n    color: #0d1b3e;\n    line-height: 1;\n    letter-spacing: -3px;\n    margin-bottom: 10px;\n    display: flex;\n    align-items: flex-start;\n    justify-content: center;\n    gap: 2px;\n  }\n\n  .stats-sym {\n    font-size: 50%;\n    font-weight: 900;\n    color: #c0392b;\n    margin-top: 8px;\n    letter-spacing: 0;\n    line-height: 1;\n  }\n\n  \/* ── DESC ── *\/\n  .stats-desc {\n    font-size: clamp(13px, 1.6vw, 14.5px);\n    line-height: 1.65;\n    color: #6b7280;\n    margin: 0 auto 14px;\n    max-width: 100%;\n    word-break: break-word;\n  }\n\n  \/* ── DIVIDER ── *\/\n  .stats-divider {\n    width: 36px;\n    height: 1px;\n    background: rgba(13,27,62,0.10);\n    margin: 0 auto 12px;\n  }\n\n  \/* ── TAG ── *\/\n  .stats-tag {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    background: #f8f6f0;\n    border: 1px solid rgba(13,27,62,0.07);\n    border-radius: 100px;\n    padding: 5px 13px;\n    font-size: 12px;\n    font-weight: 700;\n    color: #0d1b3e;\n    line-height: 1;\n    white-space: nowrap;\n  }\n\n  \/* ── FOOTNOTE ── *\/\n  .stats-footnote {\n    font-size: 11px;\n    color: #b0b7c3;\n    line-height: 1.65;\n    letter-spacing: 0.01em;\n    word-break: break-word;\n  }\n\n  \/* ── MOBILE ── *\/\n  @media (max-width: 480px) {\n    .stats-wrap { padding: 36px 16px; }\n    .stats-header { margin-bottom: 20px; }\n    .stats-card {\n      padding: 24px 16px 20px;\n      border-radius: 12px;\n    }\n    .stats-card:hover { transform: none; }\n    .stats-pct {\n      font-size: clamp(44px, 12vw, 54px);\n      letter-spacing: -2px;\n      margin-bottom: 9px;\n    }\n    .stats-desc { font-size: 13px; margin-bottom: 12px; }\n    .stats-tag { font-size: 11.5px; padding: 4px 11px; }\n    .stats-grid { gap: 9px; }\n    .stats-footnote { font-size: 10.5px; }\n  }\n\n  \/* ── TINY MOBILE ── *\/\n  @media (max-width: 360px) {\n    .stats-wrap { padding: 32px 12px; }\n    .stats-card { padding: 22px 12px 18px; }\n    .stats-pct { font-size: 42px; letter-spacing: -1.5px; }\n    .stats-desc { font-size: 12.5px; }\n    .stats-tag { font-size: 11px; padding: 4px 10px; }\n  }\n\n<\/style>","color_scheme":"background-1","padding_top":40,"padding_bottom":52}},"custom_liquid_AwDERn":{"type":"custom-liquid","name":"t:sections.custom-liquid.presets.name","settings":{"display_id":false,"visibility":"always-display","custom_liquid":"<div class=\"inside-wrap\">\n\n  <div class=\"inside-header\">\n    <div class=\"inside-eyebrow\">\n      <span class=\"inside-eyebrow__dot\"><\/span>\n      Everything inside\n    <\/div>\n    <h2 class=\"inside-heading\">\n      One Book. <span class=\"inside-highlight\">Every Subject<\/span> They're Curious About.\n    <\/h2>\n    <p class=\"inside-sub\">\n      From the deepest ocean to the edge of the universe — if your child has wondered about it, the answer is in here.\n    <\/p>\n  <\/div>\n\n  <div class=\"inside-grid\">\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🚀<\/div>\n      <div class=\"inside-card__name\">Space & Universe<\/div>\n      <div class=\"inside-card__desc\">Black holes, planets, stars, rockets and life beyond Earth<\/div>\n    <\/div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🦕<\/div>\n      <div class=\"inside-card__name\">Dinosaurs<\/div>\n      <div class=\"inside-card__desc\">Why they went extinct, how we find them, what they really looked like<\/div>\n    <\/div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🧬<\/div>\n      <div class=\"inside-card__name\">The Human Body<\/div>\n      <div class=\"inside-card__desc\">Why your heart beats, how your brain works, why you dream<\/div>\n    <\/div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🌊<\/div>\n      <div class=\"inside-card__name\">Oceans & Sea Life<\/div>\n      <div class=\"inside-card__desc\">Deep sea creatures, why the ocean is salty, how waves form<\/div>\n    <\/div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">⚡<\/div>\n      <div class=\"inside-card__name\">Weather & Nature<\/div>\n      <div class=\"inside-card__desc\">Thunder, lightning, tornadoes, rainbows and the sky<\/div>\n    <\/div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🏛️<\/div>\n      <div class=\"inside-card__name\">History & Civilisations<\/div>\n      <div class=\"inside-card__desc\">Ancient Egypt, the Romans, great inventions and how the world changed<\/div>\n    <\/div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🦁<\/div>\n      <div class=\"inside-card__name\">Animals & Wildlife<\/div>\n      <div class=\"inside-card__desc\">How animals survive, migrate, communicate and why some go extinct<\/div>\n    <\/div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🔬<\/div>\n      <div class=\"inside-card__name\">Science & Physics<\/div>\n      <div class=\"inside-card__desc\">Gravity, light, sound, electricity and how everything works<\/div>\n    <\/div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🌿<\/div>\n      <div class=\"inside-card__name\">Plants & Biology<\/div>\n      <div class=\"inside-card__desc\">How plants grow, why leaves change colour, what makes things alive<\/div>\n    <\/div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🧠<\/div>\n      <div class=\"inside-card__name\">The Brain & Mind<\/div>\n      <div class=\"inside-card__desc\">Memory, emotions, sleep, dreams and how the mind works<\/div>\n    <\/div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">⚙️<\/div>\n      <div class=\"inside-card__name\">Technology & Inventions<\/div>\n      <div class=\"inside-card__desc\">How planes fly, how the internet works, what computers do<\/div>\n    <\/div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🌍<\/div>\n      <div class=\"inside-card__name\">Earth & Geography<\/div>\n      <div class=\"inside-card__desc\">Volcanoes, earthquakes, tectonic plates and how Earth formed<\/div>\n    <\/div>\n\n  <\/div>\n\n<\/div>\n\n<style>\n\n  .inside-wrap *,\n  .inside-wrap *::before,\n  .inside-wrap *::after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n  }\n\n  \/* ── WRAP ── *\/\n  .inside-wrap {\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    width: 100%;\n    background: #0d1b3e;\n    padding: 64px 20px;\n    color: #ffffff;\n  }\n\n  \/* ── HEADER ── *\/\n  .inside-header {\n    text-align: center;\n    width: 100%;\n    max-width: 600px;\n    margin: 0 auto 44px;\n    padding: 0 4px;\n  }\n\n  .inside-eyebrow {\n    display: inline-flex;\n    align-items: center;\n    gap: 7px;\n    background: rgba(245,166,35,0.15);\n    color: #f5a623;\n    font-size: 11px;\n    font-weight: 700;\n    letter-spacing: 0.07em;\n    text-transform: uppercase;\n    padding: 6px 13px;\n    border-radius: 100px;\n    margin-bottom: 16px;\n    line-height: 1;\n    border: 1px solid rgba(245,166,35,0.25);\n  }\n\n  .inside-eyebrow__dot {\n    width: 6px;\n    height: 6px;\n    min-width: 6px;\n    border-radius: 50%;\n    background: #f5a623;\n    flex-shrink: 0;\n    display: block;\n  }\n\n  .inside-heading {\n    font-size: clamp(21px, 4.5vw, 32px);\n    font-weight: 900;\n    line-height: 1.2;\n    letter-spacing: -0.5px;\n    color: #ffffff;\n    margin-bottom: 12px;\n    word-break: break-word;\n    hyphens: none;\n  }\n\n  .inside-highlight {\n    display: inline;\n    background: #f5a623;\n    color: #0d1b3e;\n    border-radius: 5px;\n    padding: 1px 7px;\n    font-weight: 900;\n    -webkit-box-decoration-break: clone;\n    box-decoration-break: clone;\n  }\n\n  .inside-sub {\n    font-size: clamp(13.5px, 2vw, 15.5px);\n    line-height: 1.72;\n    color: rgba(255,255,255,0.56);\n  }\n\n  \/* ── GRID ── *\/\n  .inside-grid {\n    display: grid;\n    grid-template-columns: repeat(4, 1fr);\n    gap: 12px;\n    max-width: 1100px;\n    margin: 0 auto;\n    width: 100%;\n  }\n\n  \/* ── CARD ── *\/\n  .inside-card {\n    background: rgba(255,255,255,0.05);\n    border: 1px solid rgba(255,255,255,0.08);\n    border-radius: 14px;\n    padding: 20px 16px;\n    transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s ease;\n    cursor: default;\n    display: flex;\n    flex-direction: column;\n  }\n\n  .inside-card:hover {\n    background: rgba(245,166,35,0.08);\n    border-color: rgba(245,166,35,0.3);\n    transform: translateY(-3px);\n  }\n\n  .inside-card__icon {\n    font-size: 26px;\n    line-height: 1;\n    margin-bottom: 11px;\n    display: block;\n    flex-shrink: 0;\n  }\n\n  .inside-card__name {\n    font-size: clamp(12px, 1.3vw, 14px);\n    font-weight: 800;\n    color: #ffffff;\n    line-height: 1.25;\n    margin-bottom: 6px;\n  }\n\n  .inside-card__desc {\n    font-size: clamp(11.5px, 1.1vw, 12.5px);\n    color: rgba(255,255,255,0.5);\n    line-height: 1.58;\n    font-weight: 500;\n  }\n\n  \/* ── TABLET — 3 columns ── *\/\n  @media (max-width: 900px) {\n    .inside-wrap { padding: 56px 20px; }\n    .inside-grid { grid-template-columns: repeat(3, 1fr); gap: 11px; }\n    .inside-header { margin-bottom: 36px; }\n  }\n\n  \/* ── MOBILE — 2 columns ── *\/\n  @media (max-width: 600px) {\n    .inside-wrap { padding: 48px 14px; }\n    .inside-grid { grid-template-columns: repeat(2, 1fr); gap: 9px; }\n    .inside-card { padding: 16px 13px; border-radius: 12px; }\n    .inside-card:hover { transform: none; }\n    .inside-card__icon { font-size: 22px; margin-bottom: 9px; }\n    .inside-card__name { font-size: 13px; margin-bottom: 5px; }\n    .inside-card__desc { font-size: 11.5px; line-height: 1.55; }\n    .inside-header { margin-bottom: 30px; padding: 0; }\n    .inside-eyebrow { font-size: 10px; padding: 5px 11px; gap: 6px; }\n    .inside-heading { font-size: 21px; letter-spacing: -0.3px; margin-bottom: 10px; }\n    .inside-sub { font-size: 13.5px; line-height: 1.68; }\n  }\n\n  \/* ── TINY MOBILE — 320px ── *\/\n  @media (max-width: 360px) {\n    .inside-wrap { padding: 40px 12px; }\n    .inside-card { padding: 14px 11px; }\n    .inside-card__icon { font-size: 20px; }\n    .inside-card__name { font-size: 12px; }\n    .inside-card__desc { font-size: 11px; }\n    .inside-heading { font-size: 19px; }\n  }\n\n<\/style>","color_scheme":"background-1","padding_top":0,"padding_bottom":40}},"custom_liquid_YYFKG7":{"type":"custom-liquid","name":"t:sections.custom-liquid.presets.name","settings":{"display_id":false,"visibility":"always-display","custom_liquid":"<div class=\"rev-wrap\">\n\n  <h2 class=\"rev-heading\">What Parents Are <em>Saying<\/em><\/h2>\n\n  <div class=\"rev-list\">\n\n    <div class=\"rev-card\">\n      <div class=\"rev-stars\">★★★★★<\/div>\n      <p class=\"rev-text\">\"My 9-year-old asked me 'Mom, why do we have two eyes instead of one?' I didn't know the answer. He went straight to this book, found it, and spent 45 minutes reading about vision, brains and evolution. He came back and explained it to me. I almost cried. His teacher called two weeks later to say he was the most engaged student in class.\"<\/p>\n      <div class=\"rev-author\">\n        <img class=\"rev-avatar\" src=\"https:\/\/i.pravatar.cc\/150?img=47\" alt=\"Rachel M.\" \/>\n        <div class=\"rev-author-info\">\n          <span class=\"rev-name\">Rachel M.<\/span>\n          <span class=\"rev-meta\">Mom of two · Texas · <span class=\"rev-verified\">✔ Verified buyer<\/span><\/span>\n        <\/div>\n      <\/div>\n    <\/div>\n\n    <div class=\"rev-card\">\n      <div class=\"rev-stars\">★★★★★<\/div>\n      <p class=\"rev-text\">\"I was skeptical. My son doesn't read. He's a screen kid. I put this on the coffee table and didn't say a word. Day 3, I found him on the floor reading about black holes at 9pm when I thought he was asleep. He's read it cover to cover twice. That is not a normal thing for him. Buy it — it competes with screens and wins.\"<\/p>\n      <div class=\"rev-author\">\n        <img class=\"rev-avatar\" src=\"https:\/\/i.pravatar.cc\/150?img=12\" alt=\"David K.\" \/>\n        <div class=\"rev-author-info\">\n          <span class=\"rev-name\">David K.<\/span>\n          <span class=\"rev-meta\">Father of one · California · <span class=\"rev-verified\">✔ Verified buyer<\/span><\/span>\n        <\/div>\n      <\/div>\n    <\/div>\n\n    <div class=\"rev-card\">\n      <div class=\"rev-stars\">★★★★★<\/div>\n      <p class=\"rev-text\">\"Bought 3 copies — one for each of my kids and one for my nephew's birthday. The dinner table conversations we've had because of this book are priceless. My 7-year-old explained tectonic plates to my mother-in-law. She was completely speechless. This book changes how kids think, not just what they know.\"<\/p>\n      <div class=\"rev-author\">\n        <img class=\"rev-avatar\" src=\"https:\/\/i.pravatar.cc\/150?img=32\" alt=\"Jennifer L.\" \/>\n        <div class=\"rev-author-info\">\n          <span class=\"rev-name\">Jennifer L.<\/span>\n          <span class=\"rev-meta\">Mom of three · Florida · <span class=\"rev-verified\">✔ Verified buyer<\/span><\/span>\n        <\/div>\n      <\/div>\n    <\/div>\n\n    <div class=\"rev-card\">\n      <div class=\"rev-stars\">★★★★★<\/div>\n      <p class=\"rev-text\">\"My daughter has never once picked up a book without being forced. I left this on the coffee table on a Friday. By Sunday she had read half of it and was explaining to her grandfather why the moon doesn't fall out of the sky. He's a retired engineer. He was impressed. I was speechless. This book is something else entirely.\"<\/p>\n      <div class=\"rev-author\">\n        <img class=\"rev-avatar\" src=\"https:\/\/i.pravatar.cc\/150?img=25\" alt=\"Lisa W.\" \/>\n        <div class=\"rev-author-info\">\n          <span class=\"rev-name\">Lisa W.<\/span>\n          <span class=\"rev-meta\">Mom of two · Ohio · <span class=\"rev-verified\">✔ Verified buyer<\/span><\/span>\n        <\/div>\n      <\/div>\n    <\/div>\n\n    <div class=\"rev-card\">\n      <div class=\"rev-stars\">★★★★★<\/div>\n      <p class=\"rev-text\">\"Bought this for my grandson's birthday not knowing what to expect. He opened it, looked at the cover for about thirty seconds, and said 'is this actually mine?' He read it at his own party. His mum called me two months later to say he'd read it three times and was asking if there was a second one. Best gift I've given in years.\"<\/p>\n      <div class=\"rev-author\">\n        <img class=\"rev-avatar\" src=\"https:\/\/i.pravatar.cc\/150?img=56\" alt=\"Margaret T.\" \/>\n        <div class=\"rev-author-info\">\n          <span class=\"rev-name\">Margaret T.<\/span>\n          <span class=\"rev-meta\">Grandmother of four · Illinois · <span class=\"rev-verified\">✔ Verified buyer<\/span><\/span>\n        <\/div>\n      <\/div>\n    <\/div>\n\n  <\/div>\n\n<\/div>\n\n<style>\n  .rev-wrap {\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    width: 100%;\n    max-width: 640px;\n    margin: 0 auto;\n    box-sizing: border-box;\n    color: #0d1b3e;\n  }\n\n  \/* ── HEADING ── *\/\n  .rev-heading {\n    font-size: clamp(22px, 4.5vw, 28px);\n    font-weight: 900;\n    line-height: 1.18;\n    letter-spacing: -0.5px;\n    color: #0d1b3e;\n    margin: 0 0 24px 0;\n  }\n  .rev-heading em {\n    font-style: italic;\n    color: #c0392b;\n    font-weight: 400;\n  }\n\n  \/* ── LIST ── *\/\n  .rev-list {\n    display: flex;\n    flex-direction: column;\n    gap: 14px;\n  }\n\n  \/* ── CARD ── *\/\n  .rev-card {\n    background: #ffffff;\n    border: 1px solid rgba(13,27,62,0.07);\n    border-radius: 16px;\n    padding: 26px 26px 22px;\n    box-sizing: border-box;\n    box-shadow:\n      0 1px 3px rgba(13,27,62,0.05),\n      0 6px 20px rgba(13,27,62,0.06);\n    transition: transform 0.22s ease, box-shadow 0.22s ease;\n  }\n  .rev-card:hover {\n    transform: translateY(-2px);\n    box-shadow:\n      0 2px 6px rgba(13,27,62,0.07),\n      0 10px 28px rgba(13,27,62,0.10);\n  }\n\n  \/* ── STARS ── *\/\n  .rev-stars {\n    color: #f59e0b;\n    font-size: 16px;\n    letter-spacing: 2px;\n    margin-bottom: 12px;\n    line-height: 1;\n  }\n\n  \/* ── REVIEW TEXT ── *\/\n  .rev-text {\n    font-size: clamp(13.5px, 2.2vw, 15px);\n    line-height: 1.75;\n    color: #1a1a2e;\n    font-style: italic;\n    margin: 0 0 18px 0;\n  }\n\n  \/* ── AUTHOR ROW ── *\/\n  .rev-author {\n    display: flex;\n    align-items: center;\n    gap: 12px;\n    padding-top: 16px;\n    border-top: 1px solid rgba(13,27,62,0.07);\n  }\n\n  .rev-avatar {\n    width: 42px;\n    height: 42px;\n    border-radius: 50%;\n    object-fit: cover;\n    border: 2px solid rgba(13,27,62,0.08);\n    flex-shrink: 0;\n    display: block;\n  }\n\n  .rev-author-info {\n    display: flex;\n    flex-direction: column;\n    gap: 3px;\n  }\n\n  .rev-name {\n    font-size: 14px;\n    font-weight: 800;\n    color: #0d1b3e;\n    line-height: 1;\n  }\n\n  .rev-meta {\n    font-size: 12.5px;\n    color: #9ca3af;\n    font-weight: 500;\n    line-height: 1;\n  }\n\n  .rev-verified {\n    color: #166534;\n    font-weight: 700;\n  }\n\n  \/* ── MOBILE ── *\/\n  @media (max-width: 480px) {\n    .rev-card {\n      padding: 20px 16px 18px;\n      border-radius: 14px;\n    }\n    .rev-stars { font-size: 14px; }\n    .rev-avatar { width: 36px; height: 36px; }\n    .rev-name { font-size: 13.5px; }\n    .rev-meta { font-size: 12px; }\n  }\n<\/style>","color_scheme":"background-1","padding_top":40,"padding_bottom":52}},"custom_liquid_WdL3xd":{"type":"custom-liquid","name":"t:sections.custom-liquid.presets.name","settings":{"display_id":false,"visibility":"always-display","custom_liquid":"<div class=\"cta-wrap\">\n\n  <div class=\"cta-inner\">\n\n    <div class=\"cta-eyebrow\">\n      <span class=\"cta-eyebrow__dot\"><\/span>\n      Sale Ends Tonight — 50% Off Today Only\n    <\/div>\n\n    <h2 class=\"cta-heading\">\n      Ready to Build Your Child's <em>Ultimate Brain?<\/em>\n    <\/h2>\n\n    <p class=\"cta-sub\">\n      Join 18,000+ families who made the decision. Free shipping. 30-day guarantee. No risk.\n    <\/p>\n\n    <button class=\"cta-btn\" id=\"cta-scroll-btn\">\n      <span class=\"cta-btn__icon\">🧠<\/span>\n      Get The Book — 50% Off\n      <span class=\"cta-btn__arrow\">→<\/span>\n    <\/button>\n\n    <div class=\"cta-trust\">\n      <div class=\"cta-trust__item\">\n        <span class=\"cta-trust__icon\">🛡️<\/span>\n        <span>30-Day Guarantee<\/span>\n      <\/div>\n      <div class=\"cta-trust__sep\">·<\/div>\n      <div class=\"cta-trust__item\">\n        <span class=\"cta-trust__icon\">📦<\/span>\n        <span>Free Shipping<\/span>\n      <\/div>\n      <div class=\"cta-trust__sep\">·<\/div>\n      <div class=\"cta-trust__item\">\n        <span class=\"cta-trust__icon\">🔒<\/span>\n        <span>Secure Checkout<\/span>\n      <\/div>\n    <\/div>\n\n  <\/div>\n\n<\/div>\n\n<style>\n\n  .cta-wrap *,\n  .cta-wrap *::before,\n  .cta-wrap *::after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n  }\n\n  .cta-wrap {\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    width: 100%;\n    background: #0d1b3e;\n    padding: 56px 16px;\n  }\n\n  .cta-inner {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    text-align: center;\n    width: 100%;\n    max-width: 560px;\n    margin: 0 auto;\n  }\n\n  .cta-eyebrow {\n    display: inline-flex;\n    align-items: center;\n    gap: 7px;\n    background: rgba(245,166,35,0.15);\n    border: 1px solid rgba(245,166,35,0.3);\n    color: #f5a623;\n    font-size: 11px;\n    font-weight: 700;\n    letter-spacing: 0.07em;\n    text-transform: uppercase;\n    padding: 6px 14px;\n    border-radius: 100px;\n    margin-bottom: 20px;\n    line-height: 1;\n  }\n\n  .cta-eyebrow__dot {\n    width: 6px;\n    height: 6px;\n    min-width: 6px;\n    border-radius: 50%;\n    background: #f5a623;\n    flex-shrink: 0;\n    display: block;\n    animation: ctaPulse 1.8s ease-in-out infinite;\n  }\n\n  @keyframes ctaPulse {\n    0%   { box-shadow: 0 0 0 0 rgba(245,166,35,0.6); }\n    70%  { box-shadow: 0 0 0 6px rgba(245,166,35,0); }\n    100% { box-shadow: 0 0 0 0 rgba(245,166,35,0); }\n  }\n\n  .cta-heading {\n    font-size: clamp(22px, 4vw, 32px);\n    font-weight: 900;\n    line-height: 1.18;\n    letter-spacing: -0.5px;\n    color: #ffffff;\n    margin-bottom: 14px;\n    word-break: break-word;\n    hyphens: none;\n  }\n\n  .cta-heading em {\n    font-style: italic;\n    color: #f5a623;\n    font-weight: 400;\n  }\n\n  .cta-sub {\n    font-size: clamp(13.5px, 1.8vw, 15px);\n    line-height: 1.7;\n    color: rgba(255,255,255,0.6);\n    margin-bottom: 32px;\n    max-width: 420px;\n    word-break: break-word;\n  }\n\n  .cta-btn {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n    background: #c0392b;\n    color: #ffffff;\n    border: none;\n    border-radius: 10px;\n    padding: 18px 32px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    font-size: clamp(15px, 2vw, 17px);\n    font-weight: 800;\n    letter-spacing: 0.01em;\n    cursor: pointer;\n    margin-bottom: 24px;\n    width: 100%;\n    max-width: 380px;\n    box-shadow:\n      0 2px 8px rgba(192,57,43,0.3),\n      0 8px 24px rgba(192,57,43,0.25);\n    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;\n  }\n\n  .cta-btn:hover {\n    background: #a93226;\n    transform: translateY(-2px);\n    box-shadow:\n      0 4px 12px rgba(192,57,43,0.35),\n      0 14px 32px rgba(192,57,43,0.3);\n  }\n\n  .cta-btn:active {\n    transform: translateY(0);\n  }\n\n  .cta-btn__icon {\n    font-size: 20px;\n    line-height: 1;\n    flex-shrink: 0;\n  }\n\n  .cta-btn__arrow {\n    font-size: 18px;\n    line-height: 1;\n    flex-shrink: 0;\n    transition: transform 0.2s ease;\n  }\n\n  .cta-btn:hover .cta-btn__arrow {\n    transform: translateX(4px);\n  }\n\n  .cta-trust {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n    flex-wrap: wrap;\n  }\n\n  .cta-trust__item {\n    display: flex;\n    align-items: center;\n    gap: 5px;\n    font-size: 12px;\n    font-weight: 600;\n    color: rgba(255,255,255,0.45);\n    white-space: nowrap;\n  }\n\n  .cta-trust__icon {\n    font-size: 13px;\n    line-height: 1;\n  }\n\n  .cta-trust__sep {\n    color: rgba(255,255,255,0.2);\n    font-size: 12px;\n  }\n\n  @media (max-width: 480px) {\n    .cta-wrap { padding: 48px 16px; }\n    .cta-eyebrow { font-size: 10px; padding: 5px 12px; margin-bottom: 16px; }\n    .cta-heading { font-size: 22px; margin-bottom: 12px; }\n    .cta-sub { font-size: 13.5px; margin-bottom: 26px; }\n    .cta-btn { padding: 17px 24px; font-size: 15px; max-width: 100%; border-radius: 10px; }\n    .cta-trust { gap: 7px; }\n    .cta-trust__sep { display: none; }\n    .cta-trust__item { font-size: 11.5px; }\n  }\n\n  @media (max-width: 360px) {\n    .cta-wrap { padding: 40px 12px; }\n    .cta-heading { font-size: 20px; }\n    .cta-sub { font-size: 13px; }\n    .cta-btn { font-size: 14px; padding: 16px 20px; }\n  }\n\n<\/style>\n\n<script>\n(function() {\n  var btn = document.getElementById('cta-scroll-btn');\n  if (!btn) return;\n\n  btn.addEventListener('click', function() {\n\n    var target =\n      document.querySelector('.kaching-bundles') ||\n      document.querySelector('[data-kaching-bundles]') ||\n      document.querySelector('.kaching-bundle') ||\n      document.querySelector('[data-kaching]') ||\n      document.querySelector('.product-form') ||\n      document.querySelector('[data-product-form]') ||\n      document.querySelector('form[action*=\"\/cart\/add\"]') ||\n      document.querySelector('.product__form-wrapper') ||\n      document.querySelector('#product-form') ||\n      document.querySelector('.shopify-payment-button') ||\n      document.querySelector('[name=\"add\"]');\n\n    if (target) {\n      var offset = 80;\n      var top = target.getBoundingClientRect().top + window.pageYOffset - offset;\n      window.scrollTo({ top: top, behavior: 'smooth' });\n    } else {\n      window.scrollTo({ top: 0, behavior: 'smooth' });\n    }\n  });\n})();\n<\/script>","color_scheme":"background-1","padding_top":0,"padding_bottom":0}},"related-products":{"type":"related-products","disabled":true,"settings":{"display_id":false,"title":"You may also like","title_highlight_color":"#6d388b","heading_size":"h2","products_to_show":4,"columns_desktop":4,"color_scheme":"background-1","image_ratio":"adapt","show_secondary_image":false,"show_vendor":false,"show_rating":false,"enable_quick_add":false,"columns_mobile":"2","padding_top":36,"padding_bottom":24}},"image_with_text_ArcN4t":{"type":"image-with-text","blocks":{"heading_8CUkmW":{"type":"heading","settings":{"title":"All-In-One Grooming Solution","title_highlight_color":"#6d388b","heading_size":"h1"}},"text_qXhVRg":{"type":"text","settings":{"text":"<p>VacuGroom™ makes grooming <strong>quick<\/strong>, <strong>clean<\/strong>, and <strong>effortless<\/strong>.<\/p>","text_style":"body"}},"text_with_icon_Lt66tn":{"type":"text_with_icon","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","mobile_alignment":"left","text_color":"#121212","text_1":"<strong>Saves Time<\/strong>","text_2":"","text_3":"","icon_scale":120,"icon_color":"#53af01","icon_1":"check_circle","filled_icon_1":true,"icon_2":"check_circle","filled_icon_2":false,"icon_3":"check_circle","filled_icon_3":false,"width":"100%","direction":"vertical","column_gap":3,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7"}},"text_with_icon_pTNQY7":{"type":"text_with_icon","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","mobile_alignment":"left","text_color":"#121212","text_1":"<strong>Eliminates Mess<\/strong>","text_2":"","text_3":"","icon_scale":120,"icon_color":"#53af01","icon_1":"check_circle","filled_icon_1":true,"icon_2":"check_circle","filled_icon_2":false,"icon_3":"check_circle","filled_icon_3":false,"width":"100%","direction":"vertical","column_gap":3,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7"}},"text_with_icon_LHmCJ4":{"type":"text_with_icon","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","mobile_alignment":"left","text_color":"#121212","text_1":"<strong>Fits Your Lifestyle<\/strong>","text_2":"","text_3":"","icon_scale":120,"icon_color":"#53af01","icon_1":"check_circle","filled_icon_1":true,"icon_2":"check_circle","filled_icon_2":false,"icon_3":"check_circle","filled_icon_3":false,"width":"100%","direction":"vertical","column_gap":3,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7"}},"text_with_icon_egMCBY":{"type":"text_with_icon","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","mobile_alignment":"left","text_color":"#121212","text_1":"<strong>Simple & Easy to Use<\/strong>","text_2":"","text_3":"","icon_scale":120,"icon_color":"#53af01","icon_1":"check_circle","filled_icon_1":true,"icon_2":"check_circle","filled_icon_2":false,"icon_3":"check_circle","filled_icon_3":false,"width":"100%","direction":"vertical","column_gap":3,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7"}},"button_9KtGnx":{"type":"button","settings":{"button_label":"GET 3 FREE GIFTS + 50% OFF","button_link":"shopify:\/\/products\/the-россия-balaclava-hoodie"}}},"block_order":["heading_8CUkmW","text_qXhVRg","text_with_icon_Lt66tn","text_with_icon_pTNQY7","text_with_icon_LHmCJ4","text_with_icon_egMCBY","button_9KtGnx"],"disabled":true,"settings":{"display_id":false,"visibility":"always-display","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"background-1","section_color_scheme":"background-1","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"image_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#2e2a39","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#ffffff","custom_section_gradient_background":""}},"icon_bar_N6dgQ3":{"type":"icon-bar","blocks":{"column_tTYpzH":{"type":"column","settings":{"icon":"check_circle","filled_icon":false,"title":"Free shipping","text":"<p>our shipping is free worldwide<\/p>"}},"column_HtrLnH":{"type":"column","settings":{"icon":"check_circle","filled_icon":false,"title":"Try risk-free","text":"<p>14 days for exchanges and returns<\/p>"}},"column_4w7UEA":{"type":"column","settings":{"icon":"check_circle","filled_icon":false,"title":"Secure Payment","text":"<p>Strongly secure environment for payments<\/p><p><\/p>"}},"column_LxizdP":{"type":"column","settings":{"icon":"check_circle","filled_icon":false,"title":"24\/7 Support","text":"<p>Contact us anytime<\/p><p><\/p>"}}},"block_order":["column_tTYpzH","column_HtrLnH","column_4w7UEA","column_LxizdP"],"disabled":true,"settings":{"display_id":false,"visibility":"always-display","title":"","title_highlight_color":"#6d388b","heading_size":"h1","text":"","color_scheme":"background-1","icon_layout":"vertical","icon_size":"medium","icon_color":"accent-1","cards_color_scheme":"background-1","type":"slide","autoplay":false,"autoplay_speed":5,"arrows_color_scheme":"inverse","transparent_arrows":true,"dots_color_scheme":"inverse","desktop_full_page":false,"columns_desktop":4,"slider_desktop":false,"per_move_desktop":1,"desktop_spacing":40,"desktop_side_padding":0,"desktop_padding_calc":true,"desktop_adaptive_height":false,"desktop_dots_position":"under","desktop_arrows_position":"sides","columns_mobile":"2","slider_mobile":true,"enable_mobile_preview":false,"mobile_adaptive_height":true,"mobile_dots_position":"under","mobile_arrows_position":"sides","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_cards_colors_background":"#f3f3f3","custom_cards_gradient_background":"","custom_cards_colors_text":"#2e2a39"}},"image_with_text_AXEcQz":{"type":"image-with-text","blocks":{"heading_VmXMFg":{"type":"heading","settings":{"title":"100% Waterproof Grooming","title_highlight_color":"#6d388b","heading_size":"h1"}},"text_XNJEmB":{"type":"text","settings":{"text":"<p>Groom in the shower or clean easily under running water with 100% waterproof technology.<\/p>","text_style":"body"}},"text_with_icon_F9tyiR":{"type":"text_with_icon","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","mobile_alignment":"left","text_color":"#121212","text_1":"Use in the Shower","text_2":"","text_3":"","icon_scale":120,"icon_color":"#53af01","icon_1":"check_circle","filled_icon_1":true,"icon_2":"check_circle","filled_icon_2":false,"icon_3":"check_circle","filled_icon_3":false,"width":"100%","direction":"vertical","column_gap":3,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7"}},"text_with_icon_pLjJfR":{"type":"text_with_icon","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","mobile_alignment":"left","text_color":"#121212","text_1":"Easy to Clean","text_2":"","text_3":"","icon_scale":120,"icon_color":"#53af01","icon_1":"check_circle","filled_icon_1":true,"icon_2":"check_circle","filled_icon_2":false,"icon_3":"check_circle","filled_icon_3":false,"width":"100%","direction":"vertical","column_gap":3,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7"}},"text_with_icon_Hb7xF7":{"type":"text_with_icon","settings":{"mobile_text_size":14,"desktop_text_size":16,"alignment":"left","mobile_alignment":"left","text_color":"#121212","text_1":"Convenient & Safe","text_2":"","text_3":"","icon_scale":120,"icon_color":"#53af01","icon_1":"check_circle","filled_icon_1":true,"icon_2":"check_circle","filled_icon_2":false,"icon_3":"check_circle","filled_icon_3":false,"width":"100%","direction":"vertical","column_gap":3,"enable_bg":false,"bg_color":"#f3f3f3","corner_radius":40,"padding":3,"border_size":0,"border_color":"#b7b7b7"}},"button_YemXLi":{"type":"button","settings":{"button_label":"GET 3 FREE GIFTS + 50% OFF","button_link":"shopify:\/\/products\/the-россия-balaclava-hoodie"}}},"block_order":["heading_VmXMFg","text_XNJEmB","text_with_icon_F9tyiR","text_with_icon_pLjJfR","text_with_icon_Hb7xF7","button_YemXLi"],"disabled":true,"settings":{"display_id":false,"visibility":"always-display","video_autoplay":true,"video_loop":true,"height":"adapt","color_scheme":"background-1","section_color_scheme":"background-1","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"image_first","desktop_content_position":"top","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"left","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#2e2a39","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#ffffff","custom_section_gradient_background":""}},"173367553295ab5061":{"type":"apps","settings":{"display_id":false,"include_margins":true}},"b321ab88-2b59-4dba-bade-54885c874ca5":{"type":"section-divider","disabled":true,"settings":{"visibility":"always-display","shape":"waves_3","flip_horizontal":false,"flip_vertical":false,"shape_color":"accent-1","custom_shape_color":"#dd1d1d","background_color":"background-1","custom_background_color":"#ffffff","padding_top":0,"padding_bottom":0}},"image_with_text_tp8cYp":{"type":"image-with-text","blocks":{"heading_HQUNV9":{"type":"heading","settings":{"title":"<strong>Doctors are saying:<\/strong>","title_highlight_color":"#000000","heading_size":"h1"}},"text_hm7AFa":{"type":"text","settings":{"text":"<p>Bleib deinen Wurzeln treu und trage den Geist Russlands, wohin du auch gehst. Kühn. Geheimnisvoll. Unvergesslich.<\/p>","text_style":"body"}},"button_hz7BLE":{"type":"button","settings":{"button_label":"Trage deinen Stolz","button_link":"shopify:\/\/products\/the-россия-balaclava-hoodie"}}},"block_order":["heading_HQUNV9","text_hm7AFa","button_hz7BLE"],"disabled":true,"settings":{"display_id":false,"visibility":"always-display","image":"shopify:\/\/shop_images\/MAIN10.webp","video_autoplay":false,"video_loop":false,"height":"adapt","color_scheme":"background-1","section_color_scheme":"background-1","full_desktop_width":false,"content_layout":"no-overlap","desktop_media_width":50,"layout":"image_first","desktop_content_position":"middle","desktop_content_alignment":"left","mobile_full_media_width":false,"mobile_direction":"normal","mobile_image_quanlity":"2","mobile_content_alignment":"center","mobile_padding_top":0,"mobile_padding_bottom":16,"desktop_padding_top":36,"desktop_padding_bottom":36,"custom_colors_background":"#2e2a39","custom_gradient_background":"","custom_colors_text":"#ffffff","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff","custom_colors_outline_button":"#dd1d1d","custom_section_colors_background":"#ffffff","custom_section_gradient_background":""}},"174360066879bf5eb9":{"type":"apps","settings":{"display_id":false,"include_margins":true}}},"order":["main","custom_liquid_mwcE4N","custom_liquid_ycAyXQ","custom_liquid_AwDERn","custom_liquid_YYFKG7","custom_liquid_WdL3xd","related-products","image_with_text_ArcN4t","icon_bar_N6dgQ3","image_with_text_AXEcQz","173367553295ab5061","b321ab88-2b59-4dba-bade-54885c874ca5","image_with_text_tp8cYp","174360066879bf5eb9"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+ {
+    "sections": {
+      "main": {
+        "type": "main-product",
+        "blocks": {
+          "custom_liquid_PWYQA8": {
+            "type": "custom_liquid",
+            "disabled": true,
+            "settings": {
+              "custom_liquid": ""
+            }
+          },
+          "rating_stars_fE9P9j": {
+            "type": "rating_stars",
+            "disabled": true,
+            "settings": {
+              "rating": 4.8,
+              "star_color": "#ffd100",
+              "bg_stars_style": "outlined",
+              "bg_star_color": "#ececec",
+              "label": "Mit <strong>4,8</strong> von 4500+ Kunden bewertet!",
+              "size": 14,
+              "alignment": "flex-start",
+              "scroll_id": "",
+              "margin_top": 15,
+              "margin_bottom": 15
+            }
+          },
+          "custom_liquid_hKfVkc": {
+            "type": "custom_liquid",
+            "settings": {
+              "custom_liquid": "{% comment %}\n  ================================================================\n  GEO PRICING — pure Shopify Liquid, no app, no external API\n  Uses Shopify's built-in localization.country.iso_code\n  Add or edit countries in the {% case %} block below\n  ================================================================\n{% endcomment %}\n\n{% assign _cc = localization.country.iso_code %}\n\n{% case _cc %}\n\n  {% when 'GB' %}\n    {% assign _sym  = '£'   %}\n    {% assign _cur  = '32.90' %}\n    {% assign _was  = '65.80' %}\n    {% assign _save = '32.90' %}\n\n  {% when 'AU' %}\n    {% assign _sym  = 'A$'  %}\n    {% assign _cur  = '59.90' %}\n    {% assign _was  = '119.80' %}\n    {% assign _save = '59.90' %}\n\n  {% when 'NZ' %}\n    {% assign _sym  = 'NZ$' %}\n    {% assign _cur  = '64.90' %}\n    {% assign _was  = '129.80' %}\n    {% assign _save = '64.90' %}\n\n  {% when 'CA' %}\n    {% assign _sym  = 'C$'  %}\n    {% assign _cur  = '54.90' %}\n    {% assign _was  = '109.80' %}\n    {% assign _save = '54.90' %}\n\n  {% when 'SG' %}\n    {% assign _sym  = 'S$'  %}\n    {% assign _cur  = '54.90' %}\n    {% assign _was  = '109.80' %}\n    {% assign _save = '54.90' %}\n\n  {% when 'AE', 'SA', 'QA', 'KW', 'BH', 'OM' %}\n    {% assign _sym  = 'AED ' %}\n    {% assign _cur  = '149' %}\n    {% assign _was  = '298' %}\n    {% assign _save = '149' %}\n\n  {% when 'ZA' %}\n    {% assign _sym  = 'R'   %}\n    {% assign _cur  = '749' %}\n    {% assign _was  = '1498' %}\n    {% assign _save = '749' %}\n\n  {% when 'DE', 'FR', 'IT', 'ES', 'NL', 'BE', 'AT', 'PT',\n           'PL', 'SE', 'DK', 'FI', 'IE', 'NO', 'GR', 'CZ',\n           'RO', 'HU', 'BG', 'HR', 'SK', 'SI', 'EE', 'LV',\n           'LT', 'LU', 'MT', 'CY' %}\n    {% assign _sym  = '€'   %}\n    {% assign _cur  = '36.90' %}\n    {% assign _was  = '73.80' %}\n    {% assign _save = '36.90' %}\n\n  {% else %}\n    {% comment %} Default — USD for US and all unmatched countries {% endcomment %}\n    {% assign _sym  = '$'   %}\n    {% assign _cur  = '39.90' %}\n    {% assign _was  = '79.80' %}\n    {% assign _save = '39.90' %}\n\n{% endcase %}\n\n<div class=\"pib-wrap\">\n\n  <!-- TESTIMONIAL CAROUSEL -->\n  <div class=\"pib-carousel\">\n    <div class=\"pib-carousel__bg-quote\">\"</div>\n    <div class=\"pib-slides\">\n\n      <div class=\"pib-slide active\">\n        <p class=\"pib-slide__text\">\"Best money I've spent on my kids' education outside of school. The conversations it starts are priceless.\"</p>\n        <div class=\"pib-slide__author\">\n          <img class=\"pib-slide__avatar\" src=\"https://i.pravatar.cc/150?img=47\" alt=\"Jennifer L.\" />\n          <div>\n            <div class=\"pib-slide__name\">Jennifer L.</div>\n            <div class=\"pib-slide__meta\">Mom of three &nbsp;·&nbsp; <span class=\"pib-slide__stars\">★★★★★</span></div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"pib-slide\">\n        <p class=\"pib-slide__text\">\"My son is a screen kid. He read this until 9pm without me saying a word. I bought two more for his cousins.\"</p>\n        <div class=\"pib-slide__author\">\n          <img class=\"pib-slide__avatar\" src=\"https://i.pravatar.cc/150?img=12\" alt=\"David K.\" />\n          <div>\n            <div class=\"pib-slide__name\">David K.</div>\n            <div class=\"pib-slide__meta\">Father of two &nbsp;·&nbsp; <span class=\"pib-slide__stars\">★★★★★</span></div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"pib-slide\">\n        <p class=\"pib-slide__text\">\"My daughter explained tectonic plates to my mother-in-law. She's 8. We were completely speechless.\"</p>\n        <div class=\"pib-slide__author\">\n          <img class=\"pib-slide__avatar\" src=\"https://i.pravatar.cc/150?img=32\" alt=\"Rachel M.\" />\n          <div>\n            <div class=\"pib-slide__name\">Rachel M.</div>\n            <div class=\"pib-slide__meta\">Mom of two &nbsp;·&nbsp; <span class=\"pib-slide__stars\">★★★★★</span></div>\n          </div>\n        </div>\n      </div>\n\n    </div>\n    <div class=\"pib-dots\">\n      <span class=\"pib-dot active\" data-i=\"0\"></span>\n      <span class=\"pib-dot\" data-i=\"1\"></span>\n      <span class=\"pib-dot\" data-i=\"2\"></span>\n    </div>\n  </div>\n\n  <!-- SCARCITY BADGE -->\n  <div class=\"pib-scarcity\">\n    <span class=\"pib-scarcity__pulse\"></span>\n    Limited stock — schools are ordering 20+ at a time\n  </div>\n\n  <!-- TITLE -->\n  <h1 class=\"pib-title\">Kid's Encyclopedia \"10,000 Whys\" — Unlock Your Child's Full Potential</h1>\n\n  <!-- STARS -->\n  <div class=\"pib-stars-row\">\n    <span class=\"pib-stars\">★★★★★</span>\n    <span class=\"pib-rating-num\">4.9</span>\n    <span class=\"pib-review-sep\">·</span>\n    <a href=\"#reviews\" class=\"pib-review-count\">2,847 reviews</a>\n  </div>\n\n  <!-- DIVIDER -->\n  <div class=\"pib-divider\"></div>\n\n  <!-- PRICE — output from Liquid variables above -->\n  <div class=\"pib-price-block\">\n    <div class=\"pib-price-row\">\n      <span class=\"pib-price-current\">{{ _sym }}{{ _cur }}</span>\n      <span class=\"pib-price-original\"><s>{{ _sym }}{{ _was }}</s></span>\n      <span class=\"pib-price-badge\">50% OFF</span>\n    </div>\n    <div class=\"pib-price-note\">\n      🎉 You save <strong>{{ _sym }}{{ _save }}</strong> today only\n    </div>\n  </div>\n\n  <!-- DIVIDER -->\n  <div class=\"pib-divider\"></div>\n\n  <!-- BULLETS -->\n  <ul class=\"pib-bullets\">\n    <li class=\"pib-bullet\">\n      <span class=\"pib-check\" aria-hidden=\"true\">✔</span>\n      <span>Rewires curiosity into a lifelong learning habit</span>\n    </li>\n    <li class=\"pib-bullet\">\n      <span class=\"pib-check\" aria-hidden=\"true\">✔</span>\n      <span>Boosts school performance, vocabulary &amp; memory</span>\n    </li>\n    <li class=\"pib-bullet\">\n      <span class=\"pib-check\" aria-hidden=\"true\">✔</span>\n      <span>Competes with screens — kids choose it over YouTube</span>\n    </li>\n    <li class=\"pib-bullet\">\n      <span class=\"pib-check\" aria-hidden=\"true\">✔</span>\n      <span>Perfect for ages 6–12, gift-ready hardcover packaging</span>\n    </li>\n  </ul>\n\n</div>\n\n<style>\n\n  .pib-wrap *,\n  .pib-wrap *::before,\n  .pib-wrap *::after {\n    box-sizing: border-box;\n  }\n\n  .pib-wrap {\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    color: #0d1b3e;\n    width: 100%;\n    max-width: 560px;\n  }\n\n  .pib-carousel {\n    position: relative;\n    background: #ffffff;\n    border: 1px solid rgba(13,27,62,0.08);\n    border-radius: 14px;\n    padding: 22px 22px 16px 22px;\n    margin-bottom: 22px;\n    overflow: hidden;\n    box-shadow:\n      0 1px 3px rgba(13,27,62,0.04),\n      0 4px 16px rgba(13,27,62,0.06);\n  }\n\n  .pib-carousel__bg-quote {\n    position: absolute;\n    top: -10px;\n    right: 14px;\n    font-size: 100px;\n    font-family: Georgia, serif;\n    color: rgba(13,27,62,0.04);\n    line-height: 1;\n    pointer-events: none;\n    user-select: none;\n  }\n\n  .pib-slides {\n    position: relative;\n    min-height: 96px;\n  }\n\n  .pib-slide {\n    display: none;\n    animation: pibFadeIn 0.5s ease;\n  }\n  .pib-slide.active {\n    display: block;\n  }\n\n  @keyframes pibFadeIn {\n    from { opacity: 0; transform: translateY(6px); }\n    to   { opacity: 1; transform: translateY(0); }\n  }\n\n  .pib-slide__text {\n    font-size: 14px;\n    font-style: italic;\n    color: #1a1a2e;\n    line-height: 1.65;\n    margin: 0 0 14px 0;\n  }\n\n  .pib-slide__author {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n  }\n\n  .pib-slide__avatar {\n    width: 36px;\n    height: 36px;\n    border-radius: 50%;\n    object-fit: cover;\n    border: 2px solid rgba(13,27,62,0.08);\n    flex-shrink: 0;\n    display: block;\n  }\n\n  .pib-slide__name {\n    font-size: 13px;\n    font-weight: 800;\n    color: #0d1b3e;\n    line-height: 1.2;\n    margin-bottom: 3px;\n  }\n\n  .pib-slide__meta {\n    font-size: 11.5px;\n    color: #9ca3af;\n    font-weight: 500;\n    line-height: 1;\n    display: flex;\n    align-items: center;\n    gap: 4px;\n    flex-wrap: wrap;\n  }\n\n  .pib-slide__stars {\n    color: #f59e0b;\n    font-size: 11px;\n    letter-spacing: 1px;\n    line-height: 1;\n  }\n\n  .pib-dots {\n    display: flex;\n    gap: 6px;\n    justify-content: center;\n    margin-top: 14px;\n  }\n  .pib-dot {\n    width: 7px;\n    height: 7px;\n    border-radius: 50%;\n    background: rgba(13,27,62,0.12);\n    cursor: pointer;\n    transition: background 0.25s ease, transform 0.25s ease;\n    display: inline-block;\n  }\n  .pib-dot.active {\n    background: #0d1b3e;\n    transform: scale(1.35);\n  }\n  .pib-dot:hover {\n    background: rgba(13,27,62,0.3);\n  }\n\n  .pib-scarcity {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    background: #fff3cd;\n    border: 1px solid #f5a623;\n    color: #92400e;\n    border-radius: 8px;\n    padding: 8px 14px;\n    font-size: 13px;\n    font-weight: 700;\n    margin-bottom: 18px;\n    line-height: 1;\n  }\n\n  .pib-scarcity__pulse {\n    width: 8px;\n    height: 8px;\n    border-radius: 50%;\n    background: #c0392b;\n    flex-shrink: 0;\n    display: inline-block;\n    animation: pibPulse 1.8s ease-in-out infinite;\n  }\n  @keyframes pibPulse {\n    0%   { box-shadow: 0 0 0 0 rgba(192,57,43,0.5); }\n    70%  { box-shadow: 0 0 0 7px rgba(192,57,43,0); }\n    100% { box-shadow: 0 0 0 0 rgba(192,57,43,0); }\n  }\n\n  .pib-title {\n    font-size: clamp(21px, 3.5vw, 27px);\n    font-weight: 900;\n    line-height: 1.18;\n    letter-spacing: -0.5px;\n    color: #0d1b3e;\n    margin: 0 0 16px 0;\n  }\n\n  .pib-stars-row {\n    display: flex;\n    align-items: center;\n    gap: 7px;\n    margin-bottom: 20px;\n    flex-wrap: wrap;\n    cursor: pointer;\n  }\n  .pib-stars {\n    color: #f59e0b;\n    font-size: 16px;\n    letter-spacing: 1.5px;\n    line-height: 1;\n  }\n  .pib-rating-num {\n    font-size: 13.5px;\n    font-weight: 800;\n    color: #0d1b3e;\n  }\n  .pib-review-sep {\n    color: #d1d5db;\n    font-size: 13px;\n  }\n  .pib-review-count {\n    font-size: 13px;\n    color: #6b7280;\n    font-weight: 600;\n    text-decoration: underline;\n    text-underline-offset: 2px;\n    text-decoration-color: rgba(107,114,128,0.3);\n    transition: color 0.15s ease;\n  }\n  .pib-review-count:hover { color: #0d1b3e; }\n\n  .pib-divider {\n    width: 100%;\n    height: 1px;\n    background: rgba(13,27,62,0.07);\n    margin: 4px 0 20px 0;\n  }\n\n  .pib-price-block {\n    margin-bottom: 6px;\n  }\n\n  .pib-price-row {\n    display: flex;\n    align-items: center;\n    gap: 10px;\n    flex-wrap: wrap;\n    margin-bottom: 8px;\n  }\n\n  .pib-price-current {\n    font-size: clamp(36px, 7vw, 44px);\n    font-weight: 900;\n    color: #c0392b;\n    line-height: 1;\n    letter-spacing: -2px;\n  }\n\n  .pib-price-original {\n    line-height: 1;\n  }\n  .pib-price-original s {\n    font-size: 17px;\n    color: #9ca3af;\n    font-weight: 500;\n    text-decoration-color: #9ca3af;\n  }\n\n  .pib-price-badge {\n    background: #c0392b;\n    color: #fff;\n    border-radius: 5px;\n    padding: 5px 10px;\n    font-size: 12px;\n    font-weight: 900;\n    text-transform: uppercase;\n    letter-spacing: 0.07em;\n    line-height: 1;\n    white-space: nowrap;\n    align-self: center;\n  }\n\n  .pib-price-note {\n    display: flex;\n    align-items: center;\n    gap: 5px;\n    font-size: 13px;\n    color: #6b7280;\n    margin-bottom: 20px;\n  }\n  .pib-price-note strong {\n    color: #0d1b3e;\n    font-weight: 700;\n  }\n\n  .pib-bullets {\n    list-style: none;\n    padding: 0;\n    margin: 0;\n  }\n\n  .pib-bullet {\n    display: flex;\n    align-items: flex-start;\n    gap: 11px;\n    padding: 10px 0;\n    border-bottom: 1px solid rgba(13,27,62,0.06);\n    font-size: clamp(14px, 2vw, 15px);\n    color: #0d1b3e;\n    line-height: 1.5;\n  }\n  .pib-bullet:last-child {\n    border-bottom: none;\n  }\n\n  .pib-check {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 20px;\n    height: 20px;\n    min-width: 20px;\n    border-radius: 50%;\n    background: #dcfce7;\n    color: #166534;\n    font-size: 10px;\n    font-weight: 900;\n    flex-shrink: 0;\n    margin-top: 1px;\n    line-height: 1;\n  }\n\n  @media (max-width: 480px) {\n    .pib-wrap { max-width: 100%; }\n    .pib-carousel { padding: 18px 16px 14px; }\n    .pib-carousel__bg-quote { font-size: 72px; right: 10px; }\n    .pib-title { font-size: 20px; }\n    .pib-price-current { letter-spacing: -1.5px; }\n    .pib-scarcity { font-size: 12.5px; padding: 7px 12px; }\n    .pib-bullet { font-size: 14px; padding: 9px 0; }\n    .pib-slide__avatar { width: 32px; height: 32px; }\n  }\n\n</style>\n\n<script>\n(function () {\n  var slides  = document.querySelectorAll('.pib-slide');\n  var dots    = document.querySelectorAll('.pib-dot');\n  var current = 0;\n  var timer;\n\n  function goTo(idx) {\n    slides[current].classList.remove('active');\n    dots[current].classList.remove('active');\n    current = idx;\n    slides[current].classList.add('active');\n    dots[current].classList.add('active');\n  }\n\n  function startTimer() {\n    timer = setInterval(function () {\n      if (document.body.classList.contains('c-primePdp07VarA')) return;\n      goTo((current + 1) % slides.length);\n    }, 8000);\n  }\n\n  dots.forEach(function (dot) {\n    dot.addEventListener('click', function () {\n      clearInterval(timer);\n      goTo(parseInt(this.getAttribute('data-i')));\n      if (!document.body.classList.contains('c-primePdp07VarA')) startTimer();\n    });\n  });\n\n  startTimer();\n\n  var starsRow = document.querySelector('.pib-stars-row');\n  if (starsRow) {\n    starsRow.addEventListener('click', function (e) {\n      var reviews = document.getElementById('reviews');\n      if (!reviews) return;\n      e.preventDefault();\n      reviews.scrollIntoView({ behavior: 'smooth', block: 'start' });\n    });\n  }\n})();\n</script>"
+            }
+          },
+          "price": {
+            "type": "price",
+            "disabled": true,
+            "settings": {
+              "layout": "price_second",
+              "price_color": "accent-1",
+              "compare_price_color": "text",
+              "displayed_badge": "sale",
+              "icon_scale": 130,
+              "custom_badge_text": "SAVE $76",
+              "icon_1": "",
+              "filled_icon_1": false,
+              "icon_2": "check_circle",
+              "filled_icon_2": false,
+              "margin_top": 12,
+              "margin_bottom": 21
+            }
+          },
+          "buy_buttons": {
+            "type": "buy_buttons",
+            "settings": {
+              "show_dynamic_checkout": false,
+              "skip_cart": false,
+              "uppercase_text": true,
+              "icon_scale": 120,
+              "icon_spacing": 10,
+              "display_price": true,
+              "enable_custom_color": true,
+              "custom_color": "#c0392b",
+              "enable_secondary_btn": false,
+              "secondary_btn_label": "Buy It Now",
+              "secondary_btn_enable_custom_color": false,
+              "secondary_btn_custom_color": "#dd1d1d",
+              "margin_top": 24,
+              "margin_bottom": 24
+            }
+          },
+          "custom_liquid_Jpc8rU": {
+            "type": "custom_liquid",
+            "settings": {
+              "custom_liquid": "<div class=\"pib-trust\">\n\n  <div class=\"pib-guarantee-strip\">\n    <span>🛡️ 30-day money-back guarantee</span>\n    <span class=\"pib-strip-sep\">|</span>\n    <span>🔒 Secure checkout</span>\n    <span class=\"pib-strip-sep\">|</span>\n    <span>📦 Free shipping</span>\n  </div>\n\n  <div class=\"pib-payment-row\">\n    <span class=\"pib-pay-icon\">VISA</span>\n    <span class=\"pib-pay-icon\">MC</span>\n    <span class=\"pib-pay-icon\">AMEX</span>\n    <span class=\"pib-pay-icon\">PayPal</span>\n    <span class=\"pib-pay-icon\">Apple Pay</span>\n    <span class=\"pib-pay-icon\">Shop Pay</span>\n  </div>\n\n</div>\n\n<style>\n  .pib-trust {\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    width: 100%;\n  }\n\n  .pib-guarantee-strip {\n    display: flex;\n    align-items: center;\n    gap: 8px;\n    flex-wrap: wrap;\n    font-size: 13px;\n    font-weight: 600;\n    color: #4b5563;\n    margin-bottom: 10px;\n  }\n  .pib-strip-sep {\n    color: #d1d5db;\n    font-weight: 400;\n  }\n\n  .pib-payment-row {\n    display: flex;\n    align-items: center;\n    gap: 6px;\n    flex-wrap: wrap;\n  }\n  .pib-pay-icon {\n    background: #f3f4f6;\n    border: 1px solid #e5e7eb;\n    border-radius: 5px;\n    padding: 5px 10px;\n    font-size: 11px;\n    font-weight: 700;\n    color: #374151;\n    letter-spacing: 0.03em;\n    line-height: 1;\n  }\n</style>"
+            }
+          }
+        },
+        "block_order": [
+          "custom_liquid_PWYQA8",
+          "rating_stars_fE9P9j",
+          "custom_liquid_hKfVkc",
+          "price",
+          "buy_buttons",
+          "custom_liquid_Jpc8rU"
+        ],
+        "custom_css": [],
+        "settings": {
+          "display_id": false,
+          "enable_sticky_info": true,
+          "display_variant_image_first": false,
+          "disable_prepend": false,
+          "hide_variants": false,
+          "variant_image_filtering": "none",
+          "image_zoom": "none",
+          "arrows_color_scheme": "inverse",
+          "transparent_arrows": true,
+          "dots_color_scheme": "inverse",
+          "video_player": "play_btn",
+          "enable_video_looping": false,
+          "autoplay_videos_pause_btn": false,
+          "video_sound_btn": false,
+          "video_timeline": false,
+          "play_btn_color_scheme": "accent-1",
+          "sound_btn_color_scheme": "inverse",
+          "timeline_color": "accent-1",
+          "media_size": "medium",
+          "media_position": "left",
+          "gallery_layout": "thumbnail_slider",
+          "desktop_thumbnails_count": 5,
+          "constrain_to_viewport": true,
+          "media_fit": "contain",
+          "desktop_arrows_position": "hidden",
+          "mobile_media_corner_radius": 0,
+          "mobile_spacing_pixels": 0,
+          "mobile_arrows_position": "sides",
+          "mobile_pagination": "hidden",
+          "mobile_thumbnails": "show",
+          "mobile_thumbnails_count": 8,
+          "mobile_scroll_padding_percentage": 0,
+          "mobile_scroll_padding_pixels": 0,
+          "enable_mobile_outher_spacing": false,
+          "mobile_slides_container_width": 100,
+          "mobile_slides_inner_width": 100,
+          "trust_badge_position": "top-right",
+          "trust_badge_size": "medium",
+          "mobile_padding_top": 0,
+          "mobile_padding_bottom": 16,
+          "desktop_padding_top": 36,
+          "desktop_padding_bottom": 36
+        }
+      },
+      "custom_liquid_mwcE4N": {
+        "type": "custom-liquid",
+        "name": "t:sections.custom-liquid.presets.name",
+        "settings": {
+          "display_id": false,
+          "visibility": "always-display",
+          "custom_liquid": "<div class=\"imt-wrap\">\n\n  <div class=\"imt-inner\">\n\n    <div class=\"imt-eyebrow\">\n      <span class=\"imt-eyebrow__dot\"></span>\n      Why 18,000+ families chose this book\n    </div>\n\n    <h2 class=\"imt-heading\">\n      The Book That Answers <span class=\"imt-highlight\">Every Question</span> Your Child Has Ever Asked\n    </h2>\n\n    <p class=\"imt-sub\">\n      Not a textbook. Not a reference tool. A book children pick up because they want to — and can't put down.\n    </p>\n\n    <ul class=\"imt-features\">\n      <li class=\"imt-feature\">\n        <div class=\"imt-feature__icon\">🧠</div>\n        <div class=\"imt-feature__body\">\n          <div class=\"imt-feature__title\">Real Questions Kids Actually Ask</div>\n          <div class=\"imt-feature__desc\">The ones children wonder about every single day — not what adults think they should know</div>\n        </div>\n      </li>\n      <li class=\"imt-feature\">\n        <div class=\"imt-feature__icon\">🚀</div>\n        <div class=\"imt-feature__body\">\n          <div class=\"imt-feature__title\">Everything In One Book</div>\n          <div class=\"imt-feature__desc\">Animals, space, the human body, nature, technology, daily life and more</div>\n        </div>\n      </li>\n      <li class=\"imt-feature\">\n        <div class=\"imt-feature__icon\">📵</div>\n        <div class=\"imt-feature__body\">\n          <div class=\"imt-feature__title\">Competes With Screens</div>\n          <div class=\"imt-feature__desc\">Kids choose it voluntarily — parents call it the only thing that works</div>\n        </div>\n      </li>\n      <li class=\"imt-feature\">\n        <div class=\"imt-feature__icon\">⭐</div>\n        <div class=\"imt-feature__body\">\n          <div class=\"imt-feature__title\">Ages 6–12</div>\n          <div class=\"imt-feature__desc\">Written simply, illustrated beautifully, built to be read for fun</div>\n        </div>\n      </li>\n    </ul>\n\n    <div class=\"imt-proof\">\n      <div class=\"imt-proof__stars\">★★★★★</div>\n      <p class=\"imt-proof__quote\">\"His teacher called to say he was the most engaged student in class. All from a book he found on the coffee table.\"</p>\n      <span class=\"imt-proof__author\">— Rachel M., Mom of two · Verified buyer</span>\n    </div>\n\n  </div>\n\n</div>\n\n<style>\n\n  .imt-wrap *,\n  .imt-wrap *::before,\n  .imt-wrap *::after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n  }\n\n  .imt-wrap {\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    width: 100%;\n    background: transparent;\n    color: #0d1b3e;\n    padding: 48px 16px;\n  }\n\n  .imt-inner {\n    display: flex;\n    flex-direction: column;\n    align-items: flex-start;\n    width: 100%;\n    max-width: 600px;\n    margin: 0 auto;\n  }\n\n  .imt-eyebrow {\n    display: inline-flex;\n    align-items: center;\n    gap: 8px;\n    background: #dcfce7;\n    color: #166534;\n    font-size: 11px;\n    font-weight: 700;\n    letter-spacing: 0.05em;\n    text-transform: uppercase;\n    padding: 6px 14px;\n    border-radius: 100px;\n    margin-bottom: 16px;\n    line-height: 1;\n    flex-shrink: 0;\n  }\n\n  .imt-eyebrow__dot {\n    width: 6px;\n    height: 6px;\n    min-width: 6px;\n    border-radius: 50%;\n    background: #166534;\n    flex-shrink: 0;\n    display: block;\n  }\n\n  .imt-heading {\n    font-size: clamp(20px, 3vw, 28px);\n    font-weight: 900;\n    line-height: 1.22;\n    letter-spacing: -0.4px;\n    color: #0d1b3e;\n    margin-bottom: 12px;\n    width: 100%;\n    word-break: break-word;\n    hyphens: none;\n  }\n\n  .imt-highlight {\n    display: inline;\n    background: #f5a623;\n    color: #0d1b3e;\n    border-radius: 5px;\n    padding: 1px 7px;\n    font-style: normal;\n    font-weight: 900;\n    -webkit-box-decoration-break: clone;\n    box-decoration-break: clone;\n  }\n\n  .imt-sub {\n    font-size: clamp(13px, 1.6vw, 15px);\n    line-height: 1.7;\n    color: #6b7280;\n    margin-bottom: 24px;\n    width: 100%;\n  }\n\n  .imt-features {\n    list-style: none;\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    gap: 13px;\n    margin-bottom: 24px;\n  }\n\n  .imt-feature {\n    display: flex;\n    align-items: flex-start;\n    gap: 12px;\n    width: 100%;\n  }\n\n  .imt-feature__icon {\n    width: 38px;\n    height: 38px;\n    min-width: 38px;\n    background: #ffffff;\n    border: 1px solid rgba(13,27,62,0.08);\n    border-radius: 10px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 17px;\n    box-shadow: 0 1px 4px rgba(13,27,62,0.06);\n    flex-shrink: 0;\n    line-height: 1;\n  }\n\n  .imt-feature__body {\n    display: flex;\n    flex-direction: column;\n    gap: 4px;\n    padding-top: 2px;\n    min-width: 0;\n    flex: 1;\n  }\n\n  .imt-feature__title {\n    font-size: clamp(13px, 1.6vw, 14px);\n    font-weight: 800;\n    color: #0d1b3e;\n    line-height: 1.25;\n    word-break: break-word;\n  }\n\n  .imt-feature__desc {\n    font-size: clamp(12px, 1.4vw, 13px);\n    color: #6b7280;\n    line-height: 1.55;\n    font-weight: 500;\n    word-break: break-word;\n  }\n\n  .imt-proof {\n    width: 100%;\n    background: #ffffff;\n    border: 1px solid rgba(13,27,62,0.08);\n    border-left: 3px solid #c0392b;\n    border-radius: 0 12px 12px 0;\n    padding: 15px 16px;\n    box-shadow: 0 2px 8px rgba(13,27,62,0.06);\n  }\n\n  .imt-proof__stars {\n    color: #f59e0b;\n    font-size: 12.5px;\n    letter-spacing: 1.5px;\n    margin-bottom: 8px;\n    line-height: 1;\n    display: block;\n  }\n\n  .imt-proof__quote {\n    font-size: clamp(12.5px, 1.6vw, 13.5px);\n    font-style: italic;\n    color: #1a1a2e;\n    line-height: 1.68;\n    margin-bottom: 8px;\n    word-break: break-word;\n  }\n\n  .imt-proof__author {\n    font-size: clamp(11px, 1.3vw, 12px);\n    color: #9ca3af;\n    font-weight: 600;\n    display: block;\n    line-height: 1;\n  }\n\n  @media (max-width: 480px) {\n    .imt-wrap { padding: 36px 16px; }\n    .imt-eyebrow { font-size: 10.5px; padding: 5px 12px; margin-bottom: 14px; }\n    .imt-heading { font-size: 20px; letter-spacing: -0.3px; margin-bottom: 11px; }\n    .imt-sub { font-size: 13.5px; margin-bottom: 20px; }\n    .imt-features { gap: 12px; margin-bottom: 22px; }\n    .imt-feature__icon { width: 34px; height: 34px; min-width: 34px; font-size: 15px; border-radius: 8px; }\n    .imt-feature__title { font-size: 13px; }\n    .imt-feature__desc { font-size: 12px; }\n    .imt-proof { padding: 13px; border-radius: 0 10px 10px 0; }\n    .imt-proof__quote { font-size: 12.5px; }\n    .imt-proof__author { font-size: 11px; }\n  }\n\n  @media (max-width: 360px) {\n    .imt-wrap { padding: 32px 12px; }\n    .imt-heading { font-size: 19px; }\n    .imt-sub { font-size: 13px; }\n    .imt-feature__title { font-size: 12.5px; }\n    .imt-feature__desc { font-size: 11.5px; }\n  }\n\n</style>",
+          "color_scheme": "background-1",
+          "padding_top": 0,
+          "padding_bottom": 32
+        }
+      },
+      "custom_liquid_ycAyXQ": {
+        "type": "custom-liquid",
+        "name": "t:sections.custom-liquid.presets.name",
+        "settings": {
+          "display_id": false,
+          "visibility": "always-display",
+          "custom_liquid": "<div class=\"stats-wrap\">\n\n  <div class=\"stats-inner\">\n\n    <div class=\"stats-header\">\n      <div class=\"stats-eyebrow\">\n        <span class=\"stats-eyebrow__dot\"></span>\n        The results speak for themselves\n      </div>\n      <h2 class=\"stats-heading\">Loved by <em>18,000+</em> Families Worldwide</h2>\n      <p class=\"stats-subhead\">Real parents. Real kids. Real results — tracked over 90 days.</p>\n    </div>\n\n    <div class=\"stats-grid\">\n\n      <div class=\"stats-card\">\n        <div class=\"stats-accent\"></div>\n        <div class=\"stats-pct\">94<span class=\"stats-sym\">%</span></div>\n        <p class=\"stats-desc\">of parents say their child's school performance improved within 60 days</p>\n        <div class=\"stats-divider\"></div>\n        <div class=\"stats-tag\">📈 School performance</div>\n      </div>\n\n      <div class=\"stats-card\">\n        <div class=\"stats-accent\"></div>\n        <div class=\"stats-pct\">97<span class=\"stats-sym\">%</span></div>\n        <p class=\"stats-desc\">of kids voluntarily picked up the book without being asked, after day 7</p>\n        <div class=\"stats-divider\"></div>\n        <div class=\"stats-tag\">📚 Voluntary reading</div>\n      </div>\n\n      <div class=\"stats-card\">\n        <div class=\"stats-accent\"></div>\n        <div class=\"stats-pct\">91<span class=\"stats-sym\">%</span></div>\n        <p class=\"stats-desc\">of parents said their child started asking deeper, more insightful questions</p>\n        <div class=\"stats-divider\"></div>\n        <div class=\"stats-tag\">🧠 Curiosity & thinking</div>\n      </div>\n\n    </div>\n\n    <p class=\"stats-footnote\">Results from a 90-day post-purchase survey of 1,200+ customers, December 2024 – February 2025.</p>\n\n  </div>\n\n</div>\n\n<style>\n\n  .stats-wrap *,\n  .stats-wrap *::before,\n  .stats-wrap *::after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n  }\n\n  /* ── WRAP ── */\n  .stats-wrap {\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    width: 100%;\n    padding: 48px 16px;\n    color: #0d1b3e;\n    background: transparent;\n  }\n\n  /* ── INNER ── */\n  .stats-inner {\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    max-width: 600px;\n    margin: 0 auto;\n  }\n\n  /* ── HEADER ── */\n  .stats-header {\n    margin-bottom: 24px;\n  }\n\n  .stats-eyebrow {\n    display: inline-flex;\n    align-items: center;\n    gap: 7px;\n    background: #dcfce7;\n    color: #166534;\n    font-size: 11px;\n    font-weight: 700;\n    letter-spacing: 0.07em;\n    text-transform: uppercase;\n    padding: 5px 13px;\n    border-radius: 100px;\n    margin-bottom: 14px;\n    line-height: 1;\n  }\n\n  .stats-eyebrow__dot {\n    width: 6px;\n    height: 6px;\n    min-width: 6px;\n    border-radius: 50%;\n    background: #166534;\n    flex-shrink: 0;\n    display: block;\n  }\n\n  .stats-heading {\n    font-size: clamp(20px, 3vw, 28px);\n    font-weight: 900;\n    line-height: 1.2;\n    letter-spacing: -0.4px;\n    color: #0d1b3e;\n    margin-bottom: 10px;\n    word-break: break-word;\n    hyphens: none;\n  }\n\n  .stats-heading em {\n    font-style: italic;\n    color: #c0392b;\n    font-weight: 900;\n  }\n\n  .stats-subhead {\n    font-size: clamp(13px, 1.6vw, 14.5px);\n    color: #6b7280;\n    line-height: 1.65;\n    font-weight: 500;\n    word-break: break-word;\n  }\n\n  /* ── GRID ── */\n  .stats-grid {\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    margin-bottom: 16px;\n    width: 100%;\n  }\n\n  /* ── CARD ── */\n  .stats-card {\n    position: relative;\n    background: #ffffff;\n    border: 1px solid rgba(13,27,62,0.07);\n    border-radius: 14px;\n    padding: 28px 20px 22px;\n    text-align: center;\n    overflow: hidden;\n    width: 100%;\n    box-shadow:\n      0 1px 3px rgba(13,27,62,0.05),\n      0 6px 20px rgba(13,27,62,0.07);\n    transition: transform 0.22s ease, box-shadow 0.22s ease;\n  }\n\n  .stats-card:hover {\n    transform: translateY(-2px);\n    box-shadow:\n      0 2px 6px rgba(13,27,62,0.07),\n      0 12px 32px rgba(13,27,62,0.11);\n  }\n\n  /* ── ACCENT ── */\n  .stats-accent {\n    position: absolute;\n    top: 0;\n    left: 50%;\n    transform: translateX(-50%);\n    width: 44px;\n    height: 3px;\n    background: #c0392b;\n    border-radius: 0 0 4px 4px;\n  }\n\n  /* ── NUMBER ── */\n  .stats-pct {\n    font-size: clamp(48px, 13vw, 62px);\n    font-weight: 900;\n    color: #0d1b3e;\n    line-height: 1;\n    letter-spacing: -3px;\n    margin-bottom: 10px;\n    display: flex;\n    align-items: flex-start;\n    justify-content: center;\n    gap: 2px;\n  }\n\n  .stats-sym {\n    font-size: 50%;\n    font-weight: 900;\n    color: #c0392b;\n    margin-top: 8px;\n    letter-spacing: 0;\n    line-height: 1;\n  }\n\n  /* ── DESC ── */\n  .stats-desc {\n    font-size: clamp(13px, 1.6vw, 14.5px);\n    line-height: 1.65;\n    color: #6b7280;\n    margin: 0 auto 14px;\n    max-width: 100%;\n    word-break: break-word;\n  }\n\n  /* ── DIVIDER ── */\n  .stats-divider {\n    width: 36px;\n    height: 1px;\n    background: rgba(13,27,62,0.10);\n    margin: 0 auto 12px;\n  }\n\n  /* ── TAG ── */\n  .stats-tag {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    background: #f8f6f0;\n    border: 1px solid rgba(13,27,62,0.07);\n    border-radius: 100px;\n    padding: 5px 13px;\n    font-size: 12px;\n    font-weight: 700;\n    color: #0d1b3e;\n    line-height: 1;\n    white-space: nowrap;\n  }\n\n  /* ── FOOTNOTE ── */\n  .stats-footnote {\n    font-size: 11px;\n    color: #b0b7c3;\n    line-height: 1.65;\n    letter-spacing: 0.01em;\n    word-break: break-word;\n  }\n\n  /* ── MOBILE ── */\n  @media (max-width: 480px) {\n    .stats-wrap { padding: 36px 16px; }\n    .stats-header { margin-bottom: 20px; }\n    .stats-card {\n      padding: 24px 16px 20px;\n      border-radius: 12px;\n    }\n    .stats-card:hover { transform: none; }\n    .stats-pct {\n      font-size: clamp(44px, 12vw, 54px);\n      letter-spacing: -2px;\n      margin-bottom: 9px;\n    }\n    .stats-desc { font-size: 13px; margin-bottom: 12px; }\n    .stats-tag { font-size: 11.5px; padding: 4px 11px; }\n    .stats-grid { gap: 9px; }\n    .stats-footnote { font-size: 10.5px; }\n  }\n\n  /* ── TINY MOBILE ── */\n  @media (max-width: 360px) {\n    .stats-wrap { padding: 32px 12px; }\n    .stats-card { padding: 22px 12px 18px; }\n    .stats-pct { font-size: 42px; letter-spacing: -1.5px; }\n    .stats-desc { font-size: 12.5px; }\n    .stats-tag { font-size: 11px; padding: 4px 10px; }\n  }\n\n</style>",
+          "color_scheme": "background-1",
+          "padding_top": 40,
+          "padding_bottom": 52
+        }
+      },
+      "custom_liquid_AwDERn": {
+        "type": "custom-liquid",
+        "name": "t:sections.custom-liquid.presets.name",
+        "settings": {
+          "display_id": false,
+          "visibility": "always-display",
+          "custom_liquid": "<div class=\"inside-wrap\">\n\n  <div class=\"inside-header\">\n    <div class=\"inside-eyebrow\">\n      <span class=\"inside-eyebrow__dot\"></span>\n      Everything inside\n    </div>\n    <h2 class=\"inside-heading\">\n      One Book. <span class=\"inside-highlight\">Every Subject</span> They're Curious About.\n    </h2>\n    <p class=\"inside-sub\">\n      From the deepest ocean to the edge of the universe — if your child has wondered about it, the answer is in here.\n    </p>\n  </div>\n\n  <div class=\"inside-grid\">\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🚀</div>\n      <div class=\"inside-card__name\">Space & Universe</div>\n      <div class=\"inside-card__desc\">Black holes, planets, stars, rockets and life beyond Earth</div>\n    </div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🦕</div>\n      <div class=\"inside-card__name\">Dinosaurs</div>\n      <div class=\"inside-card__desc\">Why they went extinct, how we find them, what they really looked like</div>\n    </div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🧬</div>\n      <div class=\"inside-card__name\">The Human Body</div>\n      <div class=\"inside-card__desc\">Why your heart beats, how your brain works, why you dream</div>\n    </div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🌊</div>\n      <div class=\"inside-card__name\">Oceans & Sea Life</div>\n      <div class=\"inside-card__desc\">Deep sea creatures, why the ocean is salty, how waves form</div>\n    </div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">⚡</div>\n      <div class=\"inside-card__name\">Weather & Nature</div>\n      <div class=\"inside-card__desc\">Thunder, lightning, tornadoes, rainbows and the sky</div>\n    </div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🏛️</div>\n      <div class=\"inside-card__name\">History & Civilisations</div>\n      <div class=\"inside-card__desc\">Ancient Egypt, the Romans, great inventions and how the world changed</div>\n    </div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🦁</div>\n      <div class=\"inside-card__name\">Animals & Wildlife</div>\n      <div class=\"inside-card__desc\">How animals survive, migrate, communicate and why some go extinct</div>\n    </div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🔬</div>\n      <div class=\"inside-card__name\">Science & Physics</div>\n      <div class=\"inside-card__desc\">Gravity, light, sound, electricity and how everything works</div>\n    </div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🌿</div>\n      <div class=\"inside-card__name\">Plants & Biology</div>\n      <div class=\"inside-card__desc\">How plants grow, why leaves change colour, what makes things alive</div>\n    </div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🧠</div>\n      <div class=\"inside-card__name\">The Brain & Mind</div>\n      <div class=\"inside-card__desc\">Memory, emotions, sleep, dreams and how the mind works</div>\n    </div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">⚙️</div>\n      <div class=\"inside-card__name\">Technology & Inventions</div>\n      <div class=\"inside-card__desc\">How planes fly, how the internet works, what computers do</div>\n    </div>\n\n    <div class=\"inside-card\">\n      <div class=\"inside-card__icon\">🌍</div>\n      <div class=\"inside-card__name\">Earth & Geography</div>\n      <div class=\"inside-card__desc\">Volcanoes, earthquakes, tectonic plates and how Earth formed</div>\n    </div>\n\n  </div>\n\n</div>\n\n<style>\n\n  .inside-wrap *,\n  .inside-wrap *::before,\n  .inside-wrap *::after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n  }\n\n  /* ── WRAP ── */\n  .inside-wrap {\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    width: 100%;\n    background: #0d1b3e;\n    padding: 64px 20px;\n    color: #ffffff;\n  }\n\n  /* ── HEADER ── */\n  .inside-header {\n    text-align: center;\n    width: 100%;\n    max-width: 600px;\n    margin: 0 auto 44px;\n    padding: 0 4px;\n  }\n\n  .inside-eyebrow {\n    display: inline-flex;\n    align-items: center;\n    gap: 7px;\n    background: rgba(245,166,35,0.15);\n    color: #f5a623;\n    font-size: 11px;\n    font-weight: 700;\n    letter-spacing: 0.07em;\n    text-transform: uppercase;\n    padding: 6px 13px;\n    border-radius: 100px;\n    margin-bottom: 16px;\n    line-height: 1;\n    border: 1px solid rgba(245,166,35,0.25);\n  }\n\n  .inside-eyebrow__dot {\n    width: 6px;\n    height: 6px;\n    min-width: 6px;\n    border-radius: 50%;\n    background: #f5a623;\n    flex-shrink: 0;\n    display: block;\n  }\n\n  .inside-heading {\n    font-size: clamp(21px, 4.5vw, 32px);\n    font-weight: 900;\n    line-height: 1.2;\n    letter-spacing: -0.5px;\n    color: #ffffff;\n    margin-bottom: 12px;\n    word-break: break-word;\n    hyphens: none;\n  }\n\n  .inside-highlight {\n    display: inline;\n    background: #f5a623;\n    color: #0d1b3e;\n    border-radius: 5px;\n    padding: 1px 7px;\n    font-weight: 900;\n    -webkit-box-decoration-break: clone;\n    box-decoration-break: clone;\n  }\n\n  .inside-sub {\n    font-size: clamp(13.5px, 2vw, 15.5px);\n    line-height: 1.72;\n    color: rgba(255,255,255,0.56);\n  }\n\n  /* ── GRID ── */\n  .inside-grid {\n    display: grid;\n    grid-template-columns: repeat(4, 1fr);\n    gap: 12px;\n    max-width: 1100px;\n    margin: 0 auto;\n    width: 100%;\n  }\n\n  /* ── CARD ── */\n  .inside-card {\n    background: rgba(255,255,255,0.05);\n    border: 1px solid rgba(255,255,255,0.08);\n    border-radius: 14px;\n    padding: 20px 16px;\n    transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s ease;\n    cursor: default;\n    display: flex;\n    flex-direction: column;\n  }\n\n  .inside-card:hover {\n    background: rgba(245,166,35,0.08);\n    border-color: rgba(245,166,35,0.3);\n    transform: translateY(-3px);\n  }\n\n  .inside-card__icon {\n    font-size: 26px;\n    line-height: 1;\n    margin-bottom: 11px;\n    display: block;\n    flex-shrink: 0;\n  }\n\n  .inside-card__name {\n    font-size: clamp(12px, 1.3vw, 14px);\n    font-weight: 800;\n    color: #ffffff;\n    line-height: 1.25;\n    margin-bottom: 6px;\n  }\n\n  .inside-card__desc {\n    font-size: clamp(11.5px, 1.1vw, 12.5px);\n    color: rgba(255,255,255,0.5);\n    line-height: 1.58;\n    font-weight: 500;\n  }\n\n  /* ── TABLET — 3 columns ── */\n  @media (max-width: 900px) {\n    .inside-wrap { padding: 56px 20px; }\n    .inside-grid { grid-template-columns: repeat(3, 1fr); gap: 11px; }\n    .inside-header { margin-bottom: 36px; }\n  }\n\n  /* ── MOBILE — 2 columns ── */\n  @media (max-width: 600px) {\n    .inside-wrap { padding: 48px 14px; }\n    .inside-grid { grid-template-columns: repeat(2, 1fr); gap: 9px; }\n    .inside-card { padding: 16px 13px; border-radius: 12px; }\n    .inside-card:hover { transform: none; }\n    .inside-card__icon { font-size: 22px; margin-bottom: 9px; }\n    .inside-card__name { font-size: 13px; margin-bottom: 5px; }\n    .inside-card__desc { font-size: 11.5px; line-height: 1.55; }\n    .inside-header { margin-bottom: 30px; padding: 0; }\n    .inside-eyebrow { font-size: 10px; padding: 5px 11px; gap: 6px; }\n    .inside-heading { font-size: 21px; letter-spacing: -0.3px; margin-bottom: 10px; }\n    .inside-sub { font-size: 13.5px; line-height: 1.68; }\n  }\n\n  /* ── TINY MOBILE — 320px ── */\n  @media (max-width: 360px) {\n    .inside-wrap { padding: 40px 12px; }\n    .inside-card { padding: 14px 11px; }\n    .inside-card__icon { font-size: 20px; }\n    .inside-card__name { font-size: 12px; }\n    .inside-card__desc { font-size: 11px; }\n    .inside-heading { font-size: 19px; }\n  }\n\n</style>",
+          "color_scheme": "background-1",
+          "padding_top": 0,
+          "padding_bottom": 40
+        }
+      },
+      "custom_liquid_YYFKG7": {
+        "type": "custom-liquid",
+        "name": "t:sections.custom-liquid.presets.name",
+        "settings": {
+          "display_id": false,
+          "visibility": "always-display",
+          "custom_liquid": "<div class=\"rev-wrap\" id=\"reviews\">\n\n  <h2 class=\"rev-heading\">What Parents Are <em>Saying</em></h2>\n\n  <div class=\"rev-list\">\n\n    <div class=\"rev-card\">\n      <div class=\"rev-stars\">★★★★★</div>\n      <p class=\"rev-text\">\"My 9-year-old asked me 'Mom, why do we have two eyes instead of one?' I didn't know the answer. He went straight to this book, found it, and spent 45 minutes reading about vision, brains and evolution. He came back and explained it to me. I almost cried. His teacher called two weeks later to say he was the most engaged student in class.\"</p>\n      <div class=\"rev-author\">\n        <img class=\"rev-avatar\" src=\"https://i.pravatar.cc/150?img=47\" alt=\"Rachel M.\" />\n        <div class=\"rev-author-info\">\n          <span class=\"rev-name\">Rachel M.</span>\n          <span class=\"rev-meta\">Mom of two · Texas · <span class=\"rev-verified\">✔ Verified buyer</span></span>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"rev-card\">\n      <div class=\"rev-stars\">★★★★★</div>\n      <p class=\"rev-text\">\"I was skeptical. My son doesn't read. He's a screen kid. I put this on the coffee table and didn't say a word. Day 3, I found him on the floor reading about black holes at 9pm when I thought he was asleep. He's read it cover to cover twice. That is not a normal thing for him. Buy it — it competes with screens and wins.\"</p>\n      <div class=\"rev-author\">\n        <img class=\"rev-avatar\" src=\"https://i.pravatar.cc/150?img=12\" alt=\"David K.\" />\n        <div class=\"rev-author-info\">\n          <span class=\"rev-name\">David K.</span>\n          <span class=\"rev-meta\">Father of one · California · <span class=\"rev-verified\">✔ Verified buyer</span></span>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"rev-card\">\n      <div class=\"rev-stars\">★★★★★</div>\n      <p class=\"rev-text\">\"Bought 3 copies — one for each of my kids and one for my nephew's birthday. The dinner table conversations we've had because of this book are priceless. My 7-year-old explained tectonic plates to my mother-in-law. She was completely speechless. This book changes how kids think, not just what they know.\"</p>\n      <div class=\"rev-author\">\n        <img class=\"rev-avatar\" src=\"https://i.pravatar.cc/150?img=32\" alt=\"Jennifer L.\" />\n        <div class=\"rev-author-info\">\n          <span class=\"rev-name\">Jennifer L.</span>\n          <span class=\"rev-meta\">Mom of three · Florida · <span class=\"rev-verified\">✔ Verified buyer</span></span>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"rev-card\">\n      <div class=\"rev-stars\">★★★★★</div>\n      <p class=\"rev-text\">\"My daughter has never once picked up a book without being forced. I left this on the coffee table on a Friday. By Sunday she had read half of it and was explaining to her grandfather why the moon doesn't fall out of the sky. He's a retired engineer. He was impressed. I was speechless. This book is something else entirely.\"</p>\n      <div class=\"rev-author\">\n        <img class=\"rev-avatar\" src=\"https://i.pravatar.cc/150?img=25\" alt=\"Lisa W.\" />\n        <div class=\"rev-author-info\">\n          <span class=\"rev-name\">Lisa W.</span>\n          <span class=\"rev-meta\">Mom of two · Ohio · <span class=\"rev-verified\">✔ Verified buyer</span></span>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"rev-card\">\n      <div class=\"rev-stars\">★★★★★</div>\n      <p class=\"rev-text\">\"Bought this for my grandson's birthday not knowing what to expect. He opened it, looked at the cover for about thirty seconds, and said 'is this actually mine?' He read it at his own party. His mum called me two months later to say he'd read it three times and was asking if there was a second one. Best gift I've given in years.\"</p>\n      <div class=\"rev-author\">\n        <img class=\"rev-avatar\" src=\"https://i.pravatar.cc/150?img=56\" alt=\"Margaret T.\" />\n        <div class=\"rev-author-info\">\n          <span class=\"rev-name\">Margaret T.</span>\n          <span class=\"rev-meta\">Grandmother of four · Illinois · <span class=\"rev-verified\">✔ Verified buyer</span></span>\n        </div>\n      </div>\n    </div>\n\n  </div>\n\n</div>\n\n<style>\n  #reviews {\n    scroll-margin-top: 90px;\n  }\n\n  .rev-wrap {\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    width: 100%;\n    max-width: 640px;\n    margin: 0 auto;\n    box-sizing: border-box;\n    color: #0d1b3e;\n  }\n\n  /* ── HEADING ── */\n  .rev-heading {\n    font-size: clamp(22px, 4.5vw, 28px);\n    font-weight: 900;\n    line-height: 1.18;\n    letter-spacing: -0.5px;\n    color: #0d1b3e;\n    margin: 0 0 24px 0;\n  }\n  .rev-heading em {\n    font-style: italic;\n    color: #c0392b;\n    font-weight: 400;\n  }\n\n  /* ── LIST ── */\n  .rev-list {\n    display: flex;\n    flex-direction: column;\n    gap: 14px;\n  }\n\n  /* ── CARD ── */\n  .rev-card {\n    background: #ffffff;\n    border: 1px solid rgba(13,27,62,0.07);\n    border-radius: 16px;\n    padding: 26px 26px 22px;\n    box-sizing: border-box;\n    box-shadow:\n      0 1px 3px rgba(13,27,62,0.05),\n      0 6px 20px rgba(13,27,62,0.06);\n    transition: transform 0.22s ease, box-shadow 0.22s ease;\n  }\n  .rev-card:hover {\n    transform: translateY(-2px);\n    box-shadow:\n      0 2px 6px rgba(13,27,62,0.07),\n      0 10px 28px rgba(13,27,62,0.10);\n  }\n\n  /* ── STARS ── */\n  .rev-stars {\n    color: #f59e0b;\n    font-size: 16px;\n    letter-spacing: 2px;\n    margin-bottom: 12px;\n    line-height: 1;\n  }\n\n  /* ── REVIEW TEXT ── */\n  .rev-text {\n    font-size: clamp(13.5px, 2.2vw, 15px);\n    line-height: 1.75;\n    color: #1a1a2e;\n    font-style: italic;\n    margin: 0 0 18px 0;\n  }\n\n  /* ── AUTHOR ROW ── */\n  .rev-author {\n    display: flex;\n    align-items: center;\n    gap: 12px;\n    padding-top: 16px;\n    border-top: 1px solid rgba(13,27,62,0.07);\n  }\n\n  .rev-avatar {\n    width: 42px;\n    height: 42px;\n    border-radius: 50%;\n    object-fit: cover;\n    border: 2px solid rgba(13,27,62,0.08);\n    flex-shrink: 0;\n    display: block;\n  }\n\n  .rev-author-info {\n    display: flex;\n    flex-direction: column;\n    gap: 3px;\n  }\n\n  .rev-name {\n    font-size: 14px;\n    font-weight: 800;\n    color: #0d1b3e;\n    line-height: 1;\n  }\n\n  .rev-meta {\n    font-size: 12.5px;\n    color: #9ca3af;\n    font-weight: 500;\n    line-height: 1;\n  }\n\n  .rev-verified {\n    color: #166534;\n    font-weight: 700;\n  }\n\n  /* ── MOBILE ── */\n  @media (max-width: 749px) {\n    .rev-wrap {\n      padding-left: 14px;\n      padding-right: 14px;\n    }\n  }\n  @media (max-width: 480px) {\n    .rev-card {\n      padding: 20px 16px 18px;\n      border-radius: 14px;\n    }\n    .rev-stars { font-size: 14px; }\n    .rev-avatar { width: 36px; height: 36px; }\n    .rev-name { font-size: 13.5px; }\n    .rev-meta { font-size: 12px; }\n  }\n</style>",
+          "color_scheme": "background-1",
+          "padding_top": 40,
+          "padding_bottom": 52
+        }
+      },
+      "custom_liquid_WdL3xd": {
+        "type": "custom-liquid",
+        "name": "t:sections.custom-liquid.presets.name",
+        "settings": {
+          "display_id": false,
+          "visibility": "always-display",
+          "custom_liquid": "<div class=\"cta-wrap\">\n\n  <div class=\"cta-inner\">\n\n    <div class=\"cta-eyebrow\">\n      <span class=\"cta-eyebrow__dot\"></span>\n      Sale Ends Tonight — 50% Off Today Only\n    </div>\n\n    <h2 class=\"cta-heading\">\n      Ready to Build Your Child's <em>Ultimate Brain?</em>\n    </h2>\n\n    <p class=\"cta-sub\">\n      Join 18,000+ families who made the decision. Free shipping. 30-day guarantee. No risk.\n    </p>\n\n    <button class=\"cta-btn\" id=\"cta-scroll-btn\">\n      <span class=\"cta-btn__icon\">🧠</span>\n      Get The Book — 50% Off\n      <span class=\"cta-btn__arrow\">→</span>\n    </button>\n\n    <div class=\"cta-trust\">\n      <div class=\"cta-trust__item\">\n        <span class=\"cta-trust__icon\">🛡️</span>\n        <span>30-Day Guarantee</span>\n      </div>\n      <div class=\"cta-trust__sep\">·</div>\n      <div class=\"cta-trust__item\">\n        <span class=\"cta-trust__icon\">📦</span>\n        <span>Free Shipping</span>\n      </div>\n      <div class=\"cta-trust__sep\">·</div>\n      <div class=\"cta-trust__item\">\n        <span class=\"cta-trust__icon\">🔒</span>\n        <span>Secure Checkout</span>\n      </div>\n    </div>\n\n  </div>\n\n</div>\n\n<style>\n\n  .cta-wrap *,\n  .cta-wrap *::before,\n  .cta-wrap *::after {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n  }\n\n  .cta-wrap {\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    width: 100%;\n    background: #0d1b3e;\n    padding: 56px 16px;\n  }\n\n  .cta-inner {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    text-align: center;\n    width: 100%;\n    max-width: 560px;\n    margin: 0 auto;\n  }\n\n  .cta-eyebrow {\n    display: inline-flex;\n    align-items: center;\n    gap: 7px;\n    background: rgba(245,166,35,0.15);\n    border: 1px solid rgba(245,166,35,0.3);\n    color: #f5a623;\n    font-size: 11px;\n    font-weight: 700;\n    letter-spacing: 0.07em;\n    text-transform: uppercase;\n    padding: 6px 14px;\n    border-radius: 100px;\n    margin-bottom: 20px;\n    line-height: 1;\n  }\n\n  .cta-eyebrow__dot {\n    width: 6px;\n    height: 6px;\n    min-width: 6px;\n    border-radius: 50%;\n    background: #f5a623;\n    flex-shrink: 0;\n    display: block;\n    animation: ctaPulse 1.8s ease-in-out infinite;\n  }\n\n  @keyframes ctaPulse {\n    0%   { box-shadow: 0 0 0 0 rgba(245,166,35,0.6); }\n    70%  { box-shadow: 0 0 0 6px rgba(245,166,35,0); }\n    100% { box-shadow: 0 0 0 0 rgba(245,166,35,0); }\n  }\n\n  .cta-heading {\n    font-size: clamp(22px, 4vw, 32px);\n    font-weight: 900;\n    line-height: 1.18;\n    letter-spacing: -0.5px;\n    color: #ffffff;\n    margin-bottom: 14px;\n    word-break: break-word;\n    hyphens: none;\n  }\n\n  .cta-heading em {\n    font-style: italic;\n    color: #f5a623;\n    font-weight: 400;\n  }\n\n  .cta-sub {\n    font-size: clamp(13.5px, 1.8vw, 15px);\n    line-height: 1.7;\n    color: rgba(255,255,255,0.6);\n    margin-bottom: 32px;\n    max-width: 420px;\n    word-break: break-word;\n  }\n\n  .cta-btn {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n    background: #c0392b;\n    color: #ffffff;\n    border: none;\n    border-radius: 10px;\n    padding: 18px 32px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n    font-size: clamp(15px, 2vw, 17px);\n    font-weight: 800;\n    letter-spacing: 0.01em;\n    cursor: pointer;\n    margin-bottom: 24px;\n    width: 100%;\n    max-width: 380px;\n    box-shadow:\n      0 2px 8px rgba(192,57,43,0.3),\n      0 8px 24px rgba(192,57,43,0.25);\n    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;\n  }\n\n  .cta-btn:hover {\n    background: #a93226;\n    transform: translateY(-2px);\n    box-shadow:\n      0 4px 12px rgba(192,57,43,0.35),\n      0 14px 32px rgba(192,57,43,0.3);\n  }\n\n  .cta-btn:active {\n    transform: translateY(0);\n  }\n\n  .cta-btn__icon {\n    font-size: 20px;\n    line-height: 1;\n    flex-shrink: 0;\n  }\n\n  .cta-btn__arrow {\n    font-size: 18px;\n    line-height: 1;\n    flex-shrink: 0;\n    transition: transform 0.2s ease;\n  }\n\n  .cta-btn:hover .cta-btn__arrow {\n    transform: translateX(4px);\n  }\n\n  .cta-trust {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 10px;\n    flex-wrap: wrap;\n  }\n\n  .cta-trust__item {\n    display: flex;\n    align-items: center;\n    gap: 5px;\n    font-size: 12px;\n    font-weight: 600;\n    color: rgba(255,255,255,0.45);\n    white-space: nowrap;\n  }\n\n  .cta-trust__icon {\n    font-size: 13px;\n    line-height: 1;\n  }\n\n  .cta-trust__sep {\n    color: rgba(255,255,255,0.2);\n    font-size: 12px;\n  }\n\n  @media (max-width: 480px) {\n    .cta-wrap { padding: 48px 16px; }\n    .cta-eyebrow { font-size: 10px; padding: 5px 12px; margin-bottom: 16px; }\n    .cta-heading { font-size: 22px; margin-bottom: 12px; }\n    .cta-sub { font-size: 13.5px; margin-bottom: 26px; }\n    .cta-btn { padding: 17px 24px; font-size: 15px; max-width: 100%; border-radius: 10px; }\n    .cta-trust { gap: 7px; }\n    .cta-trust__sep { display: none; }\n    .cta-trust__item { font-size: 11.5px; }\n  }\n\n  @media (max-width: 360px) {\n    .cta-wrap { padding: 40px 12px; }\n    .cta-heading { font-size: 20px; }\n    .cta-sub { font-size: 13px; }\n    .cta-btn { font-size: 14px; padding: 16px 20px; }\n  }\n\n</style>\n\n<script>\n(function() {\n  var btn = document.getElementById('cta-scroll-btn');\n  if (!btn) return;\n\n  btn.addEventListener('click', function() {\n\n    var target =\n      document.querySelector('.kaching-bundles') ||\n      document.querySelector('[data-kaching-bundles]') ||\n      document.querySelector('.kaching-bundle') ||\n      document.querySelector('[data-kaching]') ||\n      document.querySelector('.product-form') ||\n      document.querySelector('[data-product-form]') ||\n      document.querySelector('form[action*=\"/cart/add\"]') ||\n      document.querySelector('.product__form-wrapper') ||\n      document.querySelector('#product-form') ||\n      document.querySelector('.shopify-payment-button') ||\n      document.querySelector('[name=\"add\"]');\n\n    if (target) {\n      var offset = 80;\n      var top = target.getBoundingClientRect().top + window.pageYOffset - offset;\n      window.scrollTo({ top: top, behavior: 'smooth' });\n    } else {\n      window.scrollTo({ top: 0, behavior: 'smooth' });\n    }\n  });\n})();\n</script>",
+          "color_scheme": "background-1",
+          "padding_top": 0,
+          "padding_bottom": 0
+        }
+      },
+      "related-products": {
+        "type": "related-products",
+        "disabled": true,
+        "settings": {
+          "display_id": false,
+          "title": "You may also like",
+          "title_highlight_color": "#6d388b",
+          "heading_size": "h2",
+          "products_to_show": 4,
+          "columns_desktop": 4,
+          "color_scheme": "background-1",
+          "image_ratio": "adapt",
+          "show_secondary_image": false,
+          "show_vendor": false,
+          "show_rating": false,
+          "enable_quick_add": false,
+          "columns_mobile": "2",
+          "padding_top": 36,
+          "padding_bottom": 24
+        }
+      },
+      "image_with_text_ArcN4t": {
+        "type": "image-with-text",
+        "blocks": {
+          "heading_8CUkmW": {
+            "type": "heading",
+            "settings": {
+              "title": "All-In-One Grooming Solution",
+              "title_highlight_color": "#6d388b",
+              "heading_size": "h1"
+            }
+          },
+          "text_qXhVRg": {
+            "type": "text",
+            "settings": {
+              "text": "<p>VacuGroom™ makes grooming <strong>quick</strong>, <strong>clean</strong>, and <strong>effortless</strong>.</p>",
+              "text_style": "body"
+            }
+          },
+          "text_with_icon_Lt66tn": {
+            "type": "text_with_icon",
+            "settings": {
+              "mobile_text_size": 14,
+              "desktop_text_size": 16,
+              "alignment": "left",
+              "mobile_alignment": "left",
+              "text_color": "#121212",
+              "text_1": "<strong>Saves Time</strong>",
+              "text_2": "",
+              "text_3": "",
+              "icon_scale": 120,
+              "icon_color": "#53af01",
+              "icon_1": "check_circle",
+              "filled_icon_1": true,
+              "icon_2": "check_circle",
+              "filled_icon_2": false,
+              "icon_3": "check_circle",
+              "filled_icon_3": false,
+              "width": "100%",
+              "direction": "vertical",
+              "column_gap": 3,
+              "enable_bg": false,
+              "bg_color": "#f3f3f3",
+              "corner_radius": 40,
+              "padding": 3,
+              "border_size": 0,
+              "border_color": "#b7b7b7"
+            }
+          },
+          "text_with_icon_pTNQY7": {
+            "type": "text_with_icon",
+            "settings": {
+              "mobile_text_size": 14,
+              "desktop_text_size": 16,
+              "alignment": "left",
+              "mobile_alignment": "left",
+              "text_color": "#121212",
+              "text_1": "<strong>Eliminates Mess</strong>",
+              "text_2": "",
+              "text_3": "",
+              "icon_scale": 120,
+              "icon_color": "#53af01",
+              "icon_1": "check_circle",
+              "filled_icon_1": true,
+              "icon_2": "check_circle",
+              "filled_icon_2": false,
+              "icon_3": "check_circle",
+              "filled_icon_3": false,
+              "width": "100%",
+              "direction": "vertical",
+              "column_gap": 3,
+              "enable_bg": false,
+              "bg_color": "#f3f3f3",
+              "corner_radius": 40,
+              "padding": 3,
+              "border_size": 0,
+              "border_color": "#b7b7b7"
+            }
+          },
+          "text_with_icon_LHmCJ4": {
+            "type": "text_with_icon",
+            "settings": {
+              "mobile_text_size": 14,
+              "desktop_text_size": 16,
+              "alignment": "left",
+              "mobile_alignment": "left",
+              "text_color": "#121212",
+              "text_1": "<strong>Fits Your Lifestyle</strong>",
+              "text_2": "",
+              "text_3": "",
+              "icon_scale": 120,
+              "icon_color": "#53af01",
+              "icon_1": "check_circle",
+              "filled_icon_1": true,
+              "icon_2": "check_circle",
+              "filled_icon_2": false,
+              "icon_3": "check_circle",
+              "filled_icon_3": false,
+              "width": "100%",
+              "direction": "vertical",
+              "column_gap": 3,
+              "enable_bg": false,
+              "bg_color": "#f3f3f3",
+              "corner_radius": 40,
+              "padding": 3,
+              "border_size": 0,
+              "border_color": "#b7b7b7"
+            }
+          },
+          "text_with_icon_egMCBY": {
+            "type": "text_with_icon",
+            "settings": {
+              "mobile_text_size": 14,
+              "desktop_text_size": 16,
+              "alignment": "left",
+              "mobile_alignment": "left",
+              "text_color": "#121212",
+              "text_1": "<strong>Simple & Easy to Use</strong>",
+              "text_2": "",
+              "text_3": "",
+              "icon_scale": 120,
+              "icon_color": "#53af01",
+              "icon_1": "check_circle",
+              "filled_icon_1": true,
+              "icon_2": "check_circle",
+              "filled_icon_2": false,
+              "icon_3": "check_circle",
+              "filled_icon_3": false,
+              "width": "100%",
+              "direction": "vertical",
+              "column_gap": 3,
+              "enable_bg": false,
+              "bg_color": "#f3f3f3",
+              "corner_radius": 40,
+              "padding": 3,
+              "border_size": 0,
+              "border_color": "#b7b7b7"
+            }
+          },
+          "button_9KtGnx": {
+            "type": "button",
+            "settings": {
+              "button_label": "GET 3 FREE GIFTS + 50% OFF",
+              "button_link": "shopify://products/the-россия-balaclava-hoodie"
+            }
+          }
+        },
+        "block_order": [
+          "heading_8CUkmW",
+          "text_qXhVRg",
+          "text_with_icon_Lt66tn",
+          "text_with_icon_pTNQY7",
+          "text_with_icon_LHmCJ4",
+          "text_with_icon_egMCBY",
+          "button_9KtGnx"
+        ],
+        "disabled": true,
+        "settings": {
+          "display_id": false,
+          "visibility": "always-display",
+          "video_autoplay": true,
+          "video_loop": true,
+          "height": "adapt",
+          "color_scheme": "background-1",
+          "section_color_scheme": "background-1",
+          "full_desktop_width": false,
+          "content_layout": "no-overlap",
+          "desktop_media_width": 50,
+          "layout": "image_first",
+          "desktop_content_position": "top",
+          "desktop_content_alignment": "left",
+          "mobile_full_media_width": false,
+          "mobile_direction": "normal",
+          "mobile_image_quanlity": "2",
+          "mobile_content_alignment": "left",
+          "mobile_padding_top": 0,
+          "mobile_padding_bottom": 16,
+          "desktop_padding_top": 36,
+          "desktop_padding_bottom": 36,
+          "custom_colors_background": "#2e2a39",
+          "custom_gradient_background": "",
+          "custom_colors_text": "#ffffff",
+          "custom_colors_solid_button_background": "#dd1d1d",
+          "custom_colors_solid_button_text": "#ffffff",
+          "custom_colors_outline_button": "#dd1d1d",
+          "custom_section_colors_background": "#ffffff",
+          "custom_section_gradient_background": ""
+        }
+      },
+      "icon_bar_N6dgQ3": {
+        "type": "icon-bar",
+        "blocks": {
+          "column_tTYpzH": {
+            "type": "column",
+            "settings": {
+              "icon": "check_circle",
+              "filled_icon": false,
+              "title": "Free shipping",
+              "text": "<p>our shipping is free worldwide</p>"
+            }
+          },
+          "column_HtrLnH": {
+            "type": "column",
+            "settings": {
+              "icon": "check_circle",
+              "filled_icon": false,
+              "title": "Try risk-free",
+              "text": "<p>14 days for exchanges and returns</p>"
+            }
+          },
+          "column_4w7UEA": {
+            "type": "column",
+            "settings": {
+              "icon": "check_circle",
+              "filled_icon": false,
+              "title": "Secure Payment",
+              "text": "<p>Strongly secure environment for payments</p><p></p>"
+            }
+          },
+          "column_LxizdP": {
+            "type": "column",
+            "settings": {
+              "icon": "check_circle",
+              "filled_icon": false,
+              "title": "24/7 Support",
+              "text": "<p>Contact us anytime</p><p></p>"
+            }
+          }
+        },
+        "block_order": [
+          "column_tTYpzH",
+          "column_HtrLnH",
+          "column_4w7UEA",
+          "column_LxizdP"
+        ],
+        "disabled": true,
+        "settings": {
+          "display_id": false,
+          "visibility": "always-display",
+          "title": "",
+          "title_highlight_color": "#6d388b",
+          "heading_size": "h1",
+          "text": "",
+          "color_scheme": "background-1",
+          "icon_layout": "vertical",
+          "icon_size": "medium",
+          "icon_color": "accent-1",
+          "cards_color_scheme": "background-1",
+          "type": "slide",
+          "autoplay": false,
+          "autoplay_speed": 5,
+          "arrows_color_scheme": "inverse",
+          "transparent_arrows": true,
+          "dots_color_scheme": "inverse",
+          "desktop_full_page": false,
+          "columns_desktop": 4,
+          "slider_desktop": false,
+          "per_move_desktop": 1,
+          "desktop_spacing": 40,
+          "desktop_side_padding": 0,
+          "desktop_padding_calc": true,
+          "desktop_adaptive_height": false,
+          "desktop_dots_position": "under",
+          "desktop_arrows_position": "sides",
+          "columns_mobile": "2",
+          "slider_mobile": true,
+          "enable_mobile_preview": false,
+          "mobile_adaptive_height": true,
+          "mobile_dots_position": "under",
+          "mobile_arrows_position": "sides",
+          "padding_top": 36,
+          "padding_bottom": 36,
+          "custom_colors_background": "#ffffff",
+          "custom_gradient_background": "",
+          "custom_colors_text": "#2e2a39",
+          "custom_cards_colors_background": "#f3f3f3",
+          "custom_cards_gradient_background": "",
+          "custom_cards_colors_text": "#2e2a39"
+        }
+      },
+      "image_with_text_AXEcQz": {
+        "type": "image-with-text",
+        "blocks": {
+          "heading_VmXMFg": {
+            "type": "heading",
+            "settings": {
+              "title": "100% Waterproof Grooming",
+              "title_highlight_color": "#6d388b",
+              "heading_size": "h1"
+            }
+          },
+          "text_XNJEmB": {
+            "type": "text",
+            "settings": {
+              "text": "<p>Groom in the shower or clean easily under running water with 100% waterproof technology.</p>",
+              "text_style": "body"
+            }
+          },
+          "text_with_icon_F9tyiR": {
+            "type": "text_with_icon",
+            "settings": {
+              "mobile_text_size": 14,
+              "desktop_text_size": 16,
+              "alignment": "left",
+              "mobile_alignment": "left",
+              "text_color": "#121212",
+              "text_1": "Use in the Shower",
+              "text_2": "",
+              "text_3": "",
+              "icon_scale": 120,
+              "icon_color": "#53af01",
+              "icon_1": "check_circle",
+              "filled_icon_1": true,
+              "icon_2": "check_circle",
+              "filled_icon_2": false,
+              "icon_3": "check_circle",
+              "filled_icon_3": false,
+              "width": "100%",
+              "direction": "vertical",
+              "column_gap": 3,
+              "enable_bg": false,
+              "bg_color": "#f3f3f3",
+              "corner_radius": 40,
+              "padding": 3,
+              "border_size": 0,
+              "border_color": "#b7b7b7"
+            }
+          },
+          "text_with_icon_pLjJfR": {
+            "type": "text_with_icon",
+            "settings": {
+              "mobile_text_size": 14,
+              "desktop_text_size": 16,
+              "alignment": "left",
+              "mobile_alignment": "left",
+              "text_color": "#121212",
+              "text_1": "Easy to Clean",
+              "text_2": "",
+              "text_3": "",
+              "icon_scale": 120,
+              "icon_color": "#53af01",
+              "icon_1": "check_circle",
+              "filled_icon_1": true,
+              "icon_2": "check_circle",
+              "filled_icon_2": false,
+              "icon_3": "check_circle",
+              "filled_icon_3": false,
+              "width": "100%",
+              "direction": "vertical",
+              "column_gap": 3,
+              "enable_bg": false,
+              "bg_color": "#f3f3f3",
+              "corner_radius": 40,
+              "padding": 3,
+              "border_size": 0,
+              "border_color": "#b7b7b7"
+            }
+          },
+          "text_with_icon_Hb7xF7": {
+            "type": "text_with_icon",
+            "settings": {
+              "mobile_text_size": 14,
+              "desktop_text_size": 16,
+              "alignment": "left",
+              "mobile_alignment": "left",
+              "text_color": "#121212",
+              "text_1": "Convenient & Safe",
+              "text_2": "",
+              "text_3": "",
+              "icon_scale": 120,
+              "icon_color": "#53af01",
+              "icon_1": "check_circle",
+              "filled_icon_1": true,
+              "icon_2": "check_circle",
+              "filled_icon_2": false,
+              "icon_3": "check_circle",
+              "filled_icon_3": false,
+              "width": "100%",
+              "direction": "vertical",
+              "column_gap": 3,
+              "enable_bg": false,
+              "bg_color": "#f3f3f3",
+              "corner_radius": 40,
+              "padding": 3,
+              "border_size": 0,
+              "border_color": "#b7b7b7"
+            }
+          },
+          "button_YemXLi": {
+            "type": "button",
+            "settings": {
+              "button_label": "GET 3 FREE GIFTS + 50% OFF",
+              "button_link": "shopify://products/the-россия-balaclava-hoodie"
+            }
+          }
+        },
+        "block_order": [
+          "heading_VmXMFg",
+          "text_XNJEmB",
+          "text_with_icon_F9tyiR",
+          "text_with_icon_pLjJfR",
+          "text_with_icon_Hb7xF7",
+          "button_YemXLi"
+        ],
+        "disabled": true,
+        "settings": {
+          "display_id": false,
+          "visibility": "always-display",
+          "video_autoplay": true,
+          "video_loop": true,
+          "height": "adapt",
+          "color_scheme": "background-1",
+          "section_color_scheme": "background-1",
+          "full_desktop_width": false,
+          "content_layout": "no-overlap",
+          "desktop_media_width": 50,
+          "layout": "image_first",
+          "desktop_content_position": "top",
+          "desktop_content_alignment": "left",
+          "mobile_full_media_width": false,
+          "mobile_direction": "normal",
+          "mobile_image_quanlity": "2",
+          "mobile_content_alignment": "left",
+          "mobile_padding_top": 0,
+          "mobile_padding_bottom": 16,
+          "desktop_padding_top": 36,
+          "desktop_padding_bottom": 36,
+          "custom_colors_background": "#2e2a39",
+          "custom_gradient_background": "",
+          "custom_colors_text": "#ffffff",
+          "custom_colors_solid_button_background": "#dd1d1d",
+          "custom_colors_solid_button_text": "#ffffff",
+          "custom_colors_outline_button": "#dd1d1d",
+          "custom_section_colors_background": "#ffffff",
+          "custom_section_gradient_background": ""
+        }
+      },
+      "173367553295ab5061": {
+        "type": "apps",
+        "settings": {
+          "display_id": false,
+          "include_margins": true
+        }
+      },
+      "b321ab88-2b59-4dba-bade-54885c874ca5": {
+        "type": "section-divider",
+        "disabled": true,
+        "settings": {
+          "visibility": "always-display",
+          "shape": "waves_3",
+          "flip_horizontal": false,
+          "flip_vertical": false,
+          "shape_color": "accent-1",
+          "custom_shape_color": "#dd1d1d",
+          "background_color": "background-1",
+          "custom_background_color": "#ffffff",
+          "padding_top": 0,
+          "padding_bottom": 0
+        }
+      },
+      "image_with_text_tp8cYp": {
+        "type": "image-with-text",
+        "blocks": {
+          "heading_HQUNV9": {
+            "type": "heading",
+            "settings": {
+              "title": "<strong>Doctors are saying:</strong>",
+              "title_highlight_color": "#000000",
+              "heading_size": "h1"
+            }
+          },
+          "text_hm7AFa": {
+            "type": "text",
+            "settings": {
+              "text": "<p>Bleib deinen Wurzeln treu und trage den Geist Russlands, wohin du auch gehst. Kühn. Geheimnisvoll. Unvergesslich.</p>",
+              "text_style": "body"
+            }
+          },
+          "button_hz7BLE": {
+            "type": "button",
+            "settings": {
+              "button_label": "Trage deinen Stolz",
+              "button_link": "shopify://products/the-россия-balaclava-hoodie"
+            }
+          }
+        },
+        "block_order": [
+          "heading_HQUNV9",
+          "text_hm7AFa",
+          "button_hz7BLE"
+        ],
+        "disabled": true,
+        "settings": {
+          "display_id": false,
+          "visibility": "always-display",
+          "image": "shopify://shop_images/MAIN10.webp",
+          "video_autoplay": false,
+          "video_loop": false,
+          "height": "adapt",
+          "color_scheme": "background-1",
+          "section_color_scheme": "background-1",
+          "full_desktop_width": false,
+          "content_layout": "no-overlap",
+          "desktop_media_width": 50,
+          "layout": "image_first",
+          "desktop_content_position": "middle",
+          "desktop_content_alignment": "left",
+          "mobile_full_media_width": false,
+          "mobile_direction": "normal",
+          "mobile_image_quanlity": "2",
+          "mobile_content_alignment": "center",
+          "mobile_padding_top": 0,
+          "mobile_padding_bottom": 16,
+          "desktop_padding_top": 36,
+          "desktop_padding_bottom": 36,
+          "custom_colors_background": "#2e2a39",
+          "custom_gradient_background": "",
+          "custom_colors_text": "#ffffff",
+          "custom_colors_solid_button_background": "#dd1d1d",
+          "custom_colors_solid_button_text": "#ffffff",
+          "custom_colors_outline_button": "#dd1d1d",
+          "custom_section_colors_background": "#ffffff",
+          "custom_section_gradient_background": ""
+        }
+      },
+      "174360066879bf5eb9": {
+        "type": "apps",
+        "settings": {
+          "display_id": false,
+          "include_margins": true
+        }
+      }
+    },
+    "order": [
+      "main",
+      "custom_liquid_mwcE4N",
+      "custom_liquid_ycAyXQ",
+      "custom_liquid_AwDERn",
+      "custom_liquid_YYFKG7",
+      "custom_liquid_WdL3xd",
+      "related-products",
+      "image_with_text_ArcN4t",
+      "icon_bar_N6dgQ3",
+      "image_with_text_AXEcQz",
+      "173367553295ab5061",
+      "b321ab88-2b59-4dba-bade-54885c874ca5",
+      "image_with_text_tp8cYp",
+      "174360066879bf5eb9"
+    ]
+  }
+  
