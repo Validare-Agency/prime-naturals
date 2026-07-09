@@ -240,4 +240,13 @@
   body.c-primeSite11VarA .stats-footnote {
     font-size: 14px;
   }
+
+  /* Kaching Bundles app widget */
+  body.c-primeSite11VarA .kaching-bundles__bar-subtitle {
+    font-size: 16px;
+  }
+
+  body.c-primeSite11VarA .kaching-bundles__bar-full-price {
+    font-size: 16px;
+  }
 }
