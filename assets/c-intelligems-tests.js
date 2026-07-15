@@ -43,7 +43,7 @@ function handleExperiments() {
 
   // Test: V_PRIME_SITE_11 | Sitewide Typography Scale Increase
   const primeSite11 = window.igData?.user.getTestGroup(
-    "b92c2ab8-1943-40c1-b0d2-d3df7737f653"
+    "0852104b-e9e7-4343-ae4d-ad36fb8a3ea8"
   );
 
   if (primeSite11?.name === "Var A") {
