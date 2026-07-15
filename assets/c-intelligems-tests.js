@@ -43,11 +43,20 @@ function handleExperiments() {
 
   // Test: V_PRIME_SITE_11 | Sitewide Typography Scale Increase
   const primeSite11 = window.igData?.user.getTestGroup(
-    "0852104b-e9e7-4343-ae4d-ad36fb8a3ea8"
+    "b92c2ab8-1943-40c1-b0d2-d3df7737f653"
   );
 
   if (primeSite11?.name === "Var A") {
     document.body.classList.add("c-primeSite11VarA");
+  }
+
+  // Test: V_PRIME_CART_15 | Cart: Free shipping threshold
+  const primeCart15 = window.igData?.user.getTestGroup(
+    "b92c2ab8-1943-40c1-b0d2-d3df7737f653"
+  );
+
+  if (primeCart15?.name === "Var A") {
+    document.body.classList.add("c-primeCart15VarA");
   }
 }
 
@@ -60,6 +69,7 @@ setInterval(() => {
     cartDrawerWasActive = true;
     window.igEvents = window.igEvents || [];
     window.igEvents.push({ event: "cartDrawerOpen" });
+    window.igEvents.push({ event: "view_cart" });
   } else if (!isActive) {
     cartDrawerWasActive = false;
   }
