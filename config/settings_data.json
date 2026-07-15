@@ -321,7 +321,7 @@
             "type": "progress_bar",
             "settings": {
               "goal_type": "subtotal",
-              "goal": 55,
+              "goal": 20,
               "progress_message": "Spend [amount] away from free shipping",
               "success_message": "Congrats! You’ve unlocked free shipping!",
               "icon": "local_shipping",

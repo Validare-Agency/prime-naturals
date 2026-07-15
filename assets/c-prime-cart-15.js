@@ -1,5 +1,10 @@
 // Test: V_PRIME_CART_15 | Cart: Free shipping threshold
 (function () {
+  // Var A tests a $55 threshold; control keeps using the block's own configured
+  // goal untouched (do not change config/settings_data.json's "goal" for this test —
+  // that setting is shared with control and must stay exactly as it was).
+  var VARIANT_GOAL_CENTS = 5500;
+
   var TRUCK_SVG =
     '<svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
     '<path d="M4.85733 16.1458C5.79977 15.8602 6.33225 14.8647 6.04666 13.9222C5.76108 12.9798 4.76557 12.4473 3.82313 12.7329C2.88069 13.0185 2.34821 14.014 2.6338 14.9564C2.91939 15.8989 3.9149 16.4314 4.85733 16.1458Z" fill="currentColor"/>' +
@@ -11,11 +16,17 @@
     return document.body.classList.contains('c-primeCart15VarA');
   }
 
+  function formatMoney(cents) {
+    var fixed = (cents / 100).toFixed(2).replace(/\.00$/, '');
+    return '$' + fixed;
+  }
+
   function upgradeBar(bar) {
     var track = bar.querySelector('.cart-progress__bar');
     var fill = bar.querySelector('.cart-progress__bar__progress');
     var badge = bar.querySelector('.cart-progress__bar__badge');
-    if (!track || !fill || !badge) return;
+    var text = bar.querySelector('.cart-progress__text');
+    if (!track || !fill || !badge || !text) return;
 
     // Move the badge out of the moving fill so it marks the fixed goal at the
     // end of the track instead of sliding along with cart progress.
@@ -30,9 +41,26 @@
       badge.setAttribute('data-cart15-icon', '');
     }
 
-    var goalAmount = bar.getAttribute('data-goal-amount');
-    if (!goalAmount) return;
+    var subtotalCents = parseInt(bar.getAttribute('data-cart-subtotal-cents'), 10);
+    if (isNaN(subtotalCents)) return;
 
+    // Recompute everything against the variant's own $55 goal — control keeps
+    // rendering against the block's real (untouched) configured goal.
+    var pct = Math.min(100, (subtotalCents / VARIANT_GOAL_CENTS) * 100);
+    var reached = subtotalCents >= VARIANT_GOAL_CENTS;
+    fill.style.width = pct + '%';
+    bar.setAttribute('data-goal-reached', reached ? 'true' : 'false');
+
+    var progressTemplate = bar.getAttribute('data-progress-message') || '';
+    var successTemplate = bar.getAttribute('data-success-message') || '';
+    var message = reached
+      ? successTemplate
+      : progressTemplate.replace('[amount]', formatMoney(VARIANT_GOAL_CENTS - subtotalCents));
+    if (message && text.textContent.trim() !== message.trim()) {
+      text.textContent = message;
+    }
+
+    var goalAmount = formatMoney(VARIANT_GOAL_CENTS);
     var goalEl = track.querySelector('.cart-progress__bar__goal');
     if (!goalEl) {
       goalEl = document.createElement('span');
@@ -46,7 +74,7 @@
 
   function run() {
     if (!isActive()) return;
-    document.querySelectorAll('.cart-progress[data-goal-amount]').forEach(upgradeBar);
+    document.querySelectorAll('.cart-progress[data-cart-subtotal-cents]').forEach(upgradeBar);
   }
 
   var observer = new MutationObserver(run);
