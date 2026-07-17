@@ -4,14 +4,6 @@ let igReady = false;
 function handleExperiments() {
   if (!domLoaded || !igReady) return;
 
-  // Test: V_PRIME_PDP_07 | PDP review format: auto-scroll vs manual arrows
-  const primePdp07 = window.igData?.user.getTestGroup(
-    "ec0d5412-f677-4267-b944-7cb74ffda215"
-  );
-  if (primePdp07?.name === "Var A") {
-    document.body.classList.add("c-primePdp07VarA");
-  }
-
   // Test: V_PRIME_HP_09 | HP - Banner Image - Repositioning
   const primeHp09 = window.igData?.user.getTestGroup(
     "d289d23b-c68c-48f7-b0b4-f39d3882426c"
