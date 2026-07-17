@@ -1,246 +1,247 @@
 @media screen and (max-width: 749px) {
   /* Product title (H1) — sitewide, all templates */
+  /* !important needed: section blocks can set a competing .h0-.h5 text-size class on the h1, which outspecifies a bare h1/.h1 selector */
   h1,
   .h1 {
-    font-size: 26px;
+    font-size: 26px !important;
   }
 
   /* Body copy — sitewide base text size */
   body {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 
   .text-body {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 
   /* Review / testimonial text */
   .review-item__text p {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 
   .pib-slide__text {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 
   /* USP bullet labels (icon-with-text blocks) */
   .icon-with-text .h4 {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 
   /* Trust-strip microcopy (text-with-icon blocks) */
   .product__text-container {
-    font-size: 14px;
+    font-size: 14px !important;
   }
 
   /* Stat numbers (results section, e.g. 94%, 97%) */
   .results__percentage {
-    width: 100px;
-    height: 100px;
-    --border-width: 10px;
+    width: 100px !important;
+    height: 100px !important;
+    --border-width: 10px !important;
   }
 
   .results__percentage p {
-    font-size: 43px;
+    font-size: 43px !important;
   }
 
   /* Add to Cart button label */
   .product-form__submit {
-    font-size: 24px;
+    font-size: 24px !important;
   }
 
   /* "Why families chose this" custom_liquid block (.imt-*) — left aligned */
   .imt-eyebrow {
-    font-size: 13px;
+    font-size: 13px !important;
   }
 
   .imt-heading {
-    font-size: 24px;
-    text-align: left;
-    line-height: 1.59;
+    font-size: 24px !important;
+    text-align: left !important;
+    line-height: 1.59 !important;
   }
 
   .imt-sub {
-    font-size: 16px;
-    text-align: left;
+    font-size: 16px !important;
+    text-align: left !important;
   }
 
   .imt-feature__title {
-    font-size: 18px;
-    text-align: left;
+    font-size: 18px !important;
+    text-align: left !important;
   }
 
   .imt-feature__desc {
-    font-size: 16px;
-    text-align: left;
+    font-size: 16px !important;
+    text-align: left !important;
   }
 
   .imt-proof__quote {
-    font-size: 16px;
-    text-align: left;
+    font-size: 16px !important;
+    text-align: left !important;
   }
 
   .imt-proof__author {
-    font-size: 16px;
-    text-align: left;
+    font-size: 16px !important;
+    text-align: left !important;
   }
 
   /* Stats custom_liquid block (.stats-*) — left aligned */
   .stats-header {
-    text-align: left;
+    text-align: left !important;
   }
 
   .stats-eyebrow {
-    font-size: 14px;
+    font-size: 14px !important;
   }
 
   .stats-heading {
-    font-size: 24px;
+    font-size: 24px !important;
   }
 
   .stats-subhead {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 
   .stats-desc {
-    font-size: 16px;
-    text-align: left;
+    font-size: 16px !important;
+    text-align: left !important;
   }
 
   /* "Everything inside" custom_liquid block — left aligned (overrides its default center) */
   .inside-header {
-    text-align: center;
+    text-align: center !important;
   }
 
   .inside-eyebrow {
-    font-size: 14px;
+    font-size: 14px !important;
   }
 
   .inside-heading {
-    font-size: 24px;
-    text-align: center;
+    font-size: 24px !important;
+    text-align: center !important;
   }
 
   .inside-sub {
-    font-size: 16px;
-    text-align: center;
+    font-size: 16px !important;
+    text-align: center !important;
   }
 
   .inside-card__name {
-    font-size: 18px;
+    font-size: 18px !important;
   }
 
   .inside-card__desc {
-    font-size: 14px;
+    font-size: 14px !important;
   }
 
   /* Reviews custom_liquid block (.rev-*) */
   .rev-heading {
-    font-size: 24px;
+    font-size: 24px !important;
   }
 
   .rev-text {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 
   .rev-meta {
-    font-size: 14px;
+    font-size: 14px !important;
   }
 
   .rev-name {
-    font-size: 15px;
+    font-size: 15px !important;
   }
 
   /* CTA custom_liquid block */
   .cta-inner {
-    align-items: center;
-    text-align: center;
+    align-items: center !important;
+    text-align: center !important;
   }
 
   .cta-eyebrow {
-    font-size: 12px;
+    font-size: 12px !important;
   }
 
   .cta-heading {
-    font-size: 24px;
+    font-size: 24px !important;
   }
 
   .cta-sub {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 
   #cta-scroll-btn {
-    font-size: 20px;
+    font-size: 20px !important;
   }
 
   .cta-trust__item {
-    font-size: 13px;
+    font-size: 13px !important;
   }
 
   /* PIB testimonial carousel — author name/meta */
   .pib-slide__name {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 
   .pib-slide__meta {
-    font-size: 15px;
+    font-size: 15px !important;
   }
 
   /* PIB rating row — everything inside uniform 15px */
   .pib-stars-row,
   .pib-stars-row * {
-    font-size: 15px;
+    font-size: 15px !important;
   }
 
   /* PIB bullets — everything inside uniform 16px */
   .pib-bullet {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 
   /* PIB trust strip — centered (the only pib-* block that should be) */
   .pib-guarantee-strip {
-    font-size: 14px;
-    justify-content: center;
+    font-size: 14px !important;
+    justify-content: center !important;
   }
 
   .pib-payment-row {
-    justify-content: center;
-    padding: 0 10px;
+    justify-content: center !important;
+    padding: 0 10px !important;
   }
 
   .pib-pay-icon {
-    font-size: 14px;
+    font-size: 14px !important;
   }
 
   /* Spacing fixes for larger mobile typography */
   .stats-wrap {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
 
   .imt-wrap {
-    padding-bottom: 0;
+    padding-bottom: 0 !important;
   }
 
   .rev-card {
-    padding: 20px 13px 18px;
+    padding: 20px 13px 18px !important;
   }
 
   .rev-text {
-    letter-spacing: 0;
-    line-height: 1.5;
+    letter-spacing: 0 !important;
+    line-height: 1.5 !important;
   }
 
   .stats-footnote {
-    font-size: 14px;
+    font-size: 14px !important;
   }
 
   /* Kaching Bundles app widget */
   .kaching-bundles__bar-subtitle {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 
   .kaching-bundles__bar-full-price {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 }
