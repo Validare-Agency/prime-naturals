@@ -323,7 +323,7 @@
               "goal_type": "subtotal",
               "goal": 20,
               "progress_message": "Spend [amount] away from free shipping",
-              "success_message": "Congrats! You’ve unlocked free shipping!",
+              "success_message": "Congrats! You Get Free Shipping!",
               "icon": "local_shipping",
               "icon_filled": true,
               "accent_color": "accent-1",

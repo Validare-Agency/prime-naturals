@@ -5,6 +5,10 @@
   // that setting is shared with control and must stay exactly as it was).
   var VARIANT_GOAL_CENTS = 5500;
 
+  // Var A's own copy — intentionally distinct from control's success_message.
+  var PROGRESS_TEMPLATE = 'You’re [amount] away from free shipping';
+  var SUCCESS_MESSAGE = 'Congrats! You’ve unlocked free shipping!';
+
   var TRUCK_SVG =
     '<svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
     '<path d="M4.85733 16.1458C5.79977 15.8602 6.33225 14.8647 6.04666 13.9222C5.76108 12.9798 4.76557 12.4473 3.82313 12.7329C2.88069 13.0185 2.34821 14.014 2.6338 14.9564C2.91939 15.8989 3.9149 16.4314 4.85733 16.1458Z" fill="currentColor"/>' +
@@ -51,12 +55,10 @@
     fill.style.width = pct + '%';
     bar.setAttribute('data-goal-reached', reached ? 'true' : 'false');
 
-    var progressTemplate = bar.getAttribute('data-progress-message') || '';
-    var successTemplate = bar.getAttribute('data-success-message') || '';
     var message = reached
-      ? successTemplate
-      : progressTemplate.replace('[amount]', formatMoney(VARIANT_GOAL_CENTS - subtotalCents));
-    if (message && text.textContent.trim() !== message.trim()) {
+      ? SUCCESS_MESSAGE
+      : PROGRESS_TEMPLATE.replace('[amount]', formatMoney(VARIANT_GOAL_CENTS - subtotalCents));
+    if (text.textContent.trim() !== message.trim()) {
       text.textContent = message;
     }
 

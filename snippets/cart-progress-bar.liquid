@@ -30,7 +30,7 @@
   {% endif %}
 {% endcapture %}
 
-<div class="cart-progress accent-color-{{ block.settings.accent_color }}" style="--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;" {% unless is_quantity %}data-goal-amount="{{ goal | money_without_trailing_zeros }}" data-cart-subtotal-cents="{{ cart.items_subtotal_price }}" data-progress-message="{{ block.settings.progress_message | escape }}" data-success-message="{{ block.settings.success_message | escape }}"{% endunless %} data-goal-reached="{{ goal_reached }}" {{ block.shopify_attributes }}>
+<div class="cart-progress accent-color-{{ block.settings.accent_color }}" style="--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;" {% unless is_quantity %}data-cart-subtotal-cents="{{ cart.items_subtotal_price }}"{% endunless %} data-goal-reached="{{ goal_reached }}" {{ block.shopify_attributes }}>
   <p class="cart-progress__text">
     {% if goal_reached == false %}
       {{ block.settings.progress_message | replace: '[amount]', goal_difference_html }}
