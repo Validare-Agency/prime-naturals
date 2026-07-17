@@ -79,8 +79,51 @@
     document.querySelectorAll('.cart-progress[data-cart-subtotal-cents]').forEach(upgradeBar);
   }
 
-  var observer = new MutationObserver(run);
+  // Sitewide: any standalone "Free Shipping" / "Kostenloser Versand" label
+  // (PDP trust badges, homepage hero, etc.) becomes "Free Shipping Over $55".
+  // Matches only text nodes whose ENTIRE trimmed content is one of those
+  // labels (an optional leading emoji/icon is preserved) — this deliberately
+  // skips longer sentences like shipping-policy paragraphs that merely
+  // mention the phrase, so it never mangles unrelated copy.
+  var FREE_SHIPPING_LABELS = ['free shipping', 'kostenloser versand'];
+  var FREE_SHIPPING_REPLACEMENT = 'Free Shipping Over $55';
+  var copyReplaced = false;
+
+  function replaceFreeShippingCopy() {
+    if (copyReplaced || !isActive()) return;
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (node) {
+        var parent = node.parentElement;
+        if (!parent || /^(SCRIPT|STYLE|NOSCRIPT|TEXTAREA|INPUT)$/.test(parent.tagName)) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        var trimmed = node.textContent.trim();
+        if (!trimmed || trimmed.length > 40) return NodeFilter.FILTER_SKIP;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+
+    var node;
+    while ((node = walker.nextNode())) {
+      var text = node.textContent;
+      var trimmed = text.trim();
+      var match = trimmed.match(/^([^\w]*)(.*)$/);
+      var prefix = match ? match[1] : '';
+      var label = (match ? match[2] : trimmed).trim();
+      if (FREE_SHIPPING_LABELS.indexOf(label.toLowerCase()) !== -1) {
+        node.textContent = text.replace(trimmed, prefix + FREE_SHIPPING_REPLACEMENT);
+      }
+    }
+    copyReplaced = true;
+  }
+
+  function runAll() {
+    run();
+    replaceFreeShippingCopy();
+  }
+
+  var observer = new MutationObserver(runAll);
   observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
-  document.addEventListener('DOMContentLoaded', run);
-  window.addEventListener('ig:ready', run);
+  document.addEventListener('DOMContentLoaded', runAll);
+  window.addEventListener('ig:ready', runAll);
 })();
