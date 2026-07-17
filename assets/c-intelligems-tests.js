@@ -32,15 +32,6 @@ function handleExperiments() {
   } else if (primePdp10?.name === "Var B : Gift + Less Screen Time") {
     document.body.classList.add("c-primePdp10VarB");
   }
-
-  // Test: V_PRIME_SITE_11 | Sitewide Typography Scale Increase
-  const primeSite11 = window.igData?.user.getTestGroup(
-    "0852104b-e9e7-4343-ae4d-ad36fb8a3ea8"
-  );
-
-  if (primeSite11?.name === "Var A") {
-    document.body.classList.add("c-primeSite11VarA");
-  }
 }
 
 let cartDrawerWasActive = false;
