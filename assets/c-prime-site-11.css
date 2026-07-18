@@ -1,252 +1,247 @@
-/* <-------------------V_PRIME_SITE_11 | Sitewide Typography Scale Increase-----------------> */
-
-/* Test Setup */
-/* No elements are hidden/shown for this test — Control renders default sitewide typography, Var A applies larger mobile-only font sizes below. */
-
-/* Test Design */
 @media screen and (max-width: 749px) {
   /* Product title (H1) — sitewide, all templates */
-  body.c-primeSite11VarA h1,
-  body.c-primeSite11VarA .h1 {
-    font-size: 26px;
+  /* !important needed: section blocks can set a competing .h0-.h5 text-size class on the h1, which outspecifies a bare h1/.h1 selector */
+  h1,
+  .h1 {
+    font-size: 26px !important;
   }
 
   /* Body copy — sitewide base text size */
-  body.c-primeSite11VarA {
-    font-size: 16px;
+  body {
+    font-size: 16px !important;
   }
 
-  body.c-primeSite11VarA .text-body {
-    font-size: 16px;
+  .text-body {
+    font-size: 16px !important;
   }
 
   /* Review / testimonial text */
-  body.c-primeSite11VarA .review-item__text p {
-    font-size: 16px;
+  .review-item__text p {
+    font-size: 16px !important;
   }
 
-  body.c-primeSite11VarA .pib-slide__text {
-    font-size: 16px;
+  .pib-slide__text {
+    font-size: 16px !important;
   }
 
   /* USP bullet labels (icon-with-text blocks) */
-  body.c-primeSite11VarA .icon-with-text .h4 {
-    font-size: 16px;
+  .icon-with-text .h4 {
+    font-size: 16px !important;
   }
 
   /* Trust-strip microcopy (text-with-icon blocks) */
-  body.c-primeSite11VarA .product__text-container {
-    font-size: 14px;
+  .product__text-container {
+    font-size: 14px !important;
   }
 
   /* Stat numbers (results section, e.g. 94%, 97%) */
-  body.c-primeSite11VarA .results__percentage {
-    width: 100px;
-    height: 100px;
-    --border-width: 10px;
+  .results__percentage {
+    width: 100px !important;
+    height: 100px !important;
+    --border-width: 10px !important;
   }
 
-  body.c-primeSite11VarA .results__percentage p {
-    font-size: 43px;
+  .results__percentage p {
+    font-size: 43px !important;
   }
 
   /* Add to Cart button label */
-  body.c-primeSite11VarA .product-form__submit {
-    font-size: 24px;
+  .product-form__submit {
+    font-size: 24px !important;
   }
 
   /* "Why families chose this" custom_liquid block (.imt-*) — left aligned */
-  body.c-primeSite11VarA .imt-eyebrow {
-    font-size: 13px;
+  .imt-eyebrow {
+    font-size: 13px !important;
   }
 
-  body.c-primeSite11VarA .imt-heading {
-    font-size: 24px;
-    text-align: left;
-    line-height: 1.59;
+  .imt-heading {
+    font-size: 24px !important;
+    text-align: left !important;
+    line-height: 1.59 !important;
   }
 
-  body.c-primeSite11VarA .imt-sub {
-    font-size: 16px;
-    text-align: left;
+  .imt-sub {
+    font-size: 16px !important;
+    text-align: left !important;
   }
 
-  body.c-primeSite11VarA .imt-feature__title {
-    font-size: 18px;
-    text-align: left;
+  .imt-feature__title {
+    font-size: 18px !important;
+    text-align: left !important;
   }
 
-  body.c-primeSite11VarA .imt-feature__desc {
-    font-size: 16px;
-    text-align: left;
+  .imt-feature__desc {
+    font-size: 16px !important;
+    text-align: left !important;
   }
 
-  body.c-primeSite11VarA .imt-proof__quote {
-    font-size: 16px;
-    text-align: left;
+  .imt-proof__quote {
+    font-size: 16px !important;
+    text-align: left !important;
   }
 
-  body.c-primeSite11VarA .imt-proof__author {
-    font-size: 16px;
-    text-align: left;
+  .imt-proof__author {
+    font-size: 16px !important;
+    text-align: left !important;
   }
 
   /* Stats custom_liquid block (.stats-*) — left aligned */
-  body.c-primeSite11VarA .stats-header {
-    text-align: left;
+  .stats-header {
+    text-align: left !important;
   }
 
-  body.c-primeSite11VarA .stats-eyebrow {
-    font-size: 14px;
+  .stats-eyebrow {
+    font-size: 14px !important;
   }
 
-  body.c-primeSite11VarA .stats-heading {
-    font-size: 24px;
+  .stats-heading {
+    font-size: 24px !important;
   }
 
-  body.c-primeSite11VarA .stats-subhead {
-    font-size: 16px;
+  .stats-subhead {
+    font-size: 16px !important;
   }
 
-  body.c-primeSite11VarA .stats-desc {
-    font-size: 16px;
-    text-align: left;
+  .stats-desc {
+    font-size: 16px !important;
+    text-align: left !important;
   }
 
   /* "Everything inside" custom_liquid block — left aligned (overrides its default center) */
-  body.c-primeSite11VarA .inside-header {
-    text-align: center;
+  .inside-header {
+    text-align: center !important;
   }
 
-  body.c-primeSite11VarA .inside-eyebrow {
-    font-size: 14px;
+  .inside-eyebrow {
+    font-size: 14px !important;
   }
 
-  body.c-primeSite11VarA .inside-heading {
-    font-size: 24px;
-    text-align: center;
+  .inside-heading {
+    font-size: 24px !important;
+    text-align: center !important;
   }
 
-  body.c-primeSite11VarA .inside-sub {
-    font-size: 16px;
-    text-align: center;
+  .inside-sub {
+    font-size: 16px !important;
+    text-align: center !important;
   }
 
-  body.c-primeSite11VarA .inside-card__name {
-    font-size: 18px;
+  .inside-card__name {
+    font-size: 18px !important;
   }
 
-  body.c-primeSite11VarA .inside-card__desc {
-    font-size: 14px;
+  .inside-card__desc {
+    font-size: 14px !important;
   }
 
   /* Reviews custom_liquid block (.rev-*) */
-  body.c-primeSite11VarA .rev-heading {
-    font-size: 24px;
+  .rev-heading {
+    font-size: 24px !important;
   }
 
-  body.c-primeSite11VarA .rev-text {
-    font-size: 16px;
+  .rev-text {
+    font-size: 16px !important;
   }
 
-  body.c-primeSite11VarA .rev-meta {
-    font-size: 14px;
+  .rev-meta {
+    font-size: 14px !important;
   }
 
-  body.c-primeSite11VarA .rev-name {
-    font-size: 15px;
+  .rev-name {
+    font-size: 15px !important;
   }
 
   /* CTA custom_liquid block */
-  body.c-primeSite11VarA .cta-inner {
-    align-items: center;
-    text-align: center;
+  .cta-inner {
+    align-items: center !important;
+    text-align: center !important;
   }
 
-  body.c-primeSite11VarA .cta-eyebrow {
-    font-size: 12px;
+  .cta-eyebrow {
+    font-size: 12px !important;
   }
 
-  body.c-primeSite11VarA .cta-heading {
-    font-size: 24px;
+  .cta-heading {
+    font-size: 24px !important;
   }
 
-  body.c-primeSite11VarA .cta-sub {
-    font-size: 16px;
+  .cta-sub {
+    font-size: 16px !important;
   }
 
-  body.c-primeSite11VarA #cta-scroll-btn {
-    font-size: 20px;
+  #cta-scroll-btn {
+    font-size: 20px !important;
   }
 
-  body.c-primeSite11VarA .cta-trust__item {
-    font-size: 13px;
+  .cta-trust__item {
+    font-size: 13px !important;
   }
 
   /* PIB testimonial carousel — author name/meta */
-  body.c-primeSite11VarA .pib-slide__name {
-    font-size: 16px;
+  .pib-slide__name {
+    font-size: 16px !important;
   }
 
-  body.c-primeSite11VarA .pib-slide__meta {
-    font-size: 15px;
+  .pib-slide__meta {
+    font-size: 15px !important;
   }
 
   /* PIB rating row — everything inside uniform 15px */
-  body.c-primeSite11VarA .pib-stars-row,
-  body.c-primeSite11VarA .pib-stars-row * {
-    font-size: 15px;
+  .pib-stars-row,
+  .pib-stars-row * {
+    font-size: 15px !important;
   }
 
   /* PIB bullets — everything inside uniform 16px */
-  body.c-primeSite11VarA .pib-bullet {
-    font-size: 16px;
+  .pib-bullet {
+    font-size: 16px !important;
   }
 
   /* PIB trust strip — centered (the only pib-* block that should be) */
-  body.c-primeSite11VarA .pib-guarantee-strip {
-    font-size: 14px;
-    justify-content: center;
+  .pib-guarantee-strip {
+    font-size: 14px !important;
+    justify-content: center !important;
   }
 
-  body.c-primeSite11VarA .pib-payment-row {
-    justify-content: center;
-    padding: 0 10px;
+  .pib-payment-row {
+    justify-content: center !important;
+    padding: 0 10px !important;
   }
 
-  body.c-primeSite11VarA .pib-pay-icon {
-    font-size: 14px;
+  .pib-pay-icon {
+    font-size: 14px !important;
   }
 
   /* Spacing fixes for larger mobile typography */
-  body.c-primeSite11VarA .stats-wrap {
-    padding-top: 0;
-    padding-bottom: 0;
+  .stats-wrap {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
 
-  body.c-primeSite11VarA .imt-wrap {
-    padding-bottom: 0;
+  .imt-wrap {
+    padding-bottom: 0 !important;
   }
 
-  body.c-primeSite11VarA .rev-card {
-    padding: 20px 13px 18px;
+  .rev-card {
+    padding: 20px 13px 18px !important;
   }
 
-  body.c-primeSite11VarA .rev-text {
-    letter-spacing: 0;
-    line-height: 1.5;
+  .rev-text {
+    letter-spacing: 0 !important;
+    line-height: 1.5 !important;
   }
 
-  body.c-primeSite11VarA .stats-footnote {
-    font-size: 14px;
+  .stats-footnote {
+    font-size: 14px !important;
   }
 
   /* Kaching Bundles app widget */
-  body.c-primeSite11VarA .kaching-bundles__bar-subtitle {
-    font-size: 16px;
+  .kaching-bundles__bar-subtitle {
+    font-size: 16px !important;
   }
 
-  body.c-primeSite11VarA .kaching-bundles__bar-full-price {
-    font-size: 16px;
+  .kaching-bundles__bar-full-price {
+    font-size: 16px !important;
   }
 }

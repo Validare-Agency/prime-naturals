@@ -10,9 +10,6 @@
     const slides = carousel.querySelectorAll('.pib-slide');
     if (!slides.length) return;
 
-    // Flag checked inside the IIFE's setInterval callback to prevent auto-scroll
-    window['__pibVarA'] = true;
-
     // Always read active state from DOM — single source of truth
     function getActive() {
       for (let i = 0; i < slides.length; i++) {
@@ -69,15 +66,10 @@
 
   function tryInit() {
     if (initialized) return;
-    if (!document.body.classList.contains('c-primePdp07VarA')) return;
+    if (!document.querySelector('.pib-carousel')) return;
     initialized = true;
-    observer.disconnect();
     setupArrows();
   }
 
-  const observer = new MutationObserver(function () { tryInit(); });
-  observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-
   document.addEventListener('DOMContentLoaded', tryInit);
-  window.addEventListener('ig:ready', tryInit);
 })();

@@ -465,7 +465,6 @@
     
     {{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
     {{ 'c-custom.css' | asset_url | stylesheet_tag }}
-    {%- comment -%} Test: V_PRIME_SITE_11 | Sitewide Typography Scale Increase (sitewide, mobile-only — loaded globally since it spans every template) {%- endcomment -%}
     {{ 'c-prime-site-11.css' | asset_url | stylesheet_tag }}
     {%- comment -%} Test: V_PRIME_CART_15 | Cart: Free shipping threshold (loaded globally — cart drawer renders on every template) {%- endcomment -%}
     {{ 'c-prime-cart-15.css' | asset_url | stylesheet_tag }}
