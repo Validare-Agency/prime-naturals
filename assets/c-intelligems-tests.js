@@ -32,6 +32,15 @@ function handleExperiments() {
   } else if (primePdp10?.name === "Var B : Gift + Less Screen Time") {
     document.body.classList.add("c-primePdp10VarB");
   }
+
+  // Test: V_PRIME_CART_15 | Cart: Free shipping threshold
+  const primeCart15 = window.igData?.user.getTestGroup(
+    "b92c2ab8-1943-40c1-b0d2-d3df7737f653"
+  );
+
+  if (primeCart15?.name === "Var A") {
+    document.body.classList.add("c-primeCart15VarA");
+  }
 }
 
 let cartDrawerWasActive = false;
@@ -43,6 +52,7 @@ setInterval(() => {
     cartDrawerWasActive = true;
     window.igEvents = window.igEvents || [];
     window.igEvents.push({ event: "cartDrawerOpen" });
+    window.igEvents.push({ event: "view_cart" });
   } else if (!isActive) {
     cartDrawerWasActive = false;
   }
