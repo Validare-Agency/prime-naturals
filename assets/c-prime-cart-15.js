@@ -1,9 +1,27 @@
 // Test: V_PRIME_CART_15 | Cart: Free shipping threshold
 (function () {
-  // Var A tests a $55 threshold; control keeps using the block's own configured
-  // goal untouched (do not change config/settings_data.json's "goal" for this test —
-  // that setting is shared with control and must stay exactly as it was).
-  var VARIANT_GOAL_CENTS = 5500;
+  // Var A tests a $55-equivalent threshold per market; control keeps using the
+  // block's own configured goal untouched (do not change
+  // config/settings_data.json's "goal" for this test — that setting is shared
+  // with control and must stay exactly as it was).
+  // window.cPrimeCart15Currency is set server-side from cart.currency.iso_code
+  // in layout/theme.liquid, so this already reflects Shopify Markets' correct
+  // presentment currency for the shopper — no extra market detection needed.
+  var CART_CURRENCY = String(window.cPrimeCart15Currency || 'USD').toUpperCase();
+
+  // Provisional round-number equivalents of $55 USD at current FX rates —
+  // confirm/adjust before shipping, this is the only place that needs editing.
+  var VARIANT_GOAL_CENTS_BY_CURRENCY = {
+    USD: 5500, // $55
+    AUD: 8000, // AU$80
+    CAD: 8000, // CA$80
+    GBP: 4500, // £45
+    NZD: 9500 // NZ$95
+  };
+  var CURRENCY_SYMBOLS = { USD: '$', AUD: 'AU$', CAD: 'CA$', GBP: '£', NZD: 'NZ$' };
+
+  var VARIANT_GOAL_CENTS = VARIANT_GOAL_CENTS_BY_CURRENCY[CART_CURRENCY] || VARIANT_GOAL_CENTS_BY_CURRENCY.USD;
+  var CURRENCY_SYMBOL = CURRENCY_SYMBOLS[CART_CURRENCY] || CURRENCY_SYMBOLS.USD;
 
   // Var A's own copy — intentionally distinct from control's success_message.
   var PROGRESS_TEMPLATE = 'You’re [amount] away from free shipping';
@@ -22,7 +40,7 @@
 
   function formatMoney(cents) {
     var fixed = (cents / 100).toFixed(2).replace(/\.00$/, '');
-    return '$' + fixed;
+    return CURRENCY_SYMBOL + fixed;
   }
 
   function upgradeBar(bar) {
@@ -48,8 +66,8 @@
     var subtotalCents = parseInt(bar.getAttribute('data-cart-subtotal-cents'), 10);
     if (isNaN(subtotalCents)) return;
 
-    // Recompute everything against the variant's own $55 goal — control keeps
-    // rendering against the block's real (untouched) configured goal.
+    // Recompute everything against the variant's own per-market goal — control
+    // keeps rendering against the block's real (untouched) configured goal.
     var pct = Math.min(100, (subtotalCents / VARIANT_GOAL_CENTS) * 100);
     var reached = subtotalCents >= VARIANT_GOAL_CENTS;
     fill.style.width = pct + '%';
@@ -86,7 +104,7 @@
   // skips longer sentences like shipping-policy paragraphs that merely
   // mention the phrase, so it never mangles unrelated copy.
   var FREE_SHIPPING_LABELS = ['free shipping', 'kostenloser versand'];
-  var FREE_SHIPPING_REPLACEMENT = 'Free Shipping Over $55';
+  var FREE_SHIPPING_REPLACEMENT = 'Free Shipping Over ' + formatMoney(VARIANT_GOAL_CENTS);
   var copyReplaced = false;
 
   function replaceFreeShippingCopy() {
