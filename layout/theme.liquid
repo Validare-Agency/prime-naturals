@@ -494,7 +494,20 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
-  </head>
+  {%- comment -%} vystodian agent: hide theme chrome on cloned-site page templates (render-blocking, no flash) {%- endcomment -%}
+{% if template.suffix contains 'vstd-' %}
+<style>
+.shopify-section-group-header-group,
+.shopify-section-group-footer-group,
+a.skip-to-content-link,
+#shopify-section-cart-drawer,
+#shopify-section-promo-popup,
+#shopify-section-scroll-to-top-btn,
+#shopify-section-global-music-player{display:none !important}
+#MainContent{margin:0 !important;padding:0 !important}
+</style>
+{% endif %}
+</head>
 
   <body class="gradient link-btns--{{ settings.link_btn_hover }} action-btns--{{ settings.action_btn_hover }}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
