@@ -22,17 +22,6 @@ function handleExperiments() {
     document.body.classList.add("c-primeHp05VarA");
   }
 
-  // Test: V_PRIME_PDP_10 | Gallery Images Optimization
-  const primePdp10 = window.igData?.user.getTestGroup(
-    "5bacdd65-f916-4413-815f-bc4401969b33"
-  );
-
-  if (primePdp10?.name === "Var A : Sparks Curiosity") {
-    document.body.classList.add("c-primePdp10VarA");
-  } else if (primePdp10?.name === "Var B : Gift + Less Screen Time") {
-    document.body.classList.add("c-primePdp10VarB");
-  }
-
   // Test: V_PRIME_CART_15 | Cart: Free shipping threshold
   const primeCart15 = window.igData?.user.getTestGroup(
     "b92c2ab8-1943-40c1-b0d2-d3df7737f653"
