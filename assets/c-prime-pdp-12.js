@@ -60,6 +60,18 @@
     correct();
   }
 
+  // Custom Intelligems event: fires once per tap on the thumbnail left/right arrows or on a
+  // thumbnail image itself.
+  function trackThumbnailEngagement(list) {
+    var slider = list.closest('.thumbnail-slider');
+    if (!slider) return;
+    slider.addEventListener('click', function (event) {
+      if (!event.target.closest('.slider-button--prev, .slider-button--next, .thumbnail')) return;
+      window.igEvents = window.igEvents || [];
+      window.igEvents.push({ event: 'thumbnail_engagement' });
+    });
+  }
+
   function tryInit() {
     if (started || !document.body.classList.contains('c-primePdp12VarA')) return;
     var lists = document.querySelectorAll('media-gallery .thumbnail-slider .thumbnail-list.slider');
@@ -67,6 +79,7 @@
     started = true;
     guard(lists);
     lists.forEach(fixNextDisabled);
+    lists.forEach(trackThumbnailEngagement);
   }
 
   document.addEventListener('DOMContentLoaded', tryInit);
