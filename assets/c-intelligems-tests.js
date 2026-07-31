@@ -30,6 +30,13 @@ function handleExperiments() {
   if (primeCart15?.name === "Var A") {
     document.body.classList.add("c-primeCart15VarA");
   }
+
+  // Test: V_PRIME_PDP_12 | Gallery Image Size + Thumbnail Scroll Affordance
+  const primePdp12 = { name: "Var A" };
+
+  if (primePdp12?.name === "Var A") {
+    document.body.classList.add("c-primePdp12VarA");
+  }
 }
 
 let cartDrawerWasActive = false;

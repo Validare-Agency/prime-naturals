@@ -1,0 +1,172 @@
+/* <-------------------V_PRIME_PDP_12 | Gallery Image Size + Thumbnail Scroll Affordance-----------------> */
+
+/* Test Setup */
+/* No elements hidden/shown — Var A resizes existing gallery elements and reveals the thumbnail scroll affordance */
+
+/* Test Design */
+@media screen and (max-width: 749px) {
+  /* Main gallery image: container height increased to match Figma (389px -> 405px on
+     iPhone 12 Pro's 390px-wide viewport), width untouched. object-fit: fill stretches the
+     image to exactly match the box on both axes independently — no cropping (unlike cover)
+     and no blank space (unlike contain). The ~4% height increase (405/389) means the vertical
+     stretch is proportionally just as small, so it shouldn't read as noticeably distorted. */
+  .c-primePdp12VarA media-gallery .product__media-item .product-media-container .media {
+    padding-top: calc(var(--ratio-percent) * 405 / 389);
+  }
+
+  .c-primePdp12VarA media-gallery .product__media-item .product-media-container .media img {
+    object-fit: fill;
+  }
+
+  /* Thumbnails: fixed doubled-up size. Item width no longer divides evenly into the strip's
+     width, so the next thumbnail peeks in as a built-in scroll affordance. */
+  .c-primePdp12VarA media-gallery .thumbnail-list__item.slider__slide {
+    width: 73px;
+    flex: 0 0 73px;
+  }
+
+  /* Thumbnail arrows float as overlays on top of the strip instead of taking their own flex
+     slot, so the row runs edge-to-edge. Blank space only shows up at the very start/end of
+     the scrollable content (via the container padding below) — it scrolls out of view the
+     moment you move past it, so the enabled-direction arrow always sits on top of a real
+     thumbnail image, and only the disabled-direction one ever rests on blank space.
+
+     Padding on the scrollable .thumbnail-list itself (rather than margin on :first/:last-child)
+     — filtered/hidden variant-image <li>s can still be the true first/last DOM child even
+     though they render display:none, which would put the margin on an invisible element. */
+  .c-primePdp12VarA media-gallery .thumbnail-slider {
+    position: relative;
+  }
+
+  .c-primePdp12VarA media-gallery .thumbnail-slider .slider-button--prev,
+  .c-primePdp12VarA media-gallery .thumbnail-slider .slider-button--next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+  }
+
+  .c-primePdp12VarA media-gallery .thumbnail-slider .slider-button--prev {
+    left: 0.3rem;
+  }
+
+  .c-primePdp12VarA media-gallery .thumbnail-slider .slider-button--next {
+    right: 0.3rem;
+  }
+
+  .c-primePdp12VarA media-gallery .thumbnail-slider .thumbnail-list.slider {
+    padding-top: 0.7rem;
+    padding-right: 3rem;
+    padding-bottom: 1.3rem;
+    column-gap: 7px;
+  }
+
+  /* Plain padding-left isn't a valid scroll-snap-align target under this theme's
+     scroll-snap-type: x mandatory, so mandatory snapping kept yanking scrollLeft back to the
+     first thumbnail's own snap point (erasing the gap) the moment you tried to rest there or
+     scroll toward it. A real ::before flex item with its own scroll-snap-align: start makes
+     scrollLeft: 0 a legitimate snap target instead of dead space. */
+  .c-primePdp12VarA media-gallery .thumbnail-slider .thumbnail-list.slider::before {
+    content: "";
+    display: block;
+    flex: 0 0 3rem;
+    scroll-snap-align: start;
+  }
+
+  /* Pagination dots below the main image: bigger dot + 44x44px touch target */
+  .c-primePdp12VarA media-gallery .slider-buttons .slider-counter__link--dots {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .c-primePdp12VarA media-gallery .slider-buttons .dot {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  /* Chevron icon for the thumbnail strip arrows AND the main gallery active-image arrows.
+     Note: the main-image arrows only carry the --prev/--next class (no base .slider-button
+     class), so both selectors below target --prev/--next directly rather than the base class.
+
+     The theme's own .splide__arrow rule sets opacity: 0.7 and uses `transform` for its
+     absolute vertical centering (translateY(-50%)) — so we can't dim the icon via that
+     opacity, and can't mirror via a button-level `transform` without clobbering that
+     centering. Instead prev/next each get their own pre-built icon (mirrored inside the
+     SVG itself), and opacity is reset to 1 here. */
+  .c-primePdp12VarA media-gallery .slider-button--prev,
+  .c-primePdp12VarA media-gallery .slider-button--next {
+    width: 2.7rem;
+    height: 2.7rem;
+    opacity: 1;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    flex-shrink: 0;
+  }
+
+  .c-primePdp12VarA media-gallery .slider-button--prev svg,
+  .c-primePdp12VarA media-gallery .slider-button--next svg {
+    opacity: 0;
+  }
+
+  /* Main gallery (active-image) arrows: pulled in from the theme's default 1rem edge inset.
+     Opacity stays fixed at 1 for the base/hover states (the theme's default hover dim to 0.9
+     isn't wanted here), but :disabled is left alone so it still greys out to the theme's 0.3
+     at the true start/end of the scroll range, same as the thumbnail arrows. */
+  .c-primePdp12VarA media-gallery .splide__arrow.slider-button--prev {
+    left: 0.5rem;
+  }
+
+  .c-primePdp12VarA media-gallery .splide__arrow.slider-button--next {
+    right: 0.5rem;
+  }
+
+  .c-primePdp12VarA media-gallery .splide__arrow.slider-button--prev:not(:disabled),
+  .c-primePdp12VarA media-gallery .splide__arrow.slider-button--next:not(:disabled),
+  .c-primePdp12VarA media-gallery .splide__arrow.slider-button--prev:hover:not(:disabled),
+  .c-primePdp12VarA media-gallery .splide__arrow.slider-button--next:hover:not(:disabled) {
+    opacity: 1;
+  }
+
+  /* Main gallery (active-image) arrows: white circle + dark arrow */
+  .c-primePdp12VarA media-gallery .splide__arrow.slider-button--next {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIgdmlld0JveD0iMCAwIDI1IDI1IiBmaWxsPSJub25lIj4KPGcgZmlsdGVyPSJ1cmwoI2ZpbHRlcjBfZF9wZHAxMikiPgo8Y2lyY2xlIGN4PSIxMi41IiBjeT0iMTIuNSIgcj0iOC41IiBmaWxsPSJ3aGl0ZSIvPgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMC41LCA3KSI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMC4xNjQyMzQgMC4xNjQ1MzVDMC4xMTIxNzQgMC4yMTY0NjMgMC4wNzA4NzAyIDAuMjc4MTUzIDAuMDQyNjg4MSAwLjM0NjA2OUMwLjAxNDUwNiAwLjQxMzk4NSAtNC4xODY1M2UtMDcgMC40ODY3OTQgLTQuMTU0MzllLTA3IDAuNTYwMzI1Qy00LjEyMjI1ZS0wNyAwLjYzMzg1NiAwLjAxNDUwNjEgMC43MDY2NjQgMC4wNDI2ODgxIDAuNzc0NThDMC4wNzA4NzAyIDAuODQyNDk2IDAuMTEyMTc0IDAuOTA0MTg1IDAuMTY0MjM0IDAuOTU2MTE0TDQuMjQxNzYgNS4wMzI1MkwwLjE2NDIzNSA5LjEwODkzQzAuMDU5MjY0NiA5LjIxMzkgMC4wMDAyOTMwODkgOS4zNTYyNyAwLjAwMDI5MzA5NiA5LjUwNDcyQzAuMDAwMjkzMTAyIDkuNjUzMTcgMC4wNTkyNjQ2IDkuNzk1NTQgMC4xNjQyMzUgOS45MDA1MUMwLjI2OTIwNSAxMC4wMDU1IDAuNDExNTc0IDEwLjA2NDUgMC41NjAwMjQgMTAuMDY0NUMwLjcwODQ3NCAxMC4wNjQ1IDAuODUwODQ0IDEwLjAwNTUgMC45NTU4MTQgOS45MDA1MUw1LjQyODAxIDUuNDI4MzFDNS40ODAwNyA1LjM3NjM4IDUuNTIxMzggNS4zMTQ2OSA1LjU0OTU2IDUuMjQ2NzhDNS41Nzc3NCA1LjE3ODg2IDUuNTkyMjUgNS4xMDYwNSA1LjU5MjI1IDUuMDMyNTJDNS41OTIyNSA0Ljk1ODk5IDUuNTc3NzQgNC44ODYxOCA1LjU0OTU2IDQuODE4MjdDNS41MjEzOCA0Ljc1MDM1IDUuNDgwMDcgNC42ODg2NiA1LjQyODAxIDQuNjM2NzNMMC45NTU4MTMgMC4xNjQ1MzVDMC45MDM4ODUgMC4xMTI0NzUgMC44NDIxOTYgMC4wNzExNzA4IDAuNzc0MjggMC4wNDI5ODg3QzAuNzA2MzY0IDAuMDE0ODA2NyAwLjYzMzU1NSAwLjAwMDMwMDM4IDAuNTYwMDI0IDAuMDAwMzAwMzgzQzAuNDg2NDkzIDAuMDAwMzAwMzg2IDAuNDEzNjg0IDAuMDE0ODA2NyAwLjM0NTc2OCAwLjA0Mjk4ODhDMC4yNzc4NTIgMC4wNzExNzA4IDAuMjE2MTYzIDAuMTEyNDc1IDAuMTY0MjM0IDAuMTY0NTM1WiIgZmlsbD0iIzEyMTIxMiIgZmlsbC1vcGFjaXR5PSIwLjciLz4KPC9nPgo8L2c+CjxkZWZzPgo8ZmlsdGVyIGlkPSJmaWx0ZXIwX2RfcGRwMTIiIHg9IjAiIHk9IjAiIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIgZmlsdGVyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9InNSR0IiPgo8ZmVGbG9vZCBmbG9vZC1vcGFjaXR5PSIwIiByZXN1bHQ9IkJhY2tncm91bmRJbWFnZUZpeCIvPgo8ZmVDb2xvck1hdHJpeCBpbj0iU291cmNlQWxwaGEiIHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAxMjcgMCIgcmVzdWx0PSJoYXJkQWxwaGEiLz4KPGZlT2Zmc2V0IGR5PSI0LjI3Ii8+CjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjIuMTM1Ii8+CjxmZUNvbXBvc2l0ZSBpbjI9ImhhcmRBbHBoYSIgb3BlcmF0b3I9Im91dCIvPgo8ZmVDb2xvck1hdHJpeCB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMC4yNSAwIi8+CjxmZUJsZW5kIG1vZGU9Im5vcm1hbCIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0iZWZmZWN0MV9kcm9wU2hhZG93X3BkcDEyIi8+CjxmZUJsZW5kIG1vZGU9Im5vcm1hbCIgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iZWZmZWN0MV9kcm9wU2hhZG93X3BkcDEyIiByZXN1bHQ9InNoYXBlIi8+CjwvZmlsdGVyPgo8L2RlZnM+Cjwvc3ZnPgo=");
+  }
+
+  .c-primePdp12VarA media-gallery .splide__arrow.slider-button--prev {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIgdmlld0JveD0iMCAwIDI1IDI1IiBmaWxsPSJub25lIj4KPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjUsMCkgc2NhbGUoLTEsMSkiPgo8ZyBmaWx0ZXI9InVybCgjZmlsdGVyMF9kX3BkcDEyX3ByZXYpIj4KPGNpcmNsZSBjeD0iMTIuNSIgY3k9IjEyLjUiIHI9IjguNSIgZmlsbD0id2hpdGUiLz4KPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTAuNSwgNykiPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTAuMTY0MjM0IDAuMTY0NTM1QzAuMTEyMTc0IDAuMjE2NDYzIDAuMDcwODcwMiAwLjI3ODE1MyAwLjA0MjY4ODEgMC4zNDYwNjlDMC4wMTQ1MDYgMC40MTM5ODUgLTQuMTg2NTNlLTA3IDAuNDg2Nzk0IC00LjE1NDM5ZS0wNyAwLjU2MDMyNUMtNC4xMjIyNWUtMDcgMC42MzM4NTYgMC4wMTQ1MDYxIDAuNzA2NjY0IDAuMDQyNjg4MSAwLjc3NDU4QzAuMDcwODcwMiAwLjg0MjQ5NiAwLjExMjE3NCAwLjkwNDE4NSAwLjE2NDIzNCAwLjk1NjExNEw0LjI0MTc2IDUuMDMyNTJMMC4xNjQyMzUgOS4xMDg5M0MwLjA1OTI2NDYgOS4yMTM5IDAuMDAwMjkzMDg5IDkuMzU2MjcgMC4wMDAyOTMwOTYgOS41MDQ3MkMwLjAwMDI5MzEwMiA5LjY1MzE3IDAuMDU5MjY0NiA5Ljc5NTU0IDAuMTY0MjM1IDkuOTAwNTFDMC4yNjkyMDUgMTAuMDA1NSAwLjQxMTU3NCAxMC4wNjQ1IDAuNTYwMDI0IDEwLjA2NDVDMC43MDg0NzQgMTAuMDY0NSAwLjg1MDg0NCAxMC4wMDU1IDAuOTU1ODE0IDkuOTAwNTFMNS40MjgwMSA1LjQyODMxQzUuNDgwMDcgNS4zNzYzOCA1LjUyMTM4IDUuMzE0NjkgNS41NDk1NiA1LjI0Njc4QzUuNTc3NzQgNS4xNzg4NiA1LjU5MjI1IDUuMTA2MDUgNS41OTIyNSA1LjAzMjUyQzUuNTkyMjUgNC45NTg5OSA1LjU3Nzc0IDQuODg2MTggNS41NDk1NiA0LjgxODI3QzUuNTIxMzggNC43NTAzNSA1LjQ4MDA3IDQuNjg4NjYgNS40MjgwMSA0LjYzNjczTDAuOTU1ODEzIDAuMTY0NTM1QzAuOTAzODg1IDAuMTEyNDc1IDAuODQyMTk2IDAuMDcxMTcwOCAwLjc3NDI4IDAuMDQyOTg4N0MwLjcwNjM2NCAwLjAxNDgwNjcgMC42MzM1NTUgMC4wMDAzMDAzOCAwLjU2MDAyNCAwLjAwMDMwMDM4M0MwLjQ4NjQ5MyAwLjAwMDMwMDM4NiAwLjQxMzY4NCAwLjAxNDgwNjcgMC4zNDU3NjggMC4wNDI5ODg4QzAuMjc3ODUyIDAuMDcxMTcwOCAwLjIxNjE2MyAwLjExMjQ3NSAwLjE2NDIzNCAwLjE2NDUzNVoiIGZpbGw9IiMxMjEyMTIiIGZpbGwtb3BhY2l0eT0iMC43Ii8+CjwvZz4KPC9nPgo8L2c+CjxkZWZzPgo8ZmlsdGVyIGlkPSJmaWx0ZXIwX2RfcGRwMTJfcHJldiIgeD0iMCIgeT0iMCIgd2lkdGg9IjI1IiBoZWlnaHQ9IjI1IiBmaWx0ZXJVbml0cz0idXNlclNwYWNlT25Vc2UiIGNvbG9yLWludGVycG9sYXRpb24tZmlsdGVycz0ic1JHQiI+CjxmZUZsb29kIGZsb29kLW9wYWNpdHk9IjAiIHJlc3VsdD0iQmFja2dyb3VuZEltYWdlRml4Ii8+CjxmZUNvbG9yTWF0cml4IGluPSJTb3VyY2VBbHBoYSIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDEyNyAwIiByZXN1bHQ9ImhhcmRBbHBoYSIvPgo8ZmVPZmZzZXQgZHk9IjQuMjciLz4KPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMi4xMzUiLz4KPGZlQ29tcG9zaXRlIGluMj0iaGFyZEFscGhhIiBvcGVyYXRvcj0ib3V0Ii8+CjxmZUNvbG9yTWF0cml4IHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwLjI1IDAiLz4KPGZlQmxlbmQgbW9kZT0ibm9ybWFsIiBpbjI9IkJhY2tncm91bmRJbWFnZUZpeCIgcmVzdWx0PSJlZmZlY3QxX2Ryb3BTaGFkb3dfcGRwMTJfcHJldiIvPgo8ZmVCbGVuZCBtb2RlPSJub3JtYWwiIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9ImVmZmVjdDFfZHJvcFNoYWRvd19wZHAxMl9wcmV2IiByZXN1bHQ9InNoYXBlIi8+CjwvZmlsdGVyPgo8L2RlZnM+Cjwvc3ZnPgo=");
+  }
+
+  /* Thumbnail strip arrows: dark teal circle + gold border + gold arrow, distinct from the
+     main gallery icon above. Scoped to .thumbnail-slider since only thumbnail buttons sit
+     inside it (main-image arrows never do). */
+  .c-primePdp12VarA media-gallery .thumbnail-slider .slider-button--next {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIgdmlld0JveD0iMCAwIDI1IDI1IiBmaWxsPSJub25lIj4KPGcgZmlsdGVyPSJ1cmwoI2ZpbHRlcjBfZF9wZHAxMl90aHVtYikiPgo8Y2lyY2xlIGN4PSIxMi41IiBjeT0iMTIuNSIgcj0iOSIgZmlsbD0iIzA0MzIzNyIvPgo8Y2lyY2xlIGN4PSIxMi41IiBjeT0iMTIuNSIgcj0iOSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRTFDMDc3Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTAuMzA3ODEgMTcuMzIyNkMxMC4yNDk4NiAxNy4yNzM5IDEwLjIwMzg5IDE3LjIxNjEgMTAuMTcyNTIgMTcuMTUyNUMxMC4xNDExNSAxNy4wODg4IDEwLjEyNSAxNy4wMjA2IDEwLjEyNSAxNi45NTE2QzEwLjEyNSAxNi44ODI3IDEwLjE0MTE1IDE2LjgxNDUgMTAuMTcyNTIgMTYuNzUwOEMxMC4yMDM4OSAxNi42ODcxIDEwLjI0OTg2IDE2LjYyOTMgMTAuMzA3ODEgMTYuNTgwNkwxNC44NDY1IDEyLjc1OTYzTDEwLjMwNzgxIDguOTM4NjJDMTAuMTkwOTcgOC44NDAyMyAxMC4xMjUzMyA4LjcwNjc4IDEwLjEyNTMzIDguNTY3NjNDMTAuMTI1MzMgOC40Mjg0OCAxMC4xOTA5NyA4LjI5NTAzIDEwLjMwNzgxIDguMTk2NjRDMTAuNDI0NjUgOC4wOTgyNSAxMC41ODMxMiA4LjA0Mjk3IDEwLjc0ODM2IDguMDQyOTdDMTAuOTEzNiA4LjA0Mjk3IDExLjA3MjA3IDguMDk4MjUgMTEuMTg4OTIgOC4xOTY2NEwxNi4xNjY5IDEyLjM4ODY0QzE2LjIyNDkgMTIuNDM3MzEgMTYuMjcwOCAxMi40OTUxNCAxNi4zMDIyIDEyLjU1ODhDMTYuMzMzNiAxMi42MjI0NiAxNi4zNDk3IDEyLjY5MDcxIDE2LjM0OTcgMTIuNzU5NjNDMTYuMzQ5NyAxMi44Mjg1NSAxNi4zMzM2IDEyLjg5NjggMTYuMzAyMiAxMi45NjA0NkMxNi4yNzA4IDEzLjAyNDEgMTYuMjI0OSAxMy4wODE5IDE2LjE2NjkgMTMuMTMwNkwxMS4xODg5MiAxNy4zMjI2QzExLjEzMTExIDE3LjM3MTQgMTEuMDYyNDUgMTcuNDEwMSAxMC45ODY4NSAxNy40MzY2QzEwLjkxMTI1IDE3LjQ2MyAxMC44MzAyMSAxNy40NzY2IDEwLjc0ODM2IDE3LjQ3NjZDMTAuNjY2NTIgMTcuNDc2NiAxMC41ODU0NyAxNy40NjMgMTAuNTA5ODcgMTcuNDM2NkMxMC40MzQyOCAxNy40MTAxIDEwLjM2NTYxIDE3LjM3MTQgMTAuMzA3ODEgMTcuMzIyNloiIGZpbGw9IiNEQ0JDNzAiLz4KPC9nPgo8ZGVmcz4KPGZpbHRlciBpZD0iZmlsdGVyMF9kX3BkcDEyX3RodW1iIiB4PSIwIiB5PSIwIiB3aWR0aD0iMjUiIGhlaWdodD0iMjUiIGZpbHRlclVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIj4KPGZlRmxvb2QgZmxvb2Qtb3BhY2l0eT0iMCIgcmVzdWx0PSJCYWNrZ3JvdW5kSW1hZ2VGaXgiLz4KPGZlQ29sb3JNYXRyaXggaW49IlNvdXJjZUFscGhhIiB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMTI3IDAiIHJlc3VsdD0iaGFyZEFscGhhIi8+CjxmZU9mZnNldCBkeT0iNC4yNyIvPgo8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIyLjEzNSIvPgo8ZmVDb21wb3NpdGUgaW4yPSJoYXJkQWxwaGEiIG9wZXJhdG9yPSJvdXQiLz4KPGZlQ29sb3JNYXRyaXggdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAuMjUgMCIvPgo8ZmVCbGVuZCBtb2RlPSJub3JtYWwiIGluMj0iQmFja2dyb3VuZEltYWdlRml4IiByZXN1bHQ9ImVmZmVjdDFfZHJvcFNoYWRvd19wZHAxMl90aHVtYiIvPgo8ZmVCbGVuZCBtb2RlPSJub3JtYWwiIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9ImVmZmVjdDFfZHJvcFNoYWRvd19wZHAxMl90aHVtYiIgcmVzdWx0PSJzaGFwZSIvPgo8L2ZpbHRlcj4KPC9kZWZzPgo8L3N2Zz4K");
+  }
+
+  .c-primePdp12VarA media-gallery .thumbnail-slider .slider-button--prev {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIgdmlld0JveD0iMCAwIDI1IDI1IiBmaWxsPSJub25lIj4KPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjUsMCkgc2NhbGUoLTEsMSkiPgo8ZyBmaWx0ZXI9InVybCgjZmlsdGVyMF9kX3BkcDEyX3RodW1iX3ByZXYpIj4KPGNpcmNsZSBjeD0iMTIuNSIgY3k9IjEyLjUiIHI9IjkiIGZpbGw9IiMwNDMyMzciLz4KPGNpcmNsZSBjeD0iMTIuNSIgY3k9IjEyLjUiIHI9IjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0UxQzA3NyIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTEwLjMwNzgxIDE3LjMyMjZDMTAuMjQ5ODYgMTcuMjczOSAxMC4yMDM4OSAxNy4yMTYxIDEwLjE3MjUyIDE3LjE1MjVDMTAuMTQxMTUgMTcuMDg4OCAxMC4xMjUgMTcuMDIwNiAxMC4xMjUgMTYuOTUxNkMxMC4xMjUgMTYuODgyNyAxMC4xNDExNSAxNi44MTQ1IDEwLjE3MjUyIDE2Ljc1MDhDMTAuMjAzODkgMTYuNjg3MSAxMC4yNDk4NiAxNi42MjkzIDEwLjMwNzgxIDE2LjU4MDZMMTQuODQ2NSAxMi43NTk2M0wxMC4zMDc4MSA4LjkzODYyQzEwLjE5MDk3IDguODQwMjMgMTAuMTI1MzMgOC43MDY3OCAxMC4xMjUzMyA4LjU2NzYzQzEwLjEyNTMzIDguNDI4NDggMTAuMTkwOTcgOC4yOTUwMyAxMC4zMDc4MSA4LjE5NjY0QzEwLjQyNDY1IDguMDk4MjUgMTAuNTgzMTIgOC4wNDI5NyAxMC43NDgzNiA4LjA0Mjk3QzEwLjkxMzYgOC4wNDI5NyAxMS4wNzIwNyA4LjA5ODI1IDExLjE4ODkyIDguMTk2NjRMMTYuMTY2OSAxMi4zODg2NEMxNi4yMjQ5IDEyLjQzNzMxIDE2LjI3MDggMTIuNDk1MTQgMTYuMzAyMiAxMi41NTg4QzE2LjMzMzYgMTIuNjIyNDYgMTYuMzQ5NyAxMi42OTA3MSAxNi4zNDk3IDEyLjc1OTYzQzE2LjM0OTcgMTIuODI4NTUgMTYuMzMzNiAxMi44OTY4IDE2LjMwMjIgMTIuOTYwNDZDMTYuMjcwOCAxMy4wMjQxIDE2LjIyNDkgMTMuMDgxOSAxNi4xNjY5IDEzLjEzMDZMMTEuMTg4OTIgMTcuMzIyNkMxMS4xMzExMSAxNy4zNzE0IDExLjA2MjQ1IDE3LjQxMDEgMTAuOTg2ODUgMTcuNDM2NkMxMC45MTEyNSAxNy40NjMgMTAuODMwMjEgMTcuNDc2NiAxMC43NDgzNiAxNy40NzY2QzEwLjY2NjUyIDE3LjQ3NjYgMTAuNTg1NDcgMTcuNDYzIDEwLjUwOTg3IDE3LjQzNjZDMTAuNDM0MjggMTcuNDEwMSAxMC4zNjU2MSAxNy4zNzE0IDEwLjMwNzgxIDE3LjMyMjZaIiBmaWxsPSIjRENCQzcwIi8+CjwvZz4KPC9nPgo8ZGVmcz4KPGZpbHRlciBpZD0iZmlsdGVyMF9kX3BkcDEyX3RodW1iX3ByZXYiIHg9IjAiIHk9IjAiIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIgZmlsdGVyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9InNSR0IiPgo8ZmVGbG9vZCBmbG9vZC1vcGFjaXR5PSIwIiByZXN1bHQ9IkJhY2tncm91bmRJbWFnZUZpeCIvPgo8ZmVDb2xvck1hdHJpeCBpbj0iU291cmNlQWxwaGEiIHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAxMjcgMCIgcmVzdWx0PSJoYXJkQWxwaGEiLz4KPGZlT2Zmc2V0IGR5PSI0LjI3Ii8+CjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjIuMTM1Ii8+CjxmZUNvbXBvc2l0ZSBpbjI9ImhhcmRBbHBoYSIgb3BlcmF0b3I9Im91dCIvPgo8ZmVDb2xvck1hdHJpeCB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMC4yNSAwIi8+CjxmZUJsZW5kIG1vZGU9Im5vcm1hbCIgaW4yPSJCYWNrZ3JvdW5kSW1hZ2VGaXgiIHJlc3VsdD0iZWZmZWN0MV9kcm9wU2hhZG93X3BkcDEyX3RodW1iX3ByZXYiLz4KPGZlQmxlbmQgbW9kZT0ibm9ybWFsIiBpbj0iU291cmNlR3JhcGhpYyIgaW4yPSJlZmZlY3QxX2Ryb3BTaGFkb3dfcGRwMTJfdGh1bWJfcHJldiIgcmVzdWx0PSJzaGFwZSIvPgo8L2ZpbHRlcj4KPC9kZWZzPgo8L3N2Zz4K");
+  }
+
+  /* Thumbnail arrows sit on a much smaller 73px thumbnail than the main image, so they need
+     to render noticeably smaller than the 2.7rem main-gallery icon above. background-size is
+     fixed at 25px (the icon's own native canvas) rather than "contain", so the 19px circle
+     drawn inside it renders at a true 19x19px regardless of this button's own box size. */
+  .c-primePdp12VarA media-gallery .thumbnail-slider .slider-button--prev,
+  .c-primePdp12VarA media-gallery .thumbnail-slider .slider-button--next {
+    width: 29px;
+    height: 29px;
+    background-size: 25px 25px;
+  }
+
+  /* Greyed-out disabled state at scroll boundaries — SliderComponent already toggles the
+     native `disabled` attribute (media-gallery.js's update()); the theme dims via opacity,
+     which our own `opacity: 1` above would otherwise cancel out. */
+  .c-primePdp12VarA media-gallery .slider-button--prev:disabled,
+  .c-primePdp12VarA media-gallery .slider-button--next:disabled {
+    opacity: 0.3;
+  }
+}
