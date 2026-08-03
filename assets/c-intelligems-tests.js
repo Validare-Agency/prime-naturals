@@ -41,7 +41,9 @@ function handleExperiments() {
   }
 
   // Test: V_PRIME_PDP_17 | Offer Restructure - PDP
-  const primePdp17 = { name: "Var C - B2G1 Free - Offer stacking" }
+  const primePdp17 = window.igData?.user.getTestGroup(
+    "48756dd3-fd4e-4831-a6da-d19821030fb4"
+  );
 
   if (primePdp17?.name === "Var A - % stacking without offer") {
     document.body.classList.add("c-primePdp17VarA");
