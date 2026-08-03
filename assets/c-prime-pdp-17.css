@@ -1,0 +1,897 @@
+/* <-------------------V_PRIME_PDP_17 | Offer Restructure - PDP-----------------> */
+
+/* Test Setup */
+/* All c-pdp17-variant blocks are hidden by default (Control renders nothing extra).
+   Each active variant class shows only its own block and hides the native
+   Kaching Bundles widget. */
+.c-pdp17-variant {
+  display: none;
+}
+
+/* BEST-EFFORT selector — Kaching's widget isn't rendered through our section's
+   block loop (confirmed: removing that block has no effect on it), so this can't
+   be scoped precisely from Liquid. Matches any element carrying a class that
+   contains "kaching-bundles" (the app's own BEM namespace, per its existing
+   c-prime-site-11.css overrides). CONFIRM the real root selector via browser
+   inspector and replace this with an exact match. */
+body[class*="c-primePdp17Var"] [class*="kaching-bundles"] {
+  display: none;
+}
+
+/* Checkout button is force-disabled (see setCheckoutBusy in c-prime-pdp-17.js)
+   while a cart mutation is still being verified/cleaned up, so a shopper
+   can't reach checkout with a stale gift/discount mid-sync. This styling
+   makes that state visually obvious instead of relying on the theme's
+   default (sometimes subtle) disabled look. */
+.c-pdp17-checkout-pending {
+  opacity: 0.55;
+  cursor: not-allowed !important;
+}
+
+/* Our variant blocks render their own Add to Cart button, so hide the theme's
+   native buy_buttons form to avoid showing two CTAs. */
+body[class*="c-primePdp17Var"] .main-product-form {
+  display: none;
+}
+
+/* Gift products (Stickers/Mystery Gift/$15 Gift Card) are only ever meant to
+   arrive at quantity 1, bound to a qualifying bundle purchase — never editable
+   by the shopper. Hides the quantity stepper on their cart line wherever it
+   renders (cart-drawer.liquid and sections/main-cart-items.liquid share the
+   same "cart-item--product-{handle}" row class), regardless of which AB test
+   variant is active. Removing the line entirely is still allowed — that's not
+   an abuse vector, it just forfeits the gift. */
+.cart-item--product-stickers .cart-item__quantity,
+.cart-item--product-mystery-gift .cart-item__quantity,
+.cart-item--product-15-gift-card .cart-item__quantity {
+  display: none;
+}
+
+.c-primePdp17VarA .c-pdp17-variant--a {
+  display: block;
+}
+
+.c-primePdp17VarB .c-pdp17-variant--b {
+  display: block;
+}
+
+.c-primePdp17VarC .c-pdp17-variant--c {
+  display: block;
+}
+
+.c-primePdp17VarD .c-pdp17-variant--d {
+  display: block;
+}
+
+.c-primePdp17VarE .c-pdp17-variant--e {
+  display: block;
+}
+
+.c-primePdp17VarF .c-pdp17-variant--f {
+  display: block;
+}
+
+.c-primePdp17VarG .c-pdp17-variant--g {
+  display: block;
+}
+
+.c-primePdp17VarH .c-pdp17-variant--h {
+  display: block;
+}
+
+/* Test Design */
+.c-pdp17-variant {
+  border-radius: 10px;
+  margin: 16px 0;
+  font-family: var(--font-body-family);
+  color: #1f3a5f;
+}
+
+.c-pdp17-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #0d1b3e;
+  margin: 0 0 14px 0;
+}
+
+.c-pdp17-eyebrow::before,
+.c-pdp17-eyebrow::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(13, 27, 62, 0.12);
+}
+
+.c-pdp17-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.c-pdp17-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 2px solid #d9e0e6;
+  border-radius: 11px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.c-pdp17-row:has(.c-pdp17-row__radio:checked) {
+  border-color: #1f3a5f;
+}
+
+/* Var G: the Complete Set row's extra content (thumbs row + gift chips)
+   makes it much taller than the other row(s), so top-align instead of
+   vertically centering the radio/body/prices against it. */
+.c-pdp17-variant--g .c-pdp17-row {
+  align-items: flex-start;
+}
+
+.c-pdp17-row__radio {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border: 2px solid #c2cbd3;
+  border-radius: 50%;
+  margin: 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.c-pdp17-row__radio:checked {
+  border-color: #1f3a5f;
+}
+
+.c-pdp17-row__radio:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #1f3a5f;
+  transform: translate(-50%, -50%);
+}
+
+.c-pdp17-row__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.c-pdp17-row__title {
+  font-weight: 700;
+  font-size: 15.5px;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #1f3a5f;
+}
+
+.c-pdp17-row__subtitle {
+  font-size: 12px;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #6b7681;
+}
+
+@media screen and (max-width: 749px) {
+  .c-pdp17-row {
+    padding: 10px 12px;
+  }
+
+  .c-pdp17-row__title {
+    font-size: 17px;
+  }
+
+  .c-pdp17-row__subtitle {
+    font-size: 12px;
+  }
+}
+
+.c-pdp17-row__prices {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0px;
+}
+
+.c-pdp17-row__price {
+  font-weight: 700;
+  font-size: 18px;
+  color: #1f3a5f;
+}
+
+.c-pdp17-row__compare {
+  font-size: 14px;
+  color: #98a2ac;
+  text-decoration: line-through;
+}
+
+.c-pdp17-row__save {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2e8b57;
+}
+
+.c-pdp17-row__badge {
+  position: absolute;
+  top: -9px;
+  right: 12px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-radius: 4px;
+  padding: 2px 9px;
+}
+
+/* Badge color is the only thing that varies per badge — add one modifier per
+   new badge flavor here, everything else (font/padding/position) is shared. */
+.c-pdp17-row__badge--popular {
+  background: #1f3a5f;
+}
+
+.c-pdp17-row__badge--value {
+  background: #2e8b57;
+}
+
+/* Var F */
+.c-pdp17-row__badge--saving {
+  background: #2f6f9e;
+}
+
+.c-pdp17-row__badge--giftpack {
+  background: #c98a2c;
+}
+
+/* .c-pdp17-atc otherwise carries the theme's own .button .button--full-width
+   classes so it stays in sync with the site's CTA styling — only the text
+   size/weight is overridden here per the design spec. */
+.c-pdp17-atc {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* Var B: free-shipping perk callout under a row's subtitle. */
+.c-pdp17-row__perk {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #2e8b57;
+  margin-top: 3px;
+}
+
+/* Var D/E: free-shipping perk uses a distinct teal instead of the shared green. */
+.c-pdp17-row__perk--ship {
+  color: #2e7d8a;
+}
+
+/* Var F: holds multiple .c-pdp17-row__gift chips side by side (tier 4 shows
+   2, tier 5 shows 3) instead of the single one Var B renders. */
+.c-pdp17-row__gifts-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.c-pdp17-variant--g .c-pdp17-row__gifts-inline {
+  gap: 20px;
+}
+
+/* Var B: free-gift callout — thumbnail + a two-line name/price stack. */
+.c-pdp17-row__gift {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Var G: gift chips stack image-over-text instead of side by side, on desktop. */
+.c-pdp17-variant--g .c-pdp17-row__gift {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Var G mobile: radio + thumbs + price stay together on the top line (price
+   pushed to the far right via margin-left:auto, same as desktop's flex:1 on
+   body naturally does — but body isn't on this line anymore to do that job).
+   Body (title/subtitle/perk/gifts) forces onto its own full-width line below
+   via flex-basis (NOT width — .c-pdp17-row__body's flex:1 sets
+   flex-basis:0%, which wins over width for sizing in a row-direction flex
+   container, so width:100% alone silently does nothing). Once body has full
+   width, the 3 gift chips fit side by side on their own without any extra
+   sizing — they only stacked before because body's shrunken width forced
+   them to wrap one at a time. */
+@media screen and (max-width: 749px) {
+  .c-pdp17-variant--g .c-pdp17-row:has(.c-pdp17-row__gifts-inline) {
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+
+  .c-pdp17-variant--g .c-pdp17-row:has(.c-pdp17-row__gifts-inline) .c-pdp17-row__prices {
+    margin-left: auto;
+  }
+
+  .c-pdp17-variant--g .c-pdp17-row:has(.c-pdp17-row__gifts-inline) .c-pdp17-row__body {
+    order: 2;
+    flex: 1 1 100%;
+  }
+
+  .c-pdp17-variant--g .c-pdp17-row__gifts-inline {
+    justify-content: center;
+  }
+}
+
+.c-pdp17-row__gift img {
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.c-pdp17-row__gift-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.c-pdp17-row__gift-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1f3a5f;
+}
+
+.c-pdp17-row__gift-price {
+  font-size: 12.5px;
+}
+
+.c-pdp17-row__gift-price strong {
+  color: #2e8b57;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.c-pdp17-row__gift-price s {
+  color: #98a2ac;
+  font-weight: 400;
+}
+
+/* Var C: "Free Gifts Unlocked" panel. */
+.c-pdp17-gifts {
+  background: #f6f7fa;
+  border: 1px solid rgba(20, 55, 87, 0.5);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.c-pdp17-gifts__header {
+  background: #15274a;
+  color: #fff;
+  text-align: center;
+  font-family: var(--font-heading-family);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  margin: 0;
+  padding: 10px;
+}
+
+.c-pdp17-gifts__grid {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 21px 12px 14px;
+  background: #f6f7fa;
+}
+
+.c-pdp17-gift-card {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  background: #fffdf4;
+  border: 1px solid #bec9da;
+  border-radius: 8px;
+  padding: 21px 6px 10px;
+  text-align: center;
+}
+
+.c-pdp17-gift-card.is-unlocked {
+  background: #fff;
+  border-color: #15274a;
+  box-shadow: 0 2px 2px rgba(20, 55, 87, 0.2);
+}
+
+.c-pdp17-gift-card__badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #c0392b;
+  color: #fff;
+  font-family: var(--font-body-family);
+  font-size: 12px;
+  font-weight: 400;
+  white-space: nowrap;
+  border-radius: 2px;
+  padding: 3px 10px;
+}
+
+.c-pdp17-gift-card__badge strong {
+  font-weight: 700;
+}
+
+.c-pdp17-gift-card__visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  height: 80px;
+  margin-bottom: 6px;
+}
+
+.c-pdp17-gift-card__image {
+  width: 86px;
+  height: 80px;
+  max-width: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  display: none;
+}
+
+.c-pdp17-gift-card.is-unlocked .c-pdp17-gift-card__image {
+  display: block;
+}
+
+.c-pdp17-gift-card__lock {
+  display: block;
+  width: 40px;
+  height: 40px;
+}
+
+.c-pdp17-gift-card.is-unlocked .c-pdp17-gift-card__lock {
+  display: none;
+}
+
+.c-pdp17-gift-card__name {
+  min-height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body-family);
+  font-size: 11px;
+  font-weight: 700;
+  color: #c0392b;
+  margin: 0;
+}
+
+.c-pdp17-gift-card.is-unlocked .c-pdp17-gift-card__name {
+  color: #15274a;
+}
+
+.c-pdp17-gift-card__unlock {
+  font-family: var(--font-body-family);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 12px;
+  color: #15274a;
+  margin: 0;
+}
+
+.c-pdp17-gift-card.is-unlocked .c-pdp17-gift-card__unlock {
+  display: none;
+}
+
+/* Var E: same rows as Var D, plus a book-cover thumbnail strip per row (one
+   thumb per book in that tier's quantity, with a FREE tag on the free ones). */
+.c-pdp17-row__thumbs {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.c-pdp17-row__thumb-wrap {
+  position: relative;
+}
+
+.c-pdp17-row__thumb {
+  display: block;
+  width: 30px;
+  height: 41px;
+  border-radius: 3px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.c-pdp17-row__thumb-free {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2e8b57;
+  color: #fff;
+  font-size: 7.5px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 749px) {
+  /* Rows with more than one thumbnail (the 3- and 5-book tiers) move the
+     thumbnail strip onto its own line above the radio/title/price line,
+     right-aligned — there isn't enough width to keep them inline on mobile.
+     The single-thumbnail 1-book row is unaffected (no --multi modifier). */
+  .c-pdp17-row:has(.c-pdp17-row__thumbs--multi) {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .c-pdp17-row__thumbs--multi {
+    order: -1;
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* Var H: "Build your bundle" progressive builder. */
+.c-pdp17-builder__heading {
+  font-family: var(--font-heading-family);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: #14141e;
+  margin: 0 0 12px 0;
+}
+
+.c-pdp17-builder__slider {
+  margin-bottom: 19px;
+}
+
+.c-pdp17-builder__track {
+  position: relative;
+  height: 11px;
+  background: rgba(192, 57, 43, 0.5);
+  border-radius: 30px;
+  /* Top/bottom margin makes room for the absolutely-positioned title labels
+     and "Best Deal" badge above the track, and the discount captions below —
+     all positioned in this same coordinate system as the nodes. */
+  margin: 54px 14.5px 40px;
+}
+
+.c-pdp17-builder__track-fill {
+  /* Empty element (no text content) — something in the theme's base styles
+     is almost certainly hiding empty divs by default (e.g. an :empty rule),
+     which explains why the width WAS updating correctly via JS but never
+     rendered visibly. */
+  display: block !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 4%;
+  background: #c0392b;
+  border-radius: 30px;
+  transition: width 0.2s ease;
+}
+
+.c-pdp17-builder__node {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  border: 3px solid #c0392b;
+  background: #fff;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease;
+}
+
+/* Nodes 1 and 4 sit inset a few px from the track's own ends, so the track's
+   rounded pill caps peek out visibly on both sides instead of being fully
+   hidden under the end nodes. */
+.c-pdp17-builder__node[data-pdp17-node='1'] {
+  left: 6%;
+}
+
+.c-pdp17-builder__node[data-pdp17-node='2'] {
+  left: 33.333%;
+}
+
+.c-pdp17-builder__node[data-pdp17-node='3'] {
+  left: 66.666%;
+}
+
+.c-pdp17-builder__node[data-pdp17-node='4'] {
+  left: calc(100% - 6%);
+}
+
+.c-pdp17-builder__node.is-filled {
+  background: #c0392b;
+}
+
+/* Titles ("1 Book"..."4 Books") and discount captions ("15% Discount" etc.)
+   are positioned in the exact same coordinate system as the nodes (same left
+   offsets), not a separate flex row — that's what guarantees they land
+   precisely centered above/below each node instead of drifting out of
+   alignment. Nodes 2/3 have room on both sides so their labels center
+   normally; nodes 1/4 sit near the track's own edges, so their labels anchor
+   to that edge (left-/right-aligned) instead of centering, to avoid the text
+   overflowing past the component's edge. */
+.c-pdp17-builder__title,
+.c-pdp17-builder__discount {
+  position: absolute;
+  white-space: nowrap;
+}
+
+.c-pdp17-builder__title {
+  top: -28px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #14141e;
+}
+
+.c-pdp17-builder__discount {
+  top: 24px;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(20, 20, 30, 0.44);
+}
+
+@media screen and (max-width: 380px) {
+  /* Narrow phones don't have enough horizontal room between nodes for the
+     discount captions to stay on one line without overlapping their
+     neighbor — wrap onto a second line instead, constrained to roughly the
+     width of one node's "slot" so it wraps rather than spilling sideways.
+     Titles stay single-line/unchanged — only the discount captions wrap. */
+  .c-pdp17-builder__discount {
+    white-space: normal;
+    max-width: 76px;
+    text-align: center;
+  }
+
+  .c-pdp17-builder__track {
+    margin: 54px 23.5px 50px 14px !important;
+  }
+}
+
+.c-pdp17-builder__title[data-pdp17-title='1'] {
+  left: 3px;
+}
+
+.c-pdp17-builder__title[data-pdp17-title='2'],
+.c-pdp17-builder__discount[data-pdp17-discount='2'] {
+  left: 33.333%;
+  transform: translateX(-50%);
+}
+
+.c-pdp17-builder__title[data-pdp17-title='3'],
+.c-pdp17-builder__discount[data-pdp17-discount='3'] {
+  left: 66.666%;
+  transform: translateX(-50%);
+}
+
+.c-pdp17-builder__title[data-pdp17-title='4'],
+.c-pdp17-builder__discount[data-pdp17-discount='4'] {
+  left: calc(100% - 3px);
+  transform: translateX(-100%);
+}
+
+.c-pdp17-builder__best-deal {
+  position: absolute;
+  top: -55px;
+  right: -8px;
+  font-family: var(--font-heading-family);
+  background: #c8202f;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  border-radius: 4px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.c-pdp17-builder__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  margin-bottom: 14px;
+}
+
+.c-pdp17-builder__row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid #f4f4f4;
+  border-radius: 7px;
+  background: #fff;
+  padding: 0;
+  padding-left: 10px;
+  overflow: hidden;
+}
+
+.c-pdp17-builder__image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 0;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.c-pdp17-builder__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  flex: 1;
+  padding: 10px 0;
+}
+
+.c-pdp17-builder__name {
+  font-family: var(--font-body-family);
+  font-size: 16px;
+  font-weight: 700;
+  color: #14141e;
+}
+
+.c-pdp17-builder__prices {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 1.05px;
+}
+
+.c-pdp17-builder__price {
+  font-size: 16.8px;
+  font-weight: 700;
+  color: #c0392b;
+}
+
+.c-pdp17-builder__compare {
+  font-size: 13.7px;
+  color: rgba(18, 18, 18, 0.9);
+  text-decoration: line-through;
+}
+
+.c-pdp17-builder__control {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+}
+
+.c-pdp17-builder__add {
+  font-family: inherit;
+  background: #c0392b;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  width: 100px;
+  height: 32px;
+  font-size: 13.6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.c-pdp17-builder__stepper {
+  align-items: center;
+  justify-content: space-between;
+  width: 100px;
+  height: 32px;
+  background: #fcfcfc;
+  border-radius: 100px;
+}
+
+.c-pdp17-builder__stepper:not([hidden]) {
+  display: flex;
+}
+
+.c-pdp17-builder__step {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #c0392b;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.c-pdp17-builder__qty {
+  font-size: 14px;
+  font-weight: 700;
+  color: #c0392b;
+  min-width: 16px;
+  text-align: center;
+}
+
+.c-pdp17-builder__cta {
+  width: 100%;
+  background: #98a2ac;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 16px;
+  font-family: var(--font-body-family);
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.05px;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background-color 0.15s ease;
+}
+
+.c-pdp17-builder__cta:not(:disabled) {
+  background: #c0392b;
+  cursor: pointer;
+}
+
+.c-pdp17-builder__cta-compare {
+  text-decoration: line-through;
+  opacity: 0.8;
+  font-weight: 400;
+}
+
+.c-pdp17-builder__payments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.c-pdp17-builder__payment-icon {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #374151;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+
+@media screen and (max-width: 749px) {
+
+  .c-pdp17-builder__node[data-pdp17-node='4'] {
+    left: calc(100% - 4%);
+  }
+
+  .c-pdp17-builder__track {
+    margin: 54px 23.5px 40px 14px;
+  }
+
+  .c-pdp17-builder__title[data-pdp17-title='4'],
+.c-pdp17-builder__discount[data-pdp17-discount='4'] {
+  left: calc(100% - 5%);
+  transform: translateX(-50%);
+}
+}
+

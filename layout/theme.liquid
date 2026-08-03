@@ -470,6 +470,34 @@
     {{ 'c-prime-cart-15.css' | asset_url | stylesheet_tag }}
     <script>window.cPrimeCart15Currency = {{ cart.currency.iso_code | json }};</script>
     <script src="{{ 'c-prime-cart-15.js' | asset_url }}" defer></script>
+    {%- comment -%} Test: V_PRIME_PDP_17 | Offer Restructure - PDP (loaded globally — the free-gift cart cleanup must run on every page, not just the PDP where the gift was added) {%- endcomment -%}
+    {%- liquid
+      assign c_pdp17_h_enc_v = all_products['kidss-encyclopedia-10-000-whys'].selected_or_first_available_variant.id
+      assign c_pdp17_h_mur_v = all_products['murphys-law-for-kids'].selected_or_first_available_variant.id
+      assign c_pdp17_h_lea_v = all_products['murphys-law-for-kids-copy'].selected_or_first_available_variant.id
+      assign c_pdp17_f_sticker_v = all_products['stickers'].selected_or_first_available_variant.id
+      assign c_pdp17_f_mystery_v = all_products['mystery-gift'].selected_or_first_available_variant.id
+      assign c_pdp17_f_giftcard_v = all_products['15-gift-card'].selected_or_first_available_variant.id
+    -%}
+    <script>window.cPdp17BuilderVariantIds = [{{ c_pdp17_h_enc_v }}, {{ c_pdp17_h_mur_v }}, {{ c_pdp17_h_lea_v }}];</script>
+    {%- comment -%} Var F: lets cleanupOrphanedGifts auto-add a gift when the cart's own quantity stepper (not just our Add to Cart button) raises a bundle past that gift's threshold. {%- endcomment -%}
+    <script>window.cPdp17VarFGiftLadder = [
+      { id: {{ c_pdp17_f_sticker_v | json }}, minQty: 3 },
+      { id: {{ c_pdp17_f_mystery_v | json }}, minQty: 4 },
+      { id: {{ c_pdp17_f_giftcard_v | json }}, minQty: 5 }
+    ];</script>
+    {%- comment -%} Var C: NOT a monotonic ladder like Var F — only the exact
+      quantities its rows actually sell (1/3/5 books) unlock a gift; 2 and 4
+      (only reachable via the cart's own stepper) unlock none. Keyed by exact
+      quantity; anything at or above the highest key reuses that key's set. {%- endcomment -%}
+    <script>window.cPdp17VarCGiftMap = {
+      1: [{{ c_pdp17_f_sticker_v | json }}],
+      2: [],
+      3: [{{ c_pdp17_f_sticker_v | json }}, {{ c_pdp17_f_mystery_v | json }}],
+      4: [],
+      5: [{{ c_pdp17_f_sticker_v | json }}, {{ c_pdp17_f_mystery_v | json }}, {{ c_pdp17_f_giftcard_v | json }}]
+    };</script>
+    <script src="{{ 'c-prime-pdp-17.js' | asset_url }}" defer></script>
     <script src="{{ 'c-custom.js' | asset_url }}" defer></script>
 
     {%- unless settings.type_body_font.system? -%}
