@@ -11,6 +11,13 @@
 {%- liquid
   assign c_pdp17_variant = product.selected_or_first_available_variant
   assign c_pdp17_base_cents = c_pdp17_variant.price
+  # Shopify's per-market currency conversion doesn't land on a clean .90
+  # ending the way the confirmed USD price points do (e.g. CAD showed
+  # $57.00 on our rows vs the $56.90 Shopify itself actually charges at
+  # cart) — round every displayed price up to the next whole unit then
+  # back off 10 cents, so it always ends in .90 like the rest of the site.
+  # No-op for the USD prices (3990/6990/... already end in 90).
+  assign c_pdp17_base_cents = c_pdp17_base_cents | divided_by: 100.0 | ceil | times: 100 | minus: 10
 
   # Tier 1 always adds the live product's own variant — no bundling needed for
   # a single book. Tiers 2/3 default to the same, then get overridden below for
@@ -36,20 +43,35 @@
       assign c_pdp17_t3_variant_id = c_pdp17_bundle_product.selected_or_first_available_variant.id
   endcase
 
+  # This store sells to 5 markets (US/AU/CA/NZ/UK) with Shopify auto-converting
+  # variant.price to whatever currency the shopper is in — so c_pdp17_base_cents
+  # is ALREADY a correctly-converted local amount, never literally "3990".
+  # Every tier price below is therefore derived as a RATIO off that local base
+  # price (matching the confirmed USD price points' own implied percentage),
+  # not a hardcoded USD cents number — otherwise every non-USD market would
+  # get the wrong tier's price entirely (a currency-agnostic handle check is
+  # needed to know WHICH book this is, since the localized price can't be
+  # compared against a fixed number to tell them apart).
+  assign c_pdp17_is_encyclopedia = false
+  if product.handle == 'kidss-encyclopedia-10-000-whys'
+    assign c_pdp17_is_encyclopedia = true
+  endif
+
   # Tier 1: 1 book, base price, no discount. Compare price is the site's
   # existing "50% off" anchor (base x2), same as shown everywhere else on the PDP.
   assign c_pdp17_a_t1_price = c_pdp17_base_cents
   assign c_pdp17_a_t1_compare = c_pdp17_base_cents | times: 2
 
-  # Tiers 2/3 sale prices are fixed, confirmed price points (not a percentage
-  # formula) — $39.90 book: 2=$69.90, 3=$79.90; $29.90 books: 2=$49.90, 3=$59.90.
-  # Add a branch here if a product at a different base price is introduced.
-  if c_pdp17_base_cents == 3990
-    assign c_pdp17_a_t2_price = 6990
-    assign c_pdp17_a_t3_price = 7990
+  # Ratios below are locked to the confirmed USD price points — $39.90 book:
+  # 2=$69.90 (÷3990), 3=$79.90 (÷3990); $29.90 books: 2=$49.90 (÷2990),
+  # 3=$59.90 (÷2990) — applied to the local base price, then rounded to the
+  # nearest cent.
+  if c_pdp17_is_encyclopedia
+    assign c_pdp17_a_t2_price = c_pdp17_base_cents | times: 6990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp17_a_t3_price = c_pdp17_base_cents | times: 7990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
   else
-    assign c_pdp17_a_t2_price = 4990
-    assign c_pdp17_a_t3_price = 5990
+    assign c_pdp17_a_t2_price = c_pdp17_base_cents | times: 4990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp17_a_t3_price = c_pdp17_base_cents | times: 5990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
   endif
 
   # Compare price is N x the current per-book price (savings are layered on top
@@ -90,13 +112,14 @@
   # Var C: BOGO framing. Tier 1 is the same as A/B. Tiers 2/3 are fixed BOGO
   # price points (not derived from A/B's percentages) — confirmed: $39.90 book:
   # 3 books for $79.90 / 5 books for $99.90; $29.90 books: 3 books for $49.90 /
-  # 5 books for $59.90 (identical to A/B's tiers for the $29.90 books).
-  if c_pdp17_base_cents == 3990
-    assign c_pdp17_c_t2_price = 7990
-    assign c_pdp17_c_t3_price = 9990
+  # 5 books for $59.90 (identical to A/B's tiers for the $29.90 books). Same
+  # ratio-off-local-base-price approach as Var A/B — see the note above.
+  if c_pdp17_is_encyclopedia
+    assign c_pdp17_c_t2_price = c_pdp17_base_cents | times: 7990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp17_c_t3_price = c_pdp17_base_cents | times: 9990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
   else
-    assign c_pdp17_c_t2_price = 4990
-    assign c_pdp17_c_t3_price = 5990
+    assign c_pdp17_c_t2_price = c_pdp17_base_cents | times: 4990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp17_c_t3_price = c_pdp17_base_cents | times: 5990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
   endif
 
   # Compare price is the summed per-book price for the FULL quantity received
@@ -151,12 +174,12 @@
   # ($79.90/$99.90), so it reuses Var C's duplicate — no new one needed.
   # Murphy's Law/Leadership have NEW confirmed numbers ($59.90/$89.90) that
   # differ from every other variant so far, requiring their own new duplicates.
-  if c_pdp17_base_cents == 3990
-    assign c_pdp17_d_t2_price = 7990
-    assign c_pdp17_d_t3_price = 9990
+  if c_pdp17_is_encyclopedia
+    assign c_pdp17_d_t2_price = c_pdp17_base_cents | times: 7990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp17_d_t3_price = c_pdp17_base_cents | times: 9990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
   else
-    assign c_pdp17_d_t2_price = 5990
-    assign c_pdp17_d_t3_price = 8990
+    assign c_pdp17_d_t2_price = c_pdp17_base_cents | times: 5990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp17_d_t3_price = c_pdp17_base_cents | times: 8990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
   endif
 
   assign c_pdp17_d_t2_compare = c_pdp17_base_cents | times: 3
@@ -204,16 +227,16 @@
   # on this product keeps producing these exact confirmed totals; we're only
   # layering our own UI + free-shipping badge + gift-tagging on top of it.
   assign c_pdp17_f_t1_price = c_pdp17_base_cents
-  if c_pdp17_base_cents == 3990
-    assign c_pdp17_f_t2_price = 6990
-    assign c_pdp17_f_t3_price = 7990
-    assign c_pdp17_f_t4_price = 8990
-    assign c_pdp17_f_t5_price = 9990
+  if c_pdp17_is_encyclopedia
+    assign c_pdp17_f_t2_price = c_pdp17_base_cents | times: 6990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp17_f_t3_price = c_pdp17_base_cents | times: 7990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp17_f_t4_price = c_pdp17_base_cents | times: 8990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp17_f_t5_price = c_pdp17_base_cents | times: 9990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
   else
-    assign c_pdp17_f_t2_price = 5890
-    assign c_pdp17_f_t3_price = 7990
-    assign c_pdp17_f_t4_price = 8990
-    assign c_pdp17_f_t5_price = 9990
+    assign c_pdp17_f_t2_price = c_pdp17_base_cents | times: 5890.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp17_f_t3_price = c_pdp17_base_cents | times: 7990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp17_f_t4_price = c_pdp17_base_cents | times: 8990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp17_f_t5_price = c_pdp17_base_cents | times: 9990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
   endif
 
   # Compare price keeps the same "2x the tier's own total" anchor used by
@@ -280,19 +303,6 @@
       assign c_pdp17_g_t1_subtitle = '"Leadership Enlightenment" only'
   endcase
 
-  # Complete Set — fixed price/compare regardless of which PDP renders it.
-  # Compare is the sum of each of the 3 books' own "2x base" anchor
-  # (7980 + 5980 + 5980 = 19940 => $199.40), same anchor logic used
-  # everywhere else on this PDP, just summed across all 3 books.
-  assign c_pdp17_g_t2_price = 7990
-  assign c_pdp17_g_t2_compare = 19940
-  assign c_pdp17_g_t2_save = c_pdp17_g_t2_compare | minus: c_pdp17_g_t2_price
-
-  assign c_pdp17_g_t2_ships_free = false
-  if c_pdp17_g_t2_price >= c_pdp17_ship_threshold_cents
-    assign c_pdp17_g_t2_ships_free = true
-  endif
-
   # Complete Set = 3 separate duplicate products (one per book, "-var-g"),
   # each already priced/discounted for this set — NOT a single bundle SKU.
   # Kaching's own "Choose Bundle" button adds all 3 to cart together; here we
@@ -314,6 +324,31 @@
   assign c_pdp17_g_encyclopedia = all_products['kidss-encyclopedia-10-000-whys']
   assign c_pdp17_g_murphys = all_products['murphys-law-for-kids']
   assign c_pdp17_g_leadership = all_products['murphys-law-for-kids-copy']
+
+  # Price/compare are LIVE sums of each duplicate/real product's OWN price —
+  # not a hardcoded $79.90/$199.40 — so this stays correct in every market:
+  # admin sets each "-var-g" duplicate's price in the shop's own currency same
+  # as any product, and Shopify's per-market conversion applies to it exactly
+  # like it does everywhere else; summing the already-converted amounts keeps
+  # the total correct without us needing to know any exchange rate.
+  assign c_pdp17_g_set_enc_price = c_pdp17_g_set_encyclopedia.selected_or_first_available_variant.price
+  assign c_pdp17_g_set_mur_price = c_pdp17_g_set_murphys.selected_or_first_available_variant.price
+  assign c_pdp17_g_set_lea_price = c_pdp17_g_set_leadership.selected_or_first_available_variant.price
+  assign c_pdp17_g_t2_price = c_pdp17_g_set_enc_price | plus: c_pdp17_g_set_mur_price
+  assign c_pdp17_g_t2_price = c_pdp17_g_t2_price | plus: c_pdp17_g_set_lea_price
+  assign c_pdp17_g_t2_price = c_pdp17_g_t2_price | divided_by: 100.0 | ceil | times: 100 | minus: 10
+
+  assign c_pdp17_g_enc_double = c_pdp17_g_encyclopedia.selected_or_first_available_variant.price | times: 2
+  assign c_pdp17_g_mur_double = c_pdp17_g_murphys.selected_or_first_available_variant.price | times: 2
+  assign c_pdp17_g_lea_double = c_pdp17_g_leadership.selected_or_first_available_variant.price | times: 2
+  assign c_pdp17_g_t2_compare = c_pdp17_g_enc_double | plus: c_pdp17_g_mur_double | plus: c_pdp17_g_lea_double
+
+  assign c_pdp17_g_t2_save = c_pdp17_g_t2_compare | minus: c_pdp17_g_t2_price
+
+  assign c_pdp17_g_t2_ships_free = false
+  if c_pdp17_g_t2_price >= c_pdp17_ship_threshold_cents
+    assign c_pdp17_g_t2_ships_free = true
+  endif
 
   # Each book's REAL/original variant id (not the -var-g duplicate) — needed so
   # that if a shopper clicks quantity+ on one of the set's book lines, we know
@@ -355,8 +390,11 @@
   assign c_pdp17_h_leadership_variant_id = c_pdp17_g_original_leadership_variant_id
 
   assign c_pdp17_h_encyclopedia_price = c_pdp17_g_encyclopedia.selected_or_first_available_variant.price
+  assign c_pdp17_h_encyclopedia_price = c_pdp17_h_encyclopedia_price | divided_by: 100.0 | ceil | times: 100 | minus: 10
   assign c_pdp17_h_murphys_price = c_pdp17_g_murphys.selected_or_first_available_variant.price
+  assign c_pdp17_h_murphys_price = c_pdp17_h_murphys_price | divided_by: 100.0 | ceil | times: 100 | minus: 10
   assign c_pdp17_h_leadership_price = c_pdp17_g_leadership.selected_or_first_available_variant.price
+  assign c_pdp17_h_leadership_price = c_pdp17_h_leadership_price | divided_by: 100.0 | ceil | times: 100 | minus: 10
 -%}
 
 <div class="c-pdp17-variant c-pdp17-variant--a">
@@ -371,7 +409,6 @@
         data-variant-id="{{ c_pdp17_t1_variant_id }}"
         data-quantity="1"
         data-pdp17-price-money="{{ c_pdp17_a_t1_price | money }}"
-        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">1 Book</span>
@@ -392,6 +429,7 @@
         data-variant-id="{{ c_pdp17_t2_variant_id }}"
         data-quantity="2"
         data-pdp17-price-money="{{ c_pdp17_a_t2_price | money }}"
+        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">2 Books &middot; EXTRA 15% off</span>
@@ -443,7 +481,6 @@
         data-variant-id="{{ c_pdp17_t1_variant_id }}"
         data-quantity="1"
         data-pdp17-price-money="{{ c_pdp17_a_t1_price | money }}"
-        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">1 Book</span>
@@ -464,12 +501,13 @@
         data-variant-id="{{ c_pdp17_t2_variant_id }}"
         data-quantity="2"
         data-pdp17-price-money="{{ c_pdp17_a_t2_price | money }}"
+        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">2 Books &middot; EXTRA 15% off</span>
         <span class="c-pdp17-row__subtitle">Best For Siblings</span>
         {%- if c_pdp17_t2_ships_free -%}
-          <span class="c-pdp17-row__perk">&#128666; Free shipping</span>
+          <span class="c-pdp17-row__perk">&#128666; FREE shipping</span>
         {%- endif -%}
       </span>
       <span class="c-pdp17-row__prices">
@@ -496,7 +534,7 @@
         <span class="c-pdp17-row__title">3 Books &middot; EXTRA 33% off</span>
         <span class="c-pdp17-row__subtitle">Best Gift Pack - One for every child</span>
         {%- if c_pdp17_t3_ships_free -%}
-          <span class="c-pdp17-row__perk">&#128666; Free shipping</span>
+          <span class="c-pdp17-row__perk">&#128666; FREE shipping</span>
         {%- endif -%}
         {%- if c_pdp17_gift_sticker_variant -%}
           <span class="c-pdp17-row__gift">
@@ -550,7 +588,6 @@
         {%- if c_pdp17_gift_sticker_variant %}
           data-gift-variant-ids="{{ c_pdp17_c_t1_gift_ids }}"
         {%- endif %}
-        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">1 Book</span>
@@ -575,6 +612,7 @@
         {%- if c_pdp17_gift_mystery_variant %}
           data-gift-variant-ids="{{ c_pdp17_c_t2_gift_ids }}"
         {%- endif %}
+        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">Buy 2, Get 1 Free</span>
@@ -673,7 +711,6 @@
         data-variant-id="{{ c_pdp17_t1_variant_id }}"
         data-quantity="1"
         data-pdp17-price-money="{{ c_pdp17_a_t1_price | money }}"
-        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">1 Book</span>
@@ -694,6 +731,7 @@
         data-variant-id="{{ c_pdp17_d_t2_variant_id }}"
         data-quantity="3"
         data-pdp17-price-money="{{ c_pdp17_d_t2_price | money }}"
+        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">Buy 2, Get 1 Free</span>
