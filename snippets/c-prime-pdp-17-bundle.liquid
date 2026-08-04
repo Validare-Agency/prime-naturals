@@ -133,12 +133,30 @@
 
   # Var C's BOGO tiers only need their own duplicate where the paid amount
   # differs from Var A/B's — confirmed identical for the $29.90 books, so only
-  # Encyclopedia needs a new duplicate here; Murphy's Law/Leadership reuse the
-  # exact same Var A/B duplicate variant IDs already resolved above.
+  # Every book needs its OWN "-var-c" duplicate, even where the final price
+  # matches Var A/B's — Var A/B's duplicate for the $29.90 books is a native
+  # bundle discount configured for 2/3 UNITS, but Var C's rows add that same
+  # variant at 3/5 units, which that duplicate's discount was never set up
+  # for (that mismatch is what caused 5 books to charge $99.90 instead of
+  # $59.90 — reusing it only happened to work by coincidence for the price
+  # text, never for the actual native discount tiers).
+  # FALLS BACK to the Var A/B duplicate (the old, mismatched behavior) if a
+  # book's own "-var-c" duplicate doesn't exist yet in admin — remove this
+  # fallback once murphys-law-for-kids-var-c and
+  # leadership-enlightenment-for-kids-var-c are created, so a typo'd handle
+  # can't silently keep serving the wrong price forever.
   assign c_pdp17_c_t2_variant_id = c_pdp17_t2_variant_id
   assign c_pdp17_c_t3_variant_id = c_pdp17_t3_variant_id
-  if product.handle == 'kidss-encyclopedia-10-000-whys'
-    assign c_pdp17_bundle_product_c = all_products['kidss-encyclopedia-10-000-whys-var-c']
+  assign c_pdp17_bundle_product_c = blank
+  case product.handle
+    when 'kidss-encyclopedia-10-000-whys'
+      assign c_pdp17_bundle_product_c = all_products['kidss-encyclopedia-10-000-whys-var-c']
+    when 'murphys-law-for-kids'
+      assign c_pdp17_bundle_product_c = all_products['murphys-law-for-kids-var-c']
+    when 'murphys-law-for-kids-copy'
+      assign c_pdp17_bundle_product_c = all_products['leadership-enlightenment-for-kids-var-c']
+  endcase
+  if c_pdp17_bundle_product_c != blank
     assign c_pdp17_c_t2_variant_id = c_pdp17_bundle_product_c.selected_or_first_available_variant.id
     assign c_pdp17_c_t3_variant_id = c_pdp17_bundle_product_c.selected_or_first_available_variant.id
   endif
@@ -220,12 +238,28 @@
   # row, one thumb per book in that tier's quantity, with the free copies
   # tagged. No new duplicate products needed.
 
-  # Var F: 5 tiers (1/2/3/4/5 books) at the product's OWN already-live bundle
-  # pricing — unlike A-D, this intentionally does NOT route to a "-var-*"
-  # duplicate product for any tier. Every tier adds the SAME base variant at
-  # increasing quantity, so the live/native bundle discount already configured
-  # on this product keeps producing these exact confirmed totals; we're only
-  # layering our own UI + free-shipping badge + gift-tagging on top of it.
+  # Var F: 5 tiers (1/2/3/4/5 books). Originally assumed the product's OWN
+  # already-live bundle discount would keep producing these exact confirmed
+  # totals with no duplicate needed — confirmed WRONG for Murphy's
+  # Law/Leadership: their live discount is steeper than Var F's confirmed
+  # numbers (e.g. 4 books charged $77 instead of $89.90), so Var F's displayed
+  # price and the actual checkout total didn't match. Routes to a dedicated
+  # "-var-f" duplicate (own bundle discount at the confirmed totals) once one
+  # exists for a given book, same fallback-if-missing pattern as Var C.
+  assign c_pdp17_f_variant_id = c_pdp17_t1_variant_id
+  assign c_pdp17_bundle_product_f = blank
+  case product.handle
+    when 'kidss-encyclopedia-10-000-whys'
+      assign c_pdp17_bundle_product_f = all_products['kidss-encyclopedia-10-000-whys-var-f']
+    when 'murphys-law-for-kids'
+      assign c_pdp17_bundle_product_f = all_products['murphys-law-for-kids-var-f']
+    when 'murphys-law-for-kids-copy'
+      assign c_pdp17_bundle_product_f = all_products['leadership-enlightenment-for-kids-var-f']
+  endcase
+  if c_pdp17_bundle_product_f != blank
+    assign c_pdp17_f_variant_id = c_pdp17_bundle_product_f.selected_or_first_available_variant.id
+  endif
+
   assign c_pdp17_f_t1_price = c_pdp17_base_cents
   if c_pdp17_is_encyclopedia
     assign c_pdp17_f_t2_price = c_pdp17_base_cents | times: 6990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
@@ -398,7 +432,7 @@
 -%}
 
 <div class="c-pdp17-variant c-pdp17-variant--a">
-  <p class="c-pdp17-eyebrow">&#9889; Sale &middot; limited time</p>
+  <p class="c-pdp17-eyebrow">&#9889; Sale &middot; LIMITED TIME</p>
 
   <div class="c-pdp17-rows" role="radiogroup" aria-label="Bundle options">
     <label class="c-pdp17-row">
@@ -409,6 +443,7 @@
         data-variant-id="{{ c_pdp17_t1_variant_id }}"
         data-quantity="1"
         data-pdp17-price-money="{{ c_pdp17_a_t1_price | money }}"
+        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">1 Book</span>
@@ -429,7 +464,6 @@
         data-variant-id="{{ c_pdp17_t2_variant_id }}"
         data-quantity="2"
         data-pdp17-price-money="{{ c_pdp17_a_t2_price | money }}"
-        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">2 Books &middot; EXTRA 15% off</span>
@@ -454,7 +488,7 @@
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">3 Books &middot; EXTRA 33% off</span>
-        <span class="c-pdp17-row__subtitle">Best Gift Pack - One for every child</span>
+        <span class="c-pdp17-row__subtitle">Best Gift Pack - one for every child</span>
       </span>
       <span class="c-pdp17-row__prices">
         <span class="c-pdp17-row__price">{{ c_pdp17_a_t3_price | money }}</span>
@@ -470,7 +504,7 @@
 </div>
 
 <div class="c-pdp17-variant c-pdp17-variant--b">
-  <p class="c-pdp17-eyebrow">&#9889; Sale &middot; limited time</p>
+  <p class="c-pdp17-eyebrow">&#9889; SALE &middot; LIMITED TIME</p>
 
   <div class="c-pdp17-rows" role="radiogroup" aria-label="Bundle options">
     <label class="c-pdp17-row">
@@ -481,6 +515,7 @@
         data-variant-id="{{ c_pdp17_t1_variant_id }}"
         data-quantity="1"
         data-pdp17-price-money="{{ c_pdp17_a_t1_price | money }}"
+        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">1 Book</span>
@@ -501,7 +536,6 @@
         data-variant-id="{{ c_pdp17_t2_variant_id }}"
         data-quantity="2"
         data-pdp17-price-money="{{ c_pdp17_a_t2_price | money }}"
-        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">2 Books &middot; EXTRA 15% off</span>
@@ -532,7 +566,7 @@
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">3 Books &middot; EXTRA 33% off</span>
-        <span class="c-pdp17-row__subtitle">Best Gift Pack - One for every child</span>
+        <span class="c-pdp17-row__subtitle">Best Gift Pack - one for every child</span>
         {%- if c_pdp17_t3_ships_free -%}
           <span class="c-pdp17-row__perk">&#128666; FREE shipping</span>
         {%- endif -%}
@@ -588,6 +622,7 @@
         {%- if c_pdp17_gift_sticker_variant %}
           data-gift-variant-ids="{{ c_pdp17_c_t1_gift_ids }}"
         {%- endif %}
+        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">1 Book</span>
@@ -612,7 +647,6 @@
         {%- if c_pdp17_gift_mystery_variant %}
           data-gift-variant-ids="{{ c_pdp17_c_t2_gift_ids }}"
         {%- endif %}
-        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">Buy 2, Get 1 Free</span>
@@ -627,7 +661,7 @@
     </label>
 
     <label class="c-pdp17-row">
-      <span class="c-pdp17-row__badge c-pdp17-row__badge--popular">One for every grandchild</span>
+      <span class="c-pdp17-row__badge c-pdp17-row__badge--popular c-pdp17-row__badge--sentence">One for every grandchild</span>
       <input
         type="radio"
         name="c-pdp17-c-tier-{{ section.id }}"
@@ -711,6 +745,7 @@
         data-variant-id="{{ c_pdp17_t1_variant_id }}"
         data-quantity="1"
         data-pdp17-price-money="{{ c_pdp17_a_t1_price | money }}"
+        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">1 Book</span>
@@ -731,7 +766,6 @@
         data-variant-id="{{ c_pdp17_d_t2_variant_id }}"
         data-quantity="3"
         data-pdp17-price-money="{{ c_pdp17_d_t2_price | money }}"
-        checked
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">Buy 2, Get 1 Free</span>
@@ -749,7 +783,7 @@
     </label>
 
     <label class="c-pdp17-row">
-      <span class="c-pdp17-row__badge c-pdp17-row__badge--popular">One for every grandchild</span>
+      <span class="c-pdp17-row__badge c-pdp17-row__badge--popular c-pdp17-row__badge--sentence">One for every grandchild</span>
       <input
         type="radio"
         name="c-pdp17-d-tier-{{ section.id }}"
@@ -846,7 +880,7 @@
     </label>
 
     <label class="c-pdp17-row">
-      <span class="c-pdp17-row__badge c-pdp17-row__badge--popular">One for every grandchild</span>
+      <span class="c-pdp17-row__badge c-pdp17-row__badge--popular c-pdp17-row__badge--sentence">One for every grandchild</span>
       <input
         type="radio"
         name="c-pdp17-e-tier-{{ section.id }}"
@@ -895,7 +929,7 @@
         type="radio"
         name="c-pdp17-f-tier-{{ section.id }}"
         class="c-pdp17-row__radio"
-        data-variant-id="{{ c_pdp17_t1_variant_id }}"
+        data-variant-id="{{ c_pdp17_f_variant_id }}"
         data-quantity="1"
         data-pdp17-price-money="{{ c_pdp17_f_t1_price | money }}"
         checked
@@ -915,7 +949,7 @@
         type="radio"
         name="c-pdp17-f-tier-{{ section.id }}"
         class="c-pdp17-row__radio"
-        data-variant-id="{{ c_pdp17_t1_variant_id }}"
+        data-variant-id="{{ c_pdp17_f_variant_id }}"
         data-quantity="2"
         data-pdp17-price-money="{{ c_pdp17_f_t2_price | money }}"
       >
@@ -938,7 +972,7 @@
         type="radio"
         name="c-pdp17-f-tier-{{ section.id }}"
         class="c-pdp17-row__radio"
-        data-variant-id="{{ c_pdp17_t1_variant_id }}"
+        data-variant-id="{{ c_pdp17_f_variant_id }}"
         data-quantity="3"
         data-pdp17-price-money="{{ c_pdp17_f_t3_price | money }}"
         {%- if c_pdp17_gift_sticker_variant %}
@@ -982,7 +1016,7 @@
         type="radio"
         name="c-pdp17-f-tier-{{ section.id }}"
         class="c-pdp17-row__radio"
-        data-variant-id="{{ c_pdp17_t1_variant_id }}"
+        data-variant-id="{{ c_pdp17_f_variant_id }}"
         data-quantity="4"
         data-pdp17-price-money="{{ c_pdp17_f_t4_price | money }}"
         {%- if c_pdp17_gift_mystery_variant %}
@@ -1042,7 +1076,7 @@
         type="radio"
         name="c-pdp17-f-tier-{{ section.id }}"
         class="c-pdp17-row__radio"
-        data-variant-id="{{ c_pdp17_t1_variant_id }}"
+        data-variant-id="{{ c_pdp17_f_variant_id }}"
         data-quantity="5"
         data-pdp17-price-money="{{ c_pdp17_f_t5_price | money }}"
         {%- if c_pdp17_gift_giftcard_variant %}

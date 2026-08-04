@@ -47,6 +47,14 @@ body[class*="c-primePdp17Var"] .main-product-form {
   display: none;
 }
 
+/* The $15 Gift Card product's own "Denomination" variant option (its only
+   option) shows up as a redundant "Denomination: $15.00" line under the cart
+   line item — the product's own title already says "$15 Gift Card", so this
+   is just noise. Hides it wherever the cart line renders, same as above. */
+.cart-item--product-15-gift-card .product-option {
+  display: none;
+}
+
 .c-primePdp17VarA .c-pdp17-variant--a {
   display: block;
 }
@@ -240,6 +248,14 @@ body[class*="c-primePdp17Var"] .main-product-form {
   padding: 2px 9px;
 }
 
+/* "One for every grandchild" reads like a sentence, not a short label like
+   "Most popular"/"Best value" — uppercasing it looks wrong, so this modifier
+   opts it out of the shared badge's uppercase transform. */
+.c-pdp17-row__badge--sentence {
+  text-transform: none;
+  letter-spacing: normal;
+}
+
 /* Badge color is the only thing that varies per badge — add one modifier per
    new badge flavor here, everything else (font/padding/position) is shared. */
 .c-pdp17-row__badge--popular {
@@ -281,6 +297,13 @@ body[class*="c-primePdp17Var"] .main-product-form {
 /* Var D/E: free-shipping perk uses a distinct teal instead of the shared green. */
 .c-pdp17-row__perk--ship {
   color: #2e7d8a;
+}
+
+/* Var B: free-shipping text specifically is navy, not the shared green —
+   scoped to this variant only since .c-pdp17-row__perk (no modifier) is also
+   reused by Var C's green "on us" gift-book perk. */
+.c-pdp17-variant--b .c-pdp17-row__perk {
+  color: #0d1b3e;
 }
 
 /* Var F: holds multiple .c-pdp17-row__gift chips side by side (tier 4 shows
