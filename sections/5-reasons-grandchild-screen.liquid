@@ -1,0 +1,842 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:ital,wght@0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+<style>
+.shopify-section-group-header-group,
+.shopify-section-group-footer-group,
+#header-group,
+#footer-group,
+.announcement-bar-section { display: none !important; }
+
+.pn-5rgc *,
+.pn-5rgc *::before,
+.pn-5rgc *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.pn-5rgc {
+  font-family: 'Inter', sans-serif;
+  color: #1d2333;
+  background: #fff;
+  overflow-x: hidden;
+}
+
+/* ── Layout helpers ── */
+.pn-5rgc .wrap {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── CTA Button ── */
+.pn-5rgc .cta-btn {
+  display: inline-block;
+  background: #e14b3c;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  padding: 19px 32px;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 1.4;
+  transition: opacity 0.2s;
+}
+.pn-5rgc .cta-btn:hover { opacity: 0.9; }
+
+/* ═══════════════════════════════════
+   SECTION 1 — HERO
+═══════════════════════════════════ */
+.pn-5rgc .hero {
+  padding: 56px 0 40px;
+}
+.pn-5rgc .hero-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  color: #2e8b4f;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 14px;
+}
+.pn-5rgc .hero-h1 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 46px;
+  line-height: 1.18;
+  color: #14213d;
+  margin-bottom: 16px;
+  max-width: 780px;
+}
+.pn-5rgc .hero-sub {
+  font-size: 20px;
+  line-height: 1.6;
+  color: #5b6072;
+  margin-bottom: 16px;
+  max-width: 680px;
+}
+.pn-5rgc .hero-stars {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.pn-5rgc .stars-gold {
+  color: #f5a623;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+.pn-5rgc .stars-count {
+  font-weight: 700;
+  font-size: 19px;
+  color: #1d2333;
+}
+.pn-5rgc .stars-label {
+  font-size: 19px;
+  color: #5b6072;
+}
+.pn-5rgc .hero-cta-wrap {
+  margin-bottom: 40px;
+}
+
+/* ── Book hero image ── */
+.pn-5rgc .book-hero {
+  border-radius: 14px;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1160 / 612;
+}
+.pn-5rgc .book-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pn-5rgc .book-caption {
+  font-size: 16px;
+  font-style: italic;
+  color: #5b6072;
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* ═══════════════════════════════════
+   SECTION 2 — REASONS
+═══════════════════════════════════ */
+.pn-5rgc .reasons {
+  padding: 32px 0 0;
+}
+.pn-5rgc .reason-row {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 42px 0;
+}
+.pn-5rgc .reason-img {
+  width: 418px;
+  min-width: 418px;
+  height: 418px;
+  border-radius: 20px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.pn-5rgc .reason-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pn-5rgc .reason-body { flex: 1; min-width: 0; }
+.pn-5rgc .reason-label {
+  font-weight: 800;
+  font-size: 18px;
+  color: #e14b3c;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  margin-bottom: 4px;
+}
+.pn-5rgc .reason-h3 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.2;
+  color: #14213d;
+  margin-bottom: 12px;
+}
+.pn-5rgc .reason-p {
+  font-size: 20px;
+  line-height: 1.65;
+  color: #1d2333;
+  margin-bottom: 14px;
+}
+.pn-5rgc .reason-highlight {
+  background: #eaf6ec;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.68;
+  color: #1f5c33;
+}
+
+/* ═══════════════════════════════════
+   SECTION 3 — SOCIAL PROOF
+═══════════════════════════════════ */
+.pn-5rgc .social-proof {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1160 / 648;
+  margin: 0 0 32px;
+}
+.pn-5rgc .social-proof img.sp-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pn-5rgc .social-proof img.sp-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pn-5rgc .sp-badge-families {
+  position: absolute;
+  bottom: 58px;
+  left: 10px;
+  background: #fff;
+  border: 1px solid #e0d0c0;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 13px;
+  white-space: nowrap;
+}
+.pn-5rgc .sp-badge-families .badge-emoji {
+  font-size: 22px;
+}
+.pn-5rgc .sp-badge-families .badge-text-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: #1a1a1a;
+  letter-spacing: -0.37px;
+}
+.pn-5rgc .sp-badge-families .badge-text-sub {
+  font-size: 12px;
+  color: #4a4a4a;
+}
+.pn-5rgc .sp-badge-bestseller {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  background: #166534;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.37px;
+  border-radius: 14px;
+  padding: 11px 13px;
+  white-space: nowrap;
+}
+.pn-5rgc .sp-cta-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+}
+
+/* ═══════════════════════════════════
+   SECTION 4 — TOPICS GRID
+═══════════════════════════════════ */
+.pn-5rgc .topics-section {
+  background: #14213d;
+  padding: 64px 0;
+  margin: 0;
+}
+.pn-5rgc .topics-headline {
+  text-align: center;
+  margin-bottom: 18px;
+  position: relative;
+}
+.pn-5rgc .topics-headline-line {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 39px;
+  color: #fff;
+  line-height: 1.25;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.pn-5rgc .topics-headline-highlight {
+  background: #f2a93b;
+  color: #14213d;
+  border-radius: 8px;
+  padding: 2px 16px;
+}
+.pn-5rgc .topics-sub {
+  text-align: center;
+  font-size: 20px;
+  color: #b7c0d6;
+  line-height: 1.68;
+  max-width: 760px;
+  margin: 0 auto 40px;
+}
+.pn-5rgc .topics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.pn-5rgc .topic-card {
+  background: #1b2a4a;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 21px 19px;
+}
+.pn-5rgc .topic-card.highlighted {
+  background: #20304f;
+  border: 1.5px solid #f2a93b;
+}
+.pn-5rgc .topic-emoji {
+  font-size: 28px;
+  margin-bottom: 10px;
+  display: block;
+}
+.pn-5rgc .topic-name {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  color: #fff;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.pn-5rgc .topic-desc {
+  font-size: 16px;
+  color: #b7c0d6;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════
+   SECTION 5 — REACTION / TESTIMONIALS
+═══════════════════════════════════ */
+.pn-5rgc .testimonials-section {
+  padding: 40px 0;
+}
+.pn-5rgc .section-divider {
+  height: 1px;
+  background: #e6e8ec;
+  margin: 40px 0;
+}
+.pn-5rgc .testimonials-h2 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 33px;
+  color: #14213d;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.pn-5rgc .reaction-img-wrap {
+  background: #fff3e8;
+  border-radius: 14px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto 40px;
+  aspect-ratio: 1512 / 2016;
+  position: relative;
+}
+.pn-5rgc .reaction-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pn-5rgc .reviews-headline-wrap {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.pn-5rgc .reviews-headline {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 35px;
+  color: #14213d;
+  line-height: 1.4;
+}
+.pn-5rgc .reviews-headline span { color: #c0392b; }
+.pn-5rgc .reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.pn-5rgc .review-card {
+  background: #fff;
+  border: 1px solid #e6e8ec;
+  border-radius: 10px;
+  padding: 23px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pn-5rgc .review-stars {
+  color: #f5a623;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+.pn-5rgc .review-text {
+  font-size: 17px;
+  line-height: 1.68;
+  color: #1d2333;
+  flex: 1;
+}
+.pn-5rgc .review-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+.pn-5rgc .review-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.pn-5rgc .review-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pn-5rgc .review-name {
+  font-weight: 700;
+  font-size: 17px;
+  color: #1d2333;
+}
+.pn-5rgc .review-role {
+  font-size: 15px;
+  color: #5b6072;
+}
+.pn-5rgc .review-verified {
+  font-weight: 700;
+  font-size: 15px;
+  color: #2e8b4f;
+}
+
+/* ═══════════════════════════════════
+   SECTION 6 — FINAL CTA
+═══════════════════════════════════ */
+.pn-5rgc .final-cta {
+  padding: 40px 0 64px;
+}
+.pn-5rgc .final-cta-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.pn-5rgc .guarantee-box {
+  background: #eaf6ec;
+  border-radius: 10px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+.pn-5rgc .guarantee-diamond {
+  color: #1f5c33;
+  font-size: 22px;
+  line-height: 1.6;
+  flex-shrink: 0;
+}
+.pn-5rgc .guarantee-text {
+  font-size: 19px;
+  line-height: 1.68;
+  color: #1f5c33;
+}
+.pn-5rgc .final-cta-btn-wrap {
+  text-align: center;
+}
+.pn-5rgc .final-cta-btn-wrap .cta-btn {
+  font-size: 22px;
+  padding: 22px 48px;
+}
+
+/* ═══════════════════════════════════
+   MOBILE STYLES (≤749px)
+═══════════════════════════════════ */
+@media (max-width: 749px) {
+  .pn-5rgc .hero { padding: 28px 0 24px; }
+  .pn-5rgc .hero-h1 { font-size: 26px; line-height: 1.18; }
+  .pn-5rgc .hero-sub { font-size: 15.5px; }
+  .pn-5rgc .hero-eyebrow { font-size: 11px; letter-spacing: 1.2px; }
+  .pn-5rgc .stars-count,
+  .pn-5rgc .stars-label { font-size: 14px; }
+  .pn-5rgc .cta-btn { font-size: 14px; padding: 15px 20px; }
+
+  .pn-5rgc .book-hero { aspect-ratio: 349 / 208; }
+
+  .pn-5rgc .reason-row {
+    flex-direction: column;
+    padding: 24px 0;
+    gap: 16px;
+  }
+  .pn-5rgc .reason-img {
+    width: 100%;
+    min-width: unset;
+    height: 280px;
+  }
+  .pn-5rgc .reason-h3 { font-size: 21px; }
+  .pn-5rgc .reason-p { font-size: 15.5px; }
+  .pn-5rgc .reason-label { font-size: 13px; }
+  .pn-5rgc .reason-highlight { font-size: 14px; }
+
+  .pn-5rgc .social-proof { aspect-ratio: 390 / 320; }
+  .pn-5rgc .sp-badge-families { bottom: 8px; left: 6px; font-size: 9px; gap: 5px; padding: 5px 6px; }
+  .pn-5rgc .sp-badge-families .badge-emoji { font-size: 11px; }
+  .pn-5rgc .sp-badge-families .badge-text-title { font-size: 9.5px; }
+  .pn-5rgc .sp-badge-families .badge-text-sub { font-size: 6.3px; }
+  .pn-5rgc .sp-badge-bestseller { font-size: 9.5px; padding: 5px 6px; border-radius: 5px; }
+
+  .pn-5rgc .topics-section { padding: 48px 0; }
+  .pn-5rgc .topics-headline-line { font-size: 24px; }
+  .pn-5rgc .topics-sub { font-size: 15px; }
+  .pn-5rgc .topics-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .pn-5rgc .topic-emoji { font-size: 22px; }
+  .pn-5rgc .topic-name { font-size: 15px; }
+  .pn-5rgc .topic-desc { font-size: 13px; }
+  .pn-5rgc .topic-card { padding: 14px 12px; }
+
+  .pn-5rgc .testimonials-h2 { font-size: 24px; }
+  .pn-5rgc .reviews-headline { font-size: 22px; }
+  .pn-5rgc .reviews-grid { grid-template-columns: 1fr; }
+
+  .pn-5rgc .final-cta-btn-wrap .cta-btn { font-size: 15px; padding: 16px 24px; }
+  .pn-5rgc .guarantee-text { font-size: 15px; }
+}
+</style>
+
+<div class="pn-5rgc">
+
+  {%- comment -%} ═══ HERO ═══ {%- endcomment -%}
+  <section class="hero">
+    <div class="wrap">
+      <p class="hero-eyebrow">What Happens When Curiosity Gets a Real Chance</p>
+      <h1 class="hero-h1">5 Reasons Your Grandchild Will Actually Put the Screen Down for This Book</h1>
+      <p class="hero-sub">Not because you asked them to. Because it gives them something a screen never can, at exactly the age it matters most.</p>
+      <div class="hero-stars">
+        <span class="stars-gold">★★★★★</span>
+        <span class="stars-count">4.9</span>
+        <span class="stars-label">· 2,847 verified reviews</span>
+      </div>
+      <div class="hero-cta-wrap">
+        <a href="{{ section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' }}" class="cta-btn">GET 50% OFF ON THE BOOK →</a>
+      </div>
+
+      <div class="book-hero">
+        <img src="{{ '5rgc-book-hero.png' | asset_url }}" alt="A glimpse of the 10,000 Whys encyclopedia, closed cover next to an open spread" loading="eager">
+      </div>
+      <p class="book-caption">A glimpse inside: real hardcover, real spreads, real questions.</p>
+    </div>
+  </section>
+
+  {%- comment -%} ═══ 5 REASONS ═══ {%- endcomment -%}
+  <section class="reasons">
+    <div class="wrap">
+
+      {%- comment -%} Reason 1 {%- endcomment -%}
+      <div class="reason-row">
+        <div class="reason-img">
+          <img src="{{ '5rgc-reason-1.png' | asset_url }}" alt="Child reading the encyclopedia" loading="lazy">
+        </div>
+        <div class="reason-body">
+          <p class="reason-label">Reason 1</p>
+          <h2 class="reason-h3">It Sparks Real Curiosity, Not Just Screen Time</h2>
+          <p class="reason-p">Where scrolling hands a child passive entertainment, this book hands them a real question and lets them go chase the answer themselves. That's the exact kind of thinking a growing mind between 6 and 12 needs most: actively wondering, not just watching.</p>
+          <div class="reason-highlight">A book packed with the questions kids ask most, from why the sky is blue to how volcanoes erupt, and so many more.</div>
+        </div>
+      </div>
+
+      {%- comment -%} Reason 2 {%- endcomment -%}
+      <div class="reason-row">
+        <div class="reason-img">
+          <img src="{{ '5rgc-reason-2.png' | asset_url }}" alt="Child happily reading without prompting" loading="lazy">
+        </div>
+        <div class="reason-body">
+          <p class="reason-label">Reason 2</p>
+          <h2 class="reason-h3">It's Never Something You Have to Fight About</h2>
+          <p class="reason-p">No timers, no "five more minutes," no taking anything away. You simply leave it where they'll find it, and because it's genuinely interesting to them, they pick it up on their own terms, not because they were told to.</p>
+          <div class="reason-highlight">No rules to enforce. No arguments to have. It works on its own.</div>
+        </div>
+      </div>
+
+      {%- comment -%} Reason 3 {%- endcomment -%}
+      <div class="reason-row">
+        <div class="reason-img">
+          <img src="{{ '5rgc-reason-3.png' | asset_url }}" alt="Child coming back to read the book on their own" loading="lazy">
+        </div>
+        <div class="reason-body">
+          <p class="reason-label">Reason 3</p>
+          <h2 class="reason-h3">They Read It, and Come Back to It, Completely Unprompted</h2>
+          <p class="reason-p">This is the part that keeps surprising grandparents: kids don't need reminding. They find themselves reaching for it again days later, flipping to a new page because they want to know what's next, not because anyone asked them to.</p>
+          <div class="reason-highlight">97% of kids picked the book back up on their own within the first week, per a survey of 1,200 buyers.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  {%- comment -%} ═══ SOCIAL PROOF IMAGE ═══ {%- endcomment -%}
+  <div class="wrap">
+    <div class="social-proof">
+      <img class="sp-bg" src="{{ '5rgc-social-bg.png' | asset_url }}" alt="Family reading together in a cozy living room" loading="lazy">
+      <img class="sp-overlay" src="{{ '5rgc-social-overlay.png' | asset_url }}" alt="" loading="lazy" aria-hidden="true">
+      <div class="sp-badge-families">
+        <span class="badge-emoji">👥</span>
+        <div>
+          <div class="badge-text-title">Loved by 20,000+ Families!</div>
+          <div class="badge-text-sub">104,644 units sold worldwide</div>
+        </div>
+      </div>
+      <div class="sp-badge-bestseller">Best Seller</div>
+    </div>
+    <div class="sp-cta-wrap">
+      <a href="{{ section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' }}" class="cta-btn">GET 50% OFF ON THE BOOK →</a>
+    </div>
+  </div>
+
+  {%- comment -%} Reasons 4 & 5 {%- endcomment -%}
+  <section class="reasons">
+    <div class="wrap">
+
+      {%- comment -%} Reason 4 {%- endcomment -%}
+      <div class="reason-row">
+        <div class="reason-img">
+          <img src="{{ '5rgc-reason-4.png' | asset_url }}" alt="Grandparent and grandchild reading together" loading="lazy">
+        </div>
+        <div class="reason-body">
+          <p class="reason-label">Reason 4</p>
+          <h2 class="reason-h3">It Gives You Something to Share, Whenever You Want It</h2>
+          <p class="reason-p">You don't have to plan reading time or turn it into a lesson. Sometimes it's just the two of you on the couch, them explaining a page to you, you asking what happens next. It becomes its own kind of together-time, naturally, on no one's schedule but yours.</p>
+          <div class="reason-highlight">A page to read side by side, or a page to hear about over the phone.</div>
+        </div>
+      </div>
+
+      {%- comment -%} Reason 5 {%- endcomment -%}
+      <div class="reason-row">
+        <div class="reason-img">
+          <img src="{{ '5rgc-reason-5.png' | asset_url }}" alt="Child at the age where curiosity is most shapeable" loading="lazy">
+        </div>
+        <div class="reason-body">
+          <p class="reason-label">Reason 5</p>
+          <h2 class="reason-h3">It Feeds a Mind That's Growing Right Now, While It Still Can</h2>
+          <p class="reason-p">Between the ages of 6 and 12, a child's curiosity is actively forming the habits that carry into who they become. This is exactly the window where the right kind of attention, active, curious, question-driven, makes the biggest difference. It's a window that doesn't stay open forever.</p>
+          <div class="reason-highlight">Built specifically for ages 6 to 12, the years curiosity is most shapeable.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  {%- comment -%} ═══ TOPICS GRID ═══ {%- endcomment -%}
+  <section class="topics-section">
+    <div class="wrap">
+      <div class="topics-headline">
+        <div class="topics-headline-line">
+          <span>One Book.</span>
+          <span class="topics-headline-highlight">Every Subject</span>
+          <span>They're Curious About.</span>
+        </div>
+      </div>
+      <p class="topics-sub">From the deepest ocean to the edge of the universe, if your grandchild has wondered about it, the answer is in here.</p>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <span class="topic-emoji">🚀</span>
+          <div class="topic-name">Space &amp; Universe</div>
+          <div class="topic-desc">Black holes, planets, stars, rockets and life beyond Earth</div>
+        </div>
+        <div class="topic-card">
+          <span class="topic-emoji">🦕</span>
+          <div class="topic-name">Dinosaurs</div>
+          <div class="topic-desc">Why they went extinct, how we find them, what they really looked like</div>
+        </div>
+        <div class="topic-card">
+          <span class="topic-emoji">🧬</span>
+          <div class="topic-name">The Human Body</div>
+          <div class="topic-desc">Why your heart beats, how your brain works, why you dream</div>
+        </div>
+        <div class="topic-card">
+          <span class="topic-emoji">🌊</span>
+          <div class="topic-name">Oceans &amp; Sea Life</div>
+          <div class="topic-desc">Deep sea creatures, why the ocean is salty, how waves form</div>
+        </div>
+        <div class="topic-card">
+          <span class="topic-emoji">⚡</span>
+          <div class="topic-name">Weather &amp; Nature</div>
+          <div class="topic-desc">Thunder, lightning, tornadoes, rainbows and the sky</div>
+        </div>
+        <div class="topic-card">
+          <span class="topic-emoji">🏛️</span>
+          <div class="topic-name">History &amp; Civilisations</div>
+          <div class="topic-desc">Ancient Egypt, the Romans, great inventions and how the world changed</div>
+        </div>
+        <div class="topic-card highlighted">
+          <span class="topic-emoji">🦁</span>
+          <div class="topic-name">Animals &amp; Wildlife</div>
+          <div class="topic-desc">How animals survive, migrate, communicate and why some go extinct</div>
+        </div>
+        <div class="topic-card">
+          <span class="topic-emoji">🔬</span>
+          <div class="topic-name">Science &amp; Forces</div>
+          <div class="topic-desc">Gravity, magnets, electricity, light and how energy moves</div>
+        </div>
+        <div class="topic-card">
+          <span class="topic-emoji">🌿</span>
+          <div class="topic-name">Plants &amp; Biology</div>
+          <div class="topic-desc">How plants grow, why leaves change colour, what makes things alive</div>
+        </div>
+        <div class="topic-card">
+          <span class="topic-emoji">🧠</span>
+          <div class="topic-name">The Brain &amp; Mind</div>
+          <div class="topic-desc">Memory, emotions, sleep, dreams and how the mind works</div>
+        </div>
+        <div class="topic-card">
+          <span class="topic-emoji">⚙️</span>
+          <div class="topic-name">Technology &amp; Inventions</div>
+          <div class="topic-desc">How planes fly, how the internet works, what computers do</div>
+        </div>
+        <div class="topic-card">
+          <span class="topic-emoji">🌍</span>
+          <div class="topic-name">Earth &amp; Geography</div>
+          <div class="topic-desc">Volcanoes, earthquakes, tectonic plates and how Earth formed</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ═══ TESTIMONIALS ═══ {%- endcomment -%}
+  <section class="testimonials-section">
+    <div class="wrap" style="max-width:760px;">
+
+      <div class="section-divider"></div>
+      <h2 class="testimonials-h2">See Their Reaction</h2>
+
+      <div class="reaction-img-wrap">
+        <img src="{{ '5rgc-reaction.png' | asset_url }}" alt="Child's reaction to the book" loading="lazy">
+      </div>
+
+      <div class="section-divider"></div>
+
+      <div class="reviews-headline-wrap">
+        <p class="reviews-headline">Trusted by 20,000+<span> Families?</span></p>
+        <p style="font-size:18px;color:#5b6072;margin-top:8px;text-align:center;">Here's what parents and grandparents are saying.</p>
+      </div>
+
+      <div class="reviews-grid">
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"My son is a screen kid. He read this until 9pm without me saying a word. I bought two more for his cousins."</p>
+          <div class="review-author">
+            <div class="review-avatar">
+              <img src="{{ '5rgc-avatar-1.png' | asset_url }}" alt="David K." loading="lazy">
+            </div>
+            <div>
+              <div class="review-name">David K.</div>
+              <div class="review-role">Father of two</div>
+              <div class="review-verified">✓ Verified buyer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Best money I've spent on my kids' education outside of school. The conversations it starts are priceless."</p>
+          <div class="review-author">
+            <div class="review-avatar">
+              <img src="{{ '5rgc-avatar-2.png' | asset_url }}" alt="Jennifer L." loading="lazy">
+            </div>
+            <div>
+              <div class="review-name">Jennifer L.</div>
+              <div class="review-role">Mother</div>
+              <div class="review-verified">✓ Verified buyer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"It's the first gift in years he's actually still using three months later. Worth every penny for that alone."</p>
+          <div class="review-author">
+            <div class="review-avatar">
+              <img src="{{ '5rgc-avatar-3.png' | asset_url }}" alt="Diane K." loading="lazy">
+            </div>
+            <div>
+              <div class="review-name">Diane K.</div>
+              <div class="review-role">Grandmother</div>
+              <div class="review-verified">✓ Verified buyer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"We read it together every visit now. It's become our thing, better than I could have hoped for."</p>
+          <div class="review-author">
+            <div class="review-avatar">
+              <img src="{{ '5rgc-avatar-4.png' | asset_url }}" alt="James P." loading="lazy">
+            </div>
+            <div>
+              <div class="review-name">James P.</div>
+              <div class="review-role">Grandfather</div>
+              <div class="review-verified">✓ Verified buyer</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ═══ FINAL CTA ═══ {%- endcomment -%}
+  <section class="final-cta">
+    <div class="final-cta-inner">
+      <div class="section-divider"></div>
+      <div class="guarantee-box">
+        <span class="guarantee-diamond">◆</span>
+        <p class="guarantee-text">Less than the cost of a week of screen-time apps, and it's theirs to keep, backed by a 30-day, no-questions guarantee.</p>
+      </div>
+      <div class="final-cta-btn-wrap">
+        <a href="{{ section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' }}" class="cta-btn">GET 50% OFF ON THE BOOK →</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "5 Reasons Why",
+  "settings": [
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Button URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "5 Reasons Why"
+    }
+  ]
+}
+{% endschema %}

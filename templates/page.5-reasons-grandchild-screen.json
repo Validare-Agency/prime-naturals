@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "5-reasons-grandchild-screen",
+      "settings": {
+        "cta_url": "/products/kids-encyclopedia-100-000-whys"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
