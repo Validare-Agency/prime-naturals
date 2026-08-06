@@ -691,6 +691,7 @@
                 has_filtering: has_filtering
               %}
             {%- when 'buy_buttons' -%}
+              {% render 'c-prime-pdp-17-bundle', product: product, section: section %}
               {%- render 'buy-buttons',
                  block: block,
                  product: product,
@@ -1201,6 +1202,14 @@
   {{ 'c-prime-pdp-12.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
 <script src="{{ 'c-prime-pdp-12.js' | asset_url }}" defer></script>
+
+{%- comment -%} V_PRIME_PDP_17 | Offer Restructure - PDP Bundle Selector {%- endcomment -%}
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-pdp-17.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-pdp-17.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+{%- comment -%} c-prime-pdp-17.js loads sitewide from layout/theme.liquid instead of here — the gift-cart cleanup logic must run on every page, not just product pages. {%- endcomment -%}
 
 {% schema %}
 {
