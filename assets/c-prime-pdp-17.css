@@ -248,9 +248,10 @@ body[class*="c-primePdp17Var"] .main-product-form {
   padding: 2px 9px;
 }
 
-/* "One for every grandchild" reads like a sentence, not a short label like
-   "Most popular"/"Best value" — uppercasing it looks wrong, so this modifier
-   opts it out of the shared badge's uppercase transform. */
+/* Opts a badge out of the shared uppercase transform — used for "One for
+   every grandchild" everywhere it appears, and for Var C/D/E's "Most
+   popular" badge specifically (per QA: A/B/F's "Most popular" stays
+   uppercase, C/D/E's doesn't). */
 .c-pdp17-row__badge--sentence {
   text-transform: none;
   letter-spacing: normal;
