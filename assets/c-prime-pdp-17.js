@@ -391,13 +391,105 @@
     });
   }
 
-  // Single shared cart read for both checks — cleanupOrphanedGifts and
-  // syncBuilderDiscount used to each fetch /cart.js independently every time
-  // they ran together, doubling an already-frequent request.
-  function runCleanupPass() {
-    return fetchCart().then(function (cart) {
-      return Promise.all([cleanupOrphanedGifts(cart), syncBuilderDiscount(cart)]);
+  // Var A/B/C/D/E: tier 1 adds the REAL product variant; tiers 2+ add a
+  // DIFFERENT (duplicate) variant with its own bundle discount. The cart's
+  // own "+"/"-" stepper only ever changes the quantity of whichever variant
+  // is already on the line, so bumping a tier-1 line's quantity via the cart
+  // can never reach the duplicate's tier pricing on its own — it just buys
+  // more of the real variant at whatever (unrelated) discount that variant's
+  // own native config happens to give. This swaps the line over to the
+  // correct variant for its CURRENT quantity, in either direction.
+  function activeVariantLadder() {
+    var letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+    for (var i = 0; i < letters.length; i++) {
+      if (document.body.classList.contains('c-primePdp17Var' + letters[i])) {
+        return (window.cPdp17VariantLadders || {})[letters[i]] || null;
+      }
+    }
+    return null;
+  }
+
+  function swapMainLineVariants(cart) {
+    var ladder = activeVariantLadder();
+    if (!ladder) return Promise.resolve(false);
+
+    var items = cart.items || [];
+    var groups = {};
+    items.forEach(function (item) {
+      var bundleId = (item.properties || {})._pdp17_bundle_id;
+      if (!bundleId) return;
+      groups[bundleId] = groups[bundleId] || [];
+      groups[bundleId].push(item);
     });
+
+    var swaps = [];
+    Object.keys(groups).forEach(function (bundleId) {
+      var groupItems = groups[bundleId];
+      var mainItem = groupItems.filter(function (item) {
+        var props = item.properties || {};
+        return !props._pdp17_gift_for && !props._pdp17_set_member;
+      })[0];
+      if (!mainItem) return;
+
+      var rung = ladder.filter(function (r) {
+        return r.dupId && (r.realId === mainItem.variant_id || r.dupId === mainItem.variant_id);
+      })[0];
+      if (!rung) return;
+
+      var correctId = mainItem.quantity >= rung.threshold ? rung.dupId : rung.realId;
+      if (correctId !== mainItem.variant_id) {
+        swaps.push({ item: mainItem, correctId: correctId });
+      }
+    });
+
+    if (!swaps.length) return Promise.resolve(false);
+
+    return Promise.all(swaps.map(function (swap) {
+      return changeLineQuantity(swap.item.key, 0);
+    }))
+      .then(function () {
+        return runSuppressed(function () {
+          return fetch(window.routes.cart_add_url + '.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({
+              items: swaps.map(function (swap) {
+                return { id: swap.correctId, quantity: swap.item.quantity, properties: swap.item.properties };
+              })
+            })
+          });
+        });
+      })
+      .then(function () {
+        return true;
+      });
+  }
+
+  // Single shared cart read for all three checks — each used to fetch
+  // /cart.js independently every time they ran together, tripling an
+  // already-frequent request.
+  // The fetch patch AND the cart-drawer MutationObserver both react to the
+  // same external change (e.g. clicking "+" triggers a fetch AND re-renders
+  // the drawer, which the observer also sees) — without this guard, two
+  // concurrent passes each fetch the SAME pre-swap/pre-cleanup cart snapshot
+  // and each independently decide to add the same corrective line, which
+  // Shopify merges into one line at DOUBLE the intended quantity. Concurrent
+  // callers share this one in-flight pass instead of each starting their own.
+  var cleanupInFlight = null;
+  function runCleanupPass() {
+    if (cleanupInFlight) return cleanupInFlight;
+    cleanupInFlight = fetchCart()
+      .then(function (cart) {
+        return Promise.all([
+          cleanupOrphanedGifts(cart),
+          syncBuilderDiscount(cart),
+          swapMainLineVariants(cart)
+        ]);
+      })
+      .finally(function () {
+        cleanupInFlight = null;
+      });
+    return cleanupInFlight;
   }
 
   var pendingCheck = null;

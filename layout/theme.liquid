@@ -497,6 +497,46 @@
       4: [],
       5: [{{ c_pdp17_f_sticker_v | json }}, {{ c_pdp17_f_mystery_v | json }}, {{ c_pdp17_f_giftcard_v | json }}]
     };</script>
+    {%- comment -%} Var A/B/C/D/E: tier 1 adds the REAL product variant, but
+      tiers 2+ add a DIFFERENT (duplicate) variant — clicking the cart's own
+      "+" only ever increases the quantity of whichever variant is already on
+      that line, so it can never reach the duplicate's tier pricing on its
+      own. This ladder lets JS detect "real variant, quantity crossed the
+      next tier's threshold" and swap the line over to the correct variant at
+      that quantity (and swap back down if quantity drops below it). Missing
+      duplicates (e.g. murphys/leadership "-var-c" not created yet) resolve
+      to null and are skipped rather than swapping to a nonexistent variant. {%- endcomment -%}
+    {%- liquid
+      assign c_pdp17_a_enc_dup = all_products['kidss-encyclopedia-10-000-whys-var-a'].selected_or_first_available_variant.id
+      assign c_pdp17_a_mur_dup = all_products['murphys-law-for-kids-var-a'].selected_or_first_available_variant.id
+      assign c_pdp17_a_lea_dup = all_products['leadership-enlightenment-for-kids-var-a'].selected_or_first_available_variant.id
+      assign c_pdp17_c_enc_dup = all_products['kidss-encyclopedia-10-000-whys-var-c'].selected_or_first_available_variant.id
+      assign c_pdp17_c_mur_dup = all_products['murphys-law-for-kids-var-c'].selected_or_first_available_variant.id
+      assign c_pdp17_c_lea_dup = all_products['leadership-enlightenment-for-kids-var-c'].selected_or_first_available_variant.id
+      assign c_pdp17_d_mur_dup = all_products['murphys-law-for-kids-var-d'].selected_or_first_available_variant.id
+      assign c_pdp17_d_lea_dup = all_products['leadership-enlightenment-for-kids-var-d'].selected_or_first_available_variant.id
+    -%}
+    <script>
+      window.cPdp17VariantLadders = {
+        A: [
+          { realId: {{ c_pdp17_h_enc_v | json }}, dupId: {{ c_pdp17_a_enc_dup | default: null | json }}, threshold: 2 },
+          { realId: {{ c_pdp17_h_mur_v | json }}, dupId: {{ c_pdp17_a_mur_dup | default: null | json }}, threshold: 2 },
+          { realId: {{ c_pdp17_h_lea_v | json }}, dupId: {{ c_pdp17_a_lea_dup | default: null | json }}, threshold: 2 }
+        ],
+        C: [
+          { realId: {{ c_pdp17_h_enc_v | json }}, dupId: {{ c_pdp17_c_enc_dup | default: null | json }}, threshold: 3 },
+          { realId: {{ c_pdp17_h_mur_v | json }}, dupId: {{ c_pdp17_c_mur_dup | default: null | json }}, threshold: 3 },
+          { realId: {{ c_pdp17_h_lea_v | json }}, dupId: {{ c_pdp17_c_lea_dup | default: null | json }}, threshold: 3 }
+        ],
+        D: [
+          { realId: {{ c_pdp17_h_enc_v | json }}, dupId: {{ c_pdp17_c_enc_dup | default: null | json }}, threshold: 3 },
+          { realId: {{ c_pdp17_h_mur_v | json }}, dupId: {{ c_pdp17_d_mur_dup | default: null | json }}, threshold: 3 },
+          { realId: {{ c_pdp17_h_lea_v | json }}, dupId: {{ c_pdp17_d_lea_dup | default: null | json }}, threshold: 3 }
+        ]
+      };
+      window.cPdp17VariantLadders.B = window.cPdp17VariantLadders.A;
+      window.cPdp17VariantLadders.E = window.cPdp17VariantLadders.D;
+    </script>
     <script src="{{ 'c-prime-pdp-17.js' | asset_url }}" defer></script>
     <script src="{{ 'c-custom.js' | asset_url }}" defer></script>
 
