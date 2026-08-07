@@ -1,15 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const bar = document.querySelectorAll('[data-sticky-cta-bar]');
-  const trigger = document.querySelector('[data-sticky-cta-trigger]');
-  if (!bar || !trigger) return;
+  const widget = document.querySelector('[data-sticky-cta-widget]');
+  const triggers = document.querySelectorAll('[data-sticky-cta-bar]');
+  if (!widget || !triggers.length) return;
+
+  const visibleTriggers = new Set();
 
   const observer = new IntersectionObserver(
-    ([entry]) => {
-      const scrolledPast = !entry.isIntersecting && entry.boundingClientRect.top < 0;
-      bar.forEach((b) => b.classList.toggle('is-visible', scrolledPast));
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          visibleTriggers.add(entry.target);
+        } else {
+          visibleTriggers.delete(entry.target);
+        }
+      });
+
+      widget.classList.toggle('is-visible', visibleTriggers.size === 0);
     },
     { threshold: 0 }
   );
 
-  observer.observe(trigger);
+  triggers.forEach((trigger) => observer.observe(trigger));
 });
