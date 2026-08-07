@@ -255,11 +255,12 @@
               // Var C's gift count does NOT grow monotonically with quantity —
               // 1/3/5 books each unlock a gift, but 2/4 (only reachable via the
               // cart's own stepper, no row sells those quantities) unlock none.
-              // Var F IS monotonic (Stickers 3+, Mystery Gift 4+, Gift Card
-              // 5+ — nothing is ever taken away once earned by quantity alone).
-              // Each is looked up against its exact current quantity so both
-              // additions and removals come from the same source of truth,
-              // instead of checking them independently and risking drift.
+              // Var B/F ARE monotonic (Var B: Stickers 3+; Var F: Stickers 3+,
+              // Mystery Gift 4+, Gift Card 5+ — nothing is ever taken away once
+              // earned by quantity alone). Each is looked up against its exact
+              // current quantity so both additions and removals come from the
+              // same source of truth, instead of checking them independently
+              // and risking drift.
               var expectedGiftIds = null;
               if (document.body.classList.contains('c-primePdp17VarC') && window.cPdp17VarCGiftMap) {
                 var qtyMap = window.cPdp17VarCGiftMap;
@@ -267,10 +268,17 @@
                 var maxKey = mapKeys[mapKeys.length - 1];
                 var lookupQty = mainItem.quantity >= maxKey ? maxKey : mainItem.quantity;
                 expectedGiftIds = qtyMap[lookupQty] || [];
-              } else if (document.body.classList.contains('c-primePdp17VarF') && window.cPdp17VarFGiftLadder) {
-                expectedGiftIds = window.cPdp17VarFGiftLadder
-                  .filter(function (rung) { return mainItem.quantity >= rung.minQty; })
-                  .map(function (rung) { return rung.id; });
+              } else {
+                var monotonicLadder = document.body.classList.contains('c-primePdp17VarB')
+                  ? window.cPdp17VarBGiftLadder
+                  : document.body.classList.contains('c-primePdp17VarF')
+                    ? window.cPdp17VarFGiftLadder
+                    : null;
+                if (monotonicLadder) {
+                  expectedGiftIds = monotonicLadder
+                    .filter(function (rung) { return mainItem.quantity >= rung.minQty; })
+                    .map(function (rung) { return rung.id; });
+                }
               }
 
               if (expectedGiftIds) {
@@ -290,7 +298,7 @@
                   }
                 });
               } else {
-                // Var B/G etc.: single shared threshold set at Add to Cart time.
+                // Var G etc.: single shared threshold set at Add to Cart time.
                 groupItems.forEach(function (item) {
                   if (item === mainItem) return;
                   var giftMinQty = parseInt((item.properties || {})._pdp17_min_qty, 10) || 1;

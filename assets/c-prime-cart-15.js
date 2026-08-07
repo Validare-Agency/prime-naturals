@@ -115,6 +115,11 @@
         if (!parent || /^(SCRIPT|STYLE|NOSCRIPT|TEXTAREA|INPUT)$/.test(parent.tagName)) {
           return NodeFilter.FILTER_REJECT;
         }
+        // PDP17's own "FREE shipping" badges are excluded on purpose — that
+        // test owns its own copy and must never be rewritten by this one.
+        if (parent.closest('.c-pdp17-row__perk')) {
+          return NodeFilter.FILTER_REJECT;
+        }
         var trimmed = node.textContent.trim();
         if (!trimmed || trimmed.length > 40) return NodeFilter.FILTER_SKIP;
         return NodeFilter.FILTER_ACCEPT;

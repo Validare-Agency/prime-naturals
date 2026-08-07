@@ -480,6 +480,10 @@
       assign c_pdp17_f_giftcard_v = all_products['15-gift-card'].selected_or_first_available_variant.id
     -%}
     <script>window.cPdp17BuilderVariantIds = [{{ c_pdp17_h_enc_v }}, {{ c_pdp17_h_mur_v }}, {{ c_pdp17_h_lea_v }}];</script>
+    {%- comment -%} Var B: single gift (Stickers), monotonic like Var F — only unlocks at 3+ books, nothing to take away below that. {%- endcomment -%}
+    <script>window.cPdp17VarBGiftLadder = [
+      { id: {{ c_pdp17_f_sticker_v | json }}, minQty: 3 }
+    ];</script>
     {%- comment -%} Var F: lets cleanupOrphanedGifts auto-add a gift when the cart's own quantity stepper (not just our Add to Cart button) raises a bundle past that gift's threshold. {%- endcomment -%}
     <script>window.cPdp17VarFGiftLadder = [
       { id: {{ c_pdp17_f_sticker_v | json }}, minQty: 3 },
