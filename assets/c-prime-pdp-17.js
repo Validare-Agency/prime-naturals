@@ -343,17 +343,30 @@
     var variantIds = window.cPdp17BuilderVariantIds;
     if (!variantIds || !variantIds.length) return Promise.resolve(false);
 
+    // This ran for EVERY variant, not just Var H — any shopper on A/B/C/D/E/F/G
+    // (or Control) who ended up with 2+ of the real book variants in their
+    // cart (e.g. Var G's individual-item add path) got a PDP17-BUNDLE-*
+    // discount code auto-applied, since this only ever checked total
+    // quantity, never which variant was active. Forcing desiredCode to blank
+    // outside Var H reuses the exact same "strip any of our codes that
+    // shouldn't be there" logic below that already runs when nothing
+    // qualifies — so a code that leaked on BEFORE this fix existed still
+    // gets removed the next time this runs, not just newly blocked.
+    var isVarH = document.body.classList.contains('c-primePdp17VarH');
+
     return Promise.resolve()
       .then(function () {
-        var totalQty = (cart.items || [])
-          .filter(function (item) {
-            return variantIds.indexOf(item.variant_id) !== -1;
-          })
-          .reduce(function (sum, item) {
-            return sum + item.quantity;
-          }, 0);
+        var totalQty = isVarH
+          ? (cart.items || [])
+            .filter(function (item) {
+              return variantIds.indexOf(item.variant_id) !== -1;
+            })
+            .reduce(function (sum, item) {
+              return sum + item.quantity;
+            }, 0)
+          : 0;
 
-        var tier = pdp17BuilderTierFor(totalQty);
+        var tier = isVarH ? pdp17BuilderTierFor(totalQty) : null;
         var desiredCode = tier ? tier.code : '';
         var appliedCodes = (cart.discount_codes || []).map(function (d) {
           return d.code;
