@@ -490,17 +490,17 @@
       { id: {{ c_pdp17_f_mystery_v | json }}, minQty: 4 },
       { id: {{ c_pdp17_f_giftcard_v | json }}, minQty: 5 }
     ];</script>
-    {%- comment -%} Var C: NOT a monotonic ladder like Var F — only the exact
-      quantities its rows actually sell (1/3/5 books) unlock a gift; 2 and 4
-      (only reachable via the cart's own stepper) unlock none. Keyed by exact
-      quantity; anything at or above the highest key reuses that key's set. {%- endcomment -%}
-    <script>window.cPdp17VarCGiftMap = {
-      1: [{{ c_pdp17_f_sticker_v | json }}],
-      2: [],
-      3: [{{ c_pdp17_f_sticker_v | json }}, {{ c_pdp17_f_mystery_v | json }}],
-      4: [],
-      5: [{{ c_pdp17_f_sticker_v | json }}, {{ c_pdp17_f_mystery_v | json }}, {{ c_pdp17_f_giftcard_v | json }}]
-    };</script>
+    {%- comment -%} Var C: monotonic like Var B/F — a gift earned at a lower
+      quantity is never taken away just because the current quantity (2, 4 —
+      only reachable via the cart's own stepper) isn't one of the rows'
+      actual sold quantities (1/3/5). Each gift's own threshold stays earned
+      going forward: 2 books still gets Stickers (earned at 1+), 4 books
+      still gets Stickers + Mystery Gift (earned at 1+/3+). {%- endcomment -%}
+    <script>window.cPdp17VarCGiftLadder = [
+      { id: {{ c_pdp17_f_sticker_v | json }}, minQty: 1 },
+      { id: {{ c_pdp17_f_mystery_v | json }}, minQty: 3 },
+      { id: {{ c_pdp17_f_giftcard_v | json }}, minQty: 5 }
+    ];</script>
     {%- comment -%} Var A/B/C/D/E: tier 1 adds the REAL product variant, but
       tiers 2+ add a DIFFERENT (duplicate) variant — clicking the cart's own
       "+" only ever increases the quantity of whichever variant is already on
