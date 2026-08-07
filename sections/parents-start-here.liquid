@@ -1,0 +1,594 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+
+<style>
+  .shopify-section-group-header-group,
+  .shopify-section-group-footer-group,
+  #header-group,
+  #footer-group,
+  .announcement-bar-section { display: none !important; }
+
+  .pn-psh * { box-sizing: border-box; margin: 0; padding: 0; }
+  .pn-psh { font-family: 'Inter', sans-serif; background: #fff; color: #1d2333; }
+
+  /* Layout */
+  .pn-psh .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  .pn-psh .wrap-wide { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── HERO ── */
+  .pn-psh .hero { padding: 56px 0 0; }
+  .pn-psh .hero-eyebrow {
+    font-size: 15px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+    color: #2e8b4f; font-style: normal;
+  }
+  .pn-psh .hero-h1 {
+    font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 46px; line-height: 1.18;
+    color: #14213d; margin-top: 14px;
+  }
+  .pn-psh .hero-sub {
+    font-size: 23px; line-height: 1.68; color: #5b6072; margin-top: 16px;
+  }
+  .pn-psh .hero-stars {
+    margin-top: 20px; display: flex; align-items: center; gap: 9px;
+  }
+  .pn-psh .hero-stars .stars { color: #f5a623; font-size: 20px; letter-spacing: 1px; }
+  .pn-psh .hero-stars .rating {
+    font-size: 19px; font-weight: 700; color: #1d2333;
+  }
+  .pn-psh .hero-stars .rating-sub { font-weight: 400; color: #5b6072; }
+  .pn-psh .cta-btn {
+    display: inline-block; background: #e14b3c; color: #fff;
+    font-size: 20px; font-weight: 800; text-decoration: none;
+    padding: 16px 28px; border-radius: 10px; margin-top: 22px;
+    letter-spacing: 0.2px; text-align: center;
+  }
+  .pn-psh .cta-btn:hover { background: #c73f30; }
+
+  /* Hero illustrations */
+  .pn-psh .hero-illustrations { margin-top: 32px; display: flex; flex-direction: column; gap: 10px; }
+  .pn-psh .hero-spread { position: relative; width: 100%; }
+  .pn-psh .hero-spread img.spread-img { display: block; width: 100%; height: auto; }
+  .pn-psh .hero-spread .spread-circle {
+    position: absolute; top: 0; right: 0;
+    width: 34.6%; height: auto; overflow: hidden;
+    pointer-events: none;
+  }
+  .pn-psh .hero-spread .spread-circle img {
+    width: 169.86%; height: 133.79%;
+    position: absolute; top: -24.83%; left: -38.44%;
+    max-width: none;
+  }
+  .pn-psh .hero-spread .spread-overlay {
+    position: absolute; bottom: 0; right: 0;
+    width: 27.8%; height: auto;
+  }
+  .pn-psh .hero-spread .spread-overlay img { width: 100%; height: auto; display: block; }
+
+  /* ── PULL QUOTE ── */
+  .pn-psh .pull-quote-wrap { margin-top: 10px; }
+  .pn-psh .pull-quote-card {
+    background: #f6f7fa; border-radius: 14px;
+    padding: 26px 28px; display: flex; gap: 22px; align-items: flex-start;
+  }
+  .pn-psh .pq-avatar {
+    width: 120px; height: 120px; flex-shrink: 0; border-radius: 50%; overflow: hidden;
+  }
+  .pn-psh .pq-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pn-psh .pq-body { flex: 1; }
+  .pn-psh .pq-text {
+    font-style: italic; font-size: 20px; line-height: 1.5; color: #1d2333;
+  }
+  .pn-psh .pq-text strong { font-weight: 600; color: #e14b3c; font-style: italic; }
+  .pn-psh .pq-attr {
+    font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 16px;
+    color: #14213d; margin-top: 10px;
+  }
+  .pn-psh .pull-quote-caption {
+    font-style: italic; font-size: 17px; color: #5b6072;
+    text-align: center; margin-top: 44px; line-height: 1.68;
+  }
+
+  /* ── ADVANTAGE SECTION ── */
+  .pn-psh .advantage-section { margin-top: 8px; }
+  .pn-psh .advantage-title {
+    font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 33px;
+    color: #14213d; text-align: center; margin-bottom: 10px;
+  }
+  .pn-psh .advantage-img { display: block; width: 100%; height: auto; border-radius: 8px; }
+
+  /* ── FEATURE CARDS ── */
+  .pn-psh .feature-card { padding-top: 42px; }
+  .pn-psh .feature-label {
+    font-size: 15px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.9px; color: #e14b3c; font-style: normal;
+  }
+  .pn-psh .feature-h3 {
+    font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 28px;
+    line-height: 1.21; color: #14213d; margin-top: 4px;
+  }
+  .pn-psh .feature-body {
+    font-size: 25px; line-height: 1.41; color: #1d2333; margin-top: 12px;
+  }
+  .pn-psh .feature-stat {
+    background: #eaf6ec; border-radius: 10px;
+    padding: 14px 18px; margin-top: 14px;
+  }
+  .pn-psh .feature-stat p {
+    font-size: 22px; font-weight: 700; color: #1f5c33; line-height: 1.38;
+  }
+
+  /* ── SOCIAL PROOF (living room) ── */
+  .pn-psh .social-proof-section { margin-top: 0; }
+  .pn-psh .social-proof-wrap {
+    position: relative; border-radius: 12px; overflow: hidden;
+    width: 100%; aspect-ratio: 715 / 399;
+  }
+  .pn-psh .sp-bg {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 12px;
+  }
+  .pn-psh .sp-overlay {
+    position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 12px; pointer-events: none;
+  }
+  .pn-psh .sp-badge-families {
+    position: absolute; bottom: 10px; left: 10px;
+    background: #fff; border: 0.4px solid #e0d0c0; border-radius: 10px;
+    display: flex; align-items: center; gap: 11px; padding: 11px 13px;
+  }
+  .pn-psh .sp-badge-families .badge-emoji { font-size: 22px; line-height: 1; }
+  .pn-psh .sp-badge-families .badge-text-title {
+    font-size: 16px; font-weight: 700; color: #1a1a1a; white-space: nowrap;
+  }
+  .pn-psh .sp-badge-bestseller {
+    position: absolute; top: 1.5%; right: 1.5%;
+    background: #166534; color: #fff;
+    font-size: 16px; font-weight: 700; border-radius: 10px;
+    padding: 11px 13px; white-space: nowrap;
+  }
+  .pn-psh .sp-cta-wrap {
+    display: flex; justify-content: center; margin-top: 0; padding: 0 24px;
+    background: #fff; padding-top: 0;
+  }
+  .pn-psh .sp-cta-inner {
+    display: flex; flex-direction: column; align-items: center; gap: 0; width: 100%; max-width: 760px;
+  }
+
+  /* ── TOPICS ── */
+  .pn-psh .topics-section { background: #14213d; padding: 64px 0; margin-top: 42px; }
+  .pn-psh .topics-headline {
+    text-align: center; margin-bottom: 18px;
+  }
+  .pn-psh .topics-headline-line {
+    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 39px;
+    line-height: 1.25; color: #fff; display: flex; justify-content: center;
+    align-items: center; flex-wrap: wrap; gap: 8px;
+  }
+  .pn-psh .topics-headline-highlight {
+    background: #f2a93b; color: #14213d; border-radius: 8px;
+    padding: 0 12px; display: inline-block;
+  }
+  .pn-psh .topics-sub {
+    font-size: 20px; line-height: 1.68; color: #b7c0d6;
+    text-align: center; margin-bottom: 40px; max-width: 760px; margin-left: auto; margin-right: auto;
+  }
+  .pn-psh .topics-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  }
+  .pn-psh .topic-card {
+    background: #1b2a4a; border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px; padding: 21px 19px;
+  }
+  .pn-psh .topic-emoji { font-size: 28px; line-height: 1; margin-bottom: 10px; }
+  .pn-psh .topic-name {
+    font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 19px;
+    color: #fff; margin-bottom: 6px; line-height: 1.68;
+  }
+  .pn-psh .topic-desc { font-size: 16px; color: #b7c0d6; line-height: 1.5; }
+
+  /* ── SEE THEIR REACTION ── */
+  .pn-psh .reaction-section { padding: 60px 0 0; }
+  .pn-psh .reaction-eyebrow {
+    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 33px;
+    color: #14213d; text-align: center; margin-bottom: 20px;
+  }
+  .pn-psh .reaction-img-wrap {
+    border-radius: 12px; overflow: hidden; width: 100%;
+  }
+  .pn-psh .reaction-img-wrap img { display: block; width: 100%; height: auto; }
+  .pn-psh .trusted-badge {
+    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 26px;
+    color: #14213d; text-align: center; margin-top: 32px;
+  }
+  .pn-psh .reviews-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px;
+  }
+  .pn-psh .review-card {
+    background: #f6f7fa; border-radius: 12px; padding: 20px;
+  }
+  .pn-psh .review-stars { color: #f5a623; font-size: 16px; margin-bottom: 8px; }
+  .pn-psh .review-text { font-size: 15px; color: #1d2333; line-height: 1.55; margin-bottom: 14px; }
+  .pn-psh .review-author { display: flex; align-items: center; gap: 10px; }
+  .pn-psh .review-avatar { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+  .pn-psh .review-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .pn-psh .review-name { font-size: 14px; font-weight: 700; color: #14213d; }
+  .pn-psh .review-role { font-size: 13px; color: #5b6072; }
+  
+
+  /* ── FOOTER ── */
+  .pn-psh .psh-footer {
+    background: #14213d; color: #b7c0d6; text-align: center;
+    padding: 32px 24px; font-size: 14px; line-height: 1.6;
+  }
+  .pn-psh .psh-footer a { color: #b7c0d6; text-decoration: underline; }
+  .pn-psh .psh-footer .footer-brand {
+    font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 18px;
+    color: #fff; margin-bottom: 8px;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 749px) {
+    .pn-psh .wrap, .pn-psh .wrap-wide { padding: 0 20px; }
+
+    /* Hero */
+    .pn-psh .hero { padding: 28px 0 0; }
+    .pn-psh .hero-eyebrow { font-size: 11px; letter-spacing: 1.2px; }
+    .pn-psh .hero-h1 { font-size: 25px; line-height: 1.2; margin-top: 10px; }
+    .pn-psh .hero-sub { font-size: 15px; line-height: 1.5; margin-top: 12px; }
+    .pn-psh .hero-stars { margin-top: 16px; flex-wrap: wrap; gap: 4px; }
+    .pn-psh .hero-stars .stars { font-size: 15px; }
+    .pn-psh .hero-stars .rating { font-size: 13px; }
+    .pn-psh .cta-btn { font-size: 14px; padding: 15px 12px; margin-top: 14px; display: block; text-align: center; }
+
+    /* Pull quote - stack vertically */
+    .pn-psh .pull-quote-card { flex-direction: column; align-items: center; padding: 22px 20px; gap: 14px; }
+    .pn-psh .pq-avatar { width: 64px; height: 64px; }
+    .pn-psh .pq-text { font-size: 15.5px; text-align: center; }
+    .pn-psh .pq-attr { font-size: 14px; text-align: center; }
+    .pn-psh .pull-quote-caption { font-size: 15px; margin-top: 28px; }
+
+    /* Advantage */
+    .pn-psh .advantage-title { font-size: 24px; }
+
+    /* Feature cards */
+    .pn-psh .feature-h3 { font-size: 22px; }
+    .pn-psh .feature-body { font-size: 17px; }
+    .pn-psh .feature-stat p { font-size: 16px; }
+
+    /* Social proof */
+    .pn-psh .sp-badge-families .badge-text-title { font-size: 12px; }
+    .pn-psh .sp-badge-bestseller { font-size: 12px; }
+
+    /* Topics */
+    .pn-psh .topics-section { padding: 40px 0; margin-top: 28px; }
+    .pn-psh .topics-headline-line { font-size: 24px; gap: 6px; }
+    .pn-psh .topics-sub { font-size: 15px; }
+    .pn-psh .topics-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .pn-psh .topic-emoji { font-size: 22px; }
+    .pn-psh .topic-name { font-size: 15px; }
+    .pn-psh .topic-desc { font-size: 13px; }
+
+    /* Reaction */
+    .pn-psh .reaction-eyebrow { font-size: 24px; }
+    .pn-psh .trusted-badge { font-size: 20px; }
+    .pn-psh .reviews-grid { grid-template-columns: 1fr; gap: 12px; }
+
+    /* Offer card */
+    .pn-psh .offer-card { flex-direction: column; align-items: center; gap: 20px; padding: 24px 20px; }
+    .pn-psh .offer-product { width: 160px; }
+    .pn-psh .offer-title { font-size: 20px; }
+    .pn-psh .offer-price { font-size: 28px; }
+  }
+</style>
+
+<div class="pn-psh">
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="hero-eyebrow">👀 The Book From the Video You Just Watched</p>
+      <h1 class="hero-h1">Give Your Grandkids The Head Start Other Kids Don't Have!</h1>
+      <p class="hero-sub">Hundreds of questions, answered like a comic. The quiet advantage that shows up on report cards.</p>
+      <div class="hero-stars">
+        <span class="stars">★★★★★</span>
+        <span class="rating">4.9<span class="rating-sub"> · 2,847 verified reviews · Bestseller for Ages 6 to 12</span></span>
+      </div>
+      <a href="{{ section.settings.cta_url }}" class="cta-btn">GET 50% OFF ON THE BOOK →</a>
+
+      <!-- Hero book illustrations -->
+      <div class="hero-illustrations">
+        <div class="hero-spread">
+          <img class="spread-img" src="{{ 'sqkc-hero.png' | asset_url }}" alt="10,000 Why book — spark curiosity" loading="lazy">
+          <div class="spread-circle">
+            <img src="{{ 'psh-hero-circle.png' | asset_url }}" alt="" loading="lazy">
+          </div>
+        </div>
+        <div class="hero-spread">
+          <img class="spread-img" src="{{ 'psh-hero-2.png' | asset_url }}" alt="10,000 Why book — every answer" loading="lazy">
+          <div class="spread-overlay">
+            <img src="{{ 'psh-hero-2-overlay.png' | asset_url }}" alt="" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PULL QUOTE ── -->
+  <section style="padding-top: 10px;">
+    <div class="wrap">
+      <div class="pull-quote-wrap">
+        <div class="pull-quote-card">
+          <div class="pq-avatar">
+            <img src="{{ 'psh-narrator.png' | asset_url }}" alt="Narrator illustration" loading="lazy">
+          </div>
+          <div class="pq-body">
+            <p class="pq-text">"When my grandkids asked me why the sky was blue, I realized I didn't actually know. So I found the book that did, and now <strong>they</strong> tell <strong>me</strong>. That's the whole point. Hundreds of questions, every answer drawn like a comic."</p>
+            <p class="pq-attr">— Why families are switching to 10,000 Why</p>
+          </div>
+        </div>
+      </div>
+      <p class="pull-quote-caption">Here's what that head start actually looks like.</p>
+    </div>
+  </section>
+
+  <!-- ── THE ADVANTAGE, MADE SIMPLE ── -->
+  <section class="advantage-section" style="padding-top: 8px;">
+    <div class="wrap">
+      <p class="advantage-title">The Advantage, Made Simple</p>
+      <img class="advantage-img" src="{{ 'psh-advantage.png' | asset_url }}" alt="The advantage made simple illustration" loading="lazy">
+    </div>
+  </section>
+
+  <!-- ── FEATURE CARDS ── -->
+  <section style="padding-bottom: 48px;">
+    <div class="wrap">
+
+      <!-- Ahead in class -->
+      <div class="feature-card">
+        <p class="feature-label">Ahead in class</p>
+        <h3 class="feature-h3">They Already Know It When the Teacher Says It</h3>
+        <p class="feature-body">When a topic comes up in school, it's not new — they met it here first, in a comic they enjoyed. Recognition turns into confidence turns into participation.</p>
+        <div class="feature-stat">
+          <p>94% of parents saw school performance improve within 60 days, per a survey of 1,200 buyers.</p>
+        </div>
+      </div>
+
+      <!-- Sharper questions -->
+      <div class="feature-card">
+        <p class="feature-label">Sharper questions</p>
+        <h3 class="feature-h3">They Ask the Question Other Kids Don't Think Of</h3>
+        <p class="feature-body">Because they've spent time following one 'why' to the next, they connect ideas other kids treat as separate. Teachers notice this fast.</p>
+        <div class="feature-stat">
+          <p>91% of parents said their child started asking deeper questions.</p>
+        </div>
+      </div>
+
+      <!-- A habit, not a hack -->
+      <div class="feature-card">
+        <p class="feature-label">A habit, not a hack</p>
+        <h3 class="feature-h3">Curiosity Becomes Their Default</h3>
+        <p class="feature-body">This isn't a tutoring program or a drill. It's a book they like, so the advantage builds quietly, on its own, every time they open it.</p>
+        <div class="feature-stat">
+          <p>The edge that doesn't feel like work, for them or you.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── SOCIAL PROOF (living room) ── -->
+  <section class="social-proof-section">
+    <div class="wrap">
+      <div class="social-proof-wrap">
+        <img class="sp-bg" src="{{ 'psh-social-bg.png' | asset_url }}" alt="Family in living room" loading="lazy">
+        <img class="sp-overlay" src="{{ 'psh-social-overlay.png' | asset_url }}" alt="" loading="lazy">
+        <div class="sp-badge-families">
+          <span class="badge-emoji">👥</span>
+          <div class="badge-text-title">Loved by 20,000+ Families!</div>
+        </div>
+        <div class="sp-badge-bestseller">Best Seller</div>
+      </div>
+    </div>
+    <div class="sp-cta-wrap">
+      <div class="sp-cta-inner wrap">
+        <a href="{{ section.settings.cta_url }}" class="cta-btn" style="margin-top: 24px; display: block; text-align: center; max-width: 400px; margin-left: auto; margin-right: auto;">GET 50% OFF ON THE BOOK →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TOPICS ── -->
+  <section class="topics-section">
+    <div class="wrap-wide">
+      <div class="topics-headline">
+        <div class="topics-headline-line">
+          <span>One Book.</span>
+          <span class="topics-headline-highlight">Every Subject</span>
+          <span>They're Curious About.</span>
+        </div>
+      </div>
+      <p class="topics-sub">From why iron rusts to why some videos look blurry, 10,000 Why covers the science of everyday life, the questions kids bump into every single day.</p>
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-emoji">🚀</div>
+          <div class="topic-name">Space & Universe</div>
+          <div class="topic-desc">Black holes, planets, stars, rockets and life beyond Earth</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-emoji">🦕</div>
+          <div class="topic-name">Dinosaurs</div>
+          <div class="topic-desc">Why they went extinct, how we find them, what they really looked like</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-emoji">🧬</div>
+          <div class="topic-name">The Human Body</div>
+          <div class="topic-desc">Why your heart beats, how your brain works, why you dream</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-emoji">🌊</div>
+          <div class="topic-name">Oceans</div>
+          <div class="topic-desc">Deep sea creatures, why the ocean is salty, how waves form</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-emoji">⛈️</div>
+          <div class="topic-name">Weather</div>
+          <div class="topic-desc">Thunder, lightning, tornadoes, rainbows and the sky</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-emoji">🏛️</div>
+          <div class="topic-name">History</div>
+          <div class="topic-desc">Ancient Egypt, the Romans, great inventions and how the world changed</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-emoji">🐘</div>
+          <div class="topic-name">Animals</div>
+          <div class="topic-desc">How animals survive, migrate, communicate and why some go extinct</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-emoji">⚡</div>
+          <div class="topic-name">Physics</div>
+          <div class="topic-desc">Gravity, light, sound, electricity and how everything works</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-emoji">🌿</div>
+          <div class="topic-name">Plants & Nature</div>
+          <div class="topic-desc">How plants grow, why leaves change colour, what makes things alive</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-emoji">🧠</div>
+          <div class="topic-name">The Mind</div>
+          <div class="topic-desc">Memory, emotions, sleep, dreams and how the mind works</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-emoji">💻</div>
+          <div class="topic-name">Technology</div>
+          <div class="topic-desc">How planes fly, how the internet works, what computers do</div>
+        </div>
+        <div class="topic-card">
+          <div class="topic-emoji">🌋</div>
+          <div class="topic-name">Earth Science</div>
+          <div class="topic-desc">Volcanoes, earthquakes, tectonic plates and how Earth formed</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SEE THEIR REACTION ── -->
+  <section class="reaction-section">
+    <div class="wrap">
+      <h2 class="reaction-eyebrow">See Their Reaction</h2>
+      <div class="reaction-img-wrap">
+        <img src="{{ 'psh-reaction.png' | asset_url }}" alt="Kids reacting to 10,000 Why" loading="lazy">
+      </div>
+      <p class="trusted-badge">Trusted by 20,000+ Families</p>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"My grandson reads it every night before bed. He's started asking questions I can't even answer — so we look them up together. Best gift I've ever given."</p>
+          <div class="review-author">
+            <div class="review-avatar"><img src="{{ 'psh-avatar-1.png' | asset_url }}" alt="David K." loading="lazy"></div>
+            <div>
+              <div class="review-name">David K.</div>
+              <div class="review-role">Father of two</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"She used to ask me 'why?' and I'd say 'I don't know'. Now she looks it up herself in 10,000 Why and explains it to me. I love this book."</p>
+          <div class="review-author">
+            <div class="review-avatar"><img src="{{ 'psh-avatar-2.png' | asset_url }}" alt="Jennifer L." loading="lazy"></div>
+            <div>
+              <div class="review-name">Jennifer L.</div>
+              <div class="review-role">Mom of Three</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"I bought this for my grandchildren and they haven't put it down. The comics make every answer so easy to understand. Incredible quality."</p>
+          <div class="review-author">
+            <div class="review-avatar"><img src="{{ 'psh-avatar-3.png' | asset_url }}" alt="Diane K." loading="lazy"></div>
+            <div>
+              <div class="review-name">Diane K.</div>
+              <div class="review-role">Grandmother</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Brilliant. My grandkids sit together reading it and I hear them teaching each other things. That's when you know a book is special."</p>
+          <div class="review-author">
+            <div class="review-avatar"><img src="{{ 'psh-avatar-4.png' | asset_url }}" alt="James P." loading="lazy"></div>
+            <div>
+              <div class="review-name">James P.</div>
+              <div class="review-role">Grandfather of three</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ═══ GUARANTEE ═══ {%- endcomment -%}
+  <section class="final-cta">
+    <div class="final-cta-inner">
+      <div class="section-divider"></div>
+      <div class="guarantee-box">
+        <span class="guarantee-diamond">◆</span>
+        <p class="guarantee-text">Less than the cost of a week of screen-time apps, and it's theirs to keep, backed by a 30-day, no-questions guarantee.</p>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ═══ OFFER CARD ═══ {%- endcomment -%}
+  <section class="offer-section">
+    <div class="offer-inner">
+      <div class="section-divider"></div>
+      <h2 class="offer-heading">Answer Their Questions Together. Here's the Offer.</h2>
+      <div class="offer-card">
+        <p class="offer-rating">★★★★★ 4.9 · 2,847 Verified Reviews</p>
+        <p class="offer-product-name">10,000 Whys Kids' Encyclopedia</p>
+        <div class="offer-img-wrap">
+          <img src="{{ 'g300-product.png' | asset_url }}" alt="10,000 Whys Kids' Encyclopedia hardcover" width="160" height="205" loading="lazy">
+        </div>
+        <div class="offer-price-row">
+          <span class="offer-price-original">$79.80</span>
+          <span class="offer-price-sale">$39.90</span>
+          <span class="offer-badge">50% OFF</span>
+        </div>
+        <p class="offer-savings">You save $39.90 today</p>
+        <p class="offer-guarantee">Give it 30 days. If your child isn't reaching for the book on their own, Prime Naturals will refund every penny, no questions asked.</p>
+        <div class="offer-cta-wrap">
+          <a href="{{ section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' }}" class="cta-btn">GET 50% OFF ON THE BOOK →</a>
+        </div>
+        <div class="offer-trust-badges">
+          <span>Premium Hardcover</span>
+          <span>Free Shipping</span>
+          <span>30-Day Guarantee</span>
+          <span>4.9 Stars</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="psh-footer">
+    <div class="footer-brand">Prime Naturals</div>
+    <p>© 2024 Prime Naturals. All rights reserved.</p>
+    <p style="margin-top: 6px;">
+      <a href="/policies/privacy-policy">Privacy Policy</a> ·
+      <a href="/policies/terms-of-service">Terms of Service</a> ·
+      <a href="/policies/refund-policy">Refund Policy</a>
+    </p>
+  </footer>
+
+</div>
+
+{% schema %}
+{
+  "name": "Parents Start Here",
+  "settings": [
+    { "type": "url", "id": "cta_url", "label": "CTA Button URL" }
+  ],
+  "presets": [{ "name": "Parents Start Here" }]
+}
+{% endschema %}
