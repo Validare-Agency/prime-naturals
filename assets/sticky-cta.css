@@ -16,14 +16,14 @@
 }
 .pn-sticky-cta-bar-inner {
   max-width: 760px;
-  margin: 0 auto;
+  margin: 0 auto 0 auto !important;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  padding: 15px 20px !important;
 }
 .pn-sticky-cta-bar-text {
-  font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 15px;
   color: #1d2333;
@@ -38,7 +38,7 @@
   font-weight: 800;
   font-size: 15px;
   text-decoration: none;
-  padding: 12px 20px;
+  padding: 12px 20px !important;
   border-radius: 8px;
   white-space: nowrap;
   flex-shrink: 0;
