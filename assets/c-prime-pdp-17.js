@@ -497,8 +497,8 @@
       .then(function (cart) {
         return Promise.all([
           cleanupOrphanedGifts(cart),
-          syncBuilderDiscount(cart),
-          swapMainLineVariants(cart)
+          syncBuilderDiscount(cart)
+          // swapMainLineVariants(cart) // temporarily disabled for testing — re-enable after
         ]);
       })
       .finally(function () {

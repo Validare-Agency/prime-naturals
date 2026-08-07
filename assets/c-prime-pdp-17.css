@@ -697,6 +697,22 @@ body[class*="c-primePdp17Var"] .main-product-form {
   }
 }
 
+/* Extra breathing room on small-to-mid phones (this range covers most
+   current flagship viewport widths, not just the narrowest devices — the
+   min-width:0 fix above is the actual root-cause fix and applies always;
+   this is just reclaiming a bit more space so the stepper's "+" button has
+   margin to spare instead of sitting flush against the row's edge). */
+@media screen and (max-width: 430px) {
+  .c-pdp17-builder__row {
+    gap: 8px;
+    padding-left: 6px;
+  }
+
+  .c-pdp17-builder__control {
+    margin-right: 8px;
+  }
+}
+
 .c-pdp17-builder__title[data-pdp17-title='1'] {
   left: 3px;
 }
@@ -768,6 +784,11 @@ body[class*="c-primePdp17Var"] .main-product-form {
   justify-content: center;
   gap: 2px;
   flex: 1;
+  /* Flex items default to min-width:auto, which refuses to shrink below the
+     content's intrinsic width (e.g. a long product name) — on narrow phones
+     that pushed the row wider than the viewport, cutting off the "+" step
+     button on the far right instead of letting this column shrink/wrap. */
+  min-width: 0;
   padding: 10px 0;
 }
 
