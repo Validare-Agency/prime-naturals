@@ -1,30 +1,6 @@
 let domLoaded = false;
 let igReady = false;
 
-// Test: V_PRIME_LP_18_LP_V1 | LP - ABCDE Template Test
-const LP_18_TEST_ID = "970ff9c0-3245-4bbe-a5ca-3b4cd61c74a7";
-const LP_18_VARIANT_VIEWS = {
-  A: "5-reasons-grandchild-screen",
-  B: "parent-screen-time-rescue",
-  C: "science-questions-kids-comics",
-  D: "one-book-answers-hundreds",
-  E: "grandchild-300-questions",
-};
-
-function handleLp18Redirect() {
-  if (!igReady) return;
-  if (!window.location.pathname.includes("/pages/landing-page")) return;
-  if (new URLSearchParams(window.location.search).has("view")) return;
-
-  const group = window.igData?.user.getTestGroup(LP_18_TEST_ID);
-  const view = group?.name && LP_18_VARIANT_VIEWS[group.name];
-  if (!view) return;
-
-  const url = new URL(window.location.href);
-  url.searchParams.set("view", view);
-  window.location.replace(url.toString());
-}
-
 function handleExperiments() {
   if (!domLoaded || !igReady) return;
 
@@ -110,6 +86,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener("ig:ready", () => {
   igReady = true;
-  handleLp18Redirect();
   handleExperiments();
 });
