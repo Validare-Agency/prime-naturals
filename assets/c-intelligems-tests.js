@@ -4,11 +4,11 @@ let igReady = false;
 // Test: V_PRIME_LP_18_LP_V1 | LP - ABCDE Template Test
 const LP_18_TEST_ID = "970ff9c0-3245-4bbe-a5ca-3b4cd61c74a7";
 const LP_18_VARIANT_VIEWS = {
-  "Var A": "5-reasons-grandchild-screen",
-  "Var B": "parent-screen-time-rescue",
-  "Var C": "science-questions-kids-comics",
-  "Var D": "one-book-answers-hundreds",
-  "Var E": "grandchild-300-questions",
+  A: "5-reasons-grandchild-screen",
+  B: "parent-screen-time-rescue",
+  C: "science-questions-kids-comics",
+  D: "one-book-answers-hundreds",
+  E: "grandchild-300-questions",
 };
 
 function handleLp18Redirect() {
