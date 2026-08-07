@@ -1,6 +1,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ 'sticky-cta.css' | asset_url }}">
+<script src="{{ 'sticky-cta.js' | asset_url }}" defer></script>
 
 <style>
   .shopify-section-group-header-group,
@@ -400,7 +402,7 @@
         <span class="stars">★★★★★</span>
         <span class="rating">4.9<span class="rating-sub"> · 2,847 verified reviews · Bestseller for Ages 6 to 12</span></span>
       </div>
-      <a href="{{ section.settings.cta_url }}" class="cta-btn">GET 50% OFF ON THE BOOK →</a>
+      <a href="{{ section.settings.cta_url }}" class="cta-btn" data-sticky-cta-trigger>GET 50% OFF ON THE BOOK →</a>
 
       <!-- Hero book illustrations -->
       <div class="hero-illustrations">
@@ -679,6 +681,13 @@
   <footer class="pn-footer">
     <p>© 2026 Prime Naturals. All Rights Reserved.</p>
   </footer>
+
+  <div class="pn-sticky-cta-bar" data-sticky-cta-bar>
+    <div class="pn-sticky-cta-bar-inner">
+      <span class="pn-sticky-cta-bar-text">Get 50% off the book today</span>
+      <a href="{{ section.settings.cta_url }}" class="pn-sticky-cta-bar-btn">GET 50% OFF →</a>
+    </div>
+  </div>
 
 </div>
 
