@@ -20,6 +20,9 @@
   color: #1d2333;
   background: #fff;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 /* ── Layout helpers ── */
@@ -27,6 +30,7 @@
   max-width: 760px;
   margin: 0 auto;
   padding: 0 24px;
+  width: 100%;
 }
 .pn-obahq .wrap-wide {
   max-width: 1080px;
@@ -55,7 +59,7 @@
 /* ═══════════════════════════════════
    SECTION 1 — HERO
 ═══════════════════════════════════ */
-.pn-obahq .hero { padding: 56px 0 40px; }
+.pn-obahq .hero { padding: 56px 0 0; }
 .pn-obahq .hero-eyebrow {
   font-family: 'Inter', sans-serif;
   font-weight: 800;
@@ -223,7 +227,7 @@
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  padding: 32px 0 8px;
+  padding: 32px 0 0;
 }
 .pn-obahq .sp-bundle-link {
   font-weight: 700;
@@ -291,13 +295,11 @@
   color: #5b6072;
   text-align: center;
   padding: 44px 0 0;
-  margin-bottom: 8px;
 }
 
 /* ═══════════════════════════════════
    SECTION 5 — NOT A TEXTBOOK
 ═══════════════════════════════════ */
-.pn-obahq .textbook-section { padding-top: 8px; }
 .pn-obahq .textbook-h2 {
   font-family: 'Baloo 2', sans-serif;
   font-weight: 700;
@@ -306,9 +308,9 @@
   text-align: center;
   line-height: 1.3;
   margin-bottom: 32px;
-  padding-top: 8px;
 }
 .pn-obahq .question-item { margin-bottom: 42px; }
+.pn-obahq .question-item:last-child { margin-bottom: 0; }
 .pn-obahq .question-label {
   font-weight: 800;
   font-size: 15px;
@@ -416,12 +418,16 @@
 /* ═══════════════════════════════════
    SECTION 7 — REACTION + VIDEOS
 ═══════════════════════════════════ */
-.pn-obahq .testimonials-section { padding: 40px 0; }
 .pn-obahq .section-divider {
   height: 1px;
   background: #e6e8ec;
   margin: 40px 0;
   display: block;
+}
+.pn-obahq .testimonials-section .wrap > .section-divider:first-child,
+.pn-obahq .final-cta-inner > .section-divider:first-child,
+.pn-obahq .offer-inner > .section-divider:first-child {
+  margin-top: 0;
 }
 .pn-obahq .testimonials-h2 {
   font-family: 'Baloo 2', sans-serif;
@@ -521,11 +527,10 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  margin-bottom: 32px;
 }
 .pn-obahq .guarantee-diamond { color: #1f5c33; font-size: 22px; line-height: 1.6; flex-shrink: 0; }
 .pn-obahq .guarantee-text { font-size: 19px; line-height: 1.68; color: #1f5c33; }
-.pn-obahq .offer-section { padding: 40px 0 0; }
+.pn-obahq .offer-section { padding: 0; }
 .pn-obahq .offer-inner { max-width: 760px; margin: 0 auto; padding: 0 24px; }
 .pn-obahq .offer-heading {
   font-family: 'Baloo 2', sans-serif;
@@ -615,7 +620,6 @@
 .pn-obahq .pn-footer {
   background: #e14b3c;
   padding: 20px;
-  margin-top: 44px;
   text-align: center;
 }
 .pn-obahq .pn-footer p { font-size: 14px; color: #fff; line-height: 1.68; }
@@ -624,7 +628,8 @@
    MOBILE STYLES (≤749px)
 ═══════════════════════════════════ */
 @media (max-width: 749px) {
-  .pn-obahq .hero { padding: 28px 0 24px; }
+  .pn-obahq { gap: 24px; }
+  .pn-obahq .hero { padding: 28px 0 0; }
   .pn-obahq .hero-h1 { font-size: 26px; }
   .pn-obahq .hero-sub { font-size: 16px; }
   .pn-obahq .hero-eyebrow { font-size: 11px; letter-spacing: 1.2px; }

@@ -20,6 +20,9 @@
   color: #1d2333;
   background: #fff;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 /* ── Layout helpers ── */
@@ -27,6 +30,7 @@
   max-width: 1160px;
   margin: 0 auto;
   padding: 0 24px;
+  width: 100%;
 }
 
 /* ── CTA Button ── */
@@ -51,7 +55,7 @@
    SECTION 1 — HERO
 ═══════════════════════════════════ */
 .pn-5rgc .hero {
-  padding: 56px 0 40px;
+  padding: 56px 0 0;
 }
 .pn-5rgc .hero-eyebrow {
   font-family: 'Inter', sans-serif;
@@ -126,13 +130,19 @@
    SECTION 2 — REASONS
 ═══════════════════════════════════ */
 .pn-5rgc .reasons {
-  padding: 32px 0 0;
+  padding: 0;
 }
 .pn-5rgc .reason-row {
   display: flex;
   align-items: center;
   gap: 30px;
   padding: 42px 0;
+}
+.pn-5rgc .reason-row:first-child {
+  padding-top: 0;
+}
+.pn-5rgc .reason-row:last-child {
+  padding-bottom: 0;
 }
 .pn-5rgc .reason-img {
   width: 418px;
@@ -248,7 +258,7 @@
 .pn-5rgc .sp-cta-wrap {
   display: flex;
   justify-content: center;
-  padding: 32px 0;
+  padding: 32px 0 0;
 }
 
 /* ═══════════════════════════════════
@@ -328,14 +338,16 @@
 /* ═══════════════════════════════════
    SECTION 5 — REACTION / TESTIMONIALS
 ═══════════════════════════════════ */
-.pn-5rgc .testimonials-section {
-  padding: 40px 0;
-}
 .pn-5rgc .section-divider {
   height: 1px;
   background: #e6e8ec;
   margin: 40px 0;
   display: block;
+}
+.pn-5rgc .testimonials-section .wrap > .section-divider:first-child,
+.pn-5rgc .final-cta-inner > .section-divider:first-child,
+.pn-5rgc .offer-inner > .section-divider:first-child {
+  margin-top: 0;
 }
 .pn-5rgc .testimonials-h2 {
   font-family: 'Baloo 2', sans-serif;
@@ -438,7 +450,7 @@
    SECTION 6 — OFFER CARD
 ═══════════════════════════════════ */
 .pn-5rgc .offer-section {
-  padding: 40px 0 0;
+  padding: 0;
 }
 .pn-5rgc .offer-inner {
   max-width: 760px;
@@ -551,7 +563,6 @@
 .pn-5rgc .pn-footer {
   background: #e14b3c;
   padding: 20px;
-  margin-top: 44px;
   text-align: center;
 }
 .pn-5rgc .pn-footer p {
@@ -561,7 +572,7 @@
 }
 
 .pn-5rgc .final-cta {
-  padding: 40px 0 64px;
+  padding: 0;
 }
 .pn-5rgc .final-cta-inner {
   max-width: 760px;
@@ -575,7 +586,6 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  margin-bottom: 32px;
 }
 .pn-5rgc .guarantee-diamond {
   color: #1f5c33;
@@ -593,7 +603,8 @@
    MOBILE STYLES (≤749px)
 ═══════════════════════════════════ */
 @media (max-width: 749px) {
-  .pn-5rgc .hero { padding: 28px 0 24px; }
+  .pn-5rgc { gap: 24px; }
+  .pn-5rgc .hero { padding: 28px 0 0; }
   .pn-5rgc .hero-h1 { font-size: 26px; line-height: 1.18; }
   .pn-5rgc .hero-sub { font-size: 15.5px; }
   .pn-5rgc .hero-eyebrow { font-size: 11px; letter-spacing: 1.2px; }
@@ -821,7 +832,7 @@
         <div class="topic-card">
           <span class="topic-emoji">🔬</span>
           <div class="topic-name">Science &amp; Forces</div>
-          <div class="topic-desc">Gravity, magnets, electricity, light and how energy moves</div>
+          <div class="topic-desc">Gravity, light, sound, electricity and how everything works</div>
         </div>
         <div class="topic-card">
           <span class="topic-emoji">🌿</span>

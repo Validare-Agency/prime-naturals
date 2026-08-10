@@ -20,6 +20,9 @@
   color: #1d2333;
   background: #fff;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 /* ── Layout helpers ── */
@@ -27,6 +30,7 @@
   max-width: 760px;
   margin: 0 auto;
   padding: 0 24px;
+  width: 100%;
 }
 .pn-pstr .wrap-wide {
   max-width: 1080px;
@@ -56,7 +60,7 @@
    SECTION 1 — HERO
 ═══════════════════════════════════ */
 .pn-pstr .hero {
-  padding: 56px 0 40px;
+  padding: 56px 0 0;
 }
 .pn-pstr .hero-eyebrow {
   font-family: 'Inter', sans-serif;
@@ -114,7 +118,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.12);
   padding: 32px 20px 28px;
-  margin: 32px 0;
+  margin: 0 0 32px;
   text-align: center;
 }
 .pn-pstr .harm-card-books {
@@ -187,7 +191,6 @@
   display: flex;
   align-items: flex-start;
   gap: 22px;
-  margin-bottom: 32px;
 }
 .pn-pstr .quote-avatar {
   width: 120px;
@@ -254,6 +257,9 @@
 ═══════════════════════════════════ */
 .pn-pstr .topic-example {
   margin-bottom: 42px;
+}
+.pn-pstr .topic-example:last-child {
+  margin-bottom: 0;
 }
 .pn-pstr .topic-example-label {
   font-weight: 800;
@@ -349,7 +355,7 @@
 .pn-pstr .sp-cta-wrap {
   display: flex;
   justify-content: center;
-  padding: 32px 0;
+  padding: 32px 0 0;
 }
 
 /* ═══════════════════════════════════
@@ -422,14 +428,16 @@
 /* ═══════════════════════════════════
    SECTION 8 — REACTION / TESTIMONIALS
 ═══════════════════════════════════ */
-.pn-pstr .testimonials-section {
-  padding: 40px 0;
-}
 .pn-pstr .section-divider {
   height: 1px;
   background: #e6e8ec;
   margin: 40px 0;
   display: block;
+}
+.pn-pstr .testimonials-section .wrap > .section-divider:first-child,
+.pn-pstr .final-cta-inner > .section-divider:first-child,
+.pn-pstr .offer-inner > .section-divider:first-child {
+  margin-top: 0;
 }
 .pn-pstr .testimonials-h2 {
   font-family: 'Baloo 2', sans-serif;
@@ -543,7 +551,6 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  margin-bottom: 32px;
 }
 .pn-pstr .guarantee-diamond {
   color: #1f5c33;
@@ -557,7 +564,7 @@
   color: #1f5c33;
 }
 .pn-pstr .offer-section {
-  padding: 40px 0 0;
+  padding: 0;
 }
 .pn-pstr .offer-inner {
   max-width: 760px;
@@ -670,7 +677,6 @@
 .pn-pstr .pn-footer {
   background: #e14b3c;
   padding: 20px;
-  margin-top: 44px;
   text-align: center;
 }
 .pn-pstr .pn-footer p {
@@ -683,7 +689,8 @@
    MOBILE STYLES (≤749px)
 ═══════════════════════════════════ */
 @media (max-width: 749px) {
-  .pn-pstr .hero { padding: 28px 0 24px; }
+  .pn-pstr { gap: 24px; }
+  .pn-pstr .hero { padding: 28px 0 0; }
   .pn-pstr .hero-h1 { font-size: 26px; }
   .pn-pstr .hero-sub { font-size: 16px; }
   .pn-pstr .hero-eyebrow { font-size: 11px; letter-spacing: 1.2px; }
