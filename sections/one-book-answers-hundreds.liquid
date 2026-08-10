@@ -344,78 +344,6 @@
 }
 
 /* ═══════════════════════════════════
-   SECTION 6 — TOPICS GRID
-═══════════════════════════════════ */
-.pn-obahq .topics-section {
-  background: #14213d;
-  padding: 64px 0;
-}
-.pn-obahq .topics-headline {
-  text-align: center;
-  margin-bottom: 18px;
-}
-.pn-obahq .topics-headline-line {
-  font-family: 'Baloo 2', sans-serif;
-  font-weight: 800;
-  font-size: 39px;
-  color: #fff;
-  line-height: 1.25;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.pn-obahq .topics-headline-highlight {
-  background: #f2a93b;
-  color: #14213d;
-  border-radius: 8px;
-  padding: 2px 16px;
-}
-.pn-obahq .topics-sub {
-  text-align: center;
-  font-size: 20px;
-  color: #b7c0d6;
-  line-height: 1.68;
-  max-width: 760px;
-  margin: 0 auto 40px;
-}
-.pn-obahq .topics-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-}
-.pn-obahq .topic-card {
-  background: #1b2a4a;
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
-  padding: 21px 19px;
-}
-.pn-obahq .topic-card-featured {
-  border-color: #f2a93b;
-  border-width: 1.5px;
-  background: #20304f;
-}
-.pn-obahq .topic-emoji {
-  font-size: 28px;
-  margin-bottom: 10px;
-  display: block;
-}
-.pn-obahq .topic-name {
-  font-family: 'Baloo 2', sans-serif;
-  font-weight: 700;
-  font-size: 19px;
-  color: #fff;
-  line-height: 1.4;
-  margin-bottom: 6px;
-}
-.pn-obahq .topic-desc {
-  font-size: 16px;
-  color: #b7c0d6;
-  line-height: 1.5;
-}
-
-/* ═══════════════════════════════════
    SECTION 7 — REACTION + VIDEOS
 ═══════════════════════════════════ */
 .pn-obahq .section-divider {
@@ -658,15 +586,6 @@
   .pn-obahq .question-p { font-size: 16px; }
   .pn-obahq .question-highlight { font-size: 15px; }
 
-  .pn-obahq .topics-section { padding: 48px 0; }
-  .pn-obahq .topics-headline-line { font-size: 24px; }
-  .pn-obahq .topics-sub { font-size: 15px; }
-  .pn-obahq .topics-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .pn-obahq .topic-emoji { font-size: 22px; }
-  .pn-obahq .topic-name { font-size: 15px; }
-  .pn-obahq .topic-desc { font-size: 13px; }
-  .pn-obahq .topic-card { padding: 14px 12px; }
-
   .pn-obahq .testimonials-h2 { font-size: 24px; }
   .pn-obahq .reviews-headline { font-size: 22px; }
   .pn-obahq .video-stills-row { gap: 8px; }
@@ -780,80 +699,7 @@
   </section>
 
   {%- comment -%} ═══ TOPICS GRID ═══ {%- endcomment -%}
-  <section class="topics-section">
-    <div class="wrap-wide">
-      <div class="topics-headline">
-        <div class="topics-headline-line">
-          <span>One Book.</span>
-          <span class="topics-headline-highlight">Every Subject</span>
-          <span>They're Curious About.</span>
-        </div>
-      </div>
-      <p class="topics-sub">From why iron rusts to why some videos look blurry, 10,000 Why covers the science of everyday life, the questions kids bump into every single day.</p>
-      <div class="topics-grid">
-        <div class="topic-card">
-          <span class="topic-emoji">🚀</span>
-          <div class="topic-name">Space &amp; Universe</div>
-          <div class="topic-desc">Black holes, planets, stars, rockets and life beyond Earth</div>
-        </div>
-        <div class="topic-card">
-          <span class="topic-emoji">🦕</span>
-          <div class="topic-name">Dinosaurs</div>
-          <div class="topic-desc">Why they went extinct, how we find them, what they really looked like</div>
-        </div>
-        <div class="topic-card">
-          <span class="topic-emoji">🧬</span>
-          <div class="topic-name">The Human Body</div>
-          <div class="topic-desc">Why your heart beats, how your brain works, why you dream</div>
-        </div>
-        <div class="topic-card">
-          <span class="topic-emoji">🌊</span>
-          <div class="topic-name">Oceans &amp; Sea Life</div>
-          <div class="topic-desc">Deep sea creatures, why the ocean is salty, how waves form</div>
-        </div>
-        <div class="topic-card">
-          <span class="topic-emoji">⚡</span>
-          <div class="topic-name">Weather &amp; Nature</div>
-          <div class="topic-desc">Thunder, lightning, tornadoes, rainbows and the sky</div>
-        </div>
-        <div class="topic-card">
-          <span class="topic-emoji">🏛️</span>
-          <div class="topic-name">History &amp; Civilisations</div>
-          <div class="topic-desc">Ancient Egypt, the Romans, great inventions and how the world changed</div>
-        </div>
-        <div class="topic-card topic-card-featured">
-          <span class="topic-emoji">🦁</span>
-          <div class="topic-name">Animals &amp; Wildlife</div>
-          <div class="topic-desc">How animals survive, migrate, communicate and why some go extinct</div>
-        </div>
-        <div class="topic-card">
-          <span class="topic-emoji">🔬</span>
-          <div class="topic-name">Science &amp; Physics</div>
-          <div class="topic-desc">Gravity, light, sound, electricity and how everything works</div>
-        </div>
-        <div class="topic-card">
-          <span class="topic-emoji">🌿</span>
-          <div class="topic-name">Plants &amp; Biology</div>
-          <div class="topic-desc">How plants grow, why leaves change colour, what makes things alive</div>
-        </div>
-        <div class="topic-card">
-          <span class="topic-emoji">🧠</span>
-          <div class="topic-name">The Brain &amp; Mind</div>
-          <div class="topic-desc">Memory, emotions, sleep, dreams and how the mind works</div>
-        </div>
-        <div class="topic-card">
-          <span class="topic-emoji">⚙️</span>
-          <div class="topic-name">Technology &amp; Inventions</div>
-          <div class="topic-desc">How planes fly, how the internet works, what computers do</div>
-        </div>
-        <div class="topic-card">
-          <span class="topic-emoji">🌍</span>
-          <div class="topic-name">Earth &amp; Geography</div>
-          <div class="topic-desc">Volcanoes, earthquakes, tectonic plates and how Earth formed</div>
-        </div>
-      </div>
-    </div>
-  </section>
+  {%- render 'topics-grid' -%}
 
   {%- comment -%} ═══ REACTION + VIDEO TESTIMONIALS ═══ {%- endcomment -%}
   <section class="testimonials-section">
