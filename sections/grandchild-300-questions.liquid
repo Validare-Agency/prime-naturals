@@ -612,67 +612,7 @@
       </div>
 
       <div class="reviews-grid">
-
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"My son is a screen kid. He read this until 9pm without me saying a word. I bought two more for his cousins."</p>
-          <div class="review-author">
-            <div class="review-avatar">
-              <img src="{{ 'g300-avatar-1.png' | asset_url }}" alt="David K." width="70" height="70" loading="lazy">
-            </div>
-            <div>
-              <div class="review-name">David K.</div>
-              <div class="review-role">Father of two</div>
-              <div class="review-verified">✓ Verified buyer</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Best money I've spent on my kids' education outside of school. The conversations it starts are priceless."</p>
-          <div class="review-author">
-            <div class="review-avatar">
-              <img src="{{ 'g300-avatar-2.png' | asset_url }}" alt="Jennifer L." width="70" height="70" loading="lazy">
-            </div>
-            <div>
-              <div class="review-name">Jennifer L.</div>
-              <div class="review-role">Mom of Three</div>
-              <div class="review-verified">✓ Verified buyer</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"It's the first gift in years he's actually still using three months later. Worth every penny for that alone."</p>
-          <div class="review-author">
-            <div class="review-avatar">
-              <img src="{{ 'g300-avatar-3.png' | asset_url }}" alt="Diane K." width="70" height="70" loading="lazy">
-            </div>
-            <div>
-              <div class="review-name">Diane K.</div>
-              <div class="review-role">Grandmother</div>
-              <div class="review-verified">✓ Verified buyer</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"We read it together every visit now. It's become our thing, better than I could have hoped for."</p>
-          <div class="review-author">
-            <div class="review-avatar">
-              <img src="{{ 'g300-avatar-4.png' | asset_url }}" alt="James P." width="70" height="70" loading="lazy">
-            </div>
-            <div>
-              <div class="review-name">James P.</div>
-              <div class="review-role">Grandfather of three</div>
-              <div class="review-verified">✓ Verified buyer</div>
-            </div>
-          </div>
-        </div>
-
+        {%- render 'review-cards' -%}
       </div>
     </div>
   </section>
