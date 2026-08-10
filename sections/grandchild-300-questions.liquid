@@ -76,6 +76,7 @@
   line-height: 1.18;
   color: #14213d;
   margin-bottom: 16px;
+  letter-spacing: 0px;
 }
 .pn-g300 .hero-sub {
   font-size: 23px;
@@ -346,8 +347,7 @@
   margin: 40px 0;
   display: block;
 }
-.pn-g300 .testimonials-section .wrap > .section-divider:first-child,
-.pn-g300 .final-cta-inner > .section-divider:first-child {
+.pn-g300 .testimonials-section .wrap > .section-divider:first-child {
   margin-top: 0;
 }
 .pn-g300 .testimonials-h2 {
@@ -436,22 +436,6 @@
 /* ═══════════════════════════════════
    SECTION 8 — OFFER
 ═══════════════════════════════════ */
-.pn-g300 .final-cta-inner {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-.pn-g300 .guarantee-box {
-  background: #eaf6ec;
-  border-radius: 10px;
-  padding: 18px 22px;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-.pn-g300 .guarantee-diamond { color: #1f5c33; font-size: 22px; line-height: 1.6; flex-shrink: 0; }
-.pn-g300 .guarantee-text { font-size: 19px; line-height: 1.68; color: #1f5c33; }
-
 /* ── Footer ── */
 .pn-g300 .pn-footer {
   background: #e14b3c;
@@ -500,7 +484,6 @@
   .pn-g300 .video-stills-row { gap: 8px; }
   .pn-g300 .video-still { width: calc(50% - 8px); }
   .pn-g300 .reviews-grid { grid-template-columns: 1fr; }
-  .pn-g300 .guarantee-text { font-size: 15px; }
 }
 </style>
 
@@ -692,16 +675,8 @@
     </div>
   </section>
 
-  {%- comment -%} ═══ GUARANTEE ═══ {%- endcomment -%}
-  <section class="final-cta">
-    <div class="final-cta-inner">
-      <div class="section-divider"></div>
-      <div class="guarantee-box">
-        <span class="guarantee-diamond">◆</span>
-        <p class="guarantee-text">Less than the cost of a week of screen-time apps, and it's theirs to keep, backed by a 30-day, no-questions guarantee.</p>
-      </div>
-    </div>
-  </section>
+  {%- comment -%} ═══ GUARANTEE BOX ═══ {%- endcomment -%}
+  {%- render 'guarantee-box' -%}
 
   {%- comment -%} ═══ OFFER CARD ═══ {%- endcomment -%}
   {%- render 'offer-card',

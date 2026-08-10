@@ -1,0 +1,49 @@
+<style>
+.pn-guarantee-block { padding: 0; }
+.pn-guarantee-block .guarantee-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.pn-guarantee-block .guarantee-divider {
+  height: 1px;
+  background: #e6e8ec;
+  margin: 0 0 40px;
+}
+.pn-guarantee-block .guarantee-box {
+  background: #eaf6ec;
+  border-radius: 10px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.pn-guarantee-block .guarantee-diamond {
+  color: #1f5c33;
+  font-size: 22px;
+  line-height: 1.6;
+  flex-shrink: 0;
+}
+.pn-guarantee-block .guarantee-text {
+  font-size: 19px;
+  line-height: 1.68;
+  color: #1f5c33;
+}
+
+@media (max-width: 749px) {
+  .pn-guarantee-block .guarantee-text { font-size: 15px; }
+}
+</style>
+
+<section class="pn-guarantee-block">
+  <div class="guarantee-inner">
+    {%- unless show_divider == false -%}
+      <div class="guarantee-divider"></div>
+    {%- endunless -%}
+    <div class="guarantee-box">
+      <span class="guarantee-diamond">◆</span>
+      <p class="guarantee-text">{{ text | default: "Less than the cost of a week of screen-time apps, and it's theirs to keep, backed by a 30-day, no-questions guarantee." }}</p>
+    </div>
+    <div class="section-divider" style="margin-bottom: 0px;"></div>
+  </div>
+</section>

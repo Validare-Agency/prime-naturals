@@ -270,8 +270,7 @@
   margin: 40px 0;
   display: block;
 }
-.pn-5rgc .testimonials-section .wrap > .section-divider:first-child,
-.pn-5rgc .final-cta-inner > .section-divider:first-child {
+.pn-5rgc .testimonials-section .wrap > .section-divider:first-child {
   margin-top: 0;
 }
 .pn-5rgc .testimonials-h2 {
@@ -383,34 +382,6 @@
   line-height: 1.68;
 }
 
-.pn-5rgc .final-cta {
-  padding: 0;
-}
-.pn-5rgc .final-cta-inner {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-.pn-5rgc .guarantee-box {
-  background: #eaf6ec;
-  border-radius: 10px;
-  padding: 18px 22px;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-.pn-5rgc .guarantee-diamond {
-  color: #1f5c33;
-  font-size: 22px;
-  line-height: 1.6;
-  flex-shrink: 0;
-}
-.pn-5rgc .guarantee-text {
-  font-size: 19px;
-  line-height: 1.68;
-  color: #1f5c33;
-}
-
 /* ═══════════════════════════════════
    MOBILE STYLES (≤749px)
 ═══════════════════════════════════ */
@@ -451,8 +422,6 @@
   .pn-5rgc .testimonials-h2 { font-size: 24px; }
   .pn-5rgc .reviews-headline { font-size: 22px; }
   .pn-5rgc .reviews-grid { grid-template-columns: 1fr; }
-
-  .pn-5rgc .guarantee-text { font-size: 15px; }
 }
 </style>
 
@@ -665,16 +634,8 @@
     </div>
   </section>
 
-  {%- comment -%} ═══ GURANTEE BOX ═══ {%- endcomment -%}
-  <section class="final-cta">
-    <div class="final-cta-inner">
-      <div class="section-divider"></div>
-      <div class="guarantee-box">
-        <span class="guarantee-diamond">◆</span>
-        <p class="guarantee-text">Less than the cost of a week of screen-time apps, and it's theirs to keep, backed by a 30-day, no-questions guarantee.</p>
-      </div>
-    </div>
-  </section>
+  {%- comment -%} ═══ GUARANTEE BOX ═══ {%- endcomment -%}
+  {%- render 'guarantee-box' -%}
 
   {%- comment -%} ═══ OFFER CARD ═══ {%- endcomment -%}
   {%- render 'offer-card',
