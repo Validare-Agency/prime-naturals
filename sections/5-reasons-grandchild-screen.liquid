@@ -402,17 +402,20 @@
   .pn-5rgc .reason-row {
     flex-direction: column;
     padding: 24px 0;
-    gap: 16px;
+    gap: 0;
   }
+  .pn-5rgc .reason-body { display: contents; }
   .pn-5rgc .reason-img {
     width: 100%;
     min-width: unset;
     height: 350px;
+    order: 1;
+    margin: 16px 0;
   }
   .pn-5rgc .reason-h3 { font-size: 21px; }
-  .pn-5rgc .reason-p { font-size: 15.5px; }
-  .pn-5rgc .reason-label { font-size: 13px; }
-  .pn-5rgc .reason-highlight { font-size: 14px; }
+  .pn-5rgc .reason-p { font-size: 15.5px; order: 2; }
+  .pn-5rgc .reason-label { font-size: 13px; margin-right: auto; }
+  .pn-5rgc .reason-highlight { font-size: 14px; order: 2; }
 
   .pn-5rgc .social-proof { border-radius: 10px; margin: 0; }
   .pn-5rgc .sp-badge-families { bottom: 8px; left: 6px; font-size: 9px; gap: 5px; padding: 5px 6px; }
@@ -422,8 +425,9 @@
   .pn-5rgc .sp-badge-bestseller { font-size: 9.5px; padding: 5px 6px; border-radius: 5px; }
 
   .pn-5rgc .testimonials-h2 { font-size: 24px; }
-  .pn-5rgc .reviews-headline { font-size: 22px; }
+  .pn-5rgc .reviews-headline { font-size: 25px; }
   .pn-5rgc .reviews-grid { grid-template-columns: 1fr; }
+  .pn-5rgc .reaction-img-wrap { margin-bottom: 20px; }
 }
 </style>
 
