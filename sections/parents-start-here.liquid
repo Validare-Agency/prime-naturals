@@ -259,9 +259,11 @@
     .pn-psh .advantage-title { font-size: 24px; }
 
     /* Feature cards */
-    .pn-psh .feature-h3 { font-size: 22px; }
+    .pn-psh .feature-h3 { font-size: 20px; }
     .pn-psh .feature-body { font-size: 17px; }
     .pn-psh .feature-stat p { font-size: 16px; }
+
+    .pn-psh .feature-stat { font-size: 14px; }
 
     /* Social proof */
     .pn-psh .sp-badge-families .badge-text-title { font-size: 12px; }
@@ -271,6 +273,9 @@
     .pn-psh .reaction-eyebrow { font-size: 24px; }
     .pn-psh .reviews-headline { font-size: 22px; }
     .pn-psh .reviews-grid { grid-template-columns: 1fr; }
+
+    .pn-psh .feature-label { font-size: 12px; }
+
   }
 </style>
 
@@ -283,8 +288,9 @@
       <h1 class="hero-h1">Give Your Grandkids The Head Start Other Kids Don't Have!</h1>
       <p class="hero-sub">Hundreds of questions, answered like a comic. The quiet advantage that shows up on report cards.</p>
       <div class="hero-stars">
-        <span class="stars">★★★★★</span>
-        <span class="rating">4.9<span class="rating-sub"> · 2,847 verified reviews · Bestseller for Ages 6 to 12</span></span>
+        <span class="stars-gold">★★★★★</span>
+        <span><span class="stars-text">4.9</span> <span class="stars-sub">· 2,847 verified reviews</span></span>
+        <span class="stars-text">Bestseller for Ages 6 to 12</span>
       </div>
       <a href="{{ section.settings.cta_url }}" class="cta-btn" data-sticky-cta-bar>GET 50% OFF ON THE BOOK →</a>
 
@@ -400,11 +406,9 @@
   {%- render 'guarantee-box' -%}
 
   {%- comment -%} ═══ OFFER CARD ═══ {%- endcomment -%}
-  <div style="margin-top: 40px;">
-    {%- render 'offer-card',
-      cta_url: section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys'
-    -%}
-  </div>
+  {%- render 'offer-card',
+    cta_url: section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys'
+  -%}
 
   {%- comment -%} ═══ FOOTER ═══ {%- endcomment -%}
   <footer class="pn-footer">
