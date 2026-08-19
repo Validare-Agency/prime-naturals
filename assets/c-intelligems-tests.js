@@ -64,7 +64,9 @@ function handleExperiments() {
   }
 
   // Test: V_PRIME_PDP_19 | PDP - Reviews - FB
-  const primePdp19 = { name: "Var A" };
+  const primePdp19 =  window.igData?.user.getTestGroup(
+    "7540f3a1-7d2c-4ee8-a965-35aab62c7aae"
+  );
   if (primePdp19?.name === "Var A") {
     document.body.classList.add("c-primePdp19VarA");
   }
