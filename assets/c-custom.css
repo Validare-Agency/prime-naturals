@@ -66,3 +66,52 @@
     padding-bottom: 5px;
   }
 }
+
+/* <-------------------V_PRIME_PDP_20 | Product Page - USPs - ATF-----------------> */
+
+/* Test Setup */
+.c-pdp20-badges--a,
+.c-pdp20-badges--b,
+.c-pdp20-badges--c {
+  display: none;
+}
+
+body.c-primePdp20VarA .c-pdp20-badges--a,
+body.c-primePdp20VarB .c-pdp20-badges--b,
+body.c-primePdp20VarC .c-pdp20-badges--c {
+  display: flex;
+}
+
+/* Kaching Bundles compact buy strip — hidden for Var B and C so the full
+   product info stack (pib-title, pib-stars-row, pib-price-block, pib-bullets)
+   surfaces above the fold. Same selector pattern as c-prime-pdp-17.css. */
+body.c-primePdp20VarB [class*="kaching-bundles"],
+body.c-primePdp20VarC [class*="kaching-bundles"] {
+  display: none;
+}
+
+/* Test Design */
+.c-pdp20-badges {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0 6px;
+}
+
+.c-pdp20-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #D5533F;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 6px 12px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.c-pdp20-badge svg {
+  flex-shrink: 0;
+}
