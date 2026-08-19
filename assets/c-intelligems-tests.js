@@ -62,6 +62,12 @@ function handleExperiments() {
   } else if (primePdp17?.name === "Var H — Bundle Offer") {
     document.body.classList.add("c-primePdp17VarH");
   }
+
+  // Test: V_PRIME_PDP_19 | PDP - Reviews - FB
+  const primePdp19 = { name: "Var A" };
+  if (primePdp19?.name === "Var A") {
+    document.body.classList.add("c-primePdp19VarA");
+  }
 }
 
 let cartDrawerWasActive = false;
@@ -78,6 +84,14 @@ setInterval(() => {
     cartDrawerWasActive = false;
   }
 }, 200);
+
+// Event: click_gallery_thumnail - Fires when users engage with the PDP gallery thumbnails
+document.addEventListener("click", (event) => {
+  const thumbnail = event.target.closest(".thumbnail-list__item .thumbnail");
+  if (!thumbnail) return;
+  window.igEvents = window.igEvents || [];
+  window.igEvents.push({ event: "click_gallery_thumnail" });
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   domLoaded = true;
