@@ -20,7 +20,6 @@
     order: 2;
   }
 
-
   body.c-primeHp09VarA .hero-inner {
     padding: 6px 20px 1px;
     gap: 10px;
@@ -62,7 +61,8 @@
     min-height: 270px;
   }
 
-  body.c-primeHp09VarA .section-template--18974226251910__custom_liquid_jzrHRV-padding {
+  body.c-primeHp09VarA
+    .section-template--18974226251910__custom_liquid_jzrHRV-padding {
     padding-bottom: 5px;
   }
 }
@@ -82,6 +82,35 @@ body.c-primePdp20VarC .c-pdp20-badges--c {
   display: flex;
 }
 
+/* Var B has two DOM instances — one after .pib-carousel (mobile placement,
+   already correct) and one after .pib-scarcity, right above the title
+   (desktop placement). Only one shows per breakpoint. */
+@media (max-width: 900px) {
+  body.c-primePdp20VarB .c-pdp20-badges--b-desktop {
+    display: none;
+  }
+}
+
+@media (min-width: 901px) {
+  .c-pdp20-badges {
+    gap: 10px;
+  }
+
+  body.c-primePdp20VarB .c-pdp20-badges--b-mobile {
+    display: none;
+  }
+
+  body.c-primePdp20VarB .c-pdp20-badges--b-desktop,
+  body.c-primePdp20VarC .c-pdp20-badges--c {
+    justify-content: flex-start;
+  }
+
+  body.c-primePdp20VarB .c-pdp20-badges--b-desktop {
+    padding-top: 0px;
+    padding-bottom: 2rem;
+  }
+}
+
 /* Kaching Bundles compact buy strip — hidden for Var B and C so the full
    product info stack (pib-title, pib-stars-row, pib-price-block, pib-bullets)
    surfaces above the fold. Same selector pattern as c-prime-pdp-17.css. */
@@ -94,24 +123,76 @@ body.c-primePdp20VarC [class*="kaching-bundles"] {
 .c-pdp20-badges {
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
   padding: 10px 0 6px;
 }
 
+body.c-primePdp20VarC .c-pdp20-badges--c {
+  padding: 0 0 2rem;
+}
+
+@media (max-width: 900px) {
+  .c-pdp20-badges {
+    justify-content: flex-start;
+    gap: 5px;
+  }
+
+  body.c-primePdp20VarA .c-pdp20-badges--a {
+    padding-top: 2px;
+    padding-bottom: 1.35rem;
+  }
+
+  body.c-primePdp20VarB .c-pdp20-badges--b-mobile {
+    padding-top: 0px;
+    padding-bottom: 2rem;
+  }
+}
+
 .c-pdp20-badge {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  background: #D5533F;
+  justify-content: center;
+  gap: 8px;
+  background-color: #c0392b;
   color: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  border-radius: 20px;
-  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 10px 21px;
   line-height: 1.2;
   white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.c-pdp20-badge:nth-child(1) {
+  width: 138px;
+}
+
+.c-pdp20-badge:nth-child(2) {
+  width: 194px;
+}
+
+.c-pdp20-badge:nth-child(3) {
+  width: 129px;
 }
 
 .c-pdp20-badge svg {
   flex-shrink: 0;
+}
+
+.badge-border {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.badge-border rect {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 1.5;
+  stroke-dasharray: 3 6;
+  stroke-linecap: round;
 }
