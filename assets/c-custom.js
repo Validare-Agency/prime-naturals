@@ -32,26 +32,45 @@ document.addEventListener('DOMContentLoaded', function () {
       '<span class="c-pdp20-badge">' + BOOK_ICON + 'Hardcover' + BADGE_BORDER + '</span>' +
       '<span class="c-pdp20-badge">' + SHIELD_ICON + '30-Days Guarantee' + BADGE_BORDER + '</span>' +
       '<span class="c-pdp20-badge">' + AGE_ICON + ageBadgeText + BADGE_BORDER + '</span>';
+    if (badgeResizeObserver) {
+      div.querySelectorAll('.c-pdp20-badge').forEach(function (badge) {
+        badgeResizeObserver.observe(badge);
+      });
+    }
     return div;
   }
 
-  function sizeBadgeBorders() {
-    document.querySelectorAll('.c-pdp20-badge').forEach(function (badge) {
-      var svg = badge.querySelector('.badge-border');
-      var rect = svg && svg.querySelector('rect');
-      if (!svg || !rect) return;
-      var w = badge.offsetWidth;
-      var h = badge.offsetHeight;
-      if (!w || !h) return;
-      var outerRadius = parseFloat(getComputedStyle(badge).borderRadius) || 0;
-      var innerRadius = Math.max(0, outerRadius - 0.5);
-      svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
-      rect.setAttribute('width', w - 1);
-      rect.setAttribute('height', h - 1);
-      rect.setAttribute('rx', innerRadius);
-      rect.setAttribute('ry', innerRadius);
-    });
+  function sizeOneBadgeBorder(badge) {
+    var svg = badge.querySelector('.badge-border');
+    var rect = svg && svg.querySelector('rect');
+    if (!svg || !rect) return;
+    var w = badge.offsetWidth;
+    var h = badge.offsetHeight;
+    if (!w || !h) return;
+    var outerRadius = parseFloat(getComputedStyle(badge).borderRadius) || 0;
+    var innerRadius = Math.max(0, outerRadius - 0.5);
+    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+    rect.setAttribute('width', w - 1);
+    rect.setAttribute('height', h - 1);
+    rect.setAttribute('rx', innerRadius);
+    rect.setAttribute('ry', innerRadius);
   }
+
+  function sizeBadgeBorders() {
+    document.querySelectorAll('.c-pdp20-badge').forEach(sizeOneBadgeBorder);
+  }
+
+  // Re-measures a badge the instant its rendered box size changes for any
+  // reason — including a variant toggle flipping its group from
+  // display:none to visible without a full page reload, which a one-time
+  // DOMContentLoaded/resize measurement would otherwise miss.
+  var badgeResizeObserver = (typeof ResizeObserver !== 'undefined')
+    ? new ResizeObserver(function (entries) {
+      entries.forEach(function (entry) {
+        sizeOneBadgeBorder(entry.target);
+      });
+    })
+    : null;
 
   function injectBadges() {
     // Var A — inserted after media-gallery (below the full thumbnail rail,
