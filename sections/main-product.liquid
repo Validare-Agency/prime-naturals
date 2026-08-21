@@ -1195,14 +1195,6 @@
 {%- endif -%}
 <script src="{{ 'c-prime-pdp-07.js' | asset_url }}" defer></script>
 
-{%- comment -%} V_PRIME_PDP_12 | Gallery Image Size + Thumbnail Scroll Affordance {%- endcomment -%}
-{%- if section.index > 3 -%}
-  <link rel="stylesheet" href="{{ 'c-prime-pdp-12.css' | asset_url }}" media="print" onload="this.media='all'">
-{%- else -%}
-  {{ 'c-prime-pdp-12.css' | asset_url | stylesheet_tag }}
-{%- endif -%}
-<script src="{{ 'c-prime-pdp-12.js' | asset_url }}" defer></script>
-
 {%- comment -%} V_PRIME_PDP_17 | Offer Restructure - PDP Bundle Selector {%- endcomment -%}
 {%- if section.index > 3 -%}
   <link rel="stylesheet" href="{{ 'c-prime-pdp-17.css' | asset_url }}" media="print" onload="this.media='all'">

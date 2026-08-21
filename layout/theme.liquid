@@ -466,10 +466,7 @@
     {{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
     {{ 'c-custom.css' | asset_url | stylesheet_tag }}
     {{ 'c-prime-site-11.css' | asset_url | stylesheet_tag }}
-    {%- comment -%} Test: V_PRIME_CART_15 | Cart: Free shipping threshold (loaded globally — cart drawer renders on every template) {%- endcomment -%}
-    {{ 'c-prime-cart-15.css' | asset_url | stylesheet_tag }}
     <script>window.cPrimeCart15Currency = {{ cart.currency.iso_code | json }};</script>
-    <script src="{{ 'c-prime-cart-15.js' | asset_url }}" defer></script>
     {%- comment -%} Test: V_PRIME_PDP_17 | Offer Restructure - PDP (loaded globally — the free-gift cart cleanup must run on every page, not just the PDP where the gift was added) {%- endcomment -%}
     {%- liquid
       assign c_pdp17_h_enc_v = all_products['kidss-encyclopedia-10-000-whys'].selected_or_first_available_variant.id
