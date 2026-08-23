@@ -111,13 +111,6 @@ body.c-primePdp20VarC .c-pdp20-badges--c {
   }
 }
 
-/* Kaching Bundles compact buy strip — hidden for Var B and C so the full
-   product info stack (pib-title, pib-stars-row, pib-price-block, pib-bullets)
-   surfaces above the fold. Same selector pattern as c-prime-pdp-17.css. */
-body.c-primePdp20VarB [class*="kaching-bundles"],
-body.c-primePdp20VarC [class*="kaching-bundles"] {
-  display: none;
-}
 
 /* Test Design */
 .c-pdp20-badges {
