@@ -84,8 +84,7 @@
 
   # Var B reuses Var A's exact tiers/pricing above, adding a free-shipping badge
   # on qualifying tiers and a free Stickers gift on the 3-book tier.
-  # Free shipping threshold: $55 USD-equivalent, same vetted per-currency map
-  # already shipped in assets/c-prime-cart-15.js (V_PRIME_CART_15).
+  # Free shipping threshold: $55 USD-equivalent, vetted per-currency map.
   assign c_pdp17_ship_threshold_cents = 5500
   case cart.currency.iso_code
     when 'AUD' or 'CAD'

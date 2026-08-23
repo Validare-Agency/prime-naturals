@@ -6,67 +6,6 @@
   overflow-y: hidden;
 }
 
-/* <-------------------V_PRIME_HP_09 | HP - Banner Image - Repositioning-----------------> */
-
-/* Test Setup */
-/* No elements hidden/shown — this test only reorders existing hero elements on mobile */
-
-/* Test Design */
-@media (max-width: 900px) {
-  body.c-primeHp09VarA .hero-inner .hero-visual {
-    order: 1;
-  }
-  body.c-primeHp09VarA .hero-inner .hero-copy {
-    order: 2;
-  }
-
-  body.c-primeHp09VarA .hero-inner {
-    padding: 6px 20px 1px;
-    gap: 10px;
-  }
-
-  body.c-primeHp09VarA .hero-float--1 {
-    top: 14px;
-  }
-
-  body.c-primeHp09VarA .hero-float--2 {
-    bottom: 25px;
-  }
-
-  body.c-primeHp09VarA .hero-float--3 {
-    bottom: -2px;
-  }
-
-  body.c-primeHp09VarA .hero-title {
-    margin: 0 0 14px 0;
-  }
-
-  body.c-primeHp09VarA .hero-sub {
-    margin: 0 auto 14px;
-  }
-
-  body.c-primeHp09VarA .hero-stars-row {
-    margin: 0 auto 14px;
-  }
-
-  body.c-primeHp09VarA .hero-price-row {
-    margin-bottom: 14px;
-  }
-
-  body.c-primeHp09VarA .hero-btn {
-    margin-bottom: 16px;
-  }
-
-  body.c-primeHp09VarA .hero-visual {
-    min-height: 270px;
-  }
-
-  body.c-primeHp09VarA
-    .section-template--18974226251910__custom_liquid_jzrHRV-padding {
-    padding-bottom: 5px;
-  }
-}
-
 /* <-------------------V_PRIME_PDP_20 | Product Page - USPs - ATF-----------------> */
 
 /* Test Setup */
