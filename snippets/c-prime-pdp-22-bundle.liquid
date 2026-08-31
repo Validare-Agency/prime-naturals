@@ -1,0 +1,279 @@
+{%- comment -%}
+  V_PRIME_PDP_22 | Encyclopedia - Upsell
+
+  Forked from c-prime-pdp-17-bundle.liquid (do not merge changes back into that
+  file — it stays untouched as the rollback target for this test). All shared
+  markup below is renamed c-pdp17-* -> c-pdp22-* / c_pdp17_* -> c_pdp22_* so this
+  file's assets/c-prime-pdp-22.js never binds to the original's elements (and
+  vice versa) if both are ever rendered on a page at once.
+
+  assets/c-prime-pdp-22.css styles it; assets/c-prime-pdp-22.js wires row
+  selection + Add to Cart + the encyclopedia-only upsell card.
+
+  Accepts: product
+{%- endcomment -%}
+
+{%- liquid
+  assign c_pdp22_variant = product.selected_or_first_available_variant
+  assign c_pdp22_base_cents = c_pdp22_variant.price
+  # See c-prime-pdp-17-bundle.liquid for why this rounds to a clean .90 ending
+  # across markets instead of using Shopify's raw converted price.
+  assign c_pdp22_base_cents = c_pdp22_base_cents | divided_by: 100.0 | ceil | times: 100 | minus: 10
+
+  # Tier 1 always adds the live product's own variant — no bundling needed for
+  # a single book.
+  assign c_pdp22_t1_variant_id = c_pdp22_variant.id
+
+  # Currency-agnostic handle check — see c-prime-pdp-17-bundle.liquid for the
+  # full rationale (localized prices can't be compared against a fixed number).
+  assign c_pdp22_is_encyclopedia = false
+  if product.handle == 'kidss-encyclopedia-10-000-whys'
+    assign c_pdp22_is_encyclopedia = true
+  endif
+
+  # Tier 1: 1 book, base price, no discount. Compare price is the site's
+  # existing "50% off" anchor (base x2), same as shown everywhere else on the PDP.
+  assign c_pdp22_a_t1_price = c_pdp22_base_cents
+  assign c_pdp22_a_t1_compare = c_pdp22_base_cents | times: 2
+
+  # Free shipping threshold: $55 USD-equivalent, vetted per-currency map.
+  assign c_pdp22_ship_threshold_cents = 5500
+  case cart.currency.iso_code
+    when 'AUD' or 'CAD'
+      assign c_pdp22_ship_threshold_cents = 8000
+    when 'GBP'
+      assign c_pdp22_ship_threshold_cents = 4500
+    when 'NZD'
+      assign c_pdp22_ship_threshold_cents = 9500
+  endcase
+
+  # BOGO framing display prices only — real discount comes from that product's
+  # own native Kaching Bundles quantity-discount config (see c-prime-pdp-17-bundle.liquid).
+  if c_pdp22_is_encyclopedia
+    assign c_pdp22_d_t2_price = c_pdp22_base_cents | times: 7990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp22_d_t3_price = c_pdp22_base_cents | times: 9990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+  else
+    assign c_pdp22_d_t2_price = c_pdp22_base_cents | times: 5990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp22_d_t3_price = c_pdp22_base_cents | times: 8990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+  endif
+
+  assign c_pdp22_d_t2_compare = c_pdp22_base_cents | times: 3
+  assign c_pdp22_d_t2_save = c_pdp22_d_t2_compare | minus: c_pdp22_d_t2_price
+
+  assign c_pdp22_d_t3_compare = c_pdp22_base_cents | times: 5
+  assign c_pdp22_d_t3_save = c_pdp22_d_t3_compare | minus: c_pdp22_d_t3_price
+
+  assign c_pdp22_d_t2_ships_free = false
+  if c_pdp22_d_t2_price >= c_pdp22_ship_threshold_cents
+    assign c_pdp22_d_t2_ships_free = true
+  endif
+
+  assign c_pdp22_d_t3_ships_free = false
+  if c_pdp22_d_t3_price >= c_pdp22_ship_threshold_cents
+    assign c_pdp22_d_t3_ships_free = true
+  endif
+
+  # Tiers 2/3 add the SAME real product variant as tier 1, just at quantity 3
+  # or 5 — see c-prime-pdp-17-bundle.liquid.
+  assign c_pdp22_d_t2_variant_id = c_pdp22_variant.id
+  assign c_pdp22_d_t3_variant_id = c_pdp22_variant.id
+
+  # V_PRIME_PDP_22 upsell card — encyclopedia only. Var A/B sell "leadership",
+  # Var C/D sell "murphys" (same card/logic, different upsell product — see
+  # assets/c-prime-pdp-22.css/.js for how the active one is picked at runtime).
+  # Compare price falls back to the site's standard "2x current price" anchor
+  # if a product has no (or an inverted) compare_at_price set.
+  if c_pdp22_is_encyclopedia
+    assign c_pdp22_upsell_leadership_product = all_products['murphys-law-for-kids-copy']
+    assign c_pdp22_upsell_leadership_variant = c_pdp22_upsell_leadership_product.selected_or_first_available_variant
+    assign c_pdp22_upsell_leadership_compare = c_pdp22_upsell_leadership_variant.compare_at_price
+    if c_pdp22_upsell_leadership_compare == blank or c_pdp22_upsell_leadership_compare <= c_pdp22_upsell_leadership_variant.price
+      assign c_pdp22_upsell_leadership_compare = c_pdp22_upsell_leadership_variant.price | times: 2
+    endif
+
+    assign c_pdp22_upsell_murphys_product = all_products['murphys-law-for-kids']
+    assign c_pdp22_upsell_murphys_variant = c_pdp22_upsell_murphys_product.selected_or_first_available_variant
+    assign c_pdp22_upsell_murphys_compare = c_pdp22_upsell_murphys_variant.compare_at_price
+    if c_pdp22_upsell_murphys_compare == blank or c_pdp22_upsell_murphys_compare <= c_pdp22_upsell_murphys_variant.price
+      assign c_pdp22_upsell_murphys_compare = c_pdp22_upsell_murphys_variant.price | times: 2
+    endif
+  endif
+-%}
+
+<div class="c-pdp22-variant c-pdp22-variant--d">
+  <p class="c-pdp22-eyebrow">&#9889; FLASH SALE &mdash; PRICES INCREASE IN 4 HOURS</p>
+
+  <div class="c-pdp22-rows" role="radiogroup" aria-label="Bundle options">
+    <label class="c-pdp22-row">
+      <input
+        type="radio"
+        name="c-pdp22-d-tier-{{ section.id }}"
+        class="c-pdp22-row__radio"
+        data-variant-id="{{ c_pdp22_t1_variant_id }}"
+        data-quantity="1"
+        data-pdp22-price-money="{{ c_pdp22_a_t1_price | money }}"
+        {%- if c_pdp22_upsell_leadership_variant %}
+        data-pdp22-price-with-upsell-leadership-money="{{ c_pdp22_a_t1_price | plus: c_pdp22_upsell_leadership_variant.price | money }}"
+        {%- endif %}
+        {%- if c_pdp22_upsell_murphys_variant %}
+        data-pdp22-price-with-upsell-murphys-money="{{ c_pdp22_a_t1_price | plus: c_pdp22_upsell_murphys_variant.price | money }}"
+        {%- endif %}
+        {%- if c_pdp22_upsell_leadership_variant and c_pdp22_upsell_murphys_variant %}
+        data-pdp22-price-with-both-upsells-money="{{ c_pdp22_a_t1_price | plus: c_pdp22_upsell_leadership_variant.price | plus: c_pdp22_upsell_murphys_variant.price | money }}"
+        {%- endif %}
+        checked
+      >
+      <span class="c-pdp22-row__body">
+        <span class="c-pdp22-row__title">1 Book</span>
+        <span class="c-pdp22-row__subtitle">For 1 child</span>
+      </span>
+      <span class="c-pdp22-row__prices">
+        <span class="c-pdp22-row__price">{{ c_pdp22_a_t1_price | money }}</span>
+        <span class="c-pdp22-row__compare">{{ c_pdp22_a_t1_compare | money }}</span>
+      </span>
+    </label>
+
+    <label class="c-pdp22-row">
+      <span class="c-pdp22-row__badge c-pdp22-row__badge--popular c-pdp22-row__badge--sentence">Most popular</span>
+      <input
+        type="radio"
+        name="c-pdp22-d-tier-{{ section.id }}"
+        class="c-pdp22-row__radio"
+        data-variant-id="{{ c_pdp22_d_t2_variant_id }}"
+        data-quantity="3"
+        data-pdp22-price-money="{{ c_pdp22_d_t2_price | money }}"
+        {%- if c_pdp22_upsell_leadership_variant %}
+        data-pdp22-price-with-upsell-leadership-money="{{ c_pdp22_d_t2_price | plus: c_pdp22_upsell_leadership_variant.price | money }}"
+        {%- endif %}
+        {%- if c_pdp22_upsell_murphys_variant %}
+        data-pdp22-price-with-upsell-murphys-money="{{ c_pdp22_d_t2_price | plus: c_pdp22_upsell_murphys_variant.price | money }}"
+        {%- endif %}
+        {%- if c_pdp22_upsell_leadership_variant and c_pdp22_upsell_murphys_variant %}
+        data-pdp22-price-with-both-upsells-money="{{ c_pdp22_d_t2_price | plus: c_pdp22_upsell_leadership_variant.price | plus: c_pdp22_upsell_murphys_variant.price | money }}"
+        {%- endif %}
+      >
+      <span class="c-pdp22-row__body">
+        <span class="c-pdp22-row__title">Buy 2, Get 1 Free</span>
+        <span class="c-pdp22-row__subtitle">3 books &mdash; best for siblings</span>
+        <span class="c-pdp22-row__perk">&#127873; 1 full book, on us</span>
+        {%- if c_pdp22_d_t2_ships_free -%}
+          <span class="c-pdp22-row__perk c-pdp22-row__perk--ship">&#128666; FREE shipping</span>
+        {%- endif -%}
+      </span>
+      <span class="c-pdp22-row__prices">
+        <span class="c-pdp22-row__price">{{ c_pdp22_d_t2_price | money }}</span>
+        <span class="c-pdp22-row__compare">{{ c_pdp22_d_t2_compare | money }}</span>
+        <span class="c-pdp22-row__save">Save {{ c_pdp22_d_t2_save | money }}</span>
+      </span>
+    </label>
+
+    <label class="c-pdp22-row">
+      <span class="c-pdp22-row__badge c-pdp22-row__badge--popular c-pdp22-row__badge--sentence">One for every grandchild</span>
+      <input
+        type="radio"
+        name="c-pdp22-d-tier-{{ section.id }}"
+        class="c-pdp22-row__radio"
+        data-variant-id="{{ c_pdp22_d_t3_variant_id }}"
+        data-quantity="5"
+        data-pdp22-price-money="{{ c_pdp22_d_t3_price | money }}"
+        {%- if c_pdp22_upsell_leadership_variant %}
+        data-pdp22-price-with-upsell-leadership-money="{{ c_pdp22_d_t3_price | plus: c_pdp22_upsell_leadership_variant.price | money }}"
+        {%- endif %}
+        {%- if c_pdp22_upsell_murphys_variant %}
+        data-pdp22-price-with-upsell-murphys-money="{{ c_pdp22_d_t3_price | plus: c_pdp22_upsell_murphys_variant.price | money }}"
+        {%- endif %}
+        {%- if c_pdp22_upsell_leadership_variant and c_pdp22_upsell_murphys_variant %}
+        data-pdp22-price-with-both-upsells-money="{{ c_pdp22_d_t3_price | plus: c_pdp22_upsell_leadership_variant.price | plus: c_pdp22_upsell_murphys_variant.price | money }}"
+        {%- endif %}
+      >
+      <span class="c-pdp22-row__body">
+        <span class="c-pdp22-row__title">Buy 3, Get 2 Free</span>
+        <span class="c-pdp22-row__subtitle">5 books &mdash; best gift pack</span>
+        <span class="c-pdp22-row__perk">&#127873; 2 full books, on us</span>
+        {%- if c_pdp22_d_t3_ships_free -%}
+          <span class="c-pdp22-row__perk c-pdp22-row__perk--ship">&#128666; FREE shipping</span>
+        {%- endif -%}
+      </span>
+      <span class="c-pdp22-row__prices">
+        <span class="c-pdp22-row__price">{{ c_pdp22_d_t3_price | money }}</span>
+        <span class="c-pdp22-row__compare">{{ c_pdp22_d_t3_compare | money }}</span>
+        <span class="c-pdp22-row__save">Save {{ c_pdp22_d_t3_save | money }}</span>
+      </span>
+    </label>
+  </div>
+
+  {%- comment -%} Both upsell_* variables are only ever assigned inside `if c_pdp22_is_encyclopedia` above, so this is already encyclopedia-only without repeating that check (Liquid has no parenthesized boolean grouping, so `A and (B or C)` isn't expressible directly). {%- endcomment -%}
+  {%- if c_pdp22_upsell_leadership_product != blank or c_pdp22_upsell_murphys_product != blank -%}
+    {%- comment -%}
+      Single upsell wrapper (one heading, one bordered box) holding one card
+      per product. Var A/B show only the leadership card, Var C/D show only
+      the murphys card, Var E/F show both (12px apart via this wrapper's own
+      flex `gap`, same gap it already uses between the heading and a card —
+      that gap only takes effect between VISIBLE children, so it doesn't add
+      space when a variant only shows one card). Card visibility + checkbox-
+      vs-Add-button are both toggled in assets/c-prime-pdp-22.css by body
+      class; hidden entirely for Control.
+    {%- endcomment -%}
+    <div class="c-pdp22-upsell">
+      <p class="c-pdp22-upsell__eyebrow">Most Grandparents Bought This Together!</p>
+
+      {%- if c_pdp22_upsell_leadership_product != blank -%}
+        <div class="c-pdp22-upsell__card" data-pdp22-upsell data-pdp22-upsell-key="leadership" data-variant-id="{{ c_pdp22_upsell_leadership_variant.id }}">
+          <label class="c-pdp22-upsell__checkbox-wrap">
+            <input type="checkbox" class="c-pdp22-upsell__checkbox" data-pdp22-checkbox>
+          </label>
+          <img
+            class="c-pdp22-upsell__image"
+            src="{{ c_pdp22_upsell_leadership_product.featured_image | image_url: width: 184 }}"
+            alt="{{ c_pdp22_upsell_leadership_product.featured_image.alt | default: c_pdp22_upsell_leadership_product.title | escape }}"
+            loading="lazy"
+            width="92"
+            height="92"
+          >
+          <div class="c-pdp22-upsell__body">
+            <p class="c-pdp22-upsell__title">{{ c_pdp22_upsell_leadership_product.title }}</p>
+            <p class="c-pdp22-upsell__desc">Teaches your child to lead and communicate in any situation</p>
+          </div>
+          <div class="c-pdp22-upsell__side">
+            <div class="c-pdp22-upsell__price-block">
+              <span class="c-pdp22-upsell__price">{{ c_pdp22_upsell_leadership_variant.price | money }}</span>
+              <span class="c-pdp22-upsell__compare">{{ c_pdp22_upsell_leadership_compare | money }}</span>
+            </div>
+            <button type="button" class="c-pdp22-upsell__add-btn" data-pdp22-add-btn>Add</button>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if c_pdp22_upsell_murphys_product != blank -%}
+        <div class="c-pdp22-upsell__card" data-pdp22-upsell data-pdp22-upsell-key="murphys" data-variant-id="{{ c_pdp22_upsell_murphys_variant.id }}">
+          <label class="c-pdp22-upsell__checkbox-wrap">
+            <input type="checkbox" class="c-pdp22-upsell__checkbox" data-pdp22-checkbox>
+          </label>
+          <img
+            class="c-pdp22-upsell__image"
+            src="{{ c_pdp22_upsell_murphys_product.featured_image | image_url: width: 184 }}"
+            alt="{{ c_pdp22_upsell_murphys_product.featured_image.alt | default: c_pdp22_upsell_murphys_product.title | escape }}"
+            loading="lazy"
+            width="92"
+            height="92"
+          >
+          <div class="c-pdp22-upsell__body">
+            <p class="c-pdp22-upsell__title">{{ c_pdp22_upsell_murphys_product.title }}</p>
+            <p class="c-pdp22-upsell__desc">Teaches your child to handle anything life throws at them</p>
+          </div>
+          <div class="c-pdp22-upsell__side">
+            <div class="c-pdp22-upsell__price-block">
+              <span class="c-pdp22-upsell__price">{{ c_pdp22_upsell_murphys_variant.price | money }}</span>
+              <span class="c-pdp22-upsell__compare">{{ c_pdp22_upsell_murphys_compare | money }}</span>
+            </div>
+            <button type="button" class="c-pdp22-upsell__add-btn" data-pdp22-add-btn>Add</button>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <button type="button" class="c-pdp22-atc button button--full-width" data-pdp22-atc>
+    <span data-pdp22-atc-price>{{ c_pdp22_a_t1_price | money }}</span>&nbsp;ADD TO CART
+  </button>
+</div>

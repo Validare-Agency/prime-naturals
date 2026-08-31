@@ -23,6 +23,24 @@ function handleExperiments() {
   } else if (primePdp20?.name === "Var C - Badges within info stack") {
     document.body.classList.add("c-primePdp20VarC");
   }
+
+  // Test: V_PRIME_PDP_22 | Encyclopedia - Upsell
+  const primePdp22 = window.igData?.user.getTestGroup(
+    "611c3873-2fc9-458b-82a5-f3ed383dd2ef"
+  );
+  if (primePdp22?.name === "Var A - Leadership checkbox") {
+    document.body.classList.add("c-primePdp22VarA");
+  } else if (primePdp22?.name === "Var B - Leadership ADD button") {
+    document.body.classList.add("c-primePdp22VarB");
+  } else if (primePdp22?.name === "Var C - Murphy checkbox") {
+    document.body.classList.add("c-primePdp22VarC");
+  } else if (primePdp22?.name === "Var D - Murphy ADD button") {
+    document.body.classList.add("c-primePdp22VarD");
+  } else if (primePdp22?.name === "Var E - Both checkbox") {
+    document.body.classList.add("c-primePdp22VarE");
+  } else if (primePdp22?.name === "Var F - Both ADD button") {
+    document.body.classList.add("c-primePdp22VarF");
+  }
 }
 
 let cartDrawerWasActive = false;
