@@ -1,0 +1,482 @@
+/* <-------------------V_PRIME_PDP_22 | Encyclopedia - Upsell-----------------> */
+
+/* Test Setup */
+
+/* One upsell wrapper (one heading, one bordered/shadowed box) renders into
+   the DOM for every visitor to the encyclopedia PDP, holding one card per
+   product (leadership, murphys) — hidden entirely until a variant class
+   lands on <body> (Control sees no change at all). Which CARD(S) inside show
+   is a second, separate toggle below: Var A-D show exactly one, Var E/F show
+   both — the wrapper's own flex `gap` (see Test Design) provides the 12px
+   space between them, and between the heading and a card, automatically
+   (gap doesn't add space around a hidden/display:none child). */
+.c-pdp22-upsell {
+  display: none;
+}
+
+body.c-primePdp22VarA .c-pdp22-upsell,
+body.c-primePdp22VarB .c-pdp22-upsell,
+body.c-primePdp22VarC .c-pdp22-upsell,
+body.c-primePdp22VarD .c-pdp22-upsell,
+body.c-primePdp22VarE .c-pdp22-upsell,
+body.c-primePdp22VarF .c-pdp22-upsell {
+  display: flex;
+}
+
+.c-pdp22-upsell__card {
+  display: none;
+}
+
+body.c-primePdp22VarA [data-pdp22-upsell-key="leadership"],
+body.c-primePdp22VarB [data-pdp22-upsell-key="leadership"],
+body.c-primePdp22VarC [data-pdp22-upsell-key="murphys"],
+body.c-primePdp22VarD [data-pdp22-upsell-key="murphys"],
+body.c-primePdp22VarE [data-pdp22-upsell-key="leadership"],
+body.c-primePdp22VarE [data-pdp22-upsell-key="murphys"],
+body.c-primePdp22VarF [data-pdp22-upsell-key="leadership"],
+body.c-primePdp22VarF [data-pdp22-upsell-key="murphys"] {
+  display: flex;
+}
+
+/* Var A/C/E: checkbox only, folded into the bundle's own Add to Cart click. */
+.c-pdp22-upsell__add-btn {
+  display: none;
+}
+
+/* Var B/D/F: its own Add button instead of the checkbox, adds immediately. */
+body.c-primePdp22VarB .c-pdp22-upsell__add-btn,
+body.c-primePdp22VarD .c-pdp22-upsell__add-btn,
+body.c-primePdp22VarF .c-pdp22-upsell__add-btn {
+  display: inline-flex;
+}
+
+body.c-primePdp22VarB .c-pdp22-upsell__checkbox-wrap,
+body.c-primePdp22VarD .c-pdp22-upsell__checkbox-wrap,
+body.c-primePdp22VarF .c-pdp22-upsell__checkbox-wrap {
+  display: none;
+}
+
+/* Var A/C/E only: the whole row toggles the checkbox (see c-prime-pdp-22.js),
+   so it should read as clickable — Var B/D/F's row isn't, only its Add button is. */
+body.c-primePdp22VarA .c-pdp22-upsell__card,
+body.c-primePdp22VarC .c-pdp22-upsell__card,
+body.c-primePdp22VarE .c-pdp22-upsell__card {
+  cursor: pointer;
+}
+
+/* Test Design */
+
+/* Bundle rows/ATC button below are an exact fork of c-prime-pdp-17.css's
+   design (same tier picker, unchanged) — kept in sync intentionally. */
+.c-pdp22-variant {
+  border-radius: 10px;
+  margin: 16px 0;
+  font-family: var(--font-body-family);
+  color: #1f3a5f;
+}
+
+.c-pdp22-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #0d1b3e;
+  margin: 0 0 14px 0;
+}
+
+.c-pdp22-eyebrow::before,
+.c-pdp22-eyebrow::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(13, 27, 62, 0.12);
+}
+
+.c-pdp22-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.c-pdp22-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 2px solid #d9e0e6;
+  border-radius: 11px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.c-pdp22-row:has(.c-pdp22-row__radio:checked) {
+  border-color: #1f3a5f;
+}
+
+.c-pdp22-row__radio {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border: 2px solid #c2cbd3;
+  border-radius: 50%;
+  margin: 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.c-pdp22-row__radio:checked {
+  border-color: #1f3a5f;
+}
+
+.c-pdp22-row__radio:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #1f3a5f;
+  transform: translate(-50%, -50%);
+}
+
+.c-pdp22-row__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.c-pdp22-row__title {
+  font-weight: 700;
+  font-size: 15.5px;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #1f3a5f;
+}
+
+.c-pdp22-row__subtitle {
+  font-size: 12px;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #6b7681;
+}
+
+@media screen and (max-width: 749px) {
+  .c-pdp22-row {
+    padding: 10px 12px;
+  }
+
+  .c-pdp22-row__title {
+    font-size: 17px;
+  }
+
+  .c-pdp22-row__subtitle {
+    font-size: 12px;
+  }
+}
+
+.c-pdp22-row__prices {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0px;
+}
+
+.c-pdp22-row__price {
+  font-weight: 700;
+  font-size: 18px;
+  color: #1f3a5f;
+}
+
+.c-pdp22-row__compare {
+  font-size: 14px;
+  color: #98a2ac;
+  text-decoration: line-through;
+}
+
+.c-pdp22-row__save {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2e8b57;
+}
+
+.c-pdp22-row__badge {
+  position: absolute;
+  top: -9px;
+  right: 12px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-radius: 4px;
+  padding: 2px 9px;
+}
+
+.c-pdp22-row__badge--sentence {
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.c-pdp22-row__badge--popular {
+  background: #1f3a5f;
+}
+
+.c-pdp22-atc {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.c-pdp22-row__perk {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #2e8b57;
+  margin-top: 3px;
+}
+
+.c-pdp22-row__perk--ship {
+  color: #2e7d8a;
+}
+
+/* Upsell card itself — matches Figma node 1000:374 / 959:5341
+   ("Var A : Leadership Only" / "Var A : Leadership Only (Add Button)"),
+   file zpc26IBYBV0LPAHxKtvzUj. */
+.c-pdp22-upsell {
+  /* display is owned by Test Setup above (default none, flex when the
+     matching variant/key is active) — do not set it here, it would win the
+     cascade for whichever block isn't the active variant's target and show
+     both upsell products at once. */
+  box-sizing: border-box;
+  flex-direction: column;
+  /* Spaces the heading from a card, AND (Var E/F) a card from the next card
+     — gap only applies between children that are actually rendered/visible,
+     so this is exactly the requested 12px between the two cards without
+     adding any stray space for Var A-D, where only one card ever shows. */
+  gap: 12px;
+  background: #ffffff;
+  border: 1px solid rgba(13, 27, 62, 0.07);
+  border-radius: 8px;
+  padding: 15px 16px;
+  margin: 0px 0 16px 0;
+}
+
+.c-pdp22-upsell__eyebrow {
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #0d1b3e;
+  margin: 0;
+}
+
+.c-pdp22-upsell__card {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(13, 27, 62, 0.1);
+  border-radius: 12px;
+  padding: 11px 12px;
+  background: #fcfcfc;
+}
+
+.c-pdp22-upsell__checkbox-wrap {
+  display: flex;
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+.c-pdp22-upsell__checkbox {
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border: 2px solid rgba(13, 27, 62, 0.35);
+  border-radius: 2px;
+  margin: 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.c-pdp22-upsell__checkbox:checked {
+  background: #0d1b3e;
+}
+
+.c-pdp22-upsell__checkbox:checked::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 6px;
+  height: 11px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.c-pdp22-upsell__image {
+  flex: 0 0 auto;
+  width: 92px;
+  height: 92px;
+  background: #f3f3f3;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.c-pdp22-upsell__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.c-pdp22-upsell__title {
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: normal;
+  color: #0d1b3e;
+  margin: 0;
+}
+
+.c-pdp22-upsell__desc {
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.c-pdp22-upsell__side {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.c-pdp22-upsell__price-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.c-pdp22-upsell__price {
+  font-family: var(--font-body-family);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #c0392b;
+}
+
+.c-pdp22-upsell__compare {
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.c-pdp22-upsell__add-btn {
+  box-sizing: border-box;
+  background: #c0392b;
+  color: #fff;
+  border: 2px solid #c0392b;
+  border-radius: 0;
+  padding: 8px 14px;
+  font-family: var(--font-body-family);
+  font-weight: 700;
+  font-size: 12px;
+  line-height: normal;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.c-pdp22-upsell__add-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.c-pdp22-upsell__add-btn--added {
+  background: #ffffff;
+  color: #c0392b;
+}
+
+@media screen and (max-width: 749px) {
+  .c-pdp22-upsell {
+    gap: 10px;
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .c-pdp22-upsell__card {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .c-pdp22-upsell__eyebrow {
+    font-size: 15px;
+  }
+
+  .c-pdp22-upsell__title {
+    font-size: 14px;
+  }
+
+  .c-pdp22-upsell__desc {
+    font-size: 12px;
+  }
+
+  .c-pdp22-upsell__image {
+    width: 82px;
+    height: 82px;
+  }
+
+  .c-pdp22-upsell__price {
+    font-size: 13.5px;
+  }
+
+  .c-pdp22-upsell__compare {
+    font-size: 11px;
+  }
+
+  /* Mobile only: the button gets a hard-fixed box (width/height), centered
+     content, and zero padding — its size is then purely a function of these
+     two numbers, never of what text is inside. Matching padding/line-height
+     between the "Add" and "✓ Added" states can only ever approximate the
+     same size; a fixed box guarantees it structurally. */
+  .c-pdp22-upsell__add-btn {
+    /* display stays owned by the Test Setup body-class rules (none by
+       default, inline-flex for Var B/D/F) — do not set it here. */
+    width: 62px;
+    height: 32px;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .c-pdp22-upsell__add-btn--added {
+    font-size: 9px;
+  }
+}
