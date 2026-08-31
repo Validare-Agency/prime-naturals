@@ -113,3 +113,329 @@ document.addEventListener('DOMContentLoaded', function () {
     document.fonts.ready.then(sizeBadgeBorders);
   }
 })();
+
+// Test: V_PRIME_PDP_22 | Encyclopedia - Upsell
+(function () {
+  var UPSELL_PRODUCTS = {
+    leadership: {
+      handle: 'leadership-enlightenment-for-kids',
+      title: 'Leadership Enlightenment For Kids',
+      desc: 'Life lessons before life teaches them'
+    },
+    murphy: {
+      handle: 'murphys-law-for-kids',
+      title: "Murphy's Law For Kids",
+      desc: 'Teaches your child to handle anything life throws at them'
+    }
+  };
+
+  var upsellData = { leadership: null, murphy: null };
+  var MODULE_ID = 'c-pdp22-upsell';
+
+  function isAnyVariant() {
+    var b = document.body.classList;
+    return b.contains('c-primePdp22VarA') || b.contains('c-primePdp22VarB') ||
+           b.contains('c-primePdp22VarC') || b.contains('c-primePdp22VarD') ||
+           b.contains('c-primePdp22VarE') || b.contains('c-primePdp22VarF');
+  }
+
+  function isCheckboxVariant() {
+    var b = document.body.classList;
+    return b.contains('c-primePdp22VarA') || b.contains('c-primePdp22VarC') ||
+           b.contains('c-primePdp22VarE');
+  }
+
+  function formatMoney(cents) {
+    return '$' + (cents / 100).toFixed(2).replace(/\.00$/, '');
+  }
+
+  function getCartUrl() {
+    return (window.routes && window.routes.cart_url) ? window.routes.cart_url : '/cart';
+  }
+
+  function getCartAddUrl() {
+    return (window.routes && window.routes.cart_add_url)
+      ? window.routes.cart_add_url + '.js'
+      : '/cart/add.js';
+  }
+
+  function fetchProductData(key) {
+    var handle = UPSELL_PRODUCTS[key].handle;
+    return fetch('/products/' + handle + '.js')
+      .then(function (r) {
+        if (!r.ok) throw new Error('product not found: ' + handle);
+        return r.json();
+      })
+      .then(function (data) {
+        var variant = data.variants && data.variants[0];
+        if (!variant) throw new Error('no variants');
+        upsellData[key] = {
+          variantId: variant.id,
+          price: variant.price,
+          comparePrice: variant.compare_at_price || variant.price * 2,
+          image: (data.images && data.images[0] && data.images[0].src) ? data.images[0].src : ''
+        };
+      })
+      .catch(function () { /* graceful — row stays in loading state */ });
+  }
+
+  function updateRowDisplay(key) {
+    var row = document.querySelector('[data-c-pdp22-key="' + key + '"]');
+    var data = upsellData[key];
+    if (!row || !data) return;
+    var thumb = row.querySelector('.c-pdp22-upsell__thumb');
+    if (thumb && data.image) thumb.src = data.image;
+    var priceEl = row.querySelector('.c-pdp22-upsell__price');
+    if (priceEl) priceEl.textContent = formatMoney(data.price);
+    var compareEl = row.querySelector('.c-pdp22-upsell__compare');
+    if (compareEl) compareEl.textContent = formatMoney(data.comparePrice);
+  }
+
+  function buildRowHTML(key) {
+    var p = UPSELL_PRODUCTS[key];
+    return '<div class="c-pdp22-upsell__row c-pdp22-upsell__row--' + key + '"' +
+           ' data-c-pdp22-key="' + key + '" data-c-pdp22-state="idle">' +
+      '<label class="c-pdp22-upsell__check-wrap">' +
+        '<input type="checkbox" class="c-pdp22-upsell__checkbox"' +
+               ' data-c-pdp22-checkbox="' + key + '">' +
+        '<span class="c-pdp22-upsell__checkmark"></span>' +
+      '</label>' +
+      '<img class="c-pdp22-upsell__thumb" src="" alt="' + p.title + '">' +
+      '<div class="c-pdp22-upsell__body">' +
+        '<p class="c-pdp22-upsell__title">' + p.title + '</p>' +
+        '<p class="c-pdp22-upsell__desc">' + p.desc + '</p>' +
+      '</div>' +
+      '<div class="c-pdp22-upsell__prices">' +
+        '<span class="c-pdp22-upsell__price">—</span>' +
+        '<span class="c-pdp22-upsell__compare">—</span>' +
+      '</div>' +
+      '<button class="c-pdp22-upsell__add-btn" data-c-pdp22-add="' + key + '"' +
+              ' type="button" aria-label="Add ' + p.title + '">Add</button>' +
+      '<div class="c-pdp22-upsell__added-state">' +
+        '<span class="c-pdp22-upsell__added-icon">&#10003;</span>' +
+        '<span class="c-pdp22-upsell__added-text">Added</span>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function buildModuleHTML() {
+    return '<div class="c-pdp22-upsell" id="' + MODULE_ID + '">' +
+      '<p class="c-pdp22-upsell__heading">Most Grandparents Bought This Together!</p>' +
+      buildRowHTML('leadership') +
+      buildRowHTML('murphy') +
+    '</div>';
+  }
+
+  function setRowAdded(key) {
+    var row = document.querySelector('[data-c-pdp22-key="' + key + '"]');
+    if (row) row.setAttribute('data-c-pdp22-state', 'added');
+  }
+
+  function refreshCartIconBubble() {
+    return fetch(getCartUrl() + '?section_id=cart-icon-bubble')
+      .then(function (r) { return r.text(); })
+      .then(function (html) {
+        var fresh = new DOMParser().parseFromString(html, 'text/html')
+          .querySelector('.shopify-section');
+        var live = document.getElementById('cart-icon-bubble');
+        if (fresh && live) live.innerHTML = fresh.innerHTML;
+      })
+      .catch(function () {});
+  }
+
+  function refreshCartDrawer() {
+    return fetch(getCartUrl() + '?section_id=cart-drawer')
+      .then(function (r) { return r.text(); })
+      .then(function (html) {
+        var fresh = new DOMParser().parseFromString(html, 'text/html')
+          .querySelector('cart-drawer');
+        var live = document.querySelector('cart-drawer');
+        if (fresh && live) {
+          live.replaceWith(fresh);
+          fresh.classList.add('active');
+        }
+        return refreshCartIconBubble();
+      })
+      .catch(function () {});
+  }
+
+  // Replicates c-prime-pdp-17.js addToCart, optionally with extra upsell items
+  function pdp17AddToCartWithUpsells(atcBtn, extraItems) {
+    var root = document.querySelector('.c-pdp17-variant');
+    if (!root) return;
+    var checkedRadio = root.querySelector('.c-pdp17-row__radio:checked');
+    if (!checkedRadio) return;
+
+    var variantId = parseInt(checkedRadio.getAttribute('data-variant-id'), 10);
+    var quantity = parseInt(checkedRadio.getAttribute('data-quantity'), 10) || 1;
+    var bundleId = 'pdp17-' + Date.now().toString(36) + '-' +
+                   Math.random().toString(36).slice(2, 8);
+
+    var items = [{
+      id: variantId,
+      quantity: quantity,
+      properties: { _pdp17_bundle_id: bundleId, _pdp17_min_qty: quantity }
+    }];
+
+    (extraItems || []).forEach(function (item) { items.push(item); });
+
+    atcBtn.disabled = true;
+
+    fetch(getCartAddUrl(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ items: items })
+    })
+      .then(function (r) {
+        if (!r.ok) return Promise.reject(r);
+        return r.json();
+      })
+      .then(function () {
+        // Mark each upsell row as Added
+        (extraItems || []).forEach(function (item) {
+          Object.keys(upsellData).forEach(function (key) {
+            if (upsellData[key] && upsellData[key].variantId === item.id) {
+              setRowAdded(key);
+            }
+          });
+        });
+        return refreshCartDrawer();
+      })
+      .catch(function () {})
+      .finally(function () { atcBtn.disabled = false; });
+  }
+
+  // Capture-phase listener: fires before PDP17's bubble listener on the target element.
+  // Only intercepts when a checkbox variant is active AND at least one box is checked.
+  function wireAtcCaptureListener(atcBtn) {
+    atcBtn.addEventListener('click', function (e) {
+      if (!isCheckboxVariant()) return;
+
+      var checkedBoxes = Array.from(
+        document.querySelectorAll('.c-pdp22-upsell__checkbox:checked')
+      );
+      if (!checkedBoxes.length) return; // no upsells selected — let PDP17 handle normally
+
+      // Stop PDP17's bubble listener from firing
+      e.stopImmediatePropagation();
+
+      var extraItems = checkedBoxes.map(function (cb) {
+        var key = cb.getAttribute('data-c-pdp22-checkbox');
+        return (upsellData[key] && upsellData[key].variantId)
+          ? { id: upsellData[key].variantId, quantity: 1 }
+          : null;
+      }).filter(Boolean);
+
+      pdp17AddToCartWithUpsells(e.currentTarget, extraItems);
+
+    }, true /* capture phase — fires before PDP17's bubble listener */);
+  }
+
+  // Event delegation for individual ADD buttons (button variants: B, D, F)
+  function wireAddButtons() {
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-c-pdp22-add]');
+      if (!btn) return;
+
+      var key = btn.getAttribute('data-c-pdp22-add');
+      var data = upsellData[key];
+      if (!data) return;
+
+      var row = document.querySelector('[data-c-pdp22-key="' + key + '"]');
+      if (!row || row.getAttribute('data-c-pdp22-state') === 'added') return;
+
+      window.igEvents = window.igEvents || [];
+      window.igEvents.push({ event: 'upsell_add_click' });
+
+      btn.disabled = true;
+
+      fetch(getCartAddUrl(), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ items: [{ id: data.variantId, quantity: 1 }] })
+      })
+        .then(function (r) {
+          if (!r.ok) throw new Error();
+          setRowAdded(key);
+          // Silent add — do NOT open the drawer; only refresh the cart icon
+          return refreshCartIconBubble();
+        })
+        .catch(function () {})
+        .finally(function () { btn.disabled = false; });
+    });
+  }
+
+  // Fire upsell_add_click when a checkbox is checked (not unchecked)
+  function wireCheckboxChangeEvents() {
+    document.addEventListener('change', function (e) {
+      if (!e.target.classList.contains('c-pdp22-upsell__checkbox')) return;
+      if (!e.target.checked) return; // only on check, not uncheck
+      window.igEvents = window.igEvents || [];
+      window.igEvents.push({ event: 'upsell_add_click' });
+    });
+  }
+
+  // IntersectionObserver: fire upsell_module_view once when module scrolls into view
+  function wireViewEvent(moduleEl) {
+    if (!window.IntersectionObserver) return;
+    var fired = false;
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !fired && isAnyVariant()) {
+          fired = true;
+          obs.disconnect();
+          window.igEvents = window.igEvents || [];
+          window.igEvents.push({ event: 'upsell_module_view' });
+        }
+      });
+    }, { threshold: 0.5 });
+    obs.observe(moduleEl);
+  }
+
+  // Check cart on load; mark rows "Added" for items already in cart
+  function syncCartState() {
+    fetch(getCartUrl() + '.js')
+      .then(function (r) { return r.json(); })
+      .then(function (cart) {
+        Object.keys(upsellData).forEach(function (key) {
+          if (!upsellData[key]) return;
+          var varId = upsellData[key].variantId;
+          var inCart = (cart.items || []).some(function (item) {
+            return item.variant_id === varId;
+          });
+          if (inCart) setRowAdded(key);
+        });
+      })
+      .catch(function () {});
+  }
+
+  function init() {
+    // Guard: only inject on pages with the PDP17 bundle ATC
+    var atcBtn = document.querySelector('.c-pdp17-atc[data-pdp17-atc]');
+    if (!atcBtn) return;
+
+    // Build and insert the module before the ATC button
+    var wrapper = document.createElement('div');
+    wrapper.innerHTML = buildModuleHTML();
+    var moduleEl = wrapper.firstChild;
+    atcBtn.parentNode.insertBefore(moduleEl, atcBtn);
+
+    // Fetch product data, then update prices + thumbnails, then sync cart state
+    Promise.all([
+      fetchProductData('leadership'),
+      fetchProductData('murphy')
+    ]).then(function () {
+      updateRowDisplay('leadership');
+      updateRowDisplay('murphy');
+      syncCartState();
+    });
+
+    // Wire interactions
+    wireAtcCaptureListener(atcBtn);
+    wireAddButtons();
+    wireCheckboxChangeEvents();
+    wireViewEvent(moduleEl);
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
