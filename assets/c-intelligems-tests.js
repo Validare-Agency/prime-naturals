@@ -28,17 +28,17 @@ function handleExperiments() {
   const primePdp22 = window.igData?.user.getTestGroup(
     "611c3873-2fc9-458b-82a5-f3ed383dd2ef"
   );
-  if (primePdp22?.name === "Var A : Leadership Only") {
+  if (primePdp22?.name === "Var A - Leadership checkbox") {
     document.body.classList.add("c-primePdp22VarA");
   } else if (primePdp22?.name === "Var B - Leadership ADD button") {
     document.body.classList.add("c-primePdp22VarB");
-  } else if (primePdp22?.name === "Var C - Murphys Law Only") {
+  } else if (primePdp22?.name === "Var C - Murphy checkbox") {
     document.body.classList.add("c-primePdp22VarC");
-  } else if (primePdp22?.name === "Var D - Murphys Law ADD button") {
+  } else if (primePdp22?.name === "Var D - Murphy ADD button") {
     document.body.classList.add("c-primePdp22VarD");
-  } else if (primePdp22?.name === "Var E - Both Products Checkbox") {
+  } else if (primePdp22?.name === "Var E - Both checkbox") {
     document.body.classList.add("c-primePdp22VarE");
-  } else if (primePdp22?.name === "Var F - Both Products ADD button") {
+  } else if (primePdp22?.name === "Var F - Both ADD button") {
     document.body.classList.add("c-primePdp22VarF");
   }
 }
