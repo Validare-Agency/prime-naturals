@@ -76,6 +76,39 @@
     return 'pdp22-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
   }
 
+  // Intelligems custom event: fires once per upsell module — see
+  // window.igEvents usage in assets/c-intelligems-tests.js for the pattern.
+  function trackUpsellModuleView(upsellWrapper) {
+    if (upsellWrapper.dataset.pdp22ViewTracked) return;
+    upsellWrapper.dataset.pdp22ViewTracked = 'true';
+    window.igEvents = window.igEvents || [];
+    window.igEvents.push({ event: 'upsell_module_view' });
+  }
+
+  // Observes the whole upsell module (heading + card(s)) and fires the view
+  // event the first time it scrolls into the viewport. A hidden module
+  // (Control, or the non-active product's card) never intersects, so this
+  // naturally only fires for shoppers who actually see it.
+  function initUpsellViewTracking(upsellWrapper) {
+    if (!('IntersectionObserver' in window)) return;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        trackUpsellModuleView(upsellWrapper);
+        observer.unobserve(upsellWrapper);
+      });
+    });
+    observer.observe(upsellWrapper);
+  }
+
+  // Intelligems custom event: fires on the click/check that SELECTS an
+  // upsell item — a checkbox being checked, or the Add button being clicked
+  // — not on unchecking.
+  function trackUpsellAddClick() {
+    window.igEvents = window.igEvents || [];
+    window.igEvents.push({ event: 'upsell_add_click' });
+  }
+
   function postCartAdd(items, button, options) {
     var openDrawer = !options || options.openDrawer !== false;
     button.disabled = true;
@@ -179,6 +212,7 @@
     var addBtn = upsellRoot.querySelector('[data-pdp22-add-btn]');
     if (addBtn) {
       addBtn.addEventListener('click', function () {
+        trackUpsellAddClick();
         addUpsellToCart(upsellRoot, addBtn);
       });
     }
@@ -188,6 +222,7 @@
       // Checking it folds its price into the bundle ATC button's total.
       checkbox.addEventListener('change', function () {
         updateAtcPrice(root);
+        if (checkbox.checked) trackUpsellAddClick();
       });
     }
 
@@ -195,7 +230,8 @@
     // .c-pdp22-upsell__card now — one card per product, not a wrapper around
     // it) toggles that card's own checkbox, not just the 20x20 box itself.
     // Skip clicks inside the checkbox's own label (native label behavior
-    // already toggles it — doing it again here would cancel it out) and
+    // already toggles it, and fires its own 'change' above — doing it again
+    // here would cancel the toggle out and double-count the click) and
     // inside the Add button (Var B/D/F's own, unrelated action).
     if (checkbox) {
       upsellRoot.addEventListener('click', function (event) {
@@ -203,6 +239,7 @@
         if (event.target.closest('[data-pdp22-add-btn]')) return;
         checkbox.checked = !checkbox.checked;
         updateAtcPrice(root);
+        if (checkbox.checked) trackUpsellAddClick();
       });
     }
   }
@@ -228,6 +265,9 @@
     root.querySelectorAll('[data-pdp22-upsell]').forEach(function (upsellRoot) {
       initUpsell(upsellRoot, root);
     });
+
+    var upsellWrapper = root.querySelector('.c-pdp22-upsell');
+    if (upsellWrapper) initUpsellViewTracking(upsellWrapper);
   }
 
   function run() {

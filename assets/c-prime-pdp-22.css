@@ -282,8 +282,11 @@ body.c-primePdp22VarE .c-pdp22-upsell__card {
 }
 
 .c-pdp22-upsell__card {
+  /* display is owned by Test Setup above (default none, flex when the
+     matching variant/key is active) — do not set it here, it would win the
+     cascade for whichever card isn't the active variant's target and show
+     both upsell products at once. */
   box-sizing: border-box;
-  display: flex;
   align-items: center;
   gap: 12px;
   border: 1px solid rgba(13, 27, 62, 0.1);
