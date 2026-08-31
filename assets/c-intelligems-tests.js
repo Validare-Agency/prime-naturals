@@ -25,7 +25,9 @@ function handleExperiments() {
   }
 
   // Test: V_PRIME_PDP_22 | Encyclopedia - Upsell
-  const primePdp22 = {name: "Var F - Both Products ADD button"}
+  const primePdp22 = window.igData?.user.getTestGroup(
+    "611c3873-2fc9-458b-82a5-f3ed383dd2ef"
+  );
   if (primePdp22?.name === "Var A : Leadership Only") {
     document.body.classList.add("c-primePdp22VarA");
   } else if (primePdp22?.name === "Var B - Leadership ADD button") {
