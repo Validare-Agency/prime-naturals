@@ -691,7 +691,7 @@
                 has_filtering: has_filtering
               %}
             {%- when 'buy_buttons' -%}
-              {% render 'c-prime-pdp-17-bundle', product: product, section: section %}
+              {% render 'c-prime-pdp-22-bundle', product: product, section: section %}
               {%- render 'buy-buttons',
                  block: block,
                  product: product,
@@ -1195,21 +1195,28 @@
 {%- endif -%}
 <script src="{{ 'c-prime-pdp-07.js' | asset_url }}" defer></script>
 
-{%- comment -%} V_PRIME_PDP_12 | Gallery Image Size + Thumbnail Scroll Affordance {%- endcomment -%}
-{%- if section.index > 3 -%}
-  <link rel="stylesheet" href="{{ 'c-prime-pdp-12.css' | asset_url }}" media="print" onload="this.media='all'">
-{%- else -%}
-  {{ 'c-prime-pdp-12.css' | asset_url | stylesheet_tag }}
-{%- endif -%}
-<script src="{{ 'c-prime-pdp-12.js' | asset_url }}" defer></script>
-
-{%- comment -%} V_PRIME_PDP_17 | Offer Restructure - PDP Bundle Selector {%- endcomment -%}
+{%- comment -%} PDP Bundle Selector {%- endcomment -%}
 {%- if section.index > 3 -%}
   <link rel="stylesheet" href="{{ 'c-prime-pdp-17.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- else -%}
   {{ 'c-prime-pdp-17.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
-{%- comment -%} c-prime-pdp-17.js loads sitewide from layout/theme.liquid instead of here — the gift-cart cleanup logic must run on every page, not just product pages. {%- endcomment -%}
+
+{%- comment -%} V_PRIME_PDP_22 | Encyclopedia - Upsell {%- endcomment -%}
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-pdp-22.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-pdp-22.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+<script src="{{ 'c-prime-pdp-22.js' | asset_url }}" defer></script>
+
+{%- comment -%} V_PRIME_PDP_19 | PDP - Reviews - FB {%- endcomment -%}
+<script
+  id="c-fb-review-test-19-script"
+  src="{{ 'c-fb-review-test-19.js' | asset_url }}"
+  data-image="{{ 'c-fb-review-test-19.png' | asset_url }}"
+  defer
+></script>
 
 {% schema %}
 {

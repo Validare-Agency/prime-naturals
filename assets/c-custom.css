@@ -6,65 +6,127 @@
   overflow-y: hidden;
 }
 
-/* <-------------------V_PRIME_HP_09 | HP - Banner Image - Repositioning-----------------> */
+/* <-------------------V_PRIME_PDP_20 | Product Page - USPs - ATF-----------------> */
 
 /* Test Setup */
-/* No elements hidden/shown — this test only reorders existing hero elements on mobile */
+.c-pdp20-badges--a,
+.c-pdp20-badges--b,
+.c-pdp20-badges--c {
+  display: none;
+}
 
-/* Test Design */
+body.c-primePdp20VarA .c-pdp20-badges--a,
+body.c-primePdp20VarB .c-pdp20-badges--b,
+body.c-primePdp20VarC .c-pdp20-badges--c {
+  display: flex;
+}
+
+/* Var B has two DOM instances — one after .pib-carousel (mobile placement,
+   already correct) and one after .pib-scarcity, right above the title
+   (desktop placement). Only one shows per breakpoint. */
 @media (max-width: 900px) {
-  body.c-primeHp09VarA .hero-inner .hero-visual {
-    order: 1;
+  body.c-primePdp20VarB .c-pdp20-badges--b-desktop {
+    display: none;
   }
-  body.c-primeHp09VarA .hero-inner .hero-copy {
-    order: 2;
-  }
+}
 
-
-  body.c-primeHp09VarA .hero-inner {
-    padding: 6px 20px 1px;
+@media (min-width: 901px) {
+  .c-pdp20-badges {
     gap: 10px;
   }
 
-  body.c-primeHp09VarA .hero-float--1 {
-    top: 14px;
+  body.c-primePdp20VarB .c-pdp20-badges--b-mobile {
+    display: none;
   }
 
-  body.c-primeHp09VarA .hero-float--2 {
-    bottom: 25px;
+  body.c-primePdp20VarB .c-pdp20-badges--b-desktop,
+  body.c-primePdp20VarC .c-pdp20-badges--c {
+    justify-content: flex-start;
   }
 
-  body.c-primeHp09VarA .hero-float--3 {
-    bottom: -2px;
+  body.c-primePdp20VarB .c-pdp20-badges--b-desktop {
+    padding-top: 0px;
+    padding-bottom: 2rem;
+  }
+}
+
+
+/* Test Design */
+.c-pdp20-badges {
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0 6px;
+}
+
+body.c-primePdp20VarC .c-pdp20-badges--c {
+  padding: 0 0 2rem;
+}
+
+@media (max-width: 900px) {
+  .c-pdp20-badges {
+    justify-content: flex-start;
+    gap: 5px;
   }
 
-  body.c-primeHp09VarA .hero-title {
-    margin: 0 0 14px 0;
+  body.c-primePdp20VarA .c-pdp20-badges--a {
+    padding-top: 2px;
+    padding-bottom: 1.35rem;
   }
 
-  body.c-primeHp09VarA .hero-sub {
-    margin: 0 auto 14px;
+  body.c-primePdp20VarB .c-pdp20-badges--b-mobile {
+    padding-top: 0px;
+    padding-bottom: 2rem;
   }
+}
 
-  body.c-primeHp09VarA .hero-stars-row {
-    margin: 0 auto 14px;
-  }
+.c-pdp20-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #c0392b;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 10px 21px;
+  line-height: 1.2;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
 
-  body.c-primeHp09VarA .hero-price-row {
-    margin-bottom: 14px;
-  }
+.c-pdp20-badge:nth-child(1) {
+  width: 138px;
+}
 
-  body.c-primeHp09VarA .hero-btn {
-    margin-bottom: 16px;
-  }
+.c-pdp20-badge:nth-child(2) {
+  width: 194px;
+}
 
-  body.c-primeHp09VarA .hero-visual {
-    min-height: 270px;
-  }
+.c-pdp20-badge:nth-child(3) {
+  width: 129px;
+}
 
-  body.c-primeHp09VarA .section-template--18974226251910__custom_liquid_jzrHRV-padding {
-    padding-bottom: 5px;
-  }
+.c-pdp20-badge svg {
+  flex-shrink: 0;
+}
+
+.badge-border {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.badge-border rect {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 1.5;
+  stroke-dasharray: 3 6;
+  stroke-linecap: round;
 }
 
 img[src*="magnific_4second-loop-grandmothers.gif"] {
