@@ -1,0 +1,164 @@
+<style>
+.topics-section {
+  background: #14213d;
+  padding: 64px 0;
+  margin: 0;
+}
+.topics-section .topics-wrap {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+}
+.topics-section .topics-headline {
+  text-align: center;
+  margin-bottom: 18px;
+  position: relative;
+}
+.topics-section .topics-headline-line {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 39px;
+  color: #fff;
+  line-height: 1.25;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.topics-section .topics-headline-highlight {
+  background: #f2a93b;
+  color: #14213d;
+  border-radius: 8px;
+  padding: 2px 16px;
+}
+.topics-section .topics-sub {
+  text-align: center;
+  font-size: 20px;
+  color: #b7c0d6;
+  line-height: 1.68;
+  max-width: 760px;
+  margin: 0 auto 40px;
+}
+.topics-section .topics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.topics-section .topic-card {
+  background: #1b2a4a;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 21px 19px;
+}
+.topics-section .topic-card.highlighted {
+  background: #20304f;
+  border: 1.5px solid #f2a93b;
+}
+.topics-section .topic-emoji {
+  font-size: 28px;
+  margin-bottom: 10px;
+  display: block;
+}
+.topics-section .topic-name {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  color: #fff;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.topics-section .topic-desc {
+  font-size: 16px;
+  color: #b7c0d6;
+  line-height: 1.5;
+}
+
+@media (max-width: 749px) {
+  .topics-section { padding: 48px 0; }
+  .topics-section .topics-headline-line { font-size: 24px; }
+  .topics-section .topics-sub { font-size: 15px; }
+  .topics-section .topics-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .topics-section .topic-emoji { font-size: 22px; }
+  .topics-section .topic-name { font-size: 15px; }
+  .topics-section .topic-desc { font-size: 13px; }
+  .topics-section .topic-card { padding: 14px 12px; }
+}
+</style>
+
+<section class="topics-section">
+  <div class="topics-wrap">
+    <div class="topics-headline">
+      <div class="topics-headline-line">
+        <span>One Book.</span>
+        <span class="topics-headline-highlight">Every Subject</span>
+        <span>They're Curious About.</span>
+      </div>
+    </div>
+    <p class="topics-sub">From the deepest ocean to the edge of the universe, if your grandchild has wondered about it, the answer is in here.</p>
+    <div class="topics-grid">
+      <div class="topic-card">
+        <span class="topic-emoji">🚀</span>
+        <div class="topic-name">Space &amp; Universe</div>
+        <div class="topic-desc">Black holes, planets, stars, rockets and life beyond Earth</div>
+      </div>
+      <div class="topic-card">
+        <span class="topic-emoji">🦕</span>
+        <div class="topic-name">Dinosaurs</div>
+        <div class="topic-desc">Why they went extinct, how we find them, what they really looked like</div>
+      </div>
+      <div class="topic-card">
+        <span class="topic-emoji">🧬</span>
+        <div class="topic-name">The Human Body</div>
+        <div class="topic-desc">Why your heart beats, how your brain works, why you dream</div>
+      </div>
+      <div class="topic-card">
+        <span class="topic-emoji">🌊</span>
+        <div class="topic-name">Oceans &amp; Sea Life</div>
+        <div class="topic-desc">Deep sea creatures, why the ocean is salty, how waves form</div>
+      </div>
+      <div class="topic-card">
+        <span class="topic-emoji">⚡</span>
+        <div class="topic-name">Weather &amp; Nature</div>
+        <div class="topic-desc">Thunder, lightning, tornadoes, rainbows and the sky</div>
+      </div>
+      <div class="topic-card">
+        <span class="topic-emoji">🏛️</span>
+        <div class="topic-name">History &amp; Civilisations</div>
+        <div class="topic-desc">Ancient Egypt, the Romans, great inventions and how the world changed</div>
+      </div>
+      <div class="topic-card highlighted">
+        <span class="topic-emoji">🦁</span>
+        <div class="topic-name">Animals &amp; Wildlife</div>
+        <div class="topic-desc">How animals survive, migrate, communicate and why some go extinct</div>
+      </div>
+      <div class="topic-card">
+        <span class="topic-emoji">🔬</span>
+        <div class="topic-name">Science &amp; Physics</div>
+        <div class="topic-desc">Gravity, light, sound, electricity and how everything works</div>
+      </div>
+      <div class="topic-card">
+        <span class="topic-emoji">🌿</span>
+        <div class="topic-name">Plants &amp; Biology</div>
+        <div class="topic-desc">How plants grow, why leaves change colour, what makes things alive</div>
+      </div>
+      <div class="topic-card">
+        <span class="topic-emoji">🧠</span>
+        <div class="topic-name">The Brain &amp; Mind</div>
+        <div class="topic-desc">Memory, emotions, sleep, dreams and how the mind works</div>
+      </div>
+      <div class="topic-card">
+        <span class="topic-emoji">⚙️</span>
+        <div class="topic-name">Technology &amp; Inventions</div>
+        <div class="topic-desc">How planes fly, how the internet works, what computers do</div>
+      </div>
+      <div class="topic-card">
+        <span class="topic-emoji">🌍</span>
+        <div class="topic-name">Earth &amp; Geography</div>
+        <div class="topic-desc">Volcanoes, earthquakes, tectonic plates and how Earth formed</div>
+      </div>
+    </div>
+  </div>
+</section>

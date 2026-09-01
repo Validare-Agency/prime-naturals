@@ -128,3 +128,14 @@ body.c-primePdp20VarC .c-pdp20-badges--c {
   stroke-dasharray: 3 6;
   stroke-linecap: round;
 }
+
+img[src*="magnific_4second-loop-grandmothers.gif"] {
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .section-divider {
+    display: none !important;
+  }
+}

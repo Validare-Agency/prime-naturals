@@ -1,0 +1,435 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ 'sticky-cta.css' | asset_url }}">
+<script src="{{ 'sticky-cta.js' | asset_url }}" defer></script>
+
+<style>
+  .shopify-section-group-header-group,
+  .shopify-section-group-footer-group,
+  #header-group,
+  #footer-group,
+  .announcement-bar-section { display: none !important; }
+
+  .pn-psh * { box-sizing: border-box; margin: 0; padding: 0; }
+  .pn-psh { font-family: 'Inter', sans-serif; background: #fff; color: #1d2333; display: flex; flex-direction: column; gap: 40px; }
+
+  /* Layout */
+  .pn-psh .wrap { width: 100%; max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  .pn-psh .wrap-wide { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── HERO ── */
+  .pn-psh .hero { padding: 56px 0 0; }
+  .pn-psh .hero-eyebrow {
+    font-size: 15px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+    color: #2e8b4f; font-style: normal;
+  }
+  .pn-psh .hero-h1 {
+    font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 46px; line-height: 1.18;
+    color: #14213d; margin-top: 14px;
+  }
+  .pn-psh .hero-sub {
+    font-size: 23px; line-height: 1.68; color: #5b6072; margin-top: 16px;
+  }
+  .pn-psh .hero-stars {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .pn-psh .stars-gold { color: #f5a623; font-size: 20px; letter-spacing: 1px; }
+  .pn-psh .stars-text { font-size: 19px; color: #5B6072; font-weight: 700; }
+  .pn-psh .stars-sub { font-size: 19px; color: #5b6072; }
+  .pn-psh .cta-btn {
+    display: inline-block; background: #e14b3c; color: #fff;
+    font-size: 20px; font-weight: 800; text-decoration: none;
+    padding: 16px 28px; border-radius: 10px; margin-top: 22px;
+    letter-spacing: 0.2px; text-align: center;
+  }
+  .pn-psh .cta-btn:hover { background: #c73f30; }
+
+  /* Hero illustrations */
+  .pn-psh .hero-illustrations { margin-top: 32px; display: flex; flex-direction: column; gap: 10px; }
+  .pn-psh .hero-spread { position: relative; width: 100%; }
+  .pn-psh .hero-spread img.spread-img { display: block; width: 100%; height: auto; }
+  .pn-psh .hero-spread .spread-circle {
+    position: absolute; top: 0; right: 0;
+    width: 34.6%; height: auto; overflow: hidden;
+    pointer-events: none;
+  }
+  .pn-psh .hero-spread .spread-circle img {
+    width: 169.86%; height: 133.79%;
+    position: absolute; top: -24.83%; left: -38.44%;
+    max-width: none;
+  }
+
+  /* ── PULL QUOTE ── */
+  .pn-psh .pull-quote-wrap { margin-top: 10px; }
+  .pn-psh .pull-quote-card {
+    background: #f6f7fa; border-radius: 14px;
+    padding: 26px 28px; display: flex; gap: 22px; align-items: flex-start;
+  }
+  .pn-psh .pq-avatar {
+    width: 120px; height: 120px; flex-shrink: 0; border-radius: 50%; overflow: hidden;
+  }
+  .pn-psh .pq-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pn-psh .pq-body { flex: 1; }
+  .pn-psh .pq-text {
+    font-style: italic; font-size: 20px; line-height: 1.5; color: #1d2333;
+  }
+  .pn-psh .pq-text strong { font-weight: 600; color: #e14b3c; font-style: italic; }
+  .pn-psh .pq-attr {
+    font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 16px;
+    color: #14213d; margin-top: 10px;
+  }
+  .pn-psh .pull-quote-caption {
+    font-style: italic; font-size: 17px; color: #5b6072;
+    text-align: center; margin-top: 44px; line-height: 1.68;
+  }
+
+  /* ── ADVANTAGE SECTION ── */
+  .pn-psh .advantage-title {
+    font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 33px;
+    color: #14213d; text-align: center; margin-bottom: 10px;
+  }
+  .pn-psh .advantage-img { display: block; width: 100%; height: auto; border-radius: 14px; }
+
+  /* ── FEATURE CARDS ── */
+  .pn-psh .feature-card { padding-top: 42px; }
+  .pn-psh .feature-label {
+    font-size: 15px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.9px; color: #e14b3c; font-style: normal;
+  }
+  .pn-psh .feature-h3 {
+    font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 28px;
+    line-height: 1.21; color: #14213d; margin-top: 4px;
+  }
+  .pn-psh .feature-body {
+    font-size: 25px; line-height: 1.41; color: #1d2333; margin-top: 12px;
+  }
+  .pn-psh .feature-stat {
+    background: #eaf6ec; border-radius: 10px;
+    padding: 14px 18px; margin-top: 14px;
+  }
+  .pn-psh .feature-stat p {
+    font-size: 22px; font-weight: 700; color: #1f5c33; line-height: 1.38;
+  }
+
+  /* ── SOCIAL PROOF (living room) ── */
+  .pn-psh .social-proof-wrap {
+    position: relative; border-radius: 12px; overflow: hidden;
+    width: 100%; aspect-ratio: 715 / 399;
+  }
+  .pn-psh .sp-bg {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 12px;
+  }
+  .pn-psh .sp-overlay {
+    position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 12px; pointer-events: none;
+  }
+  .pn-psh .sp-badge-families {
+    position: absolute; bottom: 10px; left: 10px;
+    background: #fff; border: 0.4px solid #e0d0c0; border-radius: 10px;
+    display: flex; align-items: center; gap: 11px; padding: 11px 13px;
+  }
+  .pn-psh .sp-badge-families .badge-emoji { font-size: 22px; line-height: 1; }
+  .pn-psh .sp-badge-families .badge-text-title {
+    font-size: 16px; font-weight: 700; color: #1a1a1a; white-space: nowrap;
+  }
+  .pn-psh .sp-badge-bestseller {
+    position: absolute; top: 1.5%; right: 1.5%;
+    background: #166534; color: #fff;
+    font-size: 16px; font-weight: 700; border-radius: 10px;
+    padding: 11px 13px; white-space: nowrap;
+  }
+  .pn-psh .sp-cta-wrap {
+    display: flex; justify-content: center; margin-top: 0; padding: 0 24px;
+    background: #fff; padding-top: 0;
+  }
+  .pn-psh .sp-cta-inner {
+    display: flex; flex-direction: column; align-items: center; gap: 0; width: 100%; max-width: 760px;
+  }
+
+  /* ── SEE THEIR REACTION ── */
+  .pn-psh .reaction-eyebrow {
+    font-family: 'Baloo 2', sans-serif; font-weight: 800; font-size: 33px;
+    color: #14213d; text-align: center; margin-bottom: 20px;
+  }
+  .pn-psh .reaction-img-wrap {
+    border-radius: 12px; overflow: hidden; width: 100%;
+  }
+  .pn-psh .reaction-img-wrap img { display: block; width: 100%; height: auto; }
+  .pn-psh .reviews-headline-wrap {
+    text-align: center;
+    margin-top: 32px;
+    margin-bottom: 24px;
+  }
+  .pn-psh .reviews-headline {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 35px;
+    color: #14213d;
+    line-height: 1.4;
+  }
+  .pn-psh .reviews-headline span { color: #c0392b; }
+  .pn-psh .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 760px;
+    margin: 24px auto 0;
+  }
+  .pn-psh .review-card {
+    background: #fff;
+    border: 1px solid #e6e8ec;
+    border-radius: 10px;
+    padding: 23px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .pn-psh .review-stars { color: #f5a623; font-size: 18px; letter-spacing: 1px; }
+  .pn-psh .review-text {
+    font-size: 19px;
+    line-height: 32px;
+    color: #1d2333;
+    flex: 1;
+  }
+  .pn-psh .review-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+  }
+  .pn-psh .review-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .pn-psh .review-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .pn-psh .review-name { font-weight: 700; font-size: 17px; color: #1d2333; }
+  .pn-psh .review-role { font-size: 15px; color: #5b6072; display: inline-block; }
+  .pn-psh .review-verified { font-weight: 700; font-size: 15px; color: #2e8b4f; display: inline-block; }
+
+
+  /* ── SECTION DIVIDER ── */
+  .pn-psh .section-divider {
+    height: 1px;
+    background: #e6e8ec;
+    margin: 40px 0;
+    display: block;
+  }
+
+  /* ── FOOTER ── */
+  .pn-psh .pn-footer {
+    background: #e14b3c;
+    padding: 20px;
+    text-align: center;
+  }
+  .pn-psh .pn-footer p { font-size: 14px; color: #fff; line-height: 1.68; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 749px) {
+    .pn-psh .wrap, .pn-psh .wrap-wide { padding: 0 20px; }
+
+    /* Hero */
+    .pn-psh .hero { padding: 28px 0 0; }
+    .pn-psh .hero-eyebrow { font-size: 11px; letter-spacing: 1.2px; }
+    .pn-psh .hero-h1 { font-size: 25px !important; line-height: 1.2; margin-top: 10px; }
+    .pn-psh .hero-sub { font-size: 15px; line-height: 1.5; margin-top: 12px; }
+    .pn-psh .hero-stars { margin-top: 16px; flex-wrap: wrap; gap: 4px; }
+    .pn-psh .stars-text, .pn-psh .stars-sub { font-size: 14px; }
+    .pn-psh .cta-btn { width: 100%; font-size: 14px; padding: 15px 12px; margin-top: 14px; display: block; text-align: center; }
+
+    /* Pull quote - stack vertically */
+    .pn-psh .pull-quote-card { align-items: center; flex-direction: column; align-items: center; padding: 22px 20px; gap: 14px; }
+    .pn-psh .pq-avatar { width: 64px; height: 64px; }
+    .pn-psh .pq-text { font-size: 15.5px; text-align: center; }
+    .pn-psh .pq-attr { font-size: 14px; text-align: center; }
+    .pn-psh .pull-quote-caption { font-size: 15px; margin-top: 28px; }
+
+    /* Advantage */
+    .pn-psh .advantage-title { font-size: 24px; }
+
+    /* Feature cards */
+    .pn-psh .feature-h3 { font-size: 20px; }
+    .pn-psh .feature-body { font-size: 17px; }
+    .pn-psh .feature-stat p { font-size: 16px; }
+
+    .pn-psh .feature-stat { font-size: 14px; }
+
+    /* Social proof */
+    .pn-psh .sp-badge-families .badge-text-title { font-size: 12px; }
+    .pn-psh .sp-badge-bestseller { font-size: 12px; }
+
+    /* Reaction */
+    .pn-psh .reaction-eyebrow { font-size: 24px; }
+    .pn-psh .reviews-headline { font-size: 22px; }
+    .pn-psh .reviews-grid { grid-template-columns: 1fr; }
+
+    .pn-psh .feature-label { font-size: 12px; }
+
+  }
+</style>
+
+<div class="pn-psh">
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="hero-eyebrow">👀 The Book From the Video You Just Watched</p>
+      <h1 class="hero-h1">Give Your Grandkids The Head Start Other Kids Don't Have!</h1>
+      <p class="hero-sub">Hundreds of questions, answered like a comic. The quiet advantage that shows up on report cards.</p>
+      <div class="hero-stars">
+        <span class="stars-gold">★★★★★</span>
+        <span><span class="stars-text">4.9</span> <span class="stars-sub">· 2,847 verified reviews</span></span>
+        <span class="stars-text">Bestseller for Ages 6 to 12</span>
+      </div>
+      <a href="{{ section.settings.cta_url }}" class="cta-btn" data-sticky-cta-bar>GET 50% OFF ON THE BOOK →</a>
+
+      <!-- Hero book illustrations -->
+      <div class="hero-illustrations">
+        <div class="hero-spread">
+          <img class="spread-img" src="{{ 'spark-curiosity.png' | asset_url }}" alt="10,000 Why book — spark curiosity">
+        </div>
+        <div class="hero-spread">
+          <img class="spread-img" src="{{ 'psh-hero-2.png' | asset_url }}" alt="10,000 Why book — every answer" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PULL QUOTE ── -->
+  <section>
+    <div class="wrap">
+      <div class="pull-quote-wrap">
+        <div class="pull-quote-card">
+          <div class="pq-avatar">
+            <img src="{{ 'psh-narrator.png' | asset_url }}" alt="Narrator illustration" loading="lazy">
+          </div>
+          <div class="pq-body">
+            <p class="pq-text">"When my grandkids asked me why the sky was blue, I realized I didn't actually know. So I found the book that did, and now <strong>they</strong> tell <strong>me</strong>. That's the whole point. Hundreds of questions, every answer drawn like a comic."</p>
+            <p class="pq-attr">— Why families are switching to 10,000 Why</p>
+          </div>
+        </div>
+      </div>
+      <p class="pull-quote-caption">Here's what that head start actually looks like.</p>
+    </div>
+  </section>
+
+  <!-- ── THE ADVANTAGE, MADE SIMPLE ── -->
+  <section class="advantage-section">
+    <div class="wrap">
+      <p class="advantage-title">The Advantage, Made Simple</p>
+      <img class="advantage-img" src="{{ 'magnific_4second-loop-grandmothers.gif' | asset_url }}" alt="The advantage made simple illustration" loading="lazy">
+    </div>
+  </section>
+
+  <!-- ── FEATURE CARDS ── -->
+  <section>
+    <div class="wrap">
+
+      <!-- Ahead in class -->
+      <div class="feature-card">
+        <p class="feature-label">Ahead in class</p>
+        <h3 class="feature-h3">They Already Know It When the Teacher Says It</h3>
+        <p class="feature-body">When a topic comes up in school, it's not new — they met it here first, in a comic they enjoyed. Recognition turns into confidence turns into participation.</p>
+        <div class="feature-stat">
+          <p>94% of parents saw school performance improve within 60 days, per a survey of 1,200 buyers.</p>
+        </div>
+      </div>
+
+      <!-- Sharper questions -->
+      <div class="feature-card">
+        <p class="feature-label">Sharper questions</p>
+        <h3 class="feature-h3">They Ask the Question Other Kids Don't Think Of</h3>
+        <p class="feature-body">Because they've spent time following one 'why' to the next, they connect ideas other kids treat as separate. Teachers notice this fast.</p>
+        <div class="feature-stat">
+          <p>91% of parents said their child started asking deeper questions.</p>
+        </div>
+      </div>
+
+      <!-- A habit, not a hack -->
+      <div class="feature-card">
+        <p class="feature-label">A habit, not a hack</p>
+        <h3 class="feature-h3">Curiosity Becomes Their Default</h3>
+        <p class="feature-body">This isn't a tutoring program or a drill. It's a book they like, so the advantage builds quietly, on its own, every time they open it.</p>
+        <div class="feature-stat">
+          <p>The edge that doesn't feel like work, for them or you.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── SOCIAL PROOF (living room) ── -->
+  <section class="social-proof-section">
+    <div class="wrap">
+      <div class="social-proof-wrap">
+        <img class="sp-bg" src="{{ 'social-proof.png' | asset_url }}" alt="Family in living room" loading="lazy">
+      </div>
+    </div>
+    <div class="sp-cta-wrap">
+      <div class="sp-cta-inner wrap" data-sticky-cta-bar>
+        <a href="{{ section.settings.cta_url }}" class="cta-btn" style="margin-top: 24px; display: block; text-align: center; max-width: 400px; margin-left: auto; margin-right: auto;">GET 50% OFF ON THE BOOK →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TOPICS ── -->
+  {%- render 'topics-grid' -%}
+
+  <!-- ── SEE THEIR REACTION ── -->
+  <section class="reaction-section">
+    <div class="wrap">
+      <h2 class="reaction-eyebrow">See Their Reaction</h2>
+      <div class="reaction-img-wrap">
+        <img src="{{ 'psh-reaction.png' | asset_url }}" alt="Kids reacting to 10,000 Why" loading="lazy">
+      </div>
+      <div class="reviews-headline-wrap">
+        <p class="reviews-headline">Trusted by 20,000+<span> Families</span></p>
+      </div>
+      <div class="reviews-grid">
+        {%- render 'review-cards' -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ═══ GUARANTEE BOX ═══ {%- endcomment -%}
+  {%- render 'guarantee-box' -%}
+
+  {%- comment -%} ═══ OFFER CARD ═══ {%- endcomment -%}
+  {%- render 'offer-card',
+    cta_url: section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys'
+  -%}
+
+  {%- comment -%} ═══ FOOTER ═══ {%- endcomment -%}
+  <footer class="pn-footer">
+    <p>© 2026 Prime Naturals. All Rights Reserved.</p>
+  </footer>
+
+  <div class="pn-sticky-cta-bar" data-sticky-cta-widget>
+    <div class="pn-sticky-cta-bar-inner">
+      <span class="pn-sticky-cta-bar-text">Get 50% off the book today</span>
+      <a href="{{ section.settings.cta_url }}" class="pn-sticky-cta-bar-btn">GET 50% OFF →</a>
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Parents Start Here",
+  "settings": [
+    { "type": "url", "id": "cta_url", "label": "CTA Button URL" }
+  ],
+  "presets": [{ "name": "Parents Start Here" }]
+}
+{% endschema %}

@@ -1,0 +1,182 @@
+<style>
+.pn-offer-block { padding: 0; }
+.pn-offer-block .offer-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.pn-offer-block .offer-divider {
+  height: 1px;
+  background: #e6e8ec;
+  margin: 0 0 40px;
+}
+.pn-offer-block .offer-heading {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 31px;
+  color: #14213d;
+  text-align: center;
+  margin-bottom: 26px;
+  line-height: 1.3;
+}
+.pn-offer-block .offer-card {
+  background: #f6f7fa;
+  border-radius: 14px;
+  padding: 32px 26px;
+}
+.pn-offer-block .offer-rating {
+  font-size: 16px;
+  color: #5b6072;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.96px;
+  margin-bottom: 14px;
+}
+.pn-offer-block .offer-product-name {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 29px;
+  color: #14213d;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.pn-offer-block .offer-img-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+.pn-offer-block .offer-img-wrap img {
+  width: 160px;
+  height: 205px;
+  object-fit: cover;
+  display: block;
+}
+.pn-offer-block .offer-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.pn-offer-block .offer-price-original {
+  font-size: 16px;
+  color: #5b6072;
+  text-decoration: line-through;
+}
+.pn-offer-block .offer-price-sale {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 40px;
+  color: #e14b3c;
+  line-height: 1;
+}
+.pn-offer-block .offer-badge {
+  background: #e14b3c;
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.pn-offer-block .offer-savings {
+  font-size: 17px;
+  color: #5b6072;
+  text-align: center;
+  margin-bottom: 26px;
+}
+.pn-offer-block .offer-guarantee {
+  font-size: 18px;
+  color: #5b6072;
+  text-align: center;
+  line-height: 1.68;
+  max-width: 523px;
+  margin: 0 auto 22px;
+}
+.pn-offer-block .offer-cta-wrap {
+  text-align: center;
+  margin-bottom: 26px;
+}
+.pn-offer-block .offer-cta-wrap .cta-btn {
+  display: inline-block;
+  background: #e14b3c;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  padding: 19px 40px;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 1.4;
+  transition: opacity 0.2s;
+}
+.pn-offer-block .offer-cta-wrap .cta-btn:hover { opacity: 0.9; }
+.pn-offer-block .offer-trust-badges {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.pn-offer-block .offer-trust-badges span {
+  font-size: 15.5px;
+  color: #5b6072;
+}
+
+@media (max-width: 749px) {
+  .pn-offer-block .offer-divider { margin-bottom: 24px; }
+  .pn-offer-block .offer-heading { font-size: 22px; }
+  .pn-offer-block .offer-product-name { font-size: 20px; }
+  .pn-offer-block .offer-price-sale { font-size: 32px; }
+  .pn-offer-block .offer-savings { font-size: 14px; }
+  .pn-offer-block .offer-guarantee { font-size: 14.5px; }
+  .pn-offer-block .offer-cta-wrap .cta-btn { width: 100%; font-size: 15px; padding: 16px 24px; }
+  .pn-offer-block .offer-trust-badges { gap: 12px; }
+  .pn-offer-block .offer-trust-badges span { font-size: 12px; }
+  .pn-offer-block .offer-rating span { font-size: 12.5px; letter-spacing: 0.75px; }
+  .pn-offer-block .offer-rating { font-size: 12.5px; letter-spacing: 0.75px; }
+}
+</style>
+
+{%- liquid
+  assign offer_product_name = product_name | default: "10,000 Whys Kids' Encyclopedia"
+  assign offer_rating_text = rating_text | default: '★★★★★ 4.9 · 2,847 Verified Reviews'
+  assign offer_price_original = price_original | default: '$79.80'
+  assign offer_price_sale = price_sale | default: '$39.90'
+  assign offer_badge_text = badge_text | default: '50% OFF'
+  assign offer_savings_text = savings_text | default: 'You save $39.90 today'
+  assign offer_cta_text = cta_text | default: 'GET 50% OFF ON THE BOOK →'
+-%}
+
+<section class="pn-offer-block offer-section">
+  <div class="offer-inner">
+    {%- unless show_divider == false -%}
+      <div class="offer-divider"></div>
+    {%- endunless -%}
+    <h2 class="offer-heading">You've Seen What It Does. Here's the Offer.</h2>
+    <div class="offer-card">
+      <p class="offer-rating">{{ offer_rating_text }}</p>
+      <p class="offer-product-name">{{ offer_product_name }}</p>
+      <div class="offer-img-wrap">
+        <img src="{{ 'offer-card-image.png' | asset_url }}" alt="{{ offer_product_name }} hardcover" width="160" height="205" loading="lazy">
+      </div>
+      <div class="offer-price-row">
+        <span class="offer-price-original">{{ offer_price_original }}</span>
+        <span class="offer-price-sale">{{ offer_price_sale }}</span>
+        <span class="offer-badge">{{ offer_badge_text }}</span>
+      </div>
+      <p class="offer-savings">{{ offer_savings_text }}</p>
+      <p class="offer-guarantee">Give it 30 days. If your grandchild isn't reaching for the book on their own, Prime Naturals will refund every penny, no questions asked.</p>
+      <div class="offer-cta-wrap" data-sticky-cta-bar>
+        <a href="{{ cta_url }}" class="cta-btn">{{ offer_cta_text }}</a>
+      </div>
+      <div class="offer-trust-badges">
+        <span>Grandparent-Approved</span>
+        <span>Premium Hardcover</span>
+        <span>Free Shipping</span>
+        <span>30-Day Guarantee</span>
+      </div>
+    </div>
+  </div>
+</section>
