@@ -43,11 +43,11 @@ function handleExperiments() {
   }
 
   // Test: V_PRIME_MIX_29 | Free Shipping Threshold at 2-Book Tier
-  const primeMix29 = window.igData?.user.getTestGroup(
-    "90279e90-4c59-49c6-9784-5c632eb6c9b8"
-  );
-  if (primeMix29?.name === "Var A" || primeMix29?.name === "Var B") {
+  const primeMix29 = {name: "Var A"}
+  if (primeMix29?.name === "Var A") {
     document.body.classList.add("c-primeMix29VarA");
+  } else if (primeMix29?.name === "Var B") {
+    document.body.classList.add("c-primeMix29VarB");
   }
 }
 

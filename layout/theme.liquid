@@ -466,7 +466,7 @@
     {{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
     {{ 'c-custom.css' | asset_url | stylesheet_tag }}
     {{ 'c-prime-site-11.css' | asset_url | stylesheet_tag }}
-    <script>window.cPrimeCart15Currency = {{ cart.currency.iso_code | json }};</script>
+    <script>window.primeCartCurrency = {{ cart.currency.iso_code | json }};</script>
     {%- comment -%} PDP bundle/offer selector (loaded globally — the cart cleanup must run on every page, not just the PDP). {%- endcomment -%}
     <script src="{{ 'c-prime-pdp-17.js' | asset_url }}" defer></script>
     <script src="{{ 'c-custom.js' | asset_url }}" defer></script>

@@ -47,6 +47,28 @@
       assign c_pdp22_ship_threshold_cents = 9500
   endcase
 
+  # V_PRIME_MIX_29: when live, a 1-book order no longer clears the $55
+  # threshold above, so it now carries an actual shipping fee on top of its
+  # price — $5 USD-equivalent for Var A, $10 for Var B. Derived proportionally
+  # off the ship-threshold map's own ratios (no separate vetted map exists yet
+  # for these amounts — flag to the team if these need adjusting). See
+  # c-prime-pdp-17-bundle.liquid for the same block.
+  assign c_pdp22_mix29_fee_a_cents = 500
+  assign c_pdp22_mix29_fee_b_cents = 1000
+  case cart.currency.iso_code
+    when 'AUD' or 'CAD'
+      assign c_pdp22_mix29_fee_a_cents = 700
+      assign c_pdp22_mix29_fee_b_cents = 1500
+    when 'GBP'
+      assign c_pdp22_mix29_fee_a_cents = 400
+      assign c_pdp22_mix29_fee_b_cents = 800
+    when 'NZD'
+      assign c_pdp22_mix29_fee_a_cents = 900
+      assign c_pdp22_mix29_fee_b_cents = 1700
+  endcase
+  assign c_pdp22_a_t1_price_mix29_fee_a = c_pdp22_a_t1_price | plus: c_pdp22_mix29_fee_a_cents
+  assign c_pdp22_a_t1_price_mix29_fee_b = c_pdp22_a_t1_price | plus: c_pdp22_mix29_fee_b_cents
+
   # BOGO framing display prices only — real discount comes from that product's
   # own native Kaching Bundles quantity-discount config (see c-prime-pdp-17-bundle.liquid).
   if c_pdp22_is_encyclopedia
@@ -97,6 +119,23 @@
     if c_pdp22_upsell_murphys_compare == blank or c_pdp22_upsell_murphys_compare <= c_pdp22_upsell_murphys_variant.price
       assign c_pdp22_upsell_murphys_compare = c_pdp22_upsell_murphys_variant.price | times: 2
     endif
+
+    # V_PRIME_MIX_29 combined totals (1-book price + upsell(s) + shipping fee)
+    # for every upsell combination the ATC button can show — see
+    # c-prime-pdp-17-bundle.liquid for why this is a real currency sum done in
+    # liquid rather than string concatenation/math in JS.
+    if c_pdp22_upsell_leadership_variant
+      assign c_pdp22_leadership_price_mix29_fee_a = c_pdp22_a_t1_price | plus: c_pdp22_upsell_leadership_variant.price | plus: c_pdp22_mix29_fee_a_cents
+      assign c_pdp22_leadership_price_mix29_fee_b = c_pdp22_a_t1_price | plus: c_pdp22_upsell_leadership_variant.price | plus: c_pdp22_mix29_fee_b_cents
+    endif
+    if c_pdp22_upsell_murphys_variant
+      assign c_pdp22_murphys_price_mix29_fee_a = c_pdp22_a_t1_price | plus: c_pdp22_upsell_murphys_variant.price | plus: c_pdp22_mix29_fee_a_cents
+      assign c_pdp22_murphys_price_mix29_fee_b = c_pdp22_a_t1_price | plus: c_pdp22_upsell_murphys_variant.price | plus: c_pdp22_mix29_fee_b_cents
+    endif
+    if c_pdp22_upsell_leadership_variant and c_pdp22_upsell_murphys_variant
+      assign c_pdp22_both_price_mix29_fee_a = c_pdp22_a_t1_price | plus: c_pdp22_upsell_leadership_variant.price | plus: c_pdp22_upsell_murphys_variant.price | plus: c_pdp22_mix29_fee_a_cents
+      assign c_pdp22_both_price_mix29_fee_b = c_pdp22_a_t1_price | plus: c_pdp22_upsell_leadership_variant.price | plus: c_pdp22_upsell_murphys_variant.price | plus: c_pdp22_mix29_fee_b_cents
+    endif
   endif
 -%}
 
@@ -112,14 +151,22 @@
         data-variant-id="{{ c_pdp22_t1_variant_id }}"
         data-quantity="1"
         data-pdp22-price-money="{{ c_pdp22_a_t1_price | money }}"
+        data-pdp22-price-mix29-fee-a-money="{{ c_pdp22_a_t1_price_mix29_fee_a | money }}"
+        data-pdp22-price-mix29-fee-b-money="{{ c_pdp22_a_t1_price_mix29_fee_b | money }}"
         {%- if c_pdp22_upsell_leadership_variant %}
         data-pdp22-price-with-upsell-leadership-money="{{ c_pdp22_a_t1_price | plus: c_pdp22_upsell_leadership_variant.price | money }}"
+        data-pdp22-price-with-upsell-leadership-mix29-fee-a-money="{{ c_pdp22_leadership_price_mix29_fee_a | money }}"
+        data-pdp22-price-with-upsell-leadership-mix29-fee-b-money="{{ c_pdp22_leadership_price_mix29_fee_b | money }}"
         {%- endif %}
         {%- if c_pdp22_upsell_murphys_variant %}
         data-pdp22-price-with-upsell-murphys-money="{{ c_pdp22_a_t1_price | plus: c_pdp22_upsell_murphys_variant.price | money }}"
+        data-pdp22-price-with-upsell-murphys-mix29-fee-a-money="{{ c_pdp22_murphys_price_mix29_fee_a | money }}"
+        data-pdp22-price-with-upsell-murphys-mix29-fee-b-money="{{ c_pdp22_murphys_price_mix29_fee_b | money }}"
         {%- endif %}
         {%- if c_pdp22_upsell_leadership_variant and c_pdp22_upsell_murphys_variant %}
         data-pdp22-price-with-both-upsells-money="{{ c_pdp22_a_t1_price | plus: c_pdp22_upsell_leadership_variant.price | plus: c_pdp22_upsell_murphys_variant.price | money }}"
+        data-pdp22-price-with-both-upsells-mix29-fee-a-money="{{ c_pdp22_both_price_mix29_fee_a | money }}"
+        data-pdp22-price-with-both-upsells-mix29-fee-b-money="{{ c_pdp22_both_price_mix29_fee_b | money }}"
         {%- endif %}
         checked
       >
