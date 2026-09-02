@@ -14,20 +14,6 @@
     }).filter(Boolean);
   }
 
-  // V_PRIME_MIX_29: when live, a 1-book order no longer qualifies for free
-  // shipping, so its price now bakes in an actual shipping fee — $5
-  // USD-equivalent for Var A, $10 for Var B. Liquid precomputes the
-  // already-summed, correctly-localized total (price + any checked
-  // upsell(s) + fee) as its own money-formatted attribute for every
-  // upsell/fee combination, so this never has to do currency math itself —
-  // just pick the right attribute suffix for the active variant.
-  function mix29FeeSuffix(checked) {
-    if (checked.getAttribute('data-quantity') !== '1') return '';
-    if (document.body.classList.contains('c-primeMix29VarA')) return '-mix29-fee-a';
-    if (document.body.classList.contains('c-primeMix29VarB')) return '-mix29-fee-b';
-    return '';
-  }
-
   function updateAtcPrice(root) {
     var checked = root.querySelector('.c-pdp22-row__radio:checked');
     var priceEl = root.querySelector('[data-pdp22-atc-price]');
@@ -39,14 +25,14 @@
     // both) as a money-formatted attribute, keyed by what's checked, so this
     // never has to do currency math/formatting itself.
     var keys = getCheckedUpsellKeys(root);
-    var attrRoot = 'data-pdp22-price';
+    var attr = null;
     if (keys.length === 2) {
-      attrRoot = 'data-pdp22-price-with-both-upsells';
+      attr = 'data-pdp22-price-with-both-upsells-money';
     } else if (keys.length === 1) {
-      attrRoot = 'data-pdp22-price-with-upsell-' + keys[0];
+      attr = 'data-pdp22-price-with-upsell-' + keys[0] + '-money';
     }
-    var attr = attrRoot + mix29FeeSuffix(checked) + '-money';
-    priceEl.textContent = checked.getAttribute(attr) || checked.getAttribute('data-pdp22-price-money');
+    var withUpsellPrice = attr && checked.getAttribute(attr);
+    priceEl.textContent = withUpsellPrice || checked.getAttribute('data-pdp22-price-money');
   }
 
   // Same fetch+swap technique the theme itself uses for this section (see
@@ -285,17 +271,8 @@
   }
 
   function run() {
-    document.querySelectorAll('.c-pdp22-variant').forEach(function (root) {
-      initRoot(root);
-      // initRoot no-ops after its first call, but the V_PRIME_MIX_29 test
-      // class can land on <body> after this first runs (Intelligems resolves
-      // asynchronously) — re-check the fee every time this fires so the ATC
-      // price never gets stuck showing the pre-test amount.
-      updateAtcPrice(root);
-    });
+    document.querySelectorAll('.c-pdp22-variant').forEach(initRoot);
   }
 
   document.addEventListener('DOMContentLoaded', run);
-  window.addEventListener('ig:ready', run);
-  new MutationObserver(run).observe(document.body, { attributes: true, attributeFilter: ['class'] });
 })();

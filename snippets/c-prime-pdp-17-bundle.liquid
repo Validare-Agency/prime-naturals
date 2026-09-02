@@ -50,27 +50,6 @@
       assign c_pdp17_ship_threshold_cents = 9500
   endcase
 
-  # V_PRIME_MIX_29: when live, a 1-book order no longer clears the $55
-  # threshold above, so it now carries an actual shipping fee on top of its
-  # price — $5 USD-equivalent for Var A, $9 for Var B. Derived proportionally
-  # off the ship-threshold map's own ratios (no separate vetted map exists yet
-  # for these amounts — flag to the team if these need adjusting).
-  assign c_pdp17_mix29_fee_a_cents = 500
-  assign c_pdp17_mix29_fee_b_cents = 900
-  case cart.currency.iso_code
-    when 'AUD' or 'CAD'
-      assign c_pdp17_mix29_fee_a_cents = 700
-      assign c_pdp17_mix29_fee_b_cents = 1300
-    when 'GBP'
-      assign c_pdp17_mix29_fee_a_cents = 400
-      assign c_pdp17_mix29_fee_b_cents = 700
-    when 'NZD'
-      assign c_pdp17_mix29_fee_a_cents = 900
-      assign c_pdp17_mix29_fee_b_cents = 1600
-  endcase
-  assign c_pdp17_a_t1_price_mix29_fee_a = c_pdp17_a_t1_price | plus: c_pdp17_mix29_fee_a_cents
-  assign c_pdp17_a_t1_price_mix29_fee_b = c_pdp17_a_t1_price | plus: c_pdp17_mix29_fee_b_cents
-
   # BOGO framing: tier 2/3 (3 books / 5 books) plus a free-shipping badge on
   # both once their price clears the threshold above. These are DISPLAY
   # prices only — the real discount is applied at checkout by that product's
@@ -121,8 +100,6 @@
         data-variant-id="{{ c_pdp17_t1_variant_id }}"
         data-quantity="1"
         data-pdp17-price-money="{{ c_pdp17_a_t1_price | money }}"
-        data-pdp17-price-mix29-fee-a-money="{{ c_pdp17_a_t1_price_mix29_fee_a | money }}"
-        data-pdp17-price-mix29-fee-b-money="{{ c_pdp17_a_t1_price_mix29_fee_b | money }}"
         checked
       >
       <span class="c-pdp17-row__body">
