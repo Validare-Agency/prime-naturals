@@ -41,6 +41,14 @@ function handleExperiments() {
   } else if (primePdp22?.name === "Var F - Both ADD button") {
     document.body.classList.add("c-primePdp22VarF");
   }
+
+  // Test: V_PRIME_MIX_29 | Free Shipping Threshold at 2-Book Tier
+  const primeMix29 = window.igData?.user.getTestGroup(
+    "b92c2ab8-1943-40c1-b0d2-d3df7737f653"
+  );
+  if (primeMix29?.name === "Var A" || primeMix29?.name === "Var B") {
+    document.body.classList.add("c-primeMix29VarA");
+  }
 }
 
 let cartDrawerWasActive = false;
