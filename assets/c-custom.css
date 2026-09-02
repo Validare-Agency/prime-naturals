@@ -128,3 +128,7 @@ body.c-primePdp20VarC .c-pdp20-badges--c {
   stroke-dasharray: 3 6;
   stroke-linecap: round;
 }
+
+.jdgm-star {
+  color: #f59e0b !important;
+}
