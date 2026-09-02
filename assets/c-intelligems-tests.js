@@ -5,7 +5,7 @@ function handleExperiments() {
   if (!domLoaded || !igReady) return;
 
   // Test: V_PRIME_PDP_19 | PDP - Reviews - FB
-  const primePdp19 =  window.igData?.user.getTestGroup(
+  const primePdp19 = window.igData?.user.getTestGroup(
     "7540f3a1-7d2c-4ee8-a965-35aab62c7aae"
   );
   if (primePdp19?.name === "Var A") {
@@ -46,7 +46,7 @@ function handleExperiments() {
   const primeMix29 = window.igData?.user.getTestGroup(
     "b92c2ab8-1943-40c1-b0d2-d3df7737f653"
   );
-  if (primeMix29?.name === "Var A" || primeMix29?.name === "Var B") {
+  if (primeMix29?.name === "Var A") {
     document.body.classList.add("c-primeMix29VarA");
   }
 }
