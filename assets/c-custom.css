@@ -129,9 +129,6 @@ body.c-primePdp20VarC .c-pdp20-badges--c {
   stroke-linecap: round;
 }
 
-.jdgm-star {
-  color: #f59e0b !important;
-}
 img[src*="magnific_4second-loop-grandmothers.gif"] {
   aspect-ratio: 16 / 9;
   object-fit: contain;
@@ -141,4 +138,8 @@ img[src*="magnific_4second-loop-grandmothers.gif"] {
   .section-divider {
     display: none !important;
   }
+}
+
+.jdgm-star {
+  color: #f59e0b !important;
 }
