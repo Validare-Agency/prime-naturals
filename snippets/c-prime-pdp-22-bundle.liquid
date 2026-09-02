@@ -49,22 +49,22 @@
 
   # V_PRIME_MIX_29: when live, a 1-book order no longer clears the $55
   # threshold above, so it now carries an actual shipping fee on top of its
-  # price — $5 USD-equivalent for Var A, $10 for Var B. Derived proportionally
+  # price — $5 USD-equivalent for Var A, $9 for Var B. Derived proportionally
   # off the ship-threshold map's own ratios (no separate vetted map exists yet
   # for these amounts — flag to the team if these need adjusting). See
   # c-prime-pdp-17-bundle.liquid for the same block.
   assign c_pdp22_mix29_fee_a_cents = 500
-  assign c_pdp22_mix29_fee_b_cents = 1000
+  assign c_pdp22_mix29_fee_b_cents = 900
   case cart.currency.iso_code
     when 'AUD' or 'CAD'
       assign c_pdp22_mix29_fee_a_cents = 700
-      assign c_pdp22_mix29_fee_b_cents = 1500
+      assign c_pdp22_mix29_fee_b_cents = 1300
     when 'GBP'
       assign c_pdp22_mix29_fee_a_cents = 400
-      assign c_pdp22_mix29_fee_b_cents = 800
+      assign c_pdp22_mix29_fee_b_cents = 700
     when 'NZD'
       assign c_pdp22_mix29_fee_a_cents = 900
-      assign c_pdp22_mix29_fee_b_cents = 1700
+      assign c_pdp22_mix29_fee_b_cents = 1600
   endcase
   assign c_pdp22_a_t1_price_mix29_fee_a = c_pdp22_a_t1_price | plus: c_pdp22_mix29_fee_a_cents
   assign c_pdp22_a_t1_price_mix29_fee_b = c_pdp22_a_t1_price | plus: c_pdp22_mix29_fee_b_cents
