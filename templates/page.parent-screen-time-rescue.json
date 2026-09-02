@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "parent-screen-time-rescue",
+      "settings": {
+        "cta_url": "/products/kids-encyclopedia-100-000-whys"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

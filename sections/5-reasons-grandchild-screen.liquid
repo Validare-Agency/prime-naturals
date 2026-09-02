@@ -1,0 +1,608 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:ital,wght@0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ 'sticky-cta.css' | asset_url }}">
+<script src="{{ 'sticky-cta.js' | asset_url }}" defer></script>
+
+<style>
+.shopify-section-group-header-group,
+.shopify-section-group-footer-group,
+#header-group,
+#footer-group,
+.announcement-bar-section { display: none !important; }
+
+.pn-5rgc *,
+.pn-5rgc *::before,
+.pn-5rgc *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.pn-5rgc {
+  font-family: 'Inter', sans-serif;
+  color: #1d2333;
+  background: #fff;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ── Layout helpers ── */
+.pn-5rgc .wrap {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+}
+
+/* ── CTA Button ── */
+.pn-5rgc .cta-btn {
+  display: inline-block;
+  background: #e14b3c;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  padding: 19px 32px;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 1.4;
+  transition: opacity 0.2s;
+}
+.pn-5rgc .cta-btn:hover { opacity: 0.9; }
+
+/* ═══════════════════════════════════
+   SECTION 1 — HERO
+═══════════════════════════════════ */
+.pn-5rgc .hero {
+  padding: 56px 0 0;
+}
+.pn-5rgc .hero-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  color: #2e8b4f;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 14px;
+}
+.pn-5rgc .hero-h1 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 46px;
+  line-height: 1.18;
+  color: #14213d;
+  margin-bottom: 16px;
+}
+.pn-5rgc .hero-sub {
+  font-size: 20px;
+  line-height: 1.6;
+  color: #5b6072;
+  margin-bottom: 16px;
+  max-width: 680px;
+}
+.pn-5rgc .hero-stars {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.pn-5rgc .stars-gold {
+  color: #f5a623;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+.pn-5rgc .stars-count {
+  font-weight: 700;
+  font-size: 19px;
+  color: #1d2333;
+}
+.pn-5rgc .stars-label {
+  font-size: 19px;
+  color: #5b6072;
+}
+.pn-5rgc .hero-cta-wrap {
+  margin-bottom: 40px;
+}
+
+/* ── Book hero image ── */
+.pn-5rgc .book-hero {
+  border-radius: 14px;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1160 / 612;
+}
+.pn-5rgc .book-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pn-5rgc .book-caption {
+  font-size: 16px;
+  font-style: italic;
+  color: #5b6072;
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* ═══════════════════════════════════
+   SECTION 2 — REASONS
+═══════════════════════════════════ */
+.pn-5rgc .reasons {
+  padding: 0;
+}
+.pn-5rgc .reason-row {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 42px 0;
+}
+.pn-5rgc .reason-row:first-child {
+  padding-top: 0;
+}
+.pn-5rgc .reason-row:last-child {
+  padding-bottom: 0;
+}
+.pn-5rgc .reason-img {
+  width: 418px;
+  min-width: 418px;
+  height: 418px;
+  border-radius: 20px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.pn-5rgc .reason-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pn-5rgc .reason-body { flex: 1; min-width: 0; }
+.pn-5rgc .reason-label {
+  font-weight: 800;
+  font-size: 18px;
+  color: #e14b3c;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  margin-bottom: 4px;
+}
+.pn-5rgc .reason-h3 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.2;
+  color: #14213d;
+  margin-bottom: 12px;
+}
+.pn-5rgc .reason-p {
+  font-size: 20px;
+  line-height: 1.65;
+  color: #1d2333;
+  margin-bottom: 14px;
+}
+.pn-5rgc .reason-highlight {
+  background: #eaf6ec;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.68;
+  color: #1f5c33;
+}
+
+/* ═══════════════════════════════════
+   SECTION 3 — SOCIAL PROOF
+═══════════════════════════════════ */
+.pn-5rgc .social-proof {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1160 / 648;
+  margin: 0 0 32px;
+}
+.pn-5rgc .social-proof img.sp-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pn-5rgc .social-proof img.sp-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pn-5rgc .sp-badge-families {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: #fff;
+  border: 1px solid #e0d0c0;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 13px;
+  white-space: nowrap;
+}
+.pn-5rgc .sp-badge-families .badge-emoji {
+  font-size: 22px;
+}
+.pn-5rgc .sp-badge-families .badge-text-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: #1a1a1a;
+  letter-spacing: -0.37px;
+}
+.pn-5rgc .sp-badge-families .badge-text-sub {
+  font-size: 12px;
+  color: #4a4a4a;
+}
+.pn-5rgc .sp-badge-bestseller {
+  position: absolute;
+  top: 8px;
+  right: 8PX;
+  background: #166534;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.37px;
+  border-radius: 14px;
+  padding: 11px 13px;
+  white-space: nowrap;
+}
+.pn-5rgc .sp-cta-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0 0;
+}
+
+/* ═══════════════════════════════════
+   SECTION 5 — REACTION / TESTIMONIALS
+═══════════════════════════════════ */
+.pn-5rgc .section-divider {
+  height: 1px;
+  background: #e6e8ec;
+  margin: 40px 0;
+  display: block;
+}
+.pn-5rgc .testimonials-section .wrap > .section-divider:first-child {
+  margin-top: 0;
+}
+.pn-5rgc .testimonials-h2 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 33px;
+  color: #14213d;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.pn-5rgc .reaction-img-wrap {
+  background: #fff3e8;
+  border-radius: 14px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 710px;
+  margin: 0 auto 40px;
+  aspect-ratio: 1512 / 2016;
+  position: relative;
+}
+.pn-5rgc .reaction-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pn-5rgc .reviews-headline-wrap {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.pn-5rgc .reviews-headline {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 35px;
+  color: #14213d;
+  line-height: 1.4;
+}
+.pn-5rgc .reviews-headline span { color: #c0392b; }
+.pn-5rgc .reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.pn-5rgc .review-card {
+  background: #fff;
+  border: 1px solid #e6e8ec;
+  border-radius: 10px;
+  padding: 23px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pn-5rgc .review-stars {
+  color: #f5a623;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+.pn-5rgc .review-text {
+  font-size: 19px;
+  line-height: 32px;
+  color: #1d2333;
+  flex: 1;
+}
+.pn-5rgc .review-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+.pn-5rgc .review-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.pn-5rgc .review-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pn-5rgc .review-name {
+  font-weight: 700;
+  font-size: 17px;
+  color: #1d2333;
+}
+.pn-5rgc .review-role {
+  font-size: 15px;
+  color: #5b6072;
+  display: inline-block;
+}
+.pn-5rgc .review-verified {
+  font-weight: 700;
+  font-size: 15px;
+  color: #2e8b4f;
+  display: inline-block;
+}
+
+/* ── Footer ── */
+.pn-5rgc .pn-footer {
+  background: #e14b3c;
+  padding: 20px;
+  text-align: center;
+}
+.pn-5rgc .pn-footer p {
+  font-size: 14px;
+  color: #fff;
+  line-height: 1.68;
+}
+
+/* ═══════════════════════════════════
+   MOBILE STYLES (≤749px)
+═══════════════════════════════════ */
+@media (max-width: 749px) {
+  .pn-5rgc { gap: 24px; }
+  .pn-5rgc .hero { padding: 28px 0 0; }
+  .pn-5rgc .hero-h1 { font-size: 25px !important; line-height: 1.18; }
+  .pn-5rgc .hero-sub { font-size: 15px; }
+  .pn-5rgc .hero-eyebrow { font-size: 11px; letter-spacing: 1.2px; }
+  .pn-5rgc .stars-count,
+  .pn-5rgc .stars-label { font-size: 14px; }
+  .pn-5rgc .cta-btn { width: 100%; font-size: 14px; padding: 15px 20px; }
+
+  .pn-5rgc .book-hero { aspect-ratio: 349 / 208; }
+
+  .pn-5rgc .reason-row {
+    flex-direction: column;
+    padding: 24px 0;
+    gap: 0;
+  }
+  .pn-5rgc .reason-body { display: contents; }
+  .pn-5rgc .reason-img {
+    width: 100%;
+    min-width: unset;
+    height: 350px;
+    order: 1;
+    margin: 16px 0;
+  }
+  .pn-5rgc .reason-h3 { font-size: 21px; }
+  .pn-5rgc .reason-p { font-size: 15.5px; order: 2; }
+  .pn-5rgc .reason-label { font-size: 13px; margin-right: auto; }
+  .pn-5rgc .reason-highlight { font-size: 14px; order: 2; }
+
+  .pn-5rgc .social-proof { border-radius: 10px; margin: 0; }
+  .pn-5rgc .sp-badge-families { bottom: 8px; left: 6px; font-size: 9px; gap: 5px; padding: 5px 6px; }
+  .pn-5rgc .sp-badge-families .badge-emoji { font-size: 11px; }
+  .pn-5rgc .sp-badge-families .badge-text-title { font-size: 9.5px; }
+  .pn-5rgc .sp-badge-families .badge-text-sub { font-size: 6.3px; }
+  .pn-5rgc .sp-badge-bestseller { font-size: 9.5px; padding: 5px 6px; border-radius: 5px; }
+
+  .pn-5rgc .testimonials-h2 { font-size: 24px; }
+  .pn-5rgc .reviews-headline { font-size: 25px; }
+  .pn-5rgc .reviews-grid { grid-template-columns: 1fr; }
+  .pn-5rgc .reaction-img-wrap { margin-bottom: 20px; }
+}
+</style>
+
+<div class="pn-5rgc">
+
+  {%- comment -%} ═══ HERO ═══ {%- endcomment -%}
+  <section class="hero">
+    <div class="wrap">
+      <p class="hero-eyebrow">What Happens When Curiosity Gets a Real Chance</p>
+      <h1 class="hero-h1">5 Reasons Your Grandchild Will Actually Put the Screen Down for This Book</h1>
+      <p class="hero-sub">Not because you asked them to. Because it gives them something a screen never can, at exactly the age it matters most.</p>
+      <div class="hero-stars">
+        <span class="stars-gold">★★★★★</span>
+        <span class="stars-count">4.9</span>
+        <span class="stars-label">· 2,847 verified reviews</span>
+      </div>
+      <div class="hero-cta-wrap" data-sticky-cta-bar>
+        <a href="{{ section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' }}" class="cta-btn">GET 50% OFF ON THE BOOK →</a>
+      </div>
+
+      <div class="book-hero">
+        <img src="{{ 'trusted-by-20000-families.png' | asset_url }}" alt="A glimpse of the 10,000 Whys encyclopedia, closed cover next to an open spread" loading="eager">
+      </div>
+      <p class="book-caption">A glimpse inside: real hardcover, real spreads, real questions.</p>
+    </div>
+  </section>
+
+  {%- comment -%} ═══ 5 REASONS ═══ {%- endcomment -%}
+  <section class="reasons">
+    <div class="wrap">
+
+      {%- comment -%} Reason 1 {%- endcomment -%}
+      <div class="reason-row">
+        <div class="reason-img">
+          <img src="https://cdn.shopify.com/s/files/1/0610/1463/8726/files/5rgc-reason-1.png?v=1788337357" alt="Child reading the encyclopedia" loading="lazy">
+        </div>
+        <div class="reason-body">
+          <p class="reason-label">Reason 1</p>
+          <h2 class="reason-h3">It Sparks Real Curiosity, Not Just Screen Time</h2>
+          <p class="reason-p">Where scrolling hands a child passive entertainment, this book hands them a real question and lets them go chase the answer themselves. That's the exact kind of thinking a growing mind between 6 and 12 needs most: actively wondering, not just watching.</p>
+          <div class="reason-highlight">A book packed with the questions kids ask most, from why the sky is blue to how volcanoes erupt, and so many more.</div>
+        </div>
+      </div>
+
+      {%- comment -%} Reason 2 {%- endcomment -%}
+      <div class="reason-row">
+        <div class="reason-img">
+          <img src="https://cdn.shopify.com/s/files/1/0610/1463/8726/files/5rgc-reason-2.png?v=1788337351" alt="Child happily reading without prompting" loading="lazy">
+        </div>
+        <div class="reason-body">
+          <p class="reason-label">Reason 2</p>
+          <h2 class="reason-h3">It's Never Something You Have to Fight About</h2>
+          <p class="reason-p">No timers, no "five more minutes," no taking anything away. You simply leave it where they'll find it, and because it's genuinely interesting to them, they pick it up on their own terms, not because they were told to.</p>
+          <div class="reason-highlight">No rules to enforce. No arguments to have. It works on its own.</div>
+        </div>
+      </div>
+
+      {%- comment -%} Reason 3 {%- endcomment -%}
+      <div class="reason-row">
+        <div class="reason-img">
+          <img src="{{ '5rgc-reason-3.png' | asset_url }}" alt="Child coming back to read the book on their own" loading="lazy">
+        </div>
+        <div class="reason-body">
+          <p class="reason-label">Reason 3</p>
+          <h2 class="reason-h3">They Read It, and Come Back to It, Completely Unprompted</h2>
+          <p class="reason-p">This is the part that keeps surprising grandparents: kids don't need reminding. They find themselves reaching for it again days later, flipping to a new page because they want to know what's next, not because anyone asked them to.</p>
+          <div class="reason-highlight">97% of kids picked the book back up on their own within the first week, per a survey of 1,200 buyers.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  {%- comment -%} ═══ SOCIAL PROOF IMAGE ═══ {%- endcomment -%}
+  <div class="wrap">
+    <div class="social-proof">
+      <img class="sp-bg" src="https://cdn.shopify.com/s/files/1/0610/1463/8726/files/social-proof.png?v=1788337223" alt="Family reading together in a cozy living room" loading="lazy">
+    </div>
+    <div class="sp-cta-wrap" data-sticky-cta-bar>
+      <a href="{{ section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' }}" class="cta-btn">GET 50% OFF ON THE BOOK →</a>
+    </div>
+  </div>
+
+  {%- comment -%} Reasons 4 & 5 {%- endcomment -%}
+  <section class="reasons">
+    <div class="wrap">
+
+      {%- comment -%} Reason 4 {%- endcomment -%}
+      <div class="reason-row">
+        <div class="reason-img">
+          <img src="https://cdn.shopify.com/s/files/1/0610/1463/8726/files/5rgc-reason-4.gif?v=1788337310" alt="Grandparent and grandchild reading together" loading="lazy">
+        </div>
+        <div class="reason-body">
+          <p class="reason-label">Reason 4</p>
+          <h2 class="reason-h3">It Gives You Something to Share, Whenever You Want It</h2>
+          <p class="reason-p">You don't have to plan reading time or turn it into a lesson. Sometimes it's just the two of you on the couch, them explaining a page to you, you asking what happens next. It becomes its own kind of together-time, naturally, on no one's schedule but yours.</p>
+          <div class="reason-highlight">A page to read side by side, or a page to hear about over the phone.</div>
+        </div>
+      </div>
+
+      {%- comment -%} Reason 5 {%- endcomment -%}
+      <div class="reason-row">
+        <div class="reason-img">
+          <img src="https://cdn.shopify.com/s/files/1/0610/1463/8726/files/5rgc-reason-5.png?v=1788337344" alt="Child at the age where curiosity is most shapeable" loading="lazy">
+        </div>
+        <div class="reason-body">
+          <p class="reason-label">Reason 5</p>
+          <h2 class="reason-h3">It Feeds a Mind That's Growing Right Now, While It Still Can</h2>
+          <p class="reason-p">Between the ages of 6 and 12, a child's curiosity is actively forming the habits that carry into who they become. This is exactly the window where the right kind of attention, active, curious, question-driven, makes the biggest difference. It's a window that doesn't stay open forever.</p>
+          <div class="reason-highlight">Built specifically for ages 6 to 12, the years curiosity is most shapeable.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  {%- comment -%} ═══ TOPICS GRID ═══ {%- endcomment -%}
+  {%- render 'topics-grid' -%}
+
+  {%- comment -%} ═══ TESTIMONIALS ═══ {%- endcomment -%}
+  <section class="testimonials-section">
+    <div class="wrap" style="max-width:760px;">
+
+      <h2 class="testimonials-h2">See Their Reaction</h2>
+
+      <div class="reaction-img-wrap">
+        <img src="https://cdn.shopify.com/s/files/1/0610/1463/8726/files/5rgc-reaction.png?v=1788337327" alt="Child's reaction to the book" loading="lazy">
+      </div>
+
+      <div class="reviews-headline-wrap">
+        <p class="reviews-headline">Trusted by 20,000+<span> Families</span></p>
+      </div>
+
+      <div class="reviews-grid">
+        {%- render 'review-cards' -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ═══ GUARANTEE BOX ═══ {%- endcomment -%}
+  {%- render 'guarantee-box' -%}
+
+  {%- comment -%} ═══ OFFER CARD ═══ {%- endcomment -%}
+  {%- render 'offer-card',
+    cta_url: section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys'
+  -%}
+
+  {%- comment -%} ═══ FOOTER ═══ {%- endcomment -%}
+  <footer class="pn-footer">
+    <p>© 2026 Prime Naturals. All Rights Reserved.</p>
+  </footer>
+
+  <div class="pn-sticky-cta-bar" data-sticky-cta-widget>
+    <div class="pn-sticky-cta-bar-inner">
+      <span class="pn-sticky-cta-bar-text">Get 50% off the book today</span>
+      <a href="{{ section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' }}" class="pn-sticky-cta-bar-btn">GET 50% OFF →</a>
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "5 Reasons Why",
+  "settings": [
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Button URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "5 Reasons Why"
+    }
+  ]
+}
+{% endschema %}

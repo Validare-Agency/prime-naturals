@@ -1,0 +1,657 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:ital,wght@0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ 'sticky-cta.css' | asset_url }}">
+<script src="{{ 'sticky-cta.js' | asset_url }}" defer></script>
+
+<style>
+.shopify-section-group-header-group,
+.shopify-section-group-footer-group,
+#header-group,
+#footer-group,
+.announcement-bar-section { display: none !important; }
+
+.pn-obahq *,
+.pn-obahq *::before,
+.pn-obahq *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.pn-obahq {
+  font-family: 'Inter', sans-serif;
+  color: #1d2333;
+  background: #fff;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ── Layout helpers ── */
+.pn-obahq .wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+}
+.pn-obahq .wrap-wide {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── CTA Button ── */
+.pn-obahq .cta-btn {
+  display: inline-block;
+  background: #e14b3c;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  padding: 19px 32px;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 1.4;
+  transition: opacity 0.2s;
+}
+.pn-obahq .cta-btn:hover { opacity: 0.9; }
+
+/* ═══════════════════════════════════
+   SECTION 1 — HERO
+═══════════════════════════════════ */
+.pn-obahq .hero { padding: 56px 0 0; }
+.pn-obahq .hero-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  color: #2e8b4f;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 14px;
+}
+.pn-obahq .hero-h1 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 46px;
+  line-height: 1.18;
+  color: #14213d;
+  margin-bottom: 16px;
+}
+.pn-obahq .hero-sub {
+  font-size: 23px;
+  line-height: 1.68;
+  color: #5b6072;
+  margin-bottom: 20px;
+}
+.pn-obahq .hero-stars {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.pn-obahq .stars-gold { color: #f5a623; font-size: 20px; letter-spacing: 1px; }
+.pn-obahq .stars-text { font-size: 19px; color: #5B6072; font-weight: 700; }
+.pn-obahq .stars-sub { font-size: 19px; color: #5b6072; }
+.pn-obahq .hero-cta-wrap { margin-bottom: 32px; }
+
+/* ── Subject pills ── */
+.pn-obahq .subject-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 18px;
+  margin-bottom: 22px;
+}
+.pn-obahq .subject-pill {
+  background: #f6f7fa;
+  border: 1px solid #e6e8ec;
+  border-radius: 22px;
+  padding: 10px 17px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1d2333;
+  white-space: nowrap;
+}
+.pn-obahq .subject-pill-dark {
+  background: #14213d;
+  border-color: #14213d;
+  color: #fff;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+}
+
+/* ── Intro paragraph ── */
+.pn-obahq .intro-para {
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.68;
+  color: #1d2333;
+  text-align: center;
+  padding-top: 36px;
+  margin-bottom: 22px;
+}
+.pn-obahq .intro-para em {
+  font-style: normal;
+  color: #e14b3c;
+}
+
+/* ── Grandparents blurb ── */
+.pn-obahq .grandparents-blurb {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.55;
+  color: #1d2333;
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 36px;
+}
+
+/* ═══════════════════════════════════
+   SECTION 2 — SOCIAL PROOF IMAGE
+═══════════════════════════════════ */
+.pn-obahq .social-proof-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 716 / 400;
+  margin-bottom: 8px;
+}
+.pn-obahq .social-proof-wrap img.sp-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pn-obahq .social-proof-wrap img.sp-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pn-obahq .sp-badge-families {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: #fff;
+  border: 1px solid #e0d0c0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 13px;
+  white-space: nowrap;
+}
+.pn-obahq .sp-badge-families .badge-emoji { font-size: 20px; }
+.pn-obahq .sp-badge-families .badge-text-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: #1a1a1a;
+  letter-spacing: -0.3px;
+}
+.pn-obahq .sp-badge-bestseller {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #166534;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.3px;
+  border-radius: 10px;
+  padding: 10px 13px;
+  white-space: nowrap;
+}
+.pn-obahq .sp-badge-explore {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #f8f7f2;
+  color: #000;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 10px;
+  padding: 6px 10px;
+  white-space: nowrap;
+  line-height: 1.3;
+  text-align: center;
+}
+.pn-obahq .sp-cta-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 0 0;
+}
+.pn-obahq .sp-bundle-link {
+  font-weight: 700;
+  font-size: 20px;
+  color: #1d2333;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ═══════════════════════════════════
+   SECTION 3 — PULL QUOTE
+═══════════════════════════════════ */
+.pn-obahq .pull-quote-card {
+  background: #f6f7fa;
+  border-radius: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+  padding: 26px 28px;
+  margin-bottom: 10px;
+}
+.pn-obahq .pull-quote-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.pn-obahq .pull-quote-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pn-obahq .pull-quote-body { flex: 1; }
+.pn-obahq .pull-quote-text {
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.5;
+  color: #1d2333;
+  margin-bottom: 10px;
+}
+.pn-obahq .pull-quote-text strong { font-weight: 600; color: #e14b3c; font-style: italic; }
+.pn-obahq .pull-quote-attr {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #14213d;
+}
+
+/* ═══════════════════════════════════
+   SECTION 4 — BOOK SPREAD
+═══════════════════════════════════ */
+.pn-obahq .book-spread-wrap {
+  width: 100%;
+  margin: 16px 0 0;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.pn-obahq .book-spread-wrap img {
+  width: 100%;
+  display: block;
+}
+.pn-obahq .book-spread-caption {
+  font-style: italic;
+  font-size: 17px;
+  color: #5b6072;
+  text-align: center;
+  padding: 44px 0 0;
+}
+
+/* ═══════════════════════════════════
+   SECTION 5 — NOT A TEXTBOOK
+═══════════════════════════════════ */
+.pn-obahq .textbook-h2 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 33px;
+  color: #14213d;
+  text-align: center;
+  line-height: 1.3;
+  margin-bottom: 32px;
+}
+.pn-obahq .question-item { margin-bottom: 42px; }
+.pn-obahq .question-item:last-child { margin-bottom: 0; }
+.pn-obahq .question-label {
+  font-weight: 800;
+  font-size: 15px;
+  color: #e14b3c;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  margin-bottom: 4px;
+}
+.pn-obahq .question-h3 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: #14213d;
+  line-height: 1.21;
+  margin-bottom: 12px;
+}
+.pn-obahq .question-p {
+  font-size: 24px;
+  line-height: 1.47;
+  color: #1d2333;
+  margin-bottom: 14px;
+}
+.pn-obahq .question-highlight {
+  background: #eaf6ec;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.38;
+  color: #1f5c33;
+}
+
+/* ═══════════════════════════════════
+   SECTION 7 — REACTION + VIDEOS
+═══════════════════════════════════ */
+.pn-obahq .section-divider {
+  height: 1px;
+  background: #e6e8ec;
+  margin: 40px 0;
+  display: block;
+}
+.pn-obahq .testimonials-section .wrap > .section-divider:first-child {
+  margin-top: 0;
+}
+.pn-obahq .testimonials-h2 {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 33px;
+  color: #14213d;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.pn-obahq .reaction-img-wrap {
+  background: #fff3e8;
+  border-radius: 14px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 710px;
+  margin: 0 auto 40px;
+  aspect-ratio: 1512 / 2016;
+}
+.pn-obahq .reaction-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pn-obahq .reviews-headline-wrap {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.pn-obahq .reviews-headline {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 35px;
+  color: #14213d;
+  line-height: 1.4;
+}
+.pn-obahq .reviews-headline span { color: #c0392b; }
+
+/* ── Review grid ── */
+.pn-obahq .reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.pn-obahq .review-card {
+  background: #fff;
+  border: 1px solid #e6e8ec;
+  border-radius: 10px;
+  padding: 23px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pn-obahq .review-stars { color: #f5a623; font-size: 18px; letter-spacing: 1px; }
+.pn-obahq .review-text {
+  font-size: 19px;
+  line-height: 32px;
+  color: #1d2333;
+  flex: 1;
+}
+.pn-obahq .review-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+.pn-obahq .review-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.pn-obahq .review-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pn-obahq .review-name { font-weight: 700; font-size: 17px; color: #1d2333; }
+.pn-obahq .review-role { font-size: 15px; color: #5b6072; display: inline-block; }
+.pn-obahq .review-verified { font-weight: 700; font-size: 15px; color: #2e8b4f; display: inline-block; }
+
+/* ═══════════════════════════════════
+   SECTION 8 — OFFER
+═══════════════════════════════════ */
+/* ── Footer ── */
+.pn-obahq .pn-footer {
+  background: #e14b3c;
+  padding: 20px;
+  text-align: center;
+}
+.pn-obahq .pn-footer p { font-size: 14px; color: #fff; line-height: 1.68; }
+
+/* ═══════════════════════════════════
+   MOBILE STYLES (≤749px)
+═══════════════════════════════════ */
+@media (max-width: 749px) {
+  .pn-obahq { gap: 24px; }
+  .pn-obahq .hero { padding: 28px 0 0; }
+  .pn-obahq .hero-h1 { font-size: 25px !important; }
+  .pn-obahq .hero-sub { font-size: 15px; }
+  .pn-obahq .hero-eyebrow { font-size: 11px; letter-spacing: 1.2px; }
+  .pn-obahq .stars-text, .pn-obahq .stars-sub { font-size: 14px; }
+  .pn-obahq .cta-btn { width: 100%; font-size: 14px; padding: 15px 20px; }
+
+  .pn-obahq .intro-para { font-size: 17px; padding-top: 0; }
+  .pn-obahq .grandparents-blurb { font-size: 15px; }
+  .pn-obahq .subject-pill { font-size: 13px; padding: 7px 12px; }
+
+  .pull-quote-body { text-align: center; }
+
+  .pn-obahq .sp-bundle-link { font-size: 18px; }
+
+  .pn-obahq .sp-badge-families { bottom: 6%; left: 2%; font-size: 9px; gap: 5px; padding: 5px 7px; }
+  .pn-obahq .sp-badge-families .badge-emoji { font-size: 11px; }
+  .pn-obahq .sp-badge-families .badge-text-title { font-size: 9.5px; }
+  .pn-obahq .sp-badge-bestseller { font-size: 9.5px; padding: 5px 7px; border-radius: 6px; }
+  .pn-obahq .sp-badge-explore { font-size: 8px; }
+
+  .pn-obahq .pull-quote-card { align-items: center; flex-direction: column; gap: 16px; padding: 20px; }
+  .pn-obahq .pull-quote-avatar { width: 72px; height: 72px; }
+  .pn-obahq .pull-quote-text { font-size: 16px; }
+  .pn-obahq .pull-quote-attr { font-size: 13px; }
+
+  .pn-obahq .book-spread-caption { font-size: 14px; padding-top: 24px; }
+
+  .pn-obahq .textbook-h2 { font-size: 22px; }
+  .pn-obahq .question-h3 { font-size: 20px; }
+  .pn-obahq .question-p { font-size: 15px; }
+  .pn-obahq .question-highlight { font-size: 14px; }
+
+  .pn-obahq .testimonials-h2 { font-size: 24px; }
+  .pn-obahq .reviews-headline { font-size: 25px; }
+  .pn-obahq .video-stills-row { gap: 8px; }
+  .pn-obahq .video-still { width: calc(50% - 8px); }
+  .pn-obahq .reviews-grid { grid-template-columns: 1fr; }
+
+  .pn-obahq .subject-pills { justify-content: center; padding-top: 0; }
+  .pn-obahq .question-label { font-size: 12px; }
+}
+</style>
+
+<div class="pn-obahq">
+
+  {%- comment -%} ═══ HERO ═══ {%- endcomment -%}
+  <section class="hero">
+    <div class="wrap">
+      <p class="hero-eyebrow">👀 The Book From the Video You Just Watched</p>
+      <h1 class="hero-h1">One Book Answers Hundreds of Questions. The Set Answers Everything.</h1>
+      <p class="hero-sub">The smartest way to buy it, especially if you've got more than one curious grandkid.</p>
+      <div class="hero-stars">
+        <span class="stars-gold">★★★★★</span>
+        <span><span class="stars-text">4.9</span> <span class="stars-sub">· 2,847 verified reviews</span></span>
+        <span class="stars-text">Bestseller for Ages 6 to 12</span>
+      </div>
+      <div class="hero-cta-wrap" data-sticky-cta-bar>
+        <a href="{{ section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' }}" class="cta-btn">GET 50% OFF ON THE BOOK →</a>
+      </div>
+
+      <p class="intro-para">One book is packed with questions. The full series covers <em>every</em> subject a growing mind runs into.</p>
+
+      <div class="subject-pills">
+        <span class="subject-pill">Science &amp; Physics</span>
+        <span class="subject-pill">The Human Body</span>
+        <span class="subject-pill">Space &amp; Universe</span>
+        <span class="subject-pill">Animals &amp; Nature</span>
+        <span class="subject-pill">Earth &amp; Geography</span>
+        <span class="subject-pill">Everyday Life</span>
+        <span class="subject-pill subject-pill-dark">the whole shelf</span>
+      </div>
+
+      <p class="grandparents-blurb">Grandparents with more than one grandkid, or one very curious one, are picking up the full set at once. It works out cheaper per book, and nobody fights over whose copy it is.</p>
+    </div>
+  </section>
+
+  {%- comment -%} ═══ SOCIAL PROOF IMAGE ═══ {%- endcomment -%}
+  <div class="wrap">
+    <div class="social-proof-wrap">
+      <img class="sp-bg" src="https://cdn.shopify.com/s/files/1/0610/1463/8726/files/social-proof.png?v=1788337223" alt="Family enjoying 10,000 Why in a cozy living room" width="716" height="400" loading="lazy">
+    </div>
+    <div class="sp-cta-wrap" data-sticky-cta-bar>
+      <a href="{{ section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' }}" class="cta-btn">GET 50% OFF ON THE BOOK →</a>
+      <a href="https://primenaturals.store/collections/all" class="sp-bundle-link">CHECK BUNDLE OFFERS</a>
+    </div>
+  </div>
+
+  {%- comment -%} ═══ PULL QUOTE ═══ {%- endcomment -%}
+  <div class="wrap" style="padding-top: 0; margin-top: 0;">
+    <div class="pull-quote-card">
+      <div class="pull-quote-avatar">
+        <img src="{{ 'obahq-avatar.png' | asset_url }}" alt="Narrator illustration" width="120" height="120" loading="lazy">
+      </div>
+      <div class="pull-quote-body">
+        <p class="pull-quote-text">"When my grandkids asked me why the sky was blue, I realized I didn't actually know. So I found the book that did, and now <strong>they</strong> tell <strong>me</strong>. That's the whole point. Hundreds of questions, every answer drawn like a comic."</p>
+        <p class="pull-quote-attr">— Why parents are switching to 10,000 Why</p>
+      </div>
+    </div>
+
+    <div class="book-spread-wrap">
+      <img src="https://cdn.shopify.com/s/files/1/0610/1463/8726/files/magnific_4second-loop-grandmothers.gif?v=1788337370" alt="10,000 Why book spread showing comic-style illustrated pages" width="712" height="382" loading="lazy">
+    </div>
+    <p class="book-spread-caption">Start with one, or give them the whole shelf.</p>
+  </div>
+
+  {%- comment -%} ═══ NOT A TEXTBOOK ═══ {%- endcomment -%}
+  <section class="textbook-section">
+    <div class="wrap">
+      <h2 class="textbook-h2">Not a Textbook. A Comic They Can't Put Down.</h2>
+
+      <div class="question-item">
+        <p class="question-label">🔥 Physics · page 42</p>
+        <h3 class="question-h3">Why Can Water Put Out a Fire?</h3>
+        <p class="question-p">A grinning cartoon firefighter, a panicking flame, and an answer they'll repeat at dinner for a week. There's even a "You know what?" box with a fact most adults get wrong. We'll let them tell you that one.</p>
+        <div class="question-highlight">Every page ends with a "You know what?" box, the fact that makes them say it out loud.</div>
+      </div>
+
+      <div class="question-item">
+        <p class="question-label">⚡ Everyday Safety · page 57</p>
+        <h3 class="question-h3">Why Shouldn't You Touch a Plug With Wet Hands?</h3>
+        <p class="question-p">This one has a cartoon pig getting the shock of its life, and a real, kid-level explanation of why it happens. Much better learned from a funny drawing than the hard way.</p>
+        <div class="question-highlight">Real safety, real science, delivered so it actually sticks.</div>
+      </div>
+
+      <div class="question-item">
+        <p class="question-label">🌸 Biology · early chapters</p>
+        <h3 class="question-h3">Why Do Flowers Have a Fragrance?</h3>
+        <p class="question-p">Turns out a flower's smell is basically an advertisement aimed at bees. One question, and suddenly they understand pollination, seeds, and fruit, without ever feeling like a lesson.</p>
+        <div class="question-highlight">One question quietly teaches five things. And there are hundreds more.</div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ═══ TOPICS GRID ═══ {%- endcomment -%}
+  {%- render 'topics-grid' -%}
+
+  {%- comment -%} ═══ REACTION + VIDEO TESTIMONIALS ═══ {%- endcomment -%}
+  <section class="testimonials-section">
+    <div class="wrap">
+
+      <div class="section-divider"></div>
+      <h2 class="testimonials-h2">See Their Reaction</h2>
+
+      <div class="reaction-img-wrap">
+        <img src="https://cdn.shopify.com/s/files/1/0610/1463/8726/files/obahq-reaction.png?v=1788337328" alt="Child's delighted reaction reading the book" width="480" height="640" loading="lazy">
+      </div>
+
+      <div class="section-divider"></div>
+
+      <div class="reviews-headline-wrap">
+        <p class="reviews-headline">Trusted by 20,000+<span> Families</span></p>
+      </div>
+
+      <div class="reviews-grid">
+        {%- render 'review-cards' -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ═══ GUARANTEE BOX ═══ {%- endcomment -%}
+  {%- render 'guarantee-box' -%}
+
+  {%- comment -%} ═══ OFFER CARD ═══ {%- endcomment -%}
+  {%- render 'offer-card',
+    cta_url: section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys'
+  -%}
+
+  {%- comment -%} ═══ FOOTER ═══ {%- endcomment -%}
+  <footer class="pn-footer">
+    <p>© 2026 Prime Naturals. All Rights Reserved.</p>
+  </footer>
+
+  <div class="pn-sticky-cta-bar" data-sticky-cta-widget>
+    <div class="pn-sticky-cta-bar-inner">
+      <span class="pn-sticky-cta-bar-text">Get 50% off the book today</span>
+      <a href="{{ section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' }}" class="pn-sticky-cta-bar-btn">GET 50% OFF →</a>
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "One Book Answers Hundreds",
+  "settings": [
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Button URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "One Book Answers Hundreds"
+    }
+  ]
+}
+{% endschema %}

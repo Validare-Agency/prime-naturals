@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "science-questions-kids-comics",
+      "settings": {
+        "cta_url": "/products/kids-encyclopedia-100-000-whys"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

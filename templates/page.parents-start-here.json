@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "parents-start-here",
+      "settings": {
+        "cta_url": "/products/kids-encyclopedia-100-000-whys"
+      }
+    }
+  },
+  "order": ["main"]
+}

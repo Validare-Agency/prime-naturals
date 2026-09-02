@@ -691,7 +691,7 @@
                 has_filtering: has_filtering
               %}
             {%- when 'buy_buttons' -%}
-              {% render 'c-prime-pdp-17-bundle', product: product, section: section %}
+              {% render 'c-prime-pdp-22-bundle', product: product, section: section %}
               {%- render 'buy-buttons',
                  block: block,
                  product: product,
@@ -1201,6 +1201,14 @@
 {%- else -%}
   {{ 'c-prime-pdp-17.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
+
+{%- comment -%} V_PRIME_PDP_22 | Encyclopedia - Upsell {%- endcomment -%}
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-pdp-22.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-pdp-22.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+<script src="{{ 'c-prime-pdp-22.js' | asset_url }}" defer></script>
 
 {%- comment -%} V_PRIME_PDP_19 | PDP - Reviews - FB {%- endcomment -%}
 <script
