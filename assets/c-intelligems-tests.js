@@ -11,6 +11,17 @@ function resolveHoldout() {
   if (!user) return;
   const isHeldOut = user.getTestGroup(HOLDOUT_EXPERIMENT_ID)?.id === HOLDOUT_GROUP_ID;
   document.documentElement.classList.add(isHeldOut ? "c-validareHoldout" : "c-validareOptimized");
+
+  // Cross-page flag for the optional per-test Intelligems audience rule.
+  // Audience JS Expressions run at page load, before igData exists, so they read this flag
+  // on the NEXT pageload instead: localStorage.getItem("validare_holdout") === "0".
+  // Inert until a test's audience rule is saved from the Intelligems UI to read it.
+  try {
+    localStorage.setItem("validare_holdout", isHeldOut ? "1" : "0");
+  } catch (e) {
+    // Storage blocked: no flag, and a rule reading it leaves the visitor unassigned, which is the safe side.
+  }
+
   if (!isHeldOut) return;
 
   // Held-out visitors must render Control in every test, without touching any test block.
