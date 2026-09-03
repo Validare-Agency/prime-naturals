@@ -113,3 +113,110 @@ document.addEventListener('DOMContentLoaded', function () {
     document.fonts.ready.then(sizeBadgeBorders);
   }
 })();
+
+// Test: V_PRIME_MIX_29 | Free Shipping Threshold at 2-Book Tier
+(function () {
+  // Var A/B both test a $55 USD-equivalent threshold (they only differ on the
+  // 1-book shipping fee — see c-prime-pdp-17.js/c-prime-pdp-22.js); control
+  // keeps using the block's own configured goal untouched (do not change
+  // config/settings_data.json's "goal" for this test — that setting is
+  // shared with control and must stay exactly as it was). Same vetted
+  // per-currency map as the PDP bundle snippets' own ship-threshold case
+  // block — window.primeCartCurrency is set globally in layout/theme.liquid.
+  var GOAL_CENTS_BY_CURRENCY = { AUD: 8000, CAD: 8000, GBP: 4500, NZD: 9500 };
+  var VARIANT_GOAL_CENTS = GOAL_CENTS_BY_CURRENCY[window.primeCartCurrency] || 5500;
+
+  // Same copy as control's own success_message — only the goal amount differs
+  // for Var A/B. Below the goal the bar is hidden entirely (no progress message).
+  var SUCCESS_MESSAGE = 'Congrats! You Get Free Shipping!';
+
+  function isActive() {
+    return document.body.classList.contains('c-primeMix29VarA') ||
+      document.body.classList.contains('c-primeMix29VarB');
+  }
+
+  function upgradeBar(bar) {
+    var subtotalCents = parseInt(bar.getAttribute('data-cart-subtotal-cents'), 10);
+    if (isNaN(subtotalCents)) return;
+
+    var reached = subtotalCents >= VARIANT_GOAL_CENTS;
+    bar.style.display = reached ? '' : 'none';
+    bar.setAttribute('data-goal-reached', reached ? 'true' : 'false');
+    if (!reached) return;
+
+    var fill = bar.querySelector('.cart-progress__bar__progress');
+    var text = bar.querySelector('.cart-progress__text');
+    if (fill) fill.style.width = '100%';
+    if (text && text.textContent.trim() !== SUCCESS_MESSAGE.trim()) {
+      text.textContent = SUCCESS_MESSAGE;
+    }
+  }
+
+  // Sitewide: any standalone "Free delivery" / "Free shipping" label (PDP trust
+  // badges, homepage hero, cart, etc.) gets its own "on 2+ books" qualifier.
+  // Matches only text nodes whose ENTIRE trimmed content is one of those labels
+  // (an optional leading emoji/icon is preserved) — this deliberately skips
+  // longer sentences that merely mention the phrase, so it never mangles
+  // unrelated copy. The PDP17 and PDP22 bundle row perks keep their own
+  // untouched "FREE shipping" copy and are explicitly excluded.
+  var EXCLUDED_SELECTOR = '.c-pdp17-row__perk, .c-pdp22-row';
+  var LABEL_REPLACEMENTS = {
+    'free delivery': 'Free delivery on 2+ books',
+    'free shipping': 'Free shipping on 2+ books'
+  };
+
+  function replaceFreeShippingCopy() {
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (node) {
+        var parent = node.parentElement;
+        if (!parent || /^(SCRIPT|STYLE|NOSCRIPT|TEXTAREA|INPUT)$/.test(parent.tagName)) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        if (parent.closest(EXCLUDED_SELECTOR)) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        var trimmed = node.textContent.trim();
+        if (!trimmed || trimmed.length > 40) return NodeFilter.FILTER_SKIP;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+
+    var node;
+    while ((node = walker.nextNode())) {
+      var text = node.textContent;
+      var trimmed = text.trim();
+      var match = trimmed.match(/^([^\w]*)(.*)$/);
+      var prefix = match ? match[1] : '';
+      var label = (match ? match[2] : trimmed).trim();
+      var replacement = LABEL_REPLACEMENTS[label.toLowerCase()];
+      if (replacement) {
+        node.textContent = text.replace(trimmed, prefix + replacement);
+      }
+    }
+  }
+
+  // The GLP1 supplement PDP's BTF CTA section (templates/product.glp1-sup.json)
+  // embeds "Free shipping." mid-sentence inside a longer trust line, so it
+  // can't be caught by the exact-label walker above without loosening it
+  // sitewide (which would risk mangling unrelated copy). Scope this fix to
+  // that one known element instead.
+  function upgradeCtaSubCopy() {
+    document.querySelectorAll('.cta-sub').forEach(function (el) {
+      if (el.textContent.indexOf('Free shipping.') !== -1) {
+        el.textContent = el.textContent.replace('Free shipping.', 'Free shipping on 2+ books.');
+      }
+    });
+  }
+
+  function run() {
+    if (!isActive()) return;
+    document.querySelectorAll('.cart-progress[data-cart-subtotal-cents]').forEach(upgradeBar);
+    replaceFreeShippingCopy();
+    upgradeCtaSubCopy();
+  }
+
+  var observer = new MutationObserver(run);
+  observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+  document.addEventListener('DOMContentLoaded', run);
+  window.addEventListener('ig:ready', run);
+})();

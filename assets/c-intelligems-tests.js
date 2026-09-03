@@ -27,7 +27,7 @@ function handleExperiments() {
   if (!domLoaded || !igReady) return;
 
   // Test: V_PRIME_PDP_19 | PDP - Reviews - FB
-  const primePdp19 =  window.igData?.user.getTestGroup(
+  const primePdp19 = window.igData?.user.getTestGroup(
     "7540f3a1-7d2c-4ee8-a965-35aab62c7aae"
   );
   if (primePdp19?.name === "Var A") {
@@ -62,6 +62,16 @@ function handleExperiments() {
     document.body.classList.add("c-primePdp22VarE");
   } else if (primePdp22?.name === "Var F - Both ADD button") {
     document.body.classList.add("c-primePdp22VarF");
+  }
+
+  // Test: V_PRIME_MIX_29 | Free Shipping Threshold at 2-Book Tier
+  const primeMix29 = window.igData?.user.getTestGroup(
+    "90279e90-4c59-49c6-9784-5c632eb6c9b8"
+  );
+  if (primeMix29?.name === "Var A") {
+    document.body.classList.add("c-primeMix29VarA");
+  } else if (primeMix29?.name === "Var B") {
+    document.body.classList.add("c-primeMix29VarB");
   }
 }
 
