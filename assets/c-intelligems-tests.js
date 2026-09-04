@@ -1,11 +1,44 @@
 let domLoaded = false;
 let igReady = false;
 
+// Validare Holdout, Generation 1. Sitewide, permanent. Never end this experiment.
+// Check the group by id, not by name, so a rename in Intelligems cannot silently open the gate.
+const HOLDOUT_EXPERIMENT_ID = "3ad2181f-d285-418c-b4d8-a52ce3a136a1";
+const HOLDOUT_GROUP_ID = "c41ea5b4-45b8-4edf-8687-844be31c4054";
+
+function resolveHoldout() {
+  const user = window.igData?.user;
+  if (!user) return;
+  const isHeldOut = user.getTestGroup(HOLDOUT_EXPERIMENT_ID)?.id === HOLDOUT_GROUP_ID;
+  document.documentElement.classList.add(isHeldOut ? "c-validareHoldout" : "c-validareOptimized");
+
+  // Cross-page flag for the optional per-test Intelligems audience rule.
+  // Audience JS Expressions run at page load, before igData exists, so they read this flag
+  // on the NEXT pageload instead: localStorage.getItem("validare_holdout") === "0".
+  // Inert until a test's audience rule is saved from the Intelligems UI to read it.
+  try {
+    localStorage.setItem("validare_holdout", isHeldOut ? "1" : "0");
+  } catch (e) {
+    // Storage blocked: no flag, and a rule reading it leaves the visitor unassigned, which is the safe side.
+  }
+
+  if (!isHeldOut) return;
+
+  // Held-out visitors must render Control in every test, without touching any test block.
+  // Every experiment except the holdout itself reads as unassigned for them.
+  try {
+    const getTestGroup = user.getTestGroup.bind(user);
+    user.getTestGroup = (id) => (id === HOLDOUT_EXPERIMENT_ID ? getTestGroup(id) : null);
+  } catch (e) {
+    // If the plugin ever locks this object, the html class above still gates every cleaned-up winner.
+  }
+}
+
 function handleExperiments() {
   if (!domLoaded || !igReady) return;
 
   // Test: V_PRIME_PDP_19 | PDP - Reviews - FB
-  const primePdp19 =  window.igData?.user.getTestGroup(
+  const primePdp19 = window.igData?.user.getTestGroup(
     "7540f3a1-7d2c-4ee8-a965-35aab62c7aae"
   );
   if (primePdp19?.name === "Var A") {
@@ -41,6 +74,16 @@ function handleExperiments() {
   } else if (primePdp22?.name === "Var F - Both ADD button") {
     document.body.classList.add("c-primePdp22VarF");
   }
+
+  // Test: V_PRIME_MIX_29 | Free Shipping Threshold at 2-Book Tier
+  const primeMix29 = window.igData?.user.getTestGroup(
+    "90279e90-4c59-49c6-9784-5c632eb6c9b8"
+  );
+  if (primeMix29?.name === "Var A") {
+    document.body.classList.add("c-primeMix29VarA");
+  } else if (primeMix29?.name === "Var B") {
+    document.body.classList.add("c-primeMix29VarB");
+  }
 }
 
 let cartDrawerWasActive = false;
@@ -73,5 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener("ig:ready", () => {
   igReady = true;
+  resolveHoldout();
   handleExperiments();
 });
