@@ -139,3 +139,7 @@ img[src*="magnific_4second-loop-grandmothers.gif"] {
     display: none !important;
   }
 }
+
+.jdgm-star {
+  color: #f59e0b !important;
+}
