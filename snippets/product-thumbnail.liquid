@@ -70,6 +70,7 @@
   class="product-media-container media-type-{{ media.media_type }} media-fit-{{ media_fit }} global-media-settings gradient{% if constrain_to_viewport %} constrain-height{% endif %}"
   style="--ratio: {{ media.aspect_ratio | default: 1.0 }}; --preview-ratio: {{ media.preview_image.aspect_ratio | default: 1.0 }};"
 >
+  {% render 'custom-product-labels', product: product, size: 'gallery' %}
   {% if section.settings.trust_badge != blank %}
     <div class='product-media__trust-badge product-media__trust-badge--{{ section.settings.trust_badge_position }} product-media__trust-badge--{{ section.settings.trust_badge_size }}'>
       <img

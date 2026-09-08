@@ -1,0 +1,45 @@
+{% comment %}
+  Renders custom text labels from the product.metafields.custom.labels
+  metafield (list of single line text) as badges stacked in the top-right
+  corner of a product image.
+
+  Each metafield value must follow the format: TEXT | #HEXCOLOR
+  The label's text color is auto-generated as a lighter tint of its background color.
+
+  Accepts:
+  - product: {Object} Product Liquid object. Defaults to the global `product` object.
+  - size: {String} 'card' or 'gallery'. Controls badge sizing. Default: 'gallery' (optional)
+
+  Usage:
+  {% render 'custom-product-labels', product: card_product, size: 'card' %}
+{% endcomment %}
+
+{%- liquid
+  assign custom_labels = product.metafields.custom.labels.value
+  assign label_size = size | default: 'gallery'
+-%}
+
+{%- if custom_labels != blank -%}
+  {{ 'component-custom-product-labels.css' | asset_url | stylesheet_tag }}
+  <div class="custom-product-labels custom-product-labels--{{ label_size }}">
+    {%- for label in custom_labels -%}
+      {%- liquid
+        assign label_parts = label | split: '|'
+        assign label_text = label_parts[0] | strip
+        assign label_color = '#000000'
+        if label_parts.size > 1
+          assign label_color = label_parts[1] | strip
+        endif
+        assign label_text_color = label_color | color_lighten: 45
+      -%}
+      {%- if label_text != blank -%}
+        <span
+          class="custom-product-label"
+          style="background-color: {{ label_color }}; color: {{ label_text_color }};"
+        >
+          {{- label_text -}}
+        </span>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}
