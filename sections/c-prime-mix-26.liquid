@@ -1,0 +1,5 @@
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-mix-26.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-mix-26.css' | asset_url | stylesheet_tag }}
+{%- endif -%}

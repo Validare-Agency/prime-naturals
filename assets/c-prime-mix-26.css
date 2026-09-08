@@ -1,0 +1,153 @@
+/* <-------------------V_PRIME_MIX_26 | Grandparent-voice Testimonial Carousel-----------------> */
+
+/* Test Setup */
+/* Control: hide Var A carousel */
+.c-prime-mix-26-carousel { display: none; }
+
+/* Var A: hide Control carousel, show grandparent carousel */
+.c-primeMix26VarA .pib-carousel { display: none !important; }
+.c-primeMix26VarA .c-prime-mix-26-carousel { display: block; }
+
+/* Test Design */
+.c-prime-mix-26-carousel *,
+.c-prime-mix-26-carousel *::before,
+.c-prime-mix-26-carousel *::after { box-sizing: border-box; }
+
+.c-prime-mix-26-carousel {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #0d1b3e;
+  width: 100%;
+  max-width: 560px;
+  margin-bottom: 22px;
+}
+
+.c-pgp-heading {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 8px 0;
+}
+
+.c-pgp-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid rgba(13, 27, 62, 0.08);
+  border-radius: 14px;
+  padding: 22px 36px 16px;
+  overflow: hidden;
+  box-shadow:
+    0 1px 3px rgba(13, 27, 62, 0.04),
+    0 4px 16px rgba(13, 27, 62, 0.06);
+}
+
+.c-pgp-arrow {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #0d1b3e;
+  padding: 0;
+  line-height: 1;
+  opacity: 0.45;
+  transition: opacity 0.2s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+.c-pgp-arrow:hover { opacity: 1; }
+.c-pgp-arrow--prev { left: 10px; }
+.c-pgp-arrow--next { right: 10px; }
+
+.c-pgp-slides { position: relative; min-height: 96px; }
+.c-pgp-slide { display: none; animation: cPgpFadeIn 0.5s ease; }
+.c-pgp-slide.active { display: block; }
+
+@keyframes cPgpFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.c-pgp-text {
+  font-size: 14px;
+  font-style: italic;
+  color: #1a1a2e;
+  line-height: 1.65;
+  margin: 0 0 14px 0;
+}
+
+.c-pgp-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.c-pgp-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(13, 27, 62, 0.08);
+  flex-shrink: 0;
+  display: block;
+}
+
+.c-pgp-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0d1b3e;
+  line-height: 1.2;
+  margin-bottom: 3px;
+}
+
+.c-pgp-meta {
+  font-size: 11.5px;
+  color: #9ca3af;
+  font-weight: 500;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.c-pgp-stars {
+  color: #f59e0b;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.c-pgp-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.c-pgp-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(13, 27, 62, 0.12);
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+  display: inline-block;
+}
+
+.c-pgp-dot.active {
+  background: #0d1b3e;
+  transform: scale(1.35);
+}
+
+.c-pgp-dot:hover {
+  background: rgba(13, 27, 62, 0.3);
+}
+
+@media (max-width: 480px) {
+  .c-prime-mix-26-carousel { max-width: 100%; }
+  .c-pgp-card { padding: 18px 32px 14px; }
+  .c-pgp-arrow { font-size: 20px; }
+}
