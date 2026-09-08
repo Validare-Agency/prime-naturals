@@ -1,268 +1,885 @@
-/* <-------------------V_PRIME_PDP_25 | Offer Iteration: Winning BOGO + Gift Stack-----------------> */
+/* <-------------------V_PRIME_PDP_25 | Unlock Bonus Free Gifts-----------------> */
 
 /* Test Setup */
 
-/* Gift section is hidden for Control; shown for Var A / B / C only.
-   All three gift tiles render in the DOM for every visitor so there is
-   no layout shift when the body class arrives after ig:ready. */
+/* Gift stack renders into the DOM for every visitor, hidden entirely until the
+   variant class lands on <body> (Control sees no change at all — same bundle
+   rows as before, no gift section). */
 .c-pdp25-gifts {
   display: none;
 }
 
 body.c-primePdp25VarA .c-pdp25-gifts,
 body.c-primePdp25VarB .c-pdp25-gifts,
-body.c-primePdp25VarC .c-pdp25-gifts {
+body.c-primePdp25VarC .c-pdp25-gifts,
+body.c-primePdp25VarD .c-pdp25-gifts {
   display: block;
 }
-
-/* "2x FREE" promo badge on the tier-3 row — hidden for Control */
-.c-pdp25-2x-badge {
-  display: none;
-}
-
-body.c-primePdp25VarA .c-pdp25-2x-badge,
-body.c-primePdp25VarB .c-pdp25-2x-badge,
-body.c-primePdp25VarC .c-pdp25-2x-badge {
-  display: inline-block;
-}
-
-/* Heading: "UNLOCK BONUS FREE GIFTS" shown in Var A + B;
-            "BONUS FREE GIFTS" shown in Var C.
-   Both always render; CSS toggles which is visible. */
-.c-pdp25-gifts__heading {
-  display: none;
-}
-
-body.c-primePdp25VarA .c-pdp25-gifts__heading--unlock,
-body.c-primePdp25VarB .c-pdp25-gifts__heading--unlock {
-  display: block;
-}
-
-body.c-primePdp25VarC .c-pdp25-gifts__heading--bonus {
-  display: block;
-}
-
-/* Lock overlay: Var A never shows it; Var B + C show it when locked. */
-.c-pdp25-gift__lock-overlay {
-  display: none;
-}
-
-body.c-primePdp25VarB .c-pdp25-gift[data-pdp25-unlocked="false"] .c-pdp25-gift__lock-overlay,
-body.c-primePdp25VarC .c-pdp25-gift[data-pdp25-unlocked="false"] .c-pdp25-gift__lock-overlay {
-  display: flex;
-}
-
-/* Threshold label ("Unlock at 2 books"): Var B + C show it when locked only. */
-.c-pdp25-gift__threshold {
-  display: none;
-}
-
-body.c-primePdp25VarB .c-pdp25-gift[data-pdp25-unlocked="false"] .c-pdp25-gift__threshold,
-body.c-primePdp25VarC .c-pdp25-gift[data-pdp25-unlocked="false"] .c-pdp25-gift__threshold {
-  display: block;
-}
-
-/* Retail value label: Var B + C only. */
-.c-pdp25-gift__value {
-  display: none;
-}
-
-body.c-primePdp25VarB .c-pdp25-gift__value,
-body.c-primePdp25VarC .c-pdp25-gift__value {
-  display: block;
-}
-
-/* "FREE" label: Var A always; Var B + C only when unlocked. */
-.c-pdp25-gift__free {
-  display: none;
-}
-
-body.c-primePdp25VarA .c-pdp25-gift__free {
-  display: block;
-}
-
-body.c-primePdp25VarB .c-pdp25-gift[data-pdp25-unlocked="true"] .c-pdp25-gift__free,
-body.c-primePdp25VarC .c-pdp25-gift[data-pdp25-unlocked="true"] .c-pdp25-gift__free {
-  display: block;
-}
-
-/* Var C tile border: default off; active only in Var C */
-.c-pdp25-gift__tile {
-  border: none;
-}
-
-body.c-primePdp25VarC .c-pdp25-gift__tile {
-  border: 2px solid #d9e0e6;
-}
-
-body.c-primePdp25VarC .c-pdp25-gift[data-pdp25-unlocked="true"] .c-pdp25-gift__tile {
-  border-color: #2e8b57;
-}
-
 
 /* Test Design */
 
-/* --- "2x FREE" badge on tier-3 row title --- */
-.c-pdp25-2x-badge {
-  margin-left: 6px;
-  background: #e74c3c;
-  color: #fff;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
-  border-radius: 4px;
-  padding: 2px 6px;
-  vertical-align: middle;
-  line-height: 1.4;
-}
-
-/* --- Gift section wrapper --- */
-.c-pdp25-gifts {
-  margin: 0 0 14px 0;
+/* Bundle rows/ATC button below are an exact fork of c-prime-pdp-22.css's
+   design (same tier picker, unchanged) — kept in sync intentionally. */
+.c-pdp25-variant {
+  border-radius: 10px;
+  margin: 16px 0;
   font-family: var(--font-body-family);
+  color: #1f3a5f;
 }
 
-/* Heading shared base */
-.c-pdp25-gifts__heading {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  color: #0d1b3e;
-  text-align: center;
-  margin: 0 0 10px 0;
-}
-
-/* 3-column gift row */
-.c-pdp25-gifts__row {
+.c-pdp25-eyebrow {
   display: flex;
+  align-items: center;
   gap: 8px;
+  justify-content: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #0d1b3e;
+  margin: 0 0 14px 0;
 }
 
-/* Each gift column */
-.c-pdp25-gift {
+.c-pdp25-eyebrow::before,
+.c-pdp25-eyebrow::after {
+  content: '';
   flex: 1;
-  min-width: 0;
-  transition: opacity 0.2s ease;
+  height: 1px;
+  background: rgba(13, 27, 62, 0.12);
 }
 
-/* Dim locked gifts in Var B/C */
-body.c-primePdp25VarB .c-pdp25-gift[data-pdp25-unlocked="false"],
-body.c-primePdp25VarC .c-pdp25-gift[data-pdp25-unlocked="false"] {
-  opacity: 0.45;
-}
-
-/* Tile container */
-.c-pdp25-gift__tile {
+.c-pdp25-rows {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.c-pdp25-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 2px solid #d9e0e6;
+  border-radius: 11px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.c-pdp25-row:has(.c-pdp25-row__radio:checked) {
+  border-color: #1f3a5f;
+}
+
+.c-pdp25-row__radio {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border: 2px solid #c2cbd3;
+  border-radius: 50%;
+  margin: 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.c-pdp25-row__radio:checked {
+  border-color: #1f3a5f;
+}
+
+.c-pdp25-row__radio:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #1f3a5f;
+  transform: translate(-50%, -50%);
+}
+
+/* Var B and Var D only — product thumbnail (+ "Nx FREE" badge on the 3/5-book
+   rows) at the front of each row (Var A/C/Control never show it; same rows
+   otherwise, fonts/border/functionality unchanged). */
+.c-pdp25-row__image-wrap {
+  display: none;
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  border-radius: 8px;
-  padding: 8px 4px;
-  text-align: center;
-  box-sizing: border-box;
-  transition: border-color 0.2s ease;
+  flex-shrink: 0;
 }
 
-/* Image wrap: relative position for the lock overlay */
-.c-pdp25-gift__image-wrap {
+body.c-primePdp25VarB .c-pdp25-row__image-wrap,
+body.c-primePdp25VarD .c-pdp25-row__image-wrap {
+  display: flex;
+}
+
+.c-pdp25-row__image {
+  display: block;
+  width: 34px;
+  height: 47px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.c-pdp25-row__free-badge {
+  display: inline-block;
+  background: #2e8b57;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-radius: 3.45px;
+  padding: 1px 2px;
+  white-space: nowrap;
+}
+
+.c-pdp25-row__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.c-pdp25-row__title {
+  font-weight: 700;
+  font-size: 15.5px;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #1f3a5f;
+}
+
+.c-pdp25-row__subtitle {
+  font-size: 12px;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #6b7681;
+}
+
+@media screen and (max-width: 749px) {
+  .c-pdp25-row {
+    padding: 10px 12px;
+  }
+
+  .c-pdp25-row__title {
+    font-size: 17px;
+  }
+
+  .c-pdp25-row__subtitle {
+    font-size: 12px;
+  }
+
+  .c-pdp25-row__image {
+    width: 30px;
+    height: 41px;
+  }
+
+  .c-pdp25-row__free-badge {
+    font-size: 7.5px;
+  }
+}
+
+.c-pdp25-row__prices {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0px;
+}
+
+.c-pdp25-row__price {
+  font-weight: 700;
+  font-size: 18px;
+  color: #1f3a5f;
+}
+
+.c-pdp25-row__compare {
+  font-size: 14px;
+  color: #98a2ac;
+  text-decoration: line-through;
+}
+
+.c-pdp25-row__save {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2e8b57;
+}
+
+.c-pdp25-row__badge {
+  position: absolute;
+  top: -9px;
+  right: 12px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-radius: 4px;
+  padding: 2px 9px;
+}
+
+.c-pdp25-row__badge--sentence {
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.c-pdp25-row__badge--popular {
+  background: #1f3a5f;
+}
+
+/* Var A only — refreshed row typography/border on desktop, per Figma node
+   1060:4426. Base .c-pdp25-row rules above (and the mobile overrides below)
+   are untouched, so Control and mobile keep the pre-existing look; this is
+   the only thing that changes, and only at desktop widths, when the test is
+   live. */
+@media screen and (min-width: 750px) {
+  body.c-primePdp25VarA .c-pdp25-row,
+  body.c-primePdp25VarB .c-pdp25-row,
+  body.c-primePdp25VarC .c-pdp25-row,
+  body.c-primePdp25VarD .c-pdp25-row {
+    border: 1.5px solid #0d1b3e;
+    border-radius: 8px;
+    padding: 11.5px 13.5px;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__radio,
+  body.c-primePdp25VarB .c-pdp25-row__radio,
+  body.c-primePdp25VarC .c-pdp25-row__radio,
+  body.c-primePdp25VarD .c-pdp25-row__radio {
+    border: 2px solid #0d1b3e;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row:has(.c-pdp25-row__radio:checked),
+  body.c-primePdp25VarB .c-pdp25-row:has(.c-pdp25-row__radio:checked),
+  body.c-primePdp25VarC .c-pdp25-row:has(.c-pdp25-row__radio:checked),
+  body.c-primePdp25VarD .c-pdp25-row:has(.c-pdp25-row__radio:checked) {
+    border-color: #0d1b3e;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__radio:checked::after,
+  body.c-primePdp25VarB .c-pdp25-row__radio:checked::after,
+  body.c-primePdp25VarC .c-pdp25-row__radio:checked::after,
+  body.c-primePdp25VarD .c-pdp25-row__radio:checked::after {
+    background: #0d1b3e;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__badge--popular,
+  body.c-primePdp25VarB .c-pdp25-row__badge--popular,
+  body.c-primePdp25VarC .c-pdp25-row__badge--popular,
+  body.c-primePdp25VarD .c-pdp25-row__badge--popular {
+    background: #0d1b3e;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__title,
+  body.c-primePdp25VarB .c-pdp25-row__title,
+  body.c-primePdp25VarC .c-pdp25-row__title,
+  body.c-primePdp25VarD .c-pdp25-row__title {
+    font-size: 18px;
+    line-height: 21.6px;
+    color: #0d1b3e;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__subtitle,
+  body.c-primePdp25VarB .c-pdp25-row__subtitle,
+  body.c-primePdp25VarC .c-pdp25-row__subtitle,
+  body.c-primePdp25VarD .c-pdp25-row__subtitle {
+    font-size: 13px;
+    line-height: 17px;
+    color: #555555;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__perk,
+  body.c-primePdp25VarB .c-pdp25-row__perk,
+  body.c-primePdp25VarC .c-pdp25-row__perk,
+  body.c-primePdp25VarD .c-pdp25-row__perk {
+    font-size: 12.5px;
+    line-height: 16.5px;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__perk--ship,
+  body.c-primePdp25VarB .c-pdp25-row__perk--ship,
+  body.c-primePdp25VarC .c-pdp25-row__perk--ship,
+  body.c-primePdp25VarD .c-pdp25-row__perk--ship {
+    font-size: 12px;
+    line-height: 14.1px;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__price,
+  body.c-primePdp25VarB .c-pdp25-row__price,
+  body.c-primePdp25VarC .c-pdp25-row__price,
+  body.c-primePdp25VarD .c-pdp25-row__price {
+    font-size: 18px;
+    line-height: 21.6px;
+    color: #0d1b3e;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__compare,
+  body.c-primePdp25VarB .c-pdp25-row__compare,
+  body.c-primePdp25VarC .c-pdp25-row__compare,
+  body.c-primePdp25VarD .c-pdp25-row__compare {
+    font-size: 13px;
+    line-height: 16px;
+    color: #555555;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__save,
+  body.c-primePdp25VarB .c-pdp25-row__save,
+  body.c-primePdp25VarC .c-pdp25-row__save,
+  body.c-primePdp25VarD .c-pdp25-row__save {
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__badge--sentence,
+  body.c-primePdp25VarB .c-pdp25-row__badge--sentence,
+  body.c-primePdp25VarC .c-pdp25-row__badge--sentence,
+  body.c-primePdp25VarD .c-pdp25-row__badge--sentence {
+    font-size: 11px;
+    text-transform: uppercase !important;
+  }
+}
+
+/* Var A only — same refresh as above, mobile values per Figma node
+   1103:5182. A separate block (rather than folding into the base mobile
+   overrides earlier in this file) to keep "pre-existing mobile look" and
+   "Var A mobile look" clearly apart, same as the desktop block above. */
+@media screen and (max-width: 749px) {
+  body.c-primePdp25VarA .c-pdp25-row,
+  body.c-primePdp25VarB .c-pdp25-row,
+  body.c-primePdp25VarC .c-pdp25-row,
+  body.c-primePdp25VarD .c-pdp25-row {
+    border: 2px solid #0d1b3e;
+    border-radius: 8px;
+    padding: 11px 13px;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__radio,
+  body.c-primePdp25VarB .c-pdp25-row__radio,
+  body.c-primePdp25VarC .c-pdp25-row__radio,
+  body.c-primePdp25VarD .c-pdp25-row__radio {
+    border: 2px solid #0d1b3e;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row:has(.c-pdp25-row__radio:checked),
+  body.c-primePdp25VarB .c-pdp25-row:has(.c-pdp25-row__radio:checked),
+  body.c-primePdp25VarC .c-pdp25-row:has(.c-pdp25-row__radio:checked),
+  body.c-primePdp25VarD .c-pdp25-row:has(.c-pdp25-row__radio:checked) {
+    border-color: #0d1b3e;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__radio:checked::after,
+  body.c-primePdp25VarB .c-pdp25-row__radio:checked::after,
+  body.c-primePdp25VarC .c-pdp25-row__radio:checked::after,
+  body.c-primePdp25VarD .c-pdp25-row__radio:checked::after {
+    background: #0d1b3e;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__badge--popular,
+  body.c-primePdp25VarB .c-pdp25-row__badge--popular,
+  body.c-primePdp25VarC .c-pdp25-row__badge--popular,
+  body.c-primePdp25VarD .c-pdp25-row__badge--popular {
+    background: #0d1b3e;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__title,
+  body.c-primePdp25VarB .c-pdp25-row__title,
+  body.c-primePdp25VarC .c-pdp25-row__title,
+  body.c-primePdp25VarD .c-pdp25-row__title {
+    font-size: 17px;
+    line-height: 20.4px;
+    color: #0d1b3e;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__subtitle,
+  body.c-primePdp25VarB .c-pdp25-row__subtitle,
+  body.c-primePdp25VarC .c-pdp25-row__subtitle,
+  body.c-primePdp25VarD .c-pdp25-row__subtitle {
+    font-size: 13px;
+    line-height: 17px;
+    color: #555555;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__perk,
+  body.c-primePdp25VarB .c-pdp25-row__perk,
+  body.c-primePdp25VarC .c-pdp25-row__perk,
+  body.c-primePdp25VarD .c-pdp25-row__perk {
+    font-size: 12.5px;
+    line-height: 16.5px;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__perk--ship,
+  body.c-primePdp25VarB .c-pdp25-row__perk--ship,
+  body.c-primePdp25VarC .c-pdp25-row__perk--ship,
+  body.c-primePdp25VarD .c-pdp25-row__perk--ship {
+    font-size: 12px;
+    line-height: 14.1px;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__price,
+  body.c-primePdp25VarB .c-pdp25-row__price,
+  body.c-primePdp25VarC .c-pdp25-row__price,
+  body.c-primePdp25VarD .c-pdp25-row__price {
+    font-size: 18px;
+    line-height: 21.6px;
+    color: #0d1b3e;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__compare,
+  body.c-primePdp25VarB .c-pdp25-row__compare,
+  body.c-primePdp25VarC .c-pdp25-row__compare,
+  body.c-primePdp25VarD .c-pdp25-row__compare {
+    font-size: 13px;
+    line-height: 16px;
+    color: #555555;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__save,
+  body.c-primePdp25VarB .c-pdp25-row__save,
+  body.c-primePdp25VarC .c-pdp25-row__save,
+  body.c-primePdp25VarD .c-pdp25-row__save {
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  body.c-primePdp25VarA .c-pdp25-row__badge--sentence,
+  body.c-primePdp25VarB .c-pdp25-row__badge--sentence,
+  body.c-primePdp25VarC .c-pdp25-row__badge--sentence,
+  body.c-primePdp25VarD .c-pdp25-row__badge--sentence {
+    font-size: 11px;
+    text-transform: uppercase !important;
+  }
+}
+
+/* Var B and Var D mobile only — the 3/5-book rows (the ones with an image +
+   "Nx FREE" badge) switch from a single inline row to a 2-row grid:
+   image+badge sit on their own line above the title/copy, with the radio and
+   the price each spanning both rows so they stay vertically centered against
+   the combined height. The 1-book row has no .c-pdp25-row--stacked class, so
+   it keeps the plain single-line layout (image inline with the radio) at
+   every width. */
+@media screen and (max-width: 749px) {
+  body.c-primePdp25VarB .c-pdp25-row--stacked,
+  body.c-primePdp25VarD .c-pdp25-row--stacked {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 12px;
+    row-gap: 4px;
+    align-items: center;
+  }
+
+  body.c-primePdp25VarB .c-pdp25-row--stacked .c-pdp25-row__radio,
+  body.c-primePdp25VarD .c-pdp25-row--stacked .c-pdp25-row__radio {
+    grid-column: 1;
+    grid-row: 1 / 3;
+  }
+
+  body.c-primePdp25VarB .c-pdp25-row--stacked .c-pdp25-row__image-wrap,
+  body.c-primePdp25VarD .c-pdp25-row--stacked .c-pdp25-row__image-wrap {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: start;
+  }
+
+  body.c-primePdp25VarB .c-pdp25-row--stacked .c-pdp25-row__body,
+  body.c-primePdp25VarD .c-pdp25-row--stacked .c-pdp25-row__body {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  body.c-primePdp25VarB .c-pdp25-row--stacked .c-pdp25-row__prices,
+  body.c-primePdp25VarD .c-pdp25-row--stacked .c-pdp25-row__prices {
+    grid-column: 3;
+    grid-row: 1 / 3;
+  }
+}
+
+.c-pdp25-atc {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.c-pdp25-row__perk {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #2e8b57;
+  margin-top: 3px;
+}
+
+.c-pdp25-row__perk--ship {
+  color: #2e7d8a;
+}
+
+/* Gift stack — matches Figma node 1060:4537 (unlocked card) / 1135:1092
+   (locked card), file zpc26IBYBV0LPAHxKtvzUj. Locked is a flat opacity: 0.5
+   on the whole card (that's the reference frame's own property, not a
+   hand-picked muted palette) — every color below is authored at full
+   strength and only ever dimmed as a unit via .c-pdp25-gift's opacity. */
+.c-pdp25-gifts {
+  margin: 0 0 16px 0;
+}
+
+.c-pdp25-gifts__heading {
+  font-family: var(--font-heading-family);
+  font-weight: 700;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+  color: #0D1B3E;
+  margin: 0 0 12px 0;
+}
+
+.c-pdp25-gifts__box {
+  box-sizing: border-box;
+  display: flex;
+  gap: 10px;
+  background: #fffdf5;
+  border: 1px solid #bec9da;
+  border-radius: 8px;
+  padding: 14px 12px;
+}
+
+/* Locked card is the whole thing at 50% opacity (per direct instruction) —
+   image, chip and text dim together as a unit. The badge SVGs additionally
+   carry their own 35% fill/stroke-opacity from Figma, so the badge reads a
+   bit dimmer still than the rest of the card; that's expected. */
+.c-pdp25-gift {
   position: relative;
-  width: 48px;
-  height: 48px;
+  box-sizing: border-box;
+  flex: 0 0 168px;
+  width: 168px;
+  height: 168px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  text-align: center;
+  gap: 8px;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 10px;
+  opacity: 0.5;
+}
+
+.c-pdp25-gift--unlocked {
+  border: 2px solid #2e8b57;
+  opacity: 1;
+}
+
+/* Locked-only dashed border, drawn as an SVG rect instead of CSS
+   border-style:dashed — a plain CSS dashed border can't set an exact
+   dash/gap length (it varies by browser/border-radius), an SVG
+   stroke-dasharray can. Sized via viewBox to this card's own fixed 168x168,
+   so no distortion. Hidden for the unlocked state, which uses the real solid
+   CSS border above instead. */
+.c-pdp25-gift__border {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.c-pdp25-gift__border rect {
+  fill: none;
+  stroke: rgba(13, 27, 62, 0.34);
+  stroke-width: 1;
+  stroke-dasharray: 8 6;
+  stroke-linecap: round;
+}
+
+.c-pdp25-gift--unlocked .c-pdp25-gift__border {
+  display: none;
+}
+
+.c-pdp25-gift__badge {
+  position: absolute;
+  top: 7.5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 23px;
+  height: 23px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Lock overlay */
-.c-pdp25-gift__lock-overlay {
-  position: absolute;
-  inset: 0;
+.c-pdp25-gift__badge-icon {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.c-pdp25-gift__badge-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.c-pdp25-gift__badge-icon--lock {
+  display: flex;
+}
+
+.c-pdp25-gift--unlocked .c-pdp25-gift__badge-icon--check {
+  display: flex;
+}
+
+.c-pdp25-gift--unlocked .c-pdp25-gift__badge-icon--lock {
+  display: none;
+}
+
+/* Var C and Var D only — replaces the locked card's look (small badge +
+   product image + FREE chip, dimmed to 50%) with a big centered lock icon,
+   "Unlock at N books" copy, and the product title recolored to the accent
+   red-brown — per the Figma locked-card frame (node 1103:6067, file
+   zpc26IBYBV0LPAHxKtvzUj). The unlocked card is untouched — same markup/CSS
+   as Var A/B. Colors/spacing are eyeballed from a flat screenshot of that
+   frame (Figma API access was rate-limited, ~22h cooldown, when this was
+   built) — revisit with exact tokens if the pixel match needs tightening.
+   .c-pdp25-gift__lock-circle reuses the existing c_pdp25_lock_icon SVG
+   (already a circle ring + padlock) just rendered bigger, rather than a new
+   asset. Var D is currently an exact duplicate of Var C — every selector
+   below is grouped VarC/VarD together; give Var D its own rules if/when it
+   needs to diverge. */
+.c-pdp25-gift__lock-circle,
+.c-pdp25-gift__unlock-copy,
+.c-pdp25-gift__unlock-title {
+  display: none;
+}
+
+body.c-primePdp25VarC .c-pdp25-gift:not(.c-pdp25-gift--unlocked),
+body.c-primePdp25VarD .c-pdp25-gift:not(.c-pdp25-gift--unlocked) {
+  opacity: 1;
+  gap: 5px;
+  justify-content: center;
+}
+
+body.c-primePdp25VarC .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__badge,
+body.c-primePdp25VarD .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__badge,
+body.c-primePdp25VarC .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__media,
+body.c-primePdp25VarD .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__media {
+  display: none;
+}
+
+body.c-primePdp25VarC .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__lock-circle,
+body.c-primePdp25VarD .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__lock-circle {
+  display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.75);
-  border-radius: 6px;
-  z-index: 1;
+  width: 33px;
+  height: 33px;
+  margin: 0;
 }
 
-.c-pdp25-gift__lock-overlay svg {
-  width: 28px;
-  height: 28px;
+body.c-primePdp25VarC .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__lock-circle svg,
+body.c-primePdp25VarD .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__lock-circle svg {
+  width: 100%;
+  height: 100%;
 }
 
-/* Gift icon (emoji) */
-.c-pdp25-gift__icon {
-  font-size: 32px;
-  line-height: 1;
+body.c-primePdp25VarC .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__unlock-copy,
+body.c-primePdp25VarD .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__unlock-copy {
   display: block;
-}
-
-/* Threshold label */
-.c-pdp25-gift__threshold {
-  font-size: 9px;
-  font-weight: 600;
-  color: #6b7681;
-  line-height: 1.2;
-  letter-spacing: 0.2px;
-  margin: 0;
-}
-
-/* Gift name */
-.c-pdp25-gift__name {
-  font-size: 11px;
+  font-family: var(--font-body-family);
   font-weight: 700;
-  color: #1f3a5f;
-  line-height: 1.2;
+  font-size: 14px;
+  line-height: normal;
+  color: #0D1B3E;
   margin: 0;
 }
 
-/* Retail value */
-.c-pdp25-gift__value {
-  font-size: 10px;
-  color: #6b7681;
-  text-decoration: line-through;
-  margin: 0;
-  line-height: 1;
+body.c-primePdp25VarC .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__body,
+body.c-primePdp25VarD .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__body {
+  gap: 5px;
 }
 
-/* FREE label */
-.c-pdp25-gift__free {
-  font-size: 10px;
-  font-weight: 800;
-  color: #2e8b57;
-  letter-spacing: 0.3px;
+/* The real (dynamic) product title is swapped out for the custom
+   .c-pdp25-gift__unlock-title copy below — the displayed gift name
+   deliberately differs from the live product.title for the locked card
+   only. Unlocked keeps the real product.title, unchanged. */
+body.c-primePdp25VarC .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__title,
+body.c-primePdp25VarD .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__title {
+  display: none;
+}
+
+body.c-primePdp25VarC .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__unlock-title,
+body.c-primePdp25VarD .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__unlock-title {
+  display: block;
+  font-family: var(--font-body-family);
+  line-height: normal;
+  color: #C0392B;
   margin: 0;
-  line-height: 1;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+body.c-primePdp25VarC .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__compare,
+body.c-primePdp25VarD .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__compare {
+  margin: 0;
 }
 
 @media screen and (max-width: 749px) {
-  .c-pdp25-gifts__row {
+  body.c-primePdp25VarC .c-pdp25-gift:not(.c-pdp25-gift--unlocked),
+  body.c-primePdp25VarD .c-pdp25-gift:not(.c-pdp25-gift--unlocked) {
+    height: 158px;
+  }
+
+  body.c-primePdp25VarC .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__lock-circle,
+  body.c-primePdp25VarD .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__lock-circle {
+    width: 33px;
+    height: 33px;
+  }
+
+  body.c-primePdp25VarC .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__unlock-copy,
+  body.c-primePdp25VarD .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__unlock-copy {
+    font-size: 11.5px;
+  }
+
+  body.c-primePdp25VarC .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__unlock-title,
+  body.c-primePdp25VarD .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__unlock-title {
+    font-size: 11.5px;
+  }
+}
+
+/* Wraps the image so the FREE chip below can overlap its bottom edge instead
+   of sitting in normal flow underneath it — matches the reference art, where
+   the chip is nested inside the image's own frame, not a sibling below it.
+   Fixed height (tallest of the 3 product photos, 78px) so a shorter image
+   (70/68px) doesn't shrink this slot and shift the title/price below it —
+   every card's media area takes up the same space regardless of that card's
+   own image height. */
+.c-pdp25-gift__media {
+  position: relative;
+  height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.c-pdp25-gift__image {
+  object-fit: contain;
+}
+
+/* Per Figma, each gift's image is its own real aspect ratio, not a uniform
+   square — all 70px wide, height varies by product photo (78/70/68). */
+.c-pdp25-gift[data-pdp25-gift-key="mystery"] .c-pdp25-gift__image {
+  width: 70px;
+  height: 78px;
+}
+
+.c-pdp25-gift[data-pdp25-gift-key="bookmark"] .c-pdp25-gift__image {
+  width: 70px;
+  height: 70px;
+}
+
+.c-pdp25-gift[data-pdp25-gift-key="stickers"] .c-pdp25-gift__image {
+  width: 70px;
+  height: 68px;
+}
+
+.c-pdp25-gift__free-chip {
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  transform: translateX(-50%);
+  display: inline-block;
+  white-space: nowrap;
+  background: #2e8b57;
+  color: #ffffff;
+  font-size: 7.56px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-radius: 3px;
+  padding: 3px 10px;
+}
+
+.c-pdp25-gift__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Fixed 2-line height, content vertically centered inside it — a 1-line
+   title (Bookmark) and a 2-line title (Sticker Puzzle included) then take up
+   the exact same space, so every card's price row lands on the same line
+   regardless of how many lines its own title wrapped to. */
+.c-pdp25-gift__title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 29px;
+  font-family: var(--font-body-family);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.1;
+  color: #0d1b3e;
+  margin: 0;
+}
+
+.c-pdp25-gift__compare {
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: normal;
+  color: #555555;
+  text-decoration: line-through;
+  margin: 0;
+}
+
+@media screen and (max-width: 749px) {
+  .c-pdp25-gifts__box {
     gap: 6px;
+    padding: 12px 8px;
   }
 
-  .c-pdp25-gift__tile {
-    padding: 8px 2px;
+  .c-pdp25-gift {
+    flex: 1 1 0;
+    width: auto;
+    height: auto;
+    gap: 6px;
+    padding: 25px 6px 13px;
   }
 
-  .c-pdp25-gift__icon {
-    font-size: 28px;
+  .c-pdp25-gift__badge {
+    top: 8px;
   }
 
-  .c-pdp25-gift__name {
-    font-size: 10px;
+  .c-pdp25-gift__media {
+    height: 62px;
+    margin-top: 4px;
   }
 
-  .c-pdp25-gift__threshold {
-    font-size: 8px;
+  .c-pdp25-gift[data-pdp25-gift-key="mystery"] .c-pdp25-gift__image {
+    width: 56px;
+    height: 62px;
   }
 
-  .c-pdp25-gift__value {
-    font-size: 9px;
+  .c-pdp25-gift[data-pdp25-gift-key="bookmark"] .c-pdp25-gift__image {
+    width: 56px;
+    height: 56px;
   }
 
-  .c-pdp25-gift__free {
-    font-size: 9px;
+  .c-pdp25-gift[data-pdp25-gift-key="stickers"] .c-pdp25-gift__image {
+    width: 56px;
+    height: 54px;
+  }
+
+  .c-pdp25-gift__free-chip {
+    bottom: 1px;
+    font-size: 8.5px;
+    padding: 3px 5px;
+  }
+
+  .c-pdp25-gift__title {
+    height: 27px;
+    font-size: 11.5px;
+    line-height: 13.5px;
   }
 }

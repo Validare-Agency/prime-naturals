@@ -1,33 +1,37 @@
 {%- comment -%}
-  V_PRIME_PDP_25 | Offer iteration: winning BOGO + gift stack
+  V_PRIME_PDP_25 | Unlock Bonus Free Gifts
 
   Forked from c-prime-pdp-22-bundle.liquid (do not merge changes back into that
   file — it stays untouched as the rollback target for this test). All shared
-  markup below keeps c-pdp22-* class names so assets/c-prime-pdp-22.js continues
-  to handle ATC, tier-price updates, and upsell interactions without changes.
-  New gift-stack markup uses c-pdp25-* class names, wired by
-  assets/c-prime-pdp-25.js. Liquid variables renamed c_pdp22_* → c_pdp25_*
-  (server-side only; the HTML attribute names that JS reads are unchanged).
+  bundle-row markup below is renamed c-pdp22-* -> c-pdp25-* / c_pdp22_* ->
+  c_pdp25_* so this file's assets/c-prime-pdp-25.js never binds to the original's
+  elements (and vice versa) if both are ever rendered on a page at once. The
+  encyclopedia-only upsell card from pdp22 is dropped entirely (unrelated,
+  separate test) and replaced with the new gift-stack section below.
 
-  Accepts: product, section
+  assets/c-prime-pdp-25.css styles it; assets/c-prime-pdp-25.js wires row
+  selection + gift unlock states + Add to Cart.
+
+  Accepts: product
 {%- endcomment -%}
 
 {%- liquid
   assign c_pdp25_variant = product.selected_or_first_available_variant
   assign c_pdp25_base_cents = c_pdp25_variant.price
-  # See c-prime-pdp-17-bundle.liquid for the .90-ending rounding rationale.
+  # See c-prime-pdp-17-bundle.liquid for why this rounds to a clean .90 ending
+  # across markets instead of using Shopify's raw converted price.
   assign c_pdp25_base_cents = c_pdp25_base_cents | divided_by: 100.0 | ceil | times: 100 | minus: 10
 
+  # Tier 1 always adds the live product's own variant — no bundling needed for
+  # a single book.
   assign c_pdp25_t1_variant_id = c_pdp25_variant.id
 
-  assign c_pdp25_is_encyclopedia = false
-  if product.handle == 'kidss-encyclopedia-10-000-whys'
-    assign c_pdp25_is_encyclopedia = true
-  endif
-
+  # Tier 1: 1 book, base price, no discount. Compare price is the site's
+  # existing "50% off" anchor (base x2), same as shown everywhere else on the PDP.
   assign c_pdp25_a_t1_price = c_pdp25_base_cents
   assign c_pdp25_a_t1_compare = c_pdp25_base_cents | times: 2
 
+  # Free shipping threshold: $55 USD-equivalent, vetted per-currency map.
   assign c_pdp25_ship_threshold_cents = 5500
   case cart.currency.iso_code
     when 'AUD' or 'CAD'
@@ -38,13 +42,10 @@
       assign c_pdp25_ship_threshold_cents = 9500
   endcase
 
-  if c_pdp25_is_encyclopedia
-    assign c_pdp25_d_t2_price = c_pdp25_base_cents | times: 7990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
-    assign c_pdp25_d_t3_price = c_pdp25_base_cents | times: 9990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
-  else
-    assign c_pdp25_d_t2_price = c_pdp25_base_cents | times: 5990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
-    assign c_pdp25_d_t3_price = c_pdp25_base_cents | times: 8990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
-  endif
+  # BOGO framing display prices only — real discount comes from that product's
+  # own native Kaching Bundles quantity-discount config (see c-prime-pdp-17-bundle.liquid).
+  assign c_pdp25_d_t2_price = c_pdp25_base_cents | times: 5990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+  assign c_pdp25_d_t3_price = c_pdp25_base_cents | times: 8990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
 
   assign c_pdp25_d_t2_compare = c_pdp25_base_cents | times: 3
   assign c_pdp25_d_t2_save = c_pdp25_d_t2_compare | minus: c_pdp25_d_t2_price
@@ -62,267 +63,274 @@
     assign c_pdp25_d_t3_ships_free = true
   endif
 
+  # Tiers 2/3 add the SAME real product variant as tier 1, just at quantity 3
+  # or 5 — see c-prime-pdp-17-bundle.liquid.
   assign c_pdp25_d_t2_variant_id = c_pdp25_variant.id
   assign c_pdp25_d_t3_variant_id = c_pdp25_variant.id
 
-  # V_PRIME_PDP_22 upsell — encyclopedia only. Kept here so the upsell
-  # experiment continues to run alongside this test without a separate snippet
-  # render. Class names stay c-pdp22-* so c-prime-pdp-22.js/.css still bind.
-  if c_pdp25_is_encyclopedia
-    assign c_pdp25_upsell_leadership_product = all_products['murphys-law-for-kids-copy']
-    assign c_pdp25_upsell_leadership_variant = c_pdp25_upsell_leadership_product.selected_or_first_available_variant
-    assign c_pdp25_upsell_leadership_compare = c_pdp25_upsell_leadership_variant.compare_at_price
-    if c_pdp25_upsell_leadership_compare == blank or c_pdp25_upsell_leadership_compare <= c_pdp25_upsell_leadership_variant.price
-      assign c_pdp25_upsell_leadership_compare = c_pdp25_upsell_leadership_variant.price | times: 2
-    endif
+  # V_PRIME_PDP_25 gift stack — 3 fixed gift products, each already a $0.00
+  # variant in Shopify (compare_at_price carries the "value" shown struck
+  # through). Unlock thresholds: 1 book unlocks none, 3 books unlocks the
+  # mystery gift only, 5 books unlocks all three — see assets/c-prime-pdp-25.js.
+  assign c_pdp25_gift_mystery_product = all_products['mystery-gift']
+  assign c_pdp25_gift_mystery_variant = c_pdp25_gift_mystery_product.selected_or_first_available_variant
 
-    assign c_pdp25_upsell_murphys_product = all_products['murphys-law-for-kids']
-    assign c_pdp25_upsell_murphys_variant = c_pdp25_upsell_murphys_product.selected_or_first_available_variant
-    assign c_pdp25_upsell_murphys_compare = c_pdp25_upsell_murphys_variant.compare_at_price
-    if c_pdp25_upsell_murphys_compare == blank or c_pdp25_upsell_murphys_compare <= c_pdp25_upsell_murphys_variant.price
-      assign c_pdp25_upsell_murphys_compare = c_pdp25_upsell_murphys_variant.price | times: 2
-    endif
-  endif
+  assign c_pdp25_gift_bookmark_product = all_products['bookmark']
+  assign c_pdp25_gift_bookmark_variant = c_pdp25_gift_bookmark_product.selected_or_first_available_variant
+
+  assign c_pdp25_gift_stickers_product = all_products['stickers']
+  assign c_pdp25_gift_stickers_variant = c_pdp25_gift_stickers_product.selected_or_first_available_variant
 -%}
 
-{{- '<!-- V_PRIME_PDP_25 bundle + gift stack -->' -}}
-<div class="c-pdp22-variant c-pdp22-variant--d c-pdp25-variant">
-  <p class="c-pdp22-eyebrow">&#9889; FLASH SALE &mdash; PRICES INCREASE IN 4 HOURS</p>
+{%- comment -%} Exact badge icons from Figma (node 1135:1092 lock ring, node
+  1060:4537's sibling check-circle) — captured once, reused across all 3 gift
+  cards below instead of repeating the same inline SVG markup 3 times. {%- endcomment -%}
+{%- capture c_pdp25_lock_icon -%}
+<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none" aria-hidden="true">
+  <rect x="0.5" y="0.5" width="22" height="22" rx="11" stroke="#0D1B3E" stroke-opacity="0.35"/>
+  <path d="M16.4583 9.75H15.5833V8.58332C15.5833 6.33176 13.7516 4.5 11.5 4.5C9.24841 4.5 7.41668 6.33176 7.41668 8.58332V9.75H6.54168C6.38046 9.75 6.25 9.88046 6.25 10.0417V17.3334C6.25 17.9768 6.77322 18.5 7.41668 18.5H15.5834C16.2268 18.5 16.75 17.9768 16.75 17.3333V10.0417C16.75 9.88046 16.6195 9.75 16.4583 9.75ZM12.3733 15.8428C12.3824 15.9251 12.3559 16.0077 12.3007 16.0696C12.2454 16.1313 12.1662 16.1667 12.0834 16.1667H10.9167C10.8338 16.1667 10.7546 16.1313 10.6993 16.0696C10.6441 16.0078 10.6176 15.9251 10.6267 15.8428L10.8107 14.1882C10.5119 13.9709 10.3334 13.6271 10.3334 13.25C10.3334 12.6066 10.8566 12.0833 11.5 12.0833C12.1435 12.0833 12.6667 12.6065 12.6667 13.25C12.6667 13.6271 12.4881 13.9709 12.1893 14.1882L12.3733 15.8428ZM13.8333 9.75H9.16668V8.58332C9.16668 7.29675 10.2134 6.25 11.5 6.25C12.7866 6.25 13.8333 7.29675 13.8333 8.58332V9.75Z" fill="#0D1B3E" fill-opacity="0.35"/>
+</svg>
+{%- endcapture -%}
+{%- capture c_pdp25_check_icon -%}
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none" aria-hidden="true">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5038 1.32031C15.5771 1.32031 19.6914 5.43463 19.6914 10.5079C19.6914 15.5812 15.5771 19.6955 10.5038 19.6955C5.43054 19.6955 1.31622 15.5812 1.31622 10.5079C1.31622 5.43463 5.43054 1.32031 10.5038 1.32031ZM8.5959 13.4921L6.34655 11.2409C5.96334 10.8575 5.96326 10.2322 6.34655 9.84882C6.72992 9.46553 7.35798 9.46793 7.73856 9.84882L9.32434 11.4358L13.2692 7.49096C13.6526 7.10759 14.2779 7.10759 14.6612 7.49096C15.0446 7.87425 15.0441 8.50014 14.6612 8.88297L10.0192 13.525C9.6364 13.9078 9.0105 13.9084 8.62721 13.525C8.61644 13.5142 8.60605 13.5033 8.5959 13.4921Z" fill="#2E8B57"/>
+</svg>
+{%- endcapture -%}
+{%- comment -%} Locked card's dashed border — drawn as an SVG rect (custom
+  stroke-dasharray) instead of CSS border-style:dashed, whose dash/gap ratio
+  isn't controllable and varies by browser. Hidden for the unlocked state,
+  which uses a real solid CSS border instead (see c-prime-pdp-25.css). {%- endcomment -%}
+{%- capture c_pdp25_border_svg -%}
+<svg class="c-pdp25-gift__border" viewBox="0 0 168 168" preserveAspectRatio="none" aria-hidden="true">
+  <rect x="0.5" y="0.5" width="167" height="167" rx="10" ry="10"/>
+</svg>
+{%- endcapture -%}
 
-  <div class="c-pdp22-rows" role="radiogroup" aria-label="Bundle options">
+{%- comment -%} V_PRIME_PDP_25 Var B only — same rows as Var A (fonts,
+  border, functionality all unchanged), plus this product thumbnail at the
+  front of each row. Hidden by default in CSS, shown only for
+  body.c-primePdp25VarB. Same image for all 3 rows (same product, only
+  quantity differs per tier). {%- endcomment -%}
+{%- capture c_pdp25_row_image -%}
+<img
+  class="c-pdp25-row__image"
+  src="{{ product.featured_image | image_url: width: 68 }}"
+  alt=""
+  aria-hidden="true"
+  loading="lazy"
+  width="34"
+  height="47"
+>
+{%- endcapture -%}
 
-    {%- comment -%} Tier 1: 1 book {%- endcomment -%}
-    <label class="c-pdp22-row">
+<div class="c-pdp25-variant">
+  <p class="c-pdp25-eyebrow">&#9889; FLASH SALE &mdash; PRICES INCREASE IN 4 HOURS</p>
+
+  <div class="c-pdp25-rows" role="radiogroup" aria-label="Bundle options">
+    <label class="c-pdp25-row">
       <input
         type="radio"
-        name="c-pdp22-d-tier-{{ section.id }}"
-        class="c-pdp22-row__radio"
+        name="c-pdp25-tier-{{ section.id }}"
+        class="c-pdp25-row__radio"
         data-variant-id="{{ c_pdp25_t1_variant_id }}"
         data-quantity="1"
-        data-pdp22-price-money="{{ c_pdp25_a_t1_price | money }}"
-        {%- if c_pdp25_upsell_leadership_variant %}
-        data-pdp22-price-with-upsell-leadership-money="{{ c_pdp25_a_t1_price | plus: c_pdp25_upsell_leadership_variant.price | money }}"
-        {%- endif %}
-        {%- if c_pdp25_upsell_murphys_variant %}
-        data-pdp22-price-with-upsell-murphys-money="{{ c_pdp25_a_t1_price | plus: c_pdp25_upsell_murphys_variant.price | money }}"
-        {%- endif %}
-        {%- if c_pdp25_upsell_leadership_variant and c_pdp25_upsell_murphys_variant %}
-        data-pdp22-price-with-both-upsells-money="{{ c_pdp25_a_t1_price | plus: c_pdp25_upsell_leadership_variant.price | plus: c_pdp25_upsell_murphys_variant.price | money }}"
-        {%- endif %}
+        data-pdp25-price-money="{{ c_pdp25_a_t1_price | money }}"
         checked
       >
-      <span class="c-pdp22-row__body">
-        <span class="c-pdp22-row__title">1 Book</span>
-        <span class="c-pdp22-row__subtitle">For 1 child</span>
+      <span class="c-pdp25-row__image-wrap">
+        {{ c_pdp25_row_image }}
       </span>
-      <span class="c-pdp22-row__prices">
-        <span class="c-pdp22-row__price">{{ c_pdp25_a_t1_price | money }}</span>
-        <span class="c-pdp22-row__compare">{{ c_pdp25_a_t1_compare | money }}</span>
+      <span class="c-pdp25-row__body">
+        <span class="c-pdp25-row__title">1 Book</span>
+        <span class="c-pdp25-row__subtitle">For 1 child</span>
+      </span>
+      <span class="c-pdp25-row__prices">
+        <span class="c-pdp25-row__price">{{ c_pdp25_a_t1_price | money }}</span>
+        <span class="c-pdp25-row__compare">{{ c_pdp25_a_t1_compare | money }}</span>
       </span>
     </label>
 
-    {%- comment -%} Tier 2: Buy 2 Get 1 Free (3 books) {%- endcomment -%}
-    <label class="c-pdp22-row">
-      <span class="c-pdp22-row__badge c-pdp22-row__badge--popular c-pdp22-row__badge--sentence">Most popular</span>
+    <label class="c-pdp25-row c-pdp25-row--stacked">
+      <span class="c-pdp25-row__badge c-pdp25-row__badge--popular c-pdp25-row__badge--sentence">Most popular</span>
       <input
         type="radio"
-        name="c-pdp22-d-tier-{{ section.id }}"
-        class="c-pdp22-row__radio"
+        name="c-pdp25-tier-{{ section.id }}"
+        class="c-pdp25-row__radio"
         data-variant-id="{{ c_pdp25_d_t2_variant_id }}"
         data-quantity="3"
-        data-pdp22-price-money="{{ c_pdp25_d_t2_price | money }}"
-        {%- if c_pdp25_upsell_leadership_variant %}
-        data-pdp22-price-with-upsell-leadership-money="{{ c_pdp25_d_t2_price | plus: c_pdp25_upsell_leadership_variant.price | money }}"
-        {%- endif %}
-        {%- if c_pdp25_upsell_murphys_variant %}
-        data-pdp22-price-with-upsell-murphys-money="{{ c_pdp25_d_t2_price | plus: c_pdp25_upsell_murphys_variant.price | money }}"
-        {%- endif %}
-        {%- if c_pdp25_upsell_leadership_variant and c_pdp25_upsell_murphys_variant %}
-        data-pdp22-price-with-both-upsells-money="{{ c_pdp25_d_t2_price | plus: c_pdp25_upsell_leadership_variant.price | plus: c_pdp25_upsell_murphys_variant.price | money }}"
-        {%- endif %}
+        data-pdp25-price-money="{{ c_pdp25_d_t2_price | money }}"
       >
-      <span class="c-pdp22-row__body">
-        <span class="c-pdp22-row__title">Buy 2, Get 1 Free</span>
-        <span class="c-pdp22-row__subtitle">3 books &mdash; best for siblings</span>
-        <span class="c-pdp22-row__perk">&#127873; 1 full book, on us</span>
+      <span class="c-pdp25-row__image-wrap">
+        {{ c_pdp25_row_image }}
+        <span class="c-pdp25-row__free-badge">1x FREE</span>
+      </span>
+      <span class="c-pdp25-row__body">
+        <span class="c-pdp25-row__title">Buy 2, Get 1 Free</span>
+        <span class="c-pdp25-row__subtitle">3 books &mdash; best for siblings</span>
+        <span class="c-pdp25-row__perk">&#127873; 1 full book, on us</span>
         {%- if c_pdp25_d_t2_ships_free -%}
-          <span class="c-pdp22-row__perk c-pdp22-row__perk--ship">&#128666; FREE shipping</span>
+          <span class="c-pdp25-row__perk c-pdp25-row__perk--ship">&#128666; FREE shipping</span>
         {%- endif -%}
       </span>
-      <span class="c-pdp22-row__prices">
-        <span class="c-pdp22-row__price">{{ c_pdp25_d_t2_price | money }}</span>
-        <span class="c-pdp22-row__compare">{{ c_pdp25_d_t2_compare | money }}</span>
-        <span class="c-pdp22-row__save">Save {{ c_pdp25_d_t2_save | money }}</span>
+      <span class="c-pdp25-row__prices">
+        <span class="c-pdp25-row__price">{{ c_pdp25_d_t2_price | money }}</span>
+        <span class="c-pdp25-row__compare">{{ c_pdp25_d_t2_compare | money }}</span>
+        <span class="c-pdp25-row__save">Save {{ c_pdp25_d_t2_save | money }}</span>
       </span>
     </label>
 
-    {%- comment -%} Tier 3: Buy 3 Get 2 Free (5 books) {%- endcomment -%}
-    <label class="c-pdp22-row">
-      <span class="c-pdp22-row__badge c-pdp22-row__badge--popular c-pdp22-row__badge--sentence">One for every grandchild</span>
+    <label class="c-pdp25-row c-pdp25-row--stacked">
       <input
         type="radio"
-        name="c-pdp22-d-tier-{{ section.id }}"
-        class="c-pdp22-row__radio"
+        name="c-pdp25-tier-{{ section.id }}"
+        class="c-pdp25-row__radio"
         data-variant-id="{{ c_pdp25_d_t3_variant_id }}"
         data-quantity="5"
-        data-pdp22-price-money="{{ c_pdp25_d_t3_price | money }}"
-        {%- if c_pdp25_upsell_leadership_variant %}
-        data-pdp22-price-with-upsell-leadership-money="{{ c_pdp25_d_t3_price | plus: c_pdp25_upsell_leadership_variant.price | money }}"
-        {%- endif %}
-        {%- if c_pdp25_upsell_murphys_variant %}
-        data-pdp22-price-with-upsell-murphys-money="{{ c_pdp25_d_t3_price | plus: c_pdp25_upsell_murphys_variant.price | money }}"
-        {%- endif %}
-        {%- if c_pdp25_upsell_leadership_variant and c_pdp25_upsell_murphys_variant %}
-        data-pdp22-price-with-both-upsells-money="{{ c_pdp25_d_t3_price | plus: c_pdp25_upsell_leadership_variant.price | plus: c_pdp25_upsell_murphys_variant.price | money }}"
-        {%- endif %}
+        data-pdp25-price-money="{{ c_pdp25_d_t3_price | money }}"
       >
-      <span class="c-pdp22-row__body">
-        <span class="c-pdp22-row__title">
-          Buy 3, Get 2 Free
-          <span class="c-pdp25-2x-badge">2x FREE</span>
-        </span>
-        <span class="c-pdp22-row__subtitle">5 books &mdash; best gift pack</span>
-        <span class="c-pdp22-row__perk">&#127873; 2 full books, on us</span>
+      <span class="c-pdp25-row__image-wrap">
+        {{ c_pdp25_row_image }}
+        <span class="c-pdp25-row__free-badge">2x FREE</span>
+      </span>
+      <span class="c-pdp25-row__body">
+        <span class="c-pdp25-row__title">Buy 3, Get 2 Free</span>
+        <span class="c-pdp25-row__subtitle">5 books &mdash; best gift pack</span>
+        <span class="c-pdp25-row__perk">&#127873; 2 full books, on us</span>
         {%- if c_pdp25_d_t3_ships_free -%}
-          <span class="c-pdp22-row__perk c-pdp22-row__perk--ship">&#128666; FREE shipping</span>
+          <span class="c-pdp25-row__perk c-pdp25-row__perk--ship">&#128666; FREE shipping</span>
         {%- endif -%}
       </span>
-      <span class="c-pdp22-row__prices">
-        <span class="c-pdp22-row__price">{{ c_pdp25_d_t3_price | money }}</span>
-        <span class="c-pdp22-row__compare">{{ c_pdp25_d_t3_compare | money }}</span>
-        <span class="c-pdp22-row__save">Save {{ c_pdp25_d_t3_save | money }}</span>
+      <span class="c-pdp25-row__prices">
+        <span class="c-pdp25-row__price">{{ c_pdp25_d_t3_price | money }}</span>
+        <span class="c-pdp25-row__compare">{{ c_pdp25_d_t3_compare | money }}</span>
+        <span class="c-pdp25-row__save">Save {{ c_pdp25_d_t3_save | money }}</span>
       </span>
     </label>
-
   </div>
 
-  {%- comment -%}
-    V_PRIME_PDP_25 gift stack — rendered for every visitor; CSS gates
-    visibility by body class (hidden for Control, visible for Var A/B/C).
-    JS (c-prime-pdp-25.js) updates data-pdp25-unlocked on each gift when
-    the selected tier changes; the default HTML state (all locked, tier 1
-    selected) matches the checked radio above.
-  {%- endcomment -%}
-  <div class="c-pdp25-gifts" data-pdp25-gifts>
-    <p class="c-pdp25-gifts__heading c-pdp25-gifts__heading--unlock">&#127775; UNLOCK BONUS FREE GIFTS</p>
-    <p class="c-pdp25-gifts__heading c-pdp25-gifts__heading--bonus">&#127873; BONUS FREE GIFTS</p>
-
-    <div class="c-pdp25-gifts__row">
-
-      {%- comment -%} Gift 1: Mystery Gift (sticker) — unlocks at tier 2 {%- endcomment -%}
-      <div class="c-pdp25-gift" data-pdp25-gift data-pdp25-gift-min-tier="2" data-pdp25-unlocked="false">
-        <div class="c-pdp25-gift__tile">
-          <div class="c-pdp25-gift__image-wrap">
-            <span class="c-pdp25-gift__lock-overlay" aria-hidden="true">
-              {% render 'c-pdp17-icon-lock' %}
-            </span>
-            <span class="c-pdp25-gift__icon" aria-hidden="true">🎁</span>
-          </div>
-          <p class="c-pdp25-gift__threshold">Unlock at 2 books</p>
-          <p class="c-pdp25-gift__name">Mystery Gift</p>
-          <p class="c-pdp25-gift__value">$9.80 value</p>
-          <p class="c-pdp25-gift__free">FREE</p>
-        </div>
-      </div>
-
-      {%- comment -%} Gift 2: Bookmark — unlocks at tier 3 {%- endcomment -%}
-      <div class="c-pdp25-gift" data-pdp25-gift data-pdp25-gift-min-tier="3" data-pdp25-unlocked="false">
-        <div class="c-pdp25-gift__tile">
-          <div class="c-pdp25-gift__image-wrap">
-            <span class="c-pdp25-gift__lock-overlay" aria-hidden="true">
-              {% render 'c-pdp17-icon-lock' %}
-            </span>
-            <span class="c-pdp25-gift__icon" aria-hidden="true">🔖</span>
-          </div>
-          <p class="c-pdp25-gift__threshold">Unlock at 3 books</p>
-          <p class="c-pdp25-gift__name">Bookmark</p>
-          <p class="c-pdp25-gift__value">$4.80 value</p>
-          <p class="c-pdp25-gift__free">FREE</p>
-        </div>
-      </div>
-
-      {%- comment -%} Gift 3: Sticker Puzzle — unlocks at tier 3 {%- endcomment -%}
-      <div class="c-pdp25-gift" data-pdp25-gift data-pdp25-gift-min-tier="3" data-pdp25-unlocked="false">
-        <div class="c-pdp25-gift__tile">
-          <div class="c-pdp25-gift__image-wrap">
-            <span class="c-pdp25-gift__lock-overlay" aria-hidden="true">
-              {% render 'c-pdp17-icon-lock' %}
-            </span>
-            <span class="c-pdp25-gift__icon" aria-hidden="true">🧩</span>
-          </div>
-          <p class="c-pdp25-gift__threshold">Unlock at 3 books</p>
-          <p class="c-pdp25-gift__name">Sticker Puzzle</p>
-          <p class="c-pdp25-gift__value">$15.80 value</p>
-          <p class="c-pdp25-gift__free">FREE</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  {%- comment -%} V_PRIME_PDP_22 upsell card — class names stay c-pdp22-* so
-    c-prime-pdp-22.js and c-prime-pdp-22.css continue to work unchanged. {%- endcomment -%}
-  {%- if c_pdp25_upsell_leadership_product != blank or c_pdp25_upsell_murphys_product != blank -%}
-    <div class="c-pdp22-upsell">
-      <p class="c-pdp22-upsell__eyebrow">Most Grandparents Bought This Together!</p>
-
-      {%- if c_pdp25_upsell_leadership_product != blank -%}
-        <div class="c-pdp22-upsell__card" data-pdp22-upsell data-pdp22-upsell-key="leadership" data-variant-id="{{ c_pdp25_upsell_leadership_variant.id }}">
-          <label class="c-pdp22-upsell__checkbox-wrap">
-            <input type="checkbox" class="c-pdp22-upsell__checkbox" data-pdp22-checkbox>
-          </label>
-          <img
-            class="c-pdp22-upsell__image"
-            src="{{ c_pdp25_upsell_leadership_product.featured_image | image_url: width: 184 }}"
-            alt="{{ c_pdp25_upsell_leadership_product.featured_image.alt | default: c_pdp25_upsell_leadership_product.title | escape }}"
-            loading="lazy"
-            width="92"
-            height="92"
+  {%- if c_pdp25_gift_mystery_variant or c_pdp25_gift_bookmark_variant or c_pdp25_gift_stickers_variant -%}
+    {%- comment -%}
+      Gift stack — hidden entirely for Control (see Test Setup in
+      assets/c-prime-pdp-25.css). Each card renders server-side in its LOCKED
+      state (matches the default 1-book selection); assets/c-prime-pdp-25.js
+      toggles c-pdp25-gift--unlocked per card based on the selected row's
+      data-quantity vs. that card's data-pdp25-unlock-qty.
+    {%- endcomment -%}
+    <div class="c-pdp25-gifts">
+      <p class="c-pdp25-gifts__heading">Unlock Bonus Free Gifts</p>
+      <div class="c-pdp25-gifts__box">
+        {%- if c_pdp25_gift_mystery_variant -%}
+          <div
+            class="c-pdp25-gift"
+            data-pdp25-gift
+            data-pdp25-gift-key="mystery"
+            data-pdp25-unlock-qty="3"
+            data-variant-id="{{ c_pdp25_gift_mystery_variant.id }}"
           >
-          <div class="c-pdp22-upsell__body">
-            <p class="c-pdp22-upsell__title">{{ c_pdp25_upsell_leadership_product.title }}</p>
-            <p class="c-pdp22-upsell__desc">Teaches your child to lead and communicate in any situation</p>
-          </div>
-          <div class="c-pdp22-upsell__side">
-            <div class="c-pdp22-upsell__price-block">
-              <span class="c-pdp22-upsell__price">{{ c_pdp25_upsell_leadership_variant.price | money }}</span>
-              <span class="c-pdp22-upsell__compare">{{ c_pdp25_upsell_leadership_compare | money }}</span>
+            {{ c_pdp25_border_svg }}
+            <span class="c-pdp25-gift__lock-circle" aria-hidden="true">{{ c_pdp25_lock_icon }}</span>
+            <p class="c-pdp25-gift__unlock-copy">Unlock at 2 books</p>
+            <p class="c-pdp25-gift__unlock-title">Mystery Gift</p>
+            <span class="c-pdp25-gift__badge" aria-hidden="true">
+              <span class="c-pdp25-gift__badge-icon c-pdp25-gift__badge-icon--lock">{{ c_pdp25_lock_icon }}</span>
+              <span class="c-pdp25-gift__badge-icon c-pdp25-gift__badge-icon--check">{{ c_pdp25_check_icon }}</span>
+            </span>
+            <span class="c-pdp25-gift__media">
+              <img
+                class="c-pdp25-gift__image"
+                src="{{ c_pdp25_gift_mystery_product.featured_image | image_url: width: 168 }}"
+                alt="{{ c_pdp25_gift_mystery_product.featured_image.alt | default: c_pdp25_gift_mystery_product.title | escape }}"
+                loading="lazy"
+                width="70"
+                height="78"
+              >
+              <span class="c-pdp25-gift__free-chip">FREE</span>
+            </span>
+            <div class="c-pdp25-gift__body">
+              <p class="c-pdp25-gift__title">{{ c_pdp25_gift_mystery_product.title }}</p>
+              {%- if c_pdp25_gift_mystery_variant.compare_at_price > 0 -%}
+                <p class="c-pdp25-gift__compare">{{ c_pdp25_gift_mystery_variant.compare_at_price | money }}</p>
+              {%- endif -%}
             </div>
-            <button type="button" class="c-pdp22-upsell__add-btn" data-pdp22-add-btn>Add</button>
           </div>
-        </div>
-      {%- endif -%}
+        {%- endif -%}
 
-      {%- if c_pdp25_upsell_murphys_product != blank -%}
-        <div class="c-pdp22-upsell__card" data-pdp22-upsell data-pdp22-upsell-key="murphys" data-variant-id="{{ c_pdp25_upsell_murphys_variant.id }}">
-          <label class="c-pdp22-upsell__checkbox-wrap">
-            <input type="checkbox" class="c-pdp22-upsell__checkbox" data-pdp22-checkbox>
-          </label>
-          <img
-            class="c-pdp22-upsell__image"
-            src="{{ c_pdp25_upsell_murphys_product.featured_image | image_url: width: 184 }}"
-            alt="{{ c_pdp25_upsell_murphys_product.featured_image.alt | default: c_pdp25_upsell_murphys_product.title | escape }}"
-            loading="lazy"
-            width="92"
-            height="92"
+        {%- if c_pdp25_gift_bookmark_variant -%}
+          <div
+            class="c-pdp25-gift"
+            data-pdp25-gift
+            data-pdp25-gift-key="bookmark"
+            data-pdp25-unlock-qty="5"
+            data-variant-id="{{ c_pdp25_gift_bookmark_variant.id }}"
           >
-          <div class="c-pdp22-upsell__body">
-            <p class="c-pdp22-upsell__title">{{ c_pdp25_upsell_murphys_product.title }}</p>
-            <p class="c-pdp22-upsell__desc">Teaches your child to handle anything life throws at them</p>
-          </div>
-          <div class="c-pdp22-upsell__side">
-            <div class="c-pdp22-upsell__price-block">
-              <span class="c-pdp22-upsell__price">{{ c_pdp25_upsell_murphys_variant.price | money }}</span>
-              <span class="c-pdp22-upsell__compare">{{ c_pdp25_upsell_murphys_compare | money }}</span>
+            {{ c_pdp25_border_svg }}
+            <span class="c-pdp25-gift__lock-circle" aria-hidden="true">{{ c_pdp25_lock_icon }}</span>
+            <p class="c-pdp25-gift__unlock-copy">Unlock at 3 books</p>
+            <p class="c-pdp25-gift__unlock-title">Bookmark</p>
+            <span class="c-pdp25-gift__badge" aria-hidden="true">
+              <span class="c-pdp25-gift__badge-icon c-pdp25-gift__badge-icon--lock">{{ c_pdp25_lock_icon }}</span>
+              <span class="c-pdp25-gift__badge-icon c-pdp25-gift__badge-icon--check">{{ c_pdp25_check_icon }}</span>
+            </span>
+            <span class="c-pdp25-gift__media">
+              <img
+                class="c-pdp25-gift__image"
+                src="{{ c_pdp25_gift_bookmark_product.featured_image | image_url: width: 168 }}"
+                alt="{{ c_pdp25_gift_bookmark_product.featured_image.alt | default: c_pdp25_gift_bookmark_product.title | escape }}"
+                loading="lazy"
+                width="70"
+                height="70"
+              >
+              <span class="c-pdp25-gift__free-chip">FREE</span>
+            </span>
+            <div class="c-pdp25-gift__body">
+              <p class="c-pdp25-gift__title">{{ c_pdp25_gift_bookmark_product.title }}</p>
+              {%- if c_pdp25_gift_bookmark_variant.compare_at_price > 0 -%}
+                <p class="c-pdp25-gift__compare">{{ c_pdp25_gift_bookmark_variant.compare_at_price | money }}</p>
+              {%- endif -%}
             </div>
-            <button type="button" class="c-pdp22-upsell__add-btn" data-pdp22-add-btn>Add</button>
           </div>
-        </div>
-      {%- endif -%}
+        {%- endif -%}
+
+        {%- if c_pdp25_gift_stickers_variant -%}
+          <div
+            class="c-pdp25-gift"
+            data-pdp25-gift
+            data-pdp25-gift-key="stickers"
+            data-pdp25-unlock-qty="5"
+            data-variant-id="{{ c_pdp25_gift_stickers_variant.id }}"
+          >
+            {{ c_pdp25_border_svg }}
+            <span class="c-pdp25-gift__lock-circle" aria-hidden="true">{{ c_pdp25_lock_icon }}</span>
+            <p class="c-pdp25-gift__unlock-copy">Unlock at 3 books</p>
+            <p class="c-pdp25-gift__unlock-title">Sticker Puzzle</p>
+            <span class="c-pdp25-gift__badge" aria-hidden="true">
+              <span class="c-pdp25-gift__badge-icon c-pdp25-gift__badge-icon--lock">{{ c_pdp25_lock_icon }}</span>
+              <span class="c-pdp25-gift__badge-icon c-pdp25-gift__badge-icon--check">{{ c_pdp25_check_icon }}</span>
+            </span>
+            <span class="c-pdp25-gift__media">
+              <img
+                class="c-pdp25-gift__image"
+                src="{{ c_pdp25_gift_stickers_product.featured_image | image_url: width: 168 }}"
+                alt="{{ c_pdp25_gift_stickers_product.featured_image.alt | default: c_pdp25_gift_stickers_product.title | escape }}"
+                loading="lazy"
+                width="70"
+                height="68"
+              >
+              <span class="c-pdp25-gift__free-chip">FREE</span>
+            </span>
+            <div class="c-pdp25-gift__body">
+              <p class="c-pdp25-gift__title">{{ c_pdp25_gift_stickers_product.title }}</p>
+              {%- if c_pdp25_gift_stickers_variant.compare_at_price > 0 -%}
+                <p class="c-pdp25-gift__compare">{{ c_pdp25_gift_stickers_variant.compare_at_price | money }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
     </div>
   {%- endif -%}
 
-  <button type="button" class="c-pdp22-atc button button--full-width" data-pdp22-atc>
-    <span data-pdp22-atc-price>{{ c_pdp25_a_t1_price | money }}</span>&nbsp;ADD TO CART
+  <button type="button" class="c-pdp25-atc button button--full-width" data-pdp25-atc>
+    <span data-pdp25-atc-price>{{ c_pdp25_a_t1_price | money }}</span>&nbsp;ADD TO CART
   </button>
 </div>

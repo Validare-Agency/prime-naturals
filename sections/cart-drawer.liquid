@@ -1,5 +1,26 @@
-{%- render 'cart-drawer' -%} 
-  
+{%- render 'cart-drawer' -%}
+
+{%- comment -%}
+  V_PRIME_PDP_25 | Unlock Bonus Free Gifts
+
+  This section renders sitewide (layout/theme.liquid always includes it), so
+  it's the one place that can wire up gift-line reconciliation everywhere the
+  cart drawer's quantity inputs / remove buttons can appear — including on
+  the cart page itself, where sections/main-cart-items.liquid used to load
+  this same script a second time (removed there; this single load already
+  covers it). The inline block below is data only (gift variant ids), read by
+  assets/c-prime-pdp-25.js — keep it in sync with the same lookups in
+  snippets/c-prime-pdp-25-bundle.liquid.
+{%- endcomment -%}
+<script>
+  window.pdp25GiftVariants = {
+    mystery: { id: {{ all_products['mystery-gift'].selected_or_first_available_variant.id | json }} },
+    bookmark: { id: {{ all_products['bookmark'].selected_or_first_available_variant.id | json }} },
+    stickers: { id: {{ all_products['stickers'].selected_or_first_available_variant.id | json }} }
+  };
+</script>
+<script src="{{ 'c-prime-pdp-25.js' | asset_url }}" defer></script>
+
 {% schema %}
 {
   "name": "Cart drawer",

@@ -73,9 +73,9 @@ function handleExperiments() {
     document.body.classList.add("c-primeMix29VarB");
   }
 
-  // Test: V_PRIME_PDP_25 | Offer iteration: winning BOGO + gift stack
+  // Test: V_PRIME_PDP_25 | Unlock Bonus Free Gifts
   const primePdp25 = window.igData?.user.getTestGroup(
-    "b1871cb7-39bd-406b-bf9f-3b4449788f40"
+    "59bf8132-e0c0-4d87-acec-2b3319273615"
   );
   if (primePdp25?.name === "Var A - Inline gifts shown") {
     document.body.classList.add("c-primePdp25VarA");
@@ -83,6 +83,8 @@ function handleExperiments() {
     document.body.classList.add("c-primePdp25VarB");
   } else if (primePdp25?.name === "Var C - Bordered gift tiles with lock/unlock") {
     document.body.classList.add("c-primePdp25VarC");
+  } else if (primePdp25?.name === "Var D - Bordered gift tiles with lock/unlock Threshold") {
+    document.body.classList.add("c-primePdp25VarD");
   }
 }
 
