@@ -12,6 +12,13 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "custom_liquid_FcmgCa": {
+          "type": "custom_liquid",
+          "name": "hide the elements for the VOL 2",
+          "settings": {
+            "custom_liquid": "<style>\n.pib-price-block,\n.pib-stars-row,\n.pib-scarcity,\n.pib-carousel {display: none !important;}\n</style>"
+          }
+        },
         "custom_liquid_PWYQA8": {
           "type": "custom_liquid",
           "disabled": true,
@@ -88,6 +95,7 @@
         }
       },
       "block_order": [
+        "custom_liquid_FcmgCa",
         "custom_liquid_PWYQA8",
         "rating_stars_fE9P9j",
         "custom_liquid_hKfVkc",
