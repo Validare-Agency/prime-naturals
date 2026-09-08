@@ -16,7 +16,7 @@
           "type": "custom_liquid",
           "name": "hide the elements for the VOL 2",
           "settings": {
-            "custom_liquid": "<style>\n.pib-price-block,\n.pib-stars-row,\n.pib-scarcity,\n.pib-carousel {display: none !important;}\n</style>"
+            "custom_liquid": "<style>\n.pib-price-block,\n.pib-stars-row,\n.pib-scarcity,\n.pib-carousel,\n.ann-bar {display: none !important;}\n</style>"
           }
         },
         "custom_liquid_PWYQA8": {
@@ -151,6 +151,7 @@
     },
     "custom_liquid_mwcE4N": {
       "type": "custom-liquid",
+      "disabled": true,
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
         "display_id": false,
@@ -163,6 +164,7 @@
     },
     "custom_liquid_ycAyXQ": {
       "type": "custom-liquid",
+      "disabled": true,
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
         "display_id": false,
@@ -175,6 +177,7 @@
     },
     "custom_liquid_AwDERn": {
       "type": "custom-liquid",
+      "disabled": true,
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
         "display_id": false,
@@ -187,6 +190,7 @@
     },
     "custom_liquid_YYFKG7": {
       "type": "custom-liquid",
+      "disabled": true,
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
         "display_id": false,
@@ -213,6 +217,7 @@
       "block_order": [
         "judge_me_reviews_review_widget_FbtBRQ"
       ],
+      "disabled": true,
       "settings": {
         "display_id": false,
         "include_margins": true
@@ -220,6 +225,7 @@
     },
     "custom_liquid_WdL3xd": {
       "type": "custom-liquid",
+      "disabled": true,
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
         "display_id": false,
