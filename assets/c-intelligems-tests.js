@@ -84,6 +84,18 @@ function handleExperiments() {
   } else if (primeMix29?.name === "Var B") {
     document.body.classList.add("c-primeMix29VarB");
   }
+
+  // Test: V_PRIME_PDP_23 | PDP 'What's inside' section: chapter map + Q&A
+  const primePdp23 = window.igData?.user.getTestGroup(
+    "2fbd76e4-5c99-438c-b112-d031dff9c4bd"
+  );
+  if (primePdp23?.name === "Var A - Topics then Q&A") {
+    document.body.classList.add("c-primePdp23VarA");
+  } else if (primePdp23?.name === "Var B - Q&A then topics") {
+    document.body.classList.add("c-primePdp23VarB");
+  } else if (primePdp23?.name === "Var C - Q&A only") {
+    document.body.classList.add("c-primePdp23VarC");
+  }
 }
 
 let cartDrawerWasActive = false;
