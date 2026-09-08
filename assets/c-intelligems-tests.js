@@ -8,6 +8,13 @@ const HOLDOUT_GROUP_ID = "c41ea5b4-45b8-4edf-8687-844be31c4054";
 
 function handleExperiments() {
   if (!domLoaded || !igReady) return;
+  // Test: V_PRIME_MIX_26 | Grandparent-voice Testimonial Carousel
+  const primeMix26 = window.igData?.user.getTestGroup(
+    "09581346-2806-47e0-80ef-c94e215d67b1"
+  );
+  if (primeMix26?.name === "Var A") {
+    document.body.classList.add("c-primeMix26VarA");
+  }
 
   // Holdout: V_PRIME_HOLDOUT_G1 | Validare Holdout Gen 1 (do not edit, do not move, keep above every test)
   const validareHoldout = window.igData?.user.getTestGroup(HOLDOUT_EXPERIMENT_ID);
@@ -111,4 +118,5 @@ document.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("ig:ready", () => {
   igReady = true;
   handleExperiments();
+  resolveHoldout();
 });
