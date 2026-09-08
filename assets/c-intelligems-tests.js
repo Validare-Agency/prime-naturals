@@ -118,5 +118,4 @@ document.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("ig:ready", () => {
   igReady = true;
   handleExperiments();
-  resolveHoldout();
 });
