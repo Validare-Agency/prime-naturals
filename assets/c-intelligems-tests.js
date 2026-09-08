@@ -86,7 +86,9 @@ function handleExperiments() {
   }
 
   // Test: V_PRIME_MIX_26 | Grandparent-voice Testimonial Carousel
-  const primeMix26 = { name: "Var A" }
+  const primeMix26 = window.igData?.user.getTestGroup(
+    "09581346-2806-47e0-80ef-c94e215d67b1"
+  );
   if (primeMix26?.name === "Var A") {
     document.body.classList.add("c-primeMix26VarA");
   }
