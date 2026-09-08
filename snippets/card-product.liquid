@@ -73,6 +73,7 @@
         style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
       >
         {%- if card_product.featured_media -%}
+          {% render 'custom-product-labels', product: card_product, size: 'card' %}
           <div class="card__media">
             <div class="media media--transparent media--hover-effect">
               {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
