@@ -4,7 +4,7 @@ let igReady = false;
 // Validare Holdout, Generation 1. Sitewide, permanent. Never end this experiment.
 // Checked by group id, not name, so a rename in Intelligems cannot silently open the gate.
 const HOLDOUT_EXPERIMENT_ID = "3ad2181f-d285-418c-b4d8-a52ce3a136a1";
-const HOLDOUT_GROUP_ID = "c41ea5b4-45b8-4edf-8687-844be31c4054";
+// const HOLDOUT_GROUP_ID = "c41ea5b4-45b8-4edf-8687-844be31c4054"; Uncomment this before merging
 
 function handleExperiments() {
   if (!domLoaded || !igReady) return;
@@ -45,23 +45,23 @@ function handleExperiments() {
     document.body.classList.add("c-primePdp20VarC");
   }
 
-  // Test: V_PRIME_PDP_22 | Encyclopedia - Upsell
-  const primePdp22 = window.igData?.user.getTestGroup(
-    "611c3873-2fc9-458b-82a5-f3ed383dd2ef"
-  );
-  if (primePdp22?.name === "Var A - Leadership checkbox") {
-    document.body.classList.add("c-primePdp22VarA");
-  } else if (primePdp22?.name === "Var B - Leadership ADD button") {
-    document.body.classList.add("c-primePdp22VarB");
-  } else if (primePdp22?.name === "Var C - Murphy checkbox") {
-    document.body.classList.add("c-primePdp22VarC");
-  } else if (primePdp22?.name === "Var D - Murphy ADD button") {
-    document.body.classList.add("c-primePdp22VarD");
-  } else if (primePdp22?.name === "Var E - Both checkbox") {
-    document.body.classList.add("c-primePdp22VarE");
-  } else if (primePdp22?.name === "Var F - Both ADD button") {
-    document.body.classList.add("c-primePdp22VarF");
-  }
+  // Test: V_PRIME_PDP_22 | Encyclopedia - Upsell 
+  // const primePdp22 = window.igData?.user.getTestGroup(
+  //   "611c3873-2fc9-458b-82a5-f3ed383dd2ef"
+  // );
+  // if (primePdp22?.name === "Var A - Leadership checkbox") {
+  //   document.body.classList.add("c-primePdp22VarA");
+  // } else if (primePdp22?.name === "Var B - Leadership ADD button") {
+  //   document.body.classList.add("c-primePdp22VarB");
+  // } else if (primePdp22?.name === "Var C - Murphy checkbox") {
+  //   document.body.classList.add("c-primePdp22VarC");
+  // } else if (primePdp22?.name === "Var D - Murphy ADD button") {
+  //   document.body.classList.add("c-primePdp22VarD");
+  // } else if (primePdp22?.name === "Var E - Both checkbox") {
+  //   document.body.classList.add("c-primePdp22VarE");
+  // } else if (primePdp22?.name === "Var F - Both ADD button") {
+  //   document.body.classList.add("c-primePdp22VarF");
+  // }
 
   // Test: V_PRIME_MIX_29 | Free Shipping Threshold at 2-Book Tier
   const primeMix29 = window.igData?.user.getTestGroup(
