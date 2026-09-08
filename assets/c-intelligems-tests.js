@@ -123,6 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener("ig:ready", () => {
   igReady = true;
-  resolveHoldout();
   handleExperiments();
+  resolveHoldout();
 });
