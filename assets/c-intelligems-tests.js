@@ -4,7 +4,9 @@ let igReady = false;
 // Validare Holdout, Generation 1. Sitewide, permanent. Never end this experiment.
 // Checked by group id, not name, so a rename in Intelligems cannot silently open the gate.
 const HOLDOUT_EXPERIMENT_ID = "3ad2181f-d285-418c-b4d8-a52ce3a136a1";
-// const HOLDOUT_GROUP_ID = "c41ea5b4-45b8-4edf-8687-844be31c4054"; Uncomment this before merging
+// const HOLDOUT_GROUP_ID = "c41ea5b4-45b8-4edf-8687-844be31c4054"; revert before merging the code
+const HOLDOUT_GROUP_ID = "test"; 
+
 
 function handleExperiments() {
   if (!domLoaded || !igReady) return;
