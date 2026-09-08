@@ -1,0 +1,268 @@
+/* <-------------------V_PRIME_PDP_25 | Offer Iteration: Winning BOGO + Gift Stack-----------------> */
+
+/* Test Setup */
+
+/* Gift section is hidden for Control; shown for Var A / B / C only.
+   All three gift tiles render in the DOM for every visitor so there is
+   no layout shift when the body class arrives after ig:ready. */
+.c-pdp25-gifts {
+  display: none;
+}
+
+body.c-primePdp25VarA .c-pdp25-gifts,
+body.c-primePdp25VarB .c-pdp25-gifts,
+body.c-primePdp25VarC .c-pdp25-gifts {
+  display: block;
+}
+
+/* "2x FREE" promo badge on the tier-3 row — hidden for Control */
+.c-pdp25-2x-badge {
+  display: none;
+}
+
+body.c-primePdp25VarA .c-pdp25-2x-badge,
+body.c-primePdp25VarB .c-pdp25-2x-badge,
+body.c-primePdp25VarC .c-pdp25-2x-badge {
+  display: inline-block;
+}
+
+/* Heading: "UNLOCK BONUS FREE GIFTS" shown in Var A + B;
+            "BONUS FREE GIFTS" shown in Var C.
+   Both always render; CSS toggles which is visible. */
+.c-pdp25-gifts__heading {
+  display: none;
+}
+
+body.c-primePdp25VarA .c-pdp25-gifts__heading--unlock,
+body.c-primePdp25VarB .c-pdp25-gifts__heading--unlock {
+  display: block;
+}
+
+body.c-primePdp25VarC .c-pdp25-gifts__heading--bonus {
+  display: block;
+}
+
+/* Lock overlay: Var A never shows it; Var B + C show it when locked. */
+.c-pdp25-gift__lock-overlay {
+  display: none;
+}
+
+body.c-primePdp25VarB .c-pdp25-gift[data-pdp25-unlocked="false"] .c-pdp25-gift__lock-overlay,
+body.c-primePdp25VarC .c-pdp25-gift[data-pdp25-unlocked="false"] .c-pdp25-gift__lock-overlay {
+  display: flex;
+}
+
+/* Threshold label ("Unlock at 2 books"): Var B + C show it when locked only. */
+.c-pdp25-gift__threshold {
+  display: none;
+}
+
+body.c-primePdp25VarB .c-pdp25-gift[data-pdp25-unlocked="false"] .c-pdp25-gift__threshold,
+body.c-primePdp25VarC .c-pdp25-gift[data-pdp25-unlocked="false"] .c-pdp25-gift__threshold {
+  display: block;
+}
+
+/* Retail value label: Var B + C only. */
+.c-pdp25-gift__value {
+  display: none;
+}
+
+body.c-primePdp25VarB .c-pdp25-gift__value,
+body.c-primePdp25VarC .c-pdp25-gift__value {
+  display: block;
+}
+
+/* "FREE" label: Var A always; Var B + C only when unlocked. */
+.c-pdp25-gift__free {
+  display: none;
+}
+
+body.c-primePdp25VarA .c-pdp25-gift__free {
+  display: block;
+}
+
+body.c-primePdp25VarB .c-pdp25-gift[data-pdp25-unlocked="true"] .c-pdp25-gift__free,
+body.c-primePdp25VarC .c-pdp25-gift[data-pdp25-unlocked="true"] .c-pdp25-gift__free {
+  display: block;
+}
+
+/* Var C tile border: default off; active only in Var C */
+.c-pdp25-gift__tile {
+  border: none;
+}
+
+body.c-primePdp25VarC .c-pdp25-gift__tile {
+  border: 2px solid #d9e0e6;
+}
+
+body.c-primePdp25VarC .c-pdp25-gift[data-pdp25-unlocked="true"] .c-pdp25-gift__tile {
+  border-color: #2e8b57;
+}
+
+
+/* Test Design */
+
+/* --- "2x FREE" badge on tier-3 row title --- */
+.c-pdp25-2x-badge {
+  margin-left: 6px;
+  background: #e74c3c;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  padding: 2px 6px;
+  vertical-align: middle;
+  line-height: 1.4;
+}
+
+/* --- Gift section wrapper --- */
+.c-pdp25-gifts {
+  margin: 0 0 14px 0;
+  font-family: var(--font-body-family);
+}
+
+/* Heading shared base */
+.c-pdp25-gifts__heading {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #0d1b3e;
+  text-align: center;
+  margin: 0 0 10px 0;
+}
+
+/* 3-column gift row */
+.c-pdp25-gifts__row {
+  display: flex;
+  gap: 8px;
+}
+
+/* Each gift column */
+.c-pdp25-gift {
+  flex: 1;
+  min-width: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Dim locked gifts in Var B/C */
+body.c-primePdp25VarB .c-pdp25-gift[data-pdp25-unlocked="false"],
+body.c-primePdp25VarC .c-pdp25-gift[data-pdp25-unlocked="false"] {
+  opacity: 0.45;
+}
+
+/* Tile container */
+.c-pdp25-gift__tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border-radius: 8px;
+  padding: 8px 4px;
+  text-align: center;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+/* Image wrap: relative position for the lock overlay */
+.c-pdp25-gift__image-wrap {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Lock overlay */
+.c-pdp25-gift__lock-overlay {
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 6px;
+  z-index: 1;
+}
+
+.c-pdp25-gift__lock-overlay svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* Gift icon (emoji) */
+.c-pdp25-gift__icon {
+  font-size: 32px;
+  line-height: 1;
+  display: block;
+}
+
+/* Threshold label */
+.c-pdp25-gift__threshold {
+  font-size: 9px;
+  font-weight: 600;
+  color: #6b7681;
+  line-height: 1.2;
+  letter-spacing: 0.2px;
+  margin: 0;
+}
+
+/* Gift name */
+.c-pdp25-gift__name {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1f3a5f;
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* Retail value */
+.c-pdp25-gift__value {
+  font-size: 10px;
+  color: #6b7681;
+  text-decoration: line-through;
+  margin: 0;
+  line-height: 1;
+}
+
+/* FREE label */
+.c-pdp25-gift__free {
+  font-size: 10px;
+  font-weight: 800;
+  color: #2e8b57;
+  letter-spacing: 0.3px;
+  margin: 0;
+  line-height: 1;
+}
+
+@media screen and (max-width: 749px) {
+  .c-pdp25-gifts__row {
+    gap: 6px;
+  }
+
+  .c-pdp25-gift__tile {
+    padding: 8px 2px;
+  }
+
+  .c-pdp25-gift__icon {
+    font-size: 28px;
+  }
+
+  .c-pdp25-gift__name {
+    font-size: 10px;
+  }
+
+  .c-pdp25-gift__threshold {
+    font-size: 8px;
+  }
+
+  .c-pdp25-gift__value {
+    font-size: 9px;
+  }
+
+  .c-pdp25-gift__free {
+    font-size: 9px;
+  }
+}

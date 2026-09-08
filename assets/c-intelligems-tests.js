@@ -72,6 +72,18 @@ function handleExperiments() {
   } else if (primeMix29?.name === "Var B") {
     document.body.classList.add("c-primeMix29VarB");
   }
+
+  // Test: V_PRIME_PDP_25 | Offer iteration: winning BOGO + gift stack
+  const primePdp25 = window.igData?.user.getTestGroup(
+    "b1871cb7-39bd-406b-bf9f-3b4449788f40"
+  );
+  if (primePdp25?.name === "Var A - Inline gifts shown") {
+    document.body.classList.add("c-primePdp25VarA");
+  } else if (primePdp25?.name === "Var B - Gifts with lock thresholds") {
+    document.body.classList.add("c-primePdp25VarB");
+  } else if (primePdp25?.name === "Var C - Bordered gift tiles with lock/unlock") {
+    document.body.classList.add("c-primePdp25VarC");
+  }
 }
 
 let cartDrawerWasActive = false;
