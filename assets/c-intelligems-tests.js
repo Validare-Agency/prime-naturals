@@ -16,14 +16,14 @@ function handleExperiments() {
     document.body.classList.add("c-primeMix26VarA");
   }
 
-  // // Holdout: V_PRIME_HOLDOUT_G1 | Validare Holdout Gen 1 (do not edit, do not move, keep above every test)
-  // const validareHoldout = window.igData?.user.getTestGroup(HOLDOUT_EXPERIMENT_ID);
-  // if (validareHoldout?.id === HOLDOUT_GROUP_ID) {
-  //   document.body.classList.add("c-validareHoldout");
-  //   holdOutFromAllTests();
-  // } else {
-  //   document.body.classList.add("c-validareOptimized");
-  // }
+  // Holdout: V_PRIME_HOLDOUT_G1 | Validare Holdout Gen 1 (do not edit, do not move, keep above every test)
+  const validareHoldout = window.igData?.user.getTestGroup(HOLDOUT_EXPERIMENT_ID);
+  if (validareHoldout?.id === HOLDOUT_GROUP_ID) {
+    document.body.classList.add("c-validareHoldout");
+    holdOutFromAllTests();
+  } else {
+    document.body.classList.add("c-validareOptimized");
+  }
 
   // Test: V_PRIME_PDP_19 | PDP - Reviews - FB
   const primePdp19 = window.igData?.user.getTestGroup(
@@ -132,5 +132,5 @@ document.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("ig:ready", () => {
   igReady = true;
   handleExperiments();
-  // resolveHoldout();
+  resolveHoldout();
 });
