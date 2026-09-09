@@ -22,14 +22,6 @@ function handleExperiments() {
   }
 
 
-  // Test: V_PRIME_PDP_19 | PDP - Reviews - FB
-  const primePdp19 = window.igData?.user.getTestGroup(
-    "7540f3a1-7d2c-4ee8-a965-35aab62c7aae"
-  );
-  if (primePdp19?.name === "Var A") {
-    document.body.classList.add("c-primePdp19VarA");
-  }
-
   // Test: V_PRIME_PDP_20 | Product Page - USPs - ATF
   const primePdp20 = window.igData?.user.getTestGroup(
     "7238475d-4fc1-46fd-99f1-7c262f87885c"
@@ -60,15 +52,6 @@ function handleExperiments() {
     document.body.classList.add("c-primePdp22VarF");
   }
 
-  // Test: V_PRIME_MIX_29 | Free Shipping Threshold at 2-Book Tier
-  const primeMix29 = window.igData?.user.getTestGroup(
-    "90279e90-4c59-49c6-9784-5c632eb6c9b8"
-  );
-  if (primeMix29?.name === "Var A") {
-    document.body.classList.add("c-primeMix29VarA");
-  } else if (primeMix29?.name === "Var B") {
-    document.body.classList.add("c-primeMix29VarB");
-  }
 }
 
 let cartDrawerWasActive = false;
