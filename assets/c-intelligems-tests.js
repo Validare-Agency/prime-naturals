@@ -11,9 +11,16 @@ function handleExperiments() {
 
   // Holdout: V_PRIME_HOLDOUT_G1 | Validare Holdout Gen 1 (do not edit)
   const validareHoldout = window.igData?.user.getTestGroup(HOLDOUT_EXPERIMENT_ID);
-  document.body.classList.add(
-    validareHoldout?.id === HOLDOUT_GROUP_ID ? "c-validareHoldout" : "c-validareOptimized"
-  );
+  const isHeldOut = validareHoldout?.id === HOLDOUT_GROUP_ID;
+  document.body.classList.add(isHeldOut ? "c-validareHoldout" : "c-validareOptimized");
+  // Cross-page flag for the optional per-test Intelligems audience rule. Audience JS Expressions
+  // run at page load, before igData exists, so a rule reads this on the NEXT pageload:
+  // localStorage.getItem("validare_holdout") === "0". Inert until such a rule is saved in the UI.
+  try {
+    localStorage.setItem("validare_holdout", isHeldOut ? "1" : "0");
+  } catch (e) {
+    // Storage blocked: no flag, and a rule reading it leaves the visitor unassigned, the safe side.
+  }
 
   // Test: V_PRIME_MIX_26 | Grandparent-voice Testimonial Carousel
   const primeMix26 = window.igData?.user.getTestGroup(
