@@ -9,9 +9,15 @@ function handleExperiments() {
   if (!domLoaded || !igReady) return;
 
   // Holdout: V_PRIME_HOLDOUT_G1 (do not edit)
-  const isHeldOut = window.igData?.user.getTestGroup(HOLDOUT_EXPERIMENT_ID)?.id === HOLDOUT_GROUP_ID;
-  document.body.classList.add(isHeldOut ? "c-validareHoldout" : "c-validareOptimized");
-  try { localStorage.setItem("validare_holdout", isHeldOut ? "1" : "0"); } catch (e) {}
+  const isHeldOut =
+    window.igData?.user.getTestGroup(HOLDOUT_EXPERIMENT_ID)?.id ===
+    HOLDOUT_GROUP_ID;
+  document.body.classList.add(
+    isHeldOut ? "c-validareHoldout" : "c-validareOptimized"
+  );
+  try {
+    localStorage.setItem("validare_holdout", isHeldOut ? "1" : "0");
+  } catch (e) {}
 
   // Test: V_PRIME_MIX_26 | Grandparent-voice Testimonial Carousel
   const primeMix26 = window.igData?.user.getTestGroup(
@@ -20,7 +26,6 @@ function handleExperiments() {
   if (primeMix26?.name === "Var A") {
     document.body.classList.add("c-primeMix26VarA");
   }
-
 
   // Test: V_PRIME_PDP_22 | Encyclopedia - Upsell
   const primePdp22 = window.igData?.user.getTestGroup(
@@ -40,6 +45,24 @@ function handleExperiments() {
     document.body.classList.add("c-primePdp22VarF");
   }
 
+  // Test: V_PRIME_PDP_25 | Unlock Bonus Free Gifts
+  const primePdp25 = window.igData?.user.getTestGroup(
+    "59bf8132-e0c0-4d87-acec-2b3319273615"
+  );
+  if (primePdp25?.name === "Var A - Inline gifts shown") {
+    document.body.classList.add("c-primePdp25VarA");
+  } else if (primePdp25?.name === "Var B - Gifts with lock thresholds") {
+    document.body.classList.add("c-primePdp25VarB");
+  } else if (
+    primePdp25?.name === "Var C - Bordered gift tiles with lock/unlock"
+  ) {
+    document.body.classList.add("c-primePdp25VarC");
+  } else if (
+    primePdp25?.name ===
+    "Var D - Bordered gift tiles with lock/unlock Threshold"
+  ) {
+    document.body.classList.add("c-primePdp25VarD");
+  }
 }
 
 let cartDrawerWasActive = false;
@@ -72,7 +95,8 @@ function holdOutFromAllTests() {
   if (user.getTestGroup(HOLDOUT_EXPERIMENT_ID)?.id !== HOLDOUT_GROUP_ID) return;
   try {
     const getTestGroup = user.getTestGroup.bind(user);
-    user.getTestGroup = (id) => (id === HOLDOUT_EXPERIMENT_ID ? getTestGroup(id) : null);
+    user.getTestGroup = (id) =>
+      id === HOLDOUT_EXPERIMENT_ID ? getTestGroup(id) : null;
     user.validareHoldoutApplied = true;
   } catch (e) {}
 }

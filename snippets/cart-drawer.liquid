@@ -128,9 +128,9 @@
                       <div class="drawer__cart-items-wrapper">
                         <ul class="cart-items list-unstyled">
                           {%- for item in cart.items -%}
-                            <li 
-                              id="CartDrawer-Item-{{ item.index | plus: 1 }}" 
-                              class="cart-drawer-item cart-item cart-item--product-{{ item.product.handle }}" 
+                            <li
+                              id="CartDrawer-Item-{{ item.index | plus: 1 }}"
+                              class="cart-drawer-item cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pdp25_gift %} c-pdp25-gift-line{% endif %}"
                               role="row" data-index="{{ item.index | plus: 1 }}"
                             >
                               <div class="loading-overlay hidden">
@@ -295,7 +295,10 @@
                                 <div class='cart-drawer-item__quantity-and-prices{% if block.settings.prices_position == 'left' %} cart-drawer-item__quantity-and-prices--reverse{% endif %}{% if has_props != false %} cart-drawer-item__quantity-and-prices--has-props{% endif %}'>
                                   <div class="cart-item__quantity">
                                     <div class="cart-item__quantity-wrapper">
-                                      <quantity-input 
+                                      {% if item.properties._pdp25_gift %}
+                                        <span class="c-pdp25-cart-gift-badge">FREE</span>
+                                      {% endif %}
+                                      <quantity-input
                                         class="quantity cart-quantity color-{{ block.settings.quantity_container_color_scheme }}{% if block.settings.quantity_round_btns %} cart-quantity--round-btns{% endif %}{% if block.settings.quantity_outline_btns %} cart-quantity--outline-btns{% endif %}"
                                         style='
                                           --font-size:{{ block.settings.quantity_font_size | divided_by: 10.0 }}rem;
@@ -402,7 +405,11 @@
                                           assign total_compare_price = total_compare_price | plus: item.original_line_price
                                         %}
                                         <span class="price--end regular-price accent-color-{{ block.settings.price_color }}">
-                                          {{ item.original_line_price | money }}
+                                          {%- if item.properties._pdp25_gift -%}
+                                            FREE
+                                          {%- else -%}
+                                            {{ item.original_line_price | money }}
+                                          {%- endif -%}
                                         </span>
                                       {% endif %}
         

@@ -63,7 +63,7 @@
 
             <tbody>
               {%- for item in cart.items -%}
-                <tr class="cart-item cart-item--product-{{ item.product.handle }}" id="CartItem-{{ item.index | plus: 1 }}">
+                <tr class="cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pdp25_gift %} c-pdp25-gift-line{% endif %}" id="CartItem-{{ item.index | plus: 1 }}">
                   <td class="cart-item__media">
                     {% if item.image %}
                       {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
@@ -189,7 +189,11 @@
                         </dl>
                       {%- else -%}
                         <span class="price price--end">
-                          {{ item.original_line_price | money }}
+                          {%- if item.properties._pdp25_gift -%}
+                            FREE
+                          {%- else -%}
+                            {{ item.original_line_price | money }}
+                          {%- endif -%}
                         </span>
                       {%- endif -%}
 
@@ -212,6 +216,9 @@
 
                   <td class="cart-item__quantity">
                     <div class="cart-item__quantity-wrapper">
+                      {% if item.properties._pdp25_gift %}
+                        <span class="c-pdp25-cart-gift-badge">FREE</span>
+                      {% endif %}
                       <label class="visually-hidden" for="Quantity-{{ item.index | plus: 1 }}">
                         {{ 'products.product.quantity.label' | t }}
                       </label>
@@ -312,7 +319,11 @@
                         </dl>
                       {%- else -%}
                         <span class="price price--end">
-                          {{ item.original_line_price | money }}
+                          {%- if item.properties._pdp25_gift -%}
+                            FREE
+                          {%- else -%}
+                            {{ item.original_line_price | money }}
+                          {%- endif -%}
                         </span>
                       {%- endif -%}
 
@@ -346,6 +357,17 @@
     </p>
   </form>
 </cart-items>
+
+{%- comment -%} V_PRIME_PDP_25 | Unlock Bonus Free Gifts — hides the quantity
+  selector on gift lines (c-pdp25-gift-line, set above), so gift quantity
+  stays entirely driven by the bundle tier, not directly editable here.
+  Remove button is untouched (a shopper can still remove a gift outright).
+{%- endcomment -%}
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-pdp-25.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-pdp-25.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
 
 {% schema %}
 {
