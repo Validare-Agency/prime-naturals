@@ -35,6 +35,7 @@
       {%- if label_text != blank -%}
         <span
           class="custom-product-label"
+          data-label="{{ label_text | downcase }}"
           style="background-color: {{ label_color }}; color: {{ label_text_color }};"
         >
           {{- label_text -}}
