@@ -32,8 +32,16 @@
         role="list"
       >
         {% for recommendation in recommendations.products %}
+          {% liquid
+            assign label_values = ''
+            for label in recommendation.metafields.custom.labels.value
+              assign label_text = label | split: '|' | first | strip | downcase
+              assign label_values = label_values | append: label_text | append: ' '
+            endfor
+            assign label_values = label_values | strip
+          %}
           {% unless recommendation.tags contains 'collection-hidden' %}
-            <li class="grid__item animate-item animate-item--child" style="--index:{{ forloop.index0 }};">
+            <li class="grid__item animate-item animate-item--child" data-label="{{ label_values }}" style="--index:{{ forloop.index0 }};">
               {% render 'card-product',
                 card_product: recommendation,
                 media_aspect_ratio: section.settings.image_ratio,

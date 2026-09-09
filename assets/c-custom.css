@@ -143,3 +143,8 @@ img[src*="magnific_4second-loop-grandmothers.gif"] {
 .jdgm-star {
   color: #f59e0b !important;
 }
+
+[data-label*="coming soon"] .card-information,
+[data-label*="coming soon"] .card__content .card__badge {
+  display: none;
+}
