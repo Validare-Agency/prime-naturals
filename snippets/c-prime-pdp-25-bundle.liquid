@@ -26,6 +26,16 @@
   # a single book.
   assign c_pdp25_t1_variant_id = c_pdp25_variant.id
 
+  # Currency-agnostic handle check — see c-prime-pdp-17-bundle.liquid for the
+  # full rationale (localized prices can't be compared against a fixed number).
+  # Dropped when this file was first forked from c-prime-pdp-22-bundle.liquid —
+  # restored, since the encyclopedia's tier 3 needs its own discount, not the
+  # general formula (was showing $119.90 instead of $99.90).
+  assign c_pdp25_is_encyclopedia = false
+  if product.handle == 'kidss-encyclopedia-10-000-whys'
+    assign c_pdp25_is_encyclopedia = true
+  endif
+
   # Tier 1: 1 book, base price, no discount. Compare price is the site's
   # existing "50% off" anchor (base x2), same as shown everywhere else on the PDP.
   assign c_pdp25_a_t1_price = c_pdp25_base_cents
@@ -44,8 +54,13 @@
 
   # BOGO framing display prices only — real discount comes from that product's
   # own native Kaching Bundles quantity-discount config (see c-prime-pdp-17-bundle.liquid).
-  assign c_pdp25_d_t2_price = c_pdp25_base_cents | times: 5990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
-  assign c_pdp25_d_t3_price = c_pdp25_base_cents | times: 8990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+  if c_pdp25_is_encyclopedia
+    assign c_pdp25_d_t2_price = c_pdp25_base_cents | times: 7990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp25_d_t3_price = c_pdp25_base_cents | times: 9990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+  else
+    assign c_pdp25_d_t2_price = c_pdp25_base_cents | times: 5990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp25_d_t3_price = c_pdp25_base_cents | times: 8990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+  endif
 
   assign c_pdp25_d_t2_compare = c_pdp25_base_cents | times: 3
   assign c_pdp25_d_t2_save = c_pdp25_d_t2_compare | minus: c_pdp25_d_t2_price
@@ -180,6 +195,7 @@
     </label>
 
     <label class="c-pdp25-row c-pdp25-row--stacked">
+      <span class="c-pdp25-row__badge c-pdp25-row__badge--popular c-pdp25-row__badge--sentence">One for every grandchild</span>
       <input
         type="radio"
         name="c-pdp25-tier-{{ section.id }}"
