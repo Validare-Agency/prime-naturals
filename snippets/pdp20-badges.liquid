@@ -1,0 +1,27 @@
+{%- comment -%}
+  V_PRIME_PDP_20 | Product Page - USPs - ATF
+  Winner: Var C - Badges within info stack. Rendered after the title (.pib-title / .product__title).
+{%- endcomment -%}
+{%- liquid
+  assign age_text = 'Age: 6-12'
+  if product.handle contains 'leadership' or product.handle contains 'murphy' or product.handle contains 'king-nitric'
+    assign age_text = 'Age: 8-12'
+  endif
+-%}
+<div class="c-pdp20-badges c-pdp20-badges--c" aria-hidden="true">
+  <span class="c-pdp20-badge">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g clip-path="url(#clip0_837_8026)"><path d="M2.66663 13.0026C2.66663 12.5606 2.84222 12.1367 3.15478 11.8241C3.46734 11.5115 3.89127 11.3359 4.33329 11.3359H13.3333" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.33329 1.33594H13.3333V14.6693H4.33329C3.89127 14.6693 3.46734 14.4937 3.15478 14.1811C2.84222 13.8686 2.66663 13.4446 2.66663 13.0026V3.0026C2.66663 2.56058 2.84222 2.13665 3.15478 1.82409C3.46734 1.51153 3.89127 1.33594 4.33329 1.33594Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_837_8026"><rect width="16" height="16" fill="white"/></clipPath></defs></svg>
+    Hardcover
+    <svg class="badge-border" aria-hidden="true"><rect x="0.5" y="0.5" rx="10" ry="10"></rect></svg>
+  </span>
+  <span class="c-pdp20-badge">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g clip-path="url(#clip0_837_8031)"><path d="M7.99996 14.6693C7.99996 14.6693 13.3333 12.0026 13.3333 8.0026V3.33594L7.99996 1.33594L2.66663 3.33594V8.0026C2.66663 12.0026 7.99996 14.6693 7.99996 14.6693Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 7.9974L7.33333 9.33073L10 6.66406" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_837_8031"><rect width="16" height="16" fill="white"/></clipPath></defs></svg>
+    30-Days Guarantee
+    <svg class="badge-border" aria-hidden="true"><rect x="0.5" y="0.5" rx="10" ry="10"></rect></svg>
+  </span>
+  <span class="c-pdp20-badge">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M13.3333 14V12.6667C13.3333 11.9594 13.0523 11.2811 12.5522 10.781C12.0521 10.281 11.3739 10 10.6666 10H5.33329C4.62605 10 3.94777 10.281 3.44767 10.781C2.94758 11.2811 2.66663 11.9594 2.66663 12.6667V14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.00004 7.33333C9.4728 7.33333 10.6667 6.13943 10.6667 4.66667C10.6667 3.19391 9.4728 2 8.00004 2C6.52728 2 5.33337 3.19391 5.33337 4.66667C5.33337 6.13943 6.52728 7.33333 8.00004 7.33333Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    {{ age_text }}
+    <svg class="badge-border" aria-hidden="true"><rect x="0.5" y="0.5" rx="10" ry="10"></rect></svg>
+  </span>
+</div>
