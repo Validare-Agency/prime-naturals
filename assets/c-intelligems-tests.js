@@ -22,18 +22,6 @@ function handleExperiments() {
   }
 
 
-  // Test: V_PRIME_PDP_20 | Product Page - USPs - ATF
-  const primePdp20 = window.igData?.user.getTestGroup(
-    "7238475d-4fc1-46fd-99f1-7c262f87885c"
-  );
-  if (primePdp20?.name === "Var A - Badges below thumbnails") {
-    document.body.classList.add("c-primePdp20VarA");
-  } else if (primePdp20?.name === "Var B - Badges below review card") {
-    document.body.classList.add("c-primePdp20VarB");
-  } else if (primePdp20?.name === "Var C - Badges within info stack") {
-    document.body.classList.add("c-primePdp20VarC");
-  }
-
   // Test: V_PRIME_PDP_22 | Encyclopedia - Upsell
   const primePdp22 = window.igData?.user.getTestGroup(
     "611c3873-2fc9-458b-82a5-f3ed383dd2ef"
