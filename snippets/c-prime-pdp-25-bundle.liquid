@@ -217,7 +217,11 @@
       data-quantity vs. that card's data-pdp25-unlock-qty.
     {%- endcomment -%}
     <div class="c-pdp25-gifts">
-      <p class="c-pdp25-gifts__heading">Unlock Bonus Free Gifts</p>
+      {%- comment -%} Var C/D only say "Bonus Free Gifts" (no "Unlock") — both
+        headings render, CSS shows the right one per variant (see
+        assets/c-prime-pdp-25.css). {%- endcomment -%}
+      <p class="c-pdp25-gifts__heading c-pdp25-gifts__heading--default">Unlock Bonus Free Gifts</p>
+      <p class="c-pdp25-gifts__heading c-pdp25-gifts__heading--short">Bonus Free Gifts</p>
       <div class="c-pdp25-gifts__box">
         {%- if c_pdp25_gift_mystery_variant -%}
           <div

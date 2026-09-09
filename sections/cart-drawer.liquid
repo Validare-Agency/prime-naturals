@@ -21,6 +21,16 @@
 </script>
 <script src="{{ 'c-prime-pdp-25.js' | asset_url }}" defer></script>
 
+{%- comment -%} Hides the quantity selector on gift lines (c-pdp25-gift-line,
+  set in snippets/cart-drawer.liquid) — gift quantity stays entirely driven
+  by the bundle tier, not directly editable here. Remove button is
+  untouched. {%- endcomment -%}
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-pdp-25.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-pdp-25.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Cart drawer",

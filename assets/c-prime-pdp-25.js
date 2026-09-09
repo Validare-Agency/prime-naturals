@@ -15,6 +15,18 @@
     return checked ? parseInt(checked.getAttribute('data-quantity'), 10) || 0 : 0;
   }
 
+  // The gift-stack markup always renders in the DOM (CSS just hides it
+  // visually for Control — see c-prime-pdp-25.css) so gift-granting logic
+  // must check this itself: Control must never actually receive a gift,
+  // only shoppers c-intelligems-tests.js has bucketed into a named PDP_25
+  // variant. Checked live off body classList rather than cached once, since
+  // that's the single source of truth that file writes to.
+  function pdp25VariantActive() {
+    return ['c-primePdp25VarA', 'c-primePdp25VarB', 'c-primePdp25VarC', 'c-primePdp25VarD'].some(function (cls) {
+      return document.body.classList.contains(cls);
+    });
+  }
+
   // Toggles each gift card's unlocked/locked look based on the selected row's
   // quantity vs. that card's own data-pdp25-unlock-qty threshold.
   function updateGiftLocks(root) {
@@ -110,6 +122,7 @@
   // Every gift whose unlock threshold the selected tier's quantity clears —
   // these are the ones that actually get added alongside the bundle.
   function getUnlockedGiftItems(root, bundleId) {
+    if (!pdp25VariantActive()) return [];
     var quantity = getCheckedTierQuantity(root);
     var items = [];
     root.querySelectorAll('[data-pdp25-gift]').forEach(function (gift) {
@@ -275,10 +288,16 @@
       }
     });
 
+    // Never justified outside a named variant — this both stops Control
+    // from ever getting a gift added here, and actively cleans up any gift
+    // line that shouldn't exist (e.g. a shopper reassigned away from a
+    // variant after already having one).
+    var variantActive = pdp25VariantActive();
+
     var toRemove = [];
     var toAdd = [];
     Object.keys(GIFT_UNLOCK_THRESHOLDS).forEach(function (key) {
-      var justified = mainQuantity >= GIFT_UNLOCK_THRESHOLDS[key];
+      var justified = variantActive && mainQuantity >= GIFT_UNLOCK_THRESHOLDS[key];
       var present = !!giftsByKey[key];
       if (present && !justified) toRemove.push(giftsByKey[key].key);
       if (!present && justified) toAdd.push(key);

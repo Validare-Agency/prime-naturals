@@ -523,6 +523,20 @@ body.c-primePdp25VarD .c-pdp25-row__image-wrap {
   margin: 0 0 16px 0;
 }
 
+.c-pdp25-gifts__heading--short {
+  display: none;
+}
+
+body.c-primePdp25VarC .c-pdp25-gifts__heading--default,
+body.c-primePdp25VarD .c-pdp25-gifts__heading--default {
+  display: none;
+}
+
+body.c-primePdp25VarC .c-pdp25-gifts__heading--short,
+body.c-primePdp25VarD .c-pdp25-gifts__heading--short {
+  display: block;
+}
+
 .c-pdp25-gifts__heading {
   font-family: var(--font-heading-family);
   font-weight: 700;
@@ -550,9 +564,13 @@ body.c-primePdp25VarD .c-pdp25-row__image-wrap {
 .c-pdp25-gift {
   position: relative;
   box-sizing: border-box;
-  flex: 0 0 168px;
-  width: 168px;
-  height: 168px;
+  /* Fluid at every width, same as the max-width:749px rule below — a fixed
+     168px x 3 tiles (+ gaps) overflows the purchase column on typical
+     laptop viewports (roughly 750-1400px), pushing the third tile outside
+     the module and giving the whole page a horizontal scrollbar. */
+  flex: 1 1 0;
+  width: auto;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -882,4 +900,38 @@ body.c-primePdp25VarD .c-pdp25-gift:not(.c-pdp25-gift--unlocked) .c-pdp25-gift__
     font-size: 11.5px;
     line-height: 13.5px;
   }
+}
+
+/* Cart line (drawer + cart page) — c-pdp25-gift-line is set in
+   snippets/cart-drawer.liquid and sections/main-cart-items.liquid on any
+   line carrying the _pdp25_gift property. Hides just the quantity stepper;
+   the remove button is a sibling element, untouched, so a gift can still be
+   removed outright — its quantity just isn't directly editable, since
+   that's driven entirely by the bundle tier. */
+.c-pdp25-gift-line quantity-input {
+  display: none;
+}
+
+/* FREE badge sits in the gift line's quantity slot — left of the price,
+   the same spot the (now-hidden) quantity stepper used to occupy. Same
+   green chip style as .c-pdp25-gift__free-chip on the PDP. flex/align on
+   .cart-item__quantity is scoped to gift lines only, so it doesn't affect
+   any other product's quantity cell. */
+.c-pdp25-gift-line .cart-item__quantity,
+.c-pdp25-gift-line .cart-item__quantity-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.c-pdp25-cart-gift-badge {
+  display: inline-block;
+  white-space: nowrap;
+  background: #2e8b57;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-radius: 3px;
+  padding: 3px 10px;
 }
