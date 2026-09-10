@@ -9,22 +9,28 @@
 </script>
   <head>
     <script>
-      /* Google Ads traffic detection — must run before any stylesheet paints
+      /* Paid-search traffic detection — must run before any stylesheet paints
          so the c-googleAdsVisitor class is on <html> before c-prime-pdp-17.css
          (Kaching bundle) and c-prime-pdp-25.css (.c-pdp25-variant) apply.
-         A fresh gclid (or utm_source=google + utm_medium=cpc) on the URL
-         means a new ad click just happened, so the is_google_ads_user cookie
-         is (re)set to a full 48 hours from now every time one is seen —
-         a repeat click resets the window rather than letting the original
-         expiry keep counting down. Absent a fresh param, the existing cookie
-         (if any) is just read, not renewed, so the 48-hour window still
-         expires on schedule for a visitor who doesn't click through again. */
+         Click IDs (gclid/gclsrc/dclid — Google Ads, Bing Ads, DoubleClick) are
+         checked on their own since they only appear on an actual paid click;
+         utm_medium is checked independently of utm_source so Demand
+         Gen/YouTube traffic that doesn't carry a click id is still caught. A
+         fresh match on the URL means a new paid click just happened, so the
+         is_google_ads_user cookie is (re)set to a full 48 hours from now
+         every time one is seen — a repeat click resets the window rather
+         than letting the original expiry keep counting down. Absent a fresh
+         match, the existing cookie (if any) is just read, not renewed, so
+         the 48-hour window still expires on schedule for a visitor who
+         doesn't click through again. */
       (function () {
         var params = new URLSearchParams(window.location.search);
-        var isGoogleAdsVisitor =
-          params.has("gclid") ||
-          (params.get("utm_source") === "google" &&
-            params.get("utm_medium") === "cpc");
+        var hasClickId =
+          params.has("gclid") || params.has("gclsrc") || params.has("dclid");
+        var utmMedium = (params.get("utm_medium") || "").toLowerCase();
+        var isPaidMedium =
+          ["cpc", "ppc", "paid-search", "paidsearch"].indexOf(utmMedium) !== -1;
+        var isGoogleAdsVisitor = hasClickId || isPaidMedium;
         if (isGoogleAdsVisitor) {
           document.cookie =
             "is_google_ads_user=1; max-age=172800; path=/; SameSite=Lax";
