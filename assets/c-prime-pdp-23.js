@@ -14,31 +14,42 @@
     var section = getSection();
     if (!section) return;
 
-    var slides = section.querySelectorAll('.c-pdp23-slide');
+    var images = section.querySelectorAll('.c-pdp23-slide-img');
+    var copies = section.querySelectorAll('.c-pdp23-slide-copy');
     var dots   = section.querySelectorAll('.c-pdp23-dot');
+    var count  = section.querySelector('.c-pdp23-count-current');
 
-    if (slides.length === 0) return;
+    if (images.length === 0 || copies.length === 0) return;
 
     // Clamp index with wrapping
     idx = ((idx % SLIDE_COUNT) + SLIDE_COUNT) % SLIDE_COUNT;
 
     // Deactivate current
-    slides[currentSlide].classList.remove('c-pdp23-slide--active');
-    slides[currentSlide].setAttribute('aria-hidden', 'true');
+    images[currentSlide].classList.remove('c-pdp23-slide-img--active');
+    images[currentSlide].setAttribute('aria-hidden', 'true');
+    copies[currentSlide].classList.remove('c-pdp23-slide-copy--active');
+    copies[currentSlide].setAttribute('aria-hidden', 'true');
     dots[currentSlide].classList.remove('c-pdp23-dot--active');
     dots[currentSlide].setAttribute('aria-selected', 'false');
 
     // Activate new
     currentSlide = idx;
-    slides[currentSlide].classList.add('c-pdp23-slide--active');
-    slides[currentSlide].setAttribute('aria-hidden', 'false');
+    images[currentSlide].classList.add('c-pdp23-slide-img--active');
+    images[currentSlide].setAttribute('aria-hidden', 'false');
+    copies[currentSlide].classList.add('c-pdp23-slide-copy--active');
+    copies[currentSlide].setAttribute('aria-hidden', 'false');
     dots[currentSlide].classList.add('c-pdp23-dot--active');
     dots[currentSlide].setAttribute('aria-selected', 'true');
+
+    if (count) {
+      count.textContent = currentSlide + 1;
+    }
   }
 
-  function init() {
-    var section = getSection();
-    if (!section) return;
+  function init(section) {
+    if (!section || section.dataset.pdp23Bound === 'true') return;
+    section.dataset.pdp23Bound = 'true';
+    currentSlide = 0;
 
     // Arrow clicks
     var prevBtn = section.querySelector('.c-pdp23-arrow--prev');
@@ -89,9 +100,22 @@
     }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
+  function initFromDocument() {
+    init(getSection());
   }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFromDocument);
+  } else {
+    initFromDocument();
+  }
+
+  // Theme editor re-renders this section via AJAX on every setting change,
+  // which swaps in fresh markup without re-running <script> tags — rebind then.
+  document.addEventListener('shopify:section:load', function (event) {
+    var section = event.target.querySelector
+      ? event.target.querySelector('#c-pdp23-whats-inside')
+      : null;
+    if (section) init(section);
+  });
 })();
