@@ -35,6 +35,19 @@
             "manual_deal_block_id": ""
           }
         },
+        "kaching_bundles_app_block_googleAds": {
+          "type": "shopify://apps/kaching-bundles/blocks/app-block/6c637362-a106-4a32-94ac-94dcfd68cdb8",
+          "settings": {
+            "product": "leadership-enlightenment-for-kids-google-ads",
+            "manual_deal_block_id": ""
+          }
+        },
+        "custom_liquid_kachingGoogleAdsCleanup": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<script>\n(function () {\n  var isGoogleAdsVisitor = document.documentElement.classList.contains('c-googleAdsVisitor');\n  var idToRemove = isGoogleAdsVisitor ? 'kaching_bundles_app_block_wRxFW8' : 'kaching_bundles_app_block_googleAds';\n  var el = document.querySelector('[id$=\"__' + idToRemove + '\"]');\n  if (el) { el.remove(); }\n})();\n</script>"
+          }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -65,6 +78,8 @@
         "c_prime_mix_26",
         "custom_liquid_mN8rj9",
         "kaching_bundles_app_block_wRxFW8",
+        "kaching_bundles_app_block_googleAds",
+        "custom_liquid_kachingGoogleAdsCleanup",
         "buy_buttons",
         "custom_liquid_YnpwQY"
       ],

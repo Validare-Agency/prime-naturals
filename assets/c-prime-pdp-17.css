@@ -19,7 +19,17 @@ html:not(.c-googleAdsVisitor) [class*="kaching-bundles"] {
   display: none;
 }
 
-.main-product-form {
+/* Some Kaching deal configs (eg. "vertical" block layout, seen on
+   murphys-law-for-kids / murphys-law-for-kids-copy and their -google-ads
+   duplicates) don't render their own Add to Cart button at all — they set
+   updateNativePrice:true and drive checkout through the native buy_buttons
+   form's own button instead, just updating its displayed price per tier.
+   Hiding that form unconditionally left Google Ads visitors on those pages
+   with a bundle they couldn't purchase. Scoped the same way as the Kaching
+   visibility rule above: hidden for normal visitors (who see our own
+   self-contained .c-pdp25-variant button instead), shown whenever Kaching is
+   what's actually visible. */
+html:not(.c-googleAdsVisitor) .main-product-form {
   display: none;
 }
 
