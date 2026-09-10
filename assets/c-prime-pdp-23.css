@@ -1,0 +1,416 @@
+/* <-------------------V_PRIME_PDP_23 | PDP 'What's inside' section: chapter map + Q&A-----------------> */
+/* Matches Figma: https://www.figma.com/design/zpc26IBYBV0LPAHxKtvzUj/Prime-Naturals?node-id=952-250 */
+
+/* Test Setup */
+
+/* Hide the entire section for Control (no variant class on body) */
+.c-pdp23-section {
+  display: none;
+}
+
+/* Show for any active variant */
+body.c-primePdp23VarA .c-pdp23-section,
+body.c-primePdp23VarB .c-pdp23-section,
+body.c-primePdp23VarC .c-pdp23-section {
+  display: block;
+}
+
+/* Var A: topics first (default order — no extra CSS needed, topics block comes first in DOM) */
+body.c-primePdp23VarA .c-pdp23-topics { order: 1; }
+body.c-primePdp23VarA .c-pdp23-qa    { order: 2; }
+
+/* Var B: Q&A first, topics second */
+body.c-primePdp23VarB .c-pdp23-topics { order: 2; }
+body.c-primePdp23VarB .c-pdp23-qa    { order: 1; }
+
+/* Var C: hide topics grid entirely */
+body.c-primePdp23VarC .c-pdp23-topics {
+  display: none;
+}
+
+/* Test Design */
+
+/* ── Wrap ── */
+.c-pdp23-section {
+  font-family: var(--font-body-family);
+  width: 100%;
+  background: #FFFDF5;
+  color: #121212;
+  box-sizing: border-box;
+}
+
+.c-pdp23-section *,
+.c-pdp23-section *::before,
+.c-pdp23-section *::after {
+  box-sizing: border-box;
+}
+
+.c-pdp23-inner {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 36px 16px 0;
+}
+
+/* ── Header ── */
+.c-pdp23-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.c-pdp23-heading {
+  font-family: var(--font-heading-family);
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 900;
+  line-height: 1.16;
+  letter-spacing: -0.5px;
+  color: #0d1b3e;
+  margin: 0 0 10px;
+}
+
+.c-pdp23-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 14px;
+  color: #0d1b3e;
+  margin-bottom: 8px;
+}
+
+.c-pdp23-stat {
+  background: #ffffff;
+  border: 1px solid rgba(13,27,62,0.07);
+  border-radius: 40px;
+  padding: 6px 14px;
+}
+
+.c-pdp23-stats strong {
+  color: #c0392b;
+  font-weight: 700;
+}
+
+.c-pdp23-descriptor {
+  font-size: 15px;
+  color: #121212;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.c-pdp23-descriptor strong {
+  font-weight: 700;
+}
+
+/* ── Blocks card ── */
+.c-pdp23-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #ffffff;
+  border: 1px solid rgba(13,27,62,0.07);
+  border-radius: 16px;
+  box-shadow: 0px 6px 20px 0px rgba(13, 27, 62, 0.06);
+  padding: 22px;
+}
+
+/* .c-pdp23-qa wraps the header bar + carousel row; give it the same 16px rhythm as the card */
+.c-pdp23-qa {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Topics grid ── */
+.c-pdp23-topics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.c-pdp23-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 52px;
+  background: #fdf8f0;
+  border: 1px solid rgba(13,27,62,0.07);
+  border-radius: 10px;
+  padding: 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0d1b3e;
+  line-height: 16px;
+  cursor: default;
+}
+
+.c-pdp23-chip-icon {
+  font-size: 17px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* ── Sample Questions Q&A ── */
+.c-pdp23-qa-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  background: #0d1b3e;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  padding: 0 10px;
+  border-radius: 7px;
+}
+
+.c-pdp23-carousel {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+/* ── Slide image ── */
+.c-pdp23-slide-img-wrap {
+  position: relative;
+  flex: 0 0 420px;
+  width: 420px;
+  height: 279px;
+  border: 1px solid rgba(13,27,62,0.07);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f2f2f2;
+}
+
+.c-pdp23-slide-img {
+  position: absolute;
+  inset: 0;
+  display: none;
+}
+
+.c-pdp23-slide-img--active {
+  display: block;
+}
+
+.c-pdp23-slide-img-el {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Slide text card ── */
+.c-pdp23-slide-text {
+  flex: 1;
+  min-width: 0;
+  align-self: stretch;
+  background: #fdf8f0;
+  border: 1px solid rgba(13,27,62,0.07);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.c-pdp23-slide-copy {
+  display: none;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.c-pdp23-slide-copy--active {
+  display: flex;
+}
+
+.c-pdp23-slide-q {
+  font-family: var(--font-heading-family);
+  font-size: clamp(16px, 2vw, 19px);
+  font-weight: 700;
+  color: #0d1b3e;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.c-pdp23-slide-a {
+  font-size: clamp(13px, 1.5vw, 15px);
+  color: #121212;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Navigation ── */
+.c-pdp23-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.c-pdp23-count {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.c-pdp23-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(13,27,62,0.07);
+  border-radius: 15px;
+  background: #ffffff;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.c-pdp23-arrow:hover {
+  border-color: rgba(13,27,62,0.2);
+  background: #f8f8f8;
+}
+
+/* Pushes count + arrows to the right edge, dots stay left — no wrapper needed */
+.c-pdp23-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: auto;
+}
+
+.c-pdp23-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 3.5px;
+  background: rgba(13,27,62,0.18);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.25s ease, width 0.25s ease, border-radius 0.25s ease;
+  flex-shrink: 0;
+}
+
+.c-pdp23-dot--active {
+  width: 18px;
+  height: 7px;
+  border-radius: 4px;
+  background: #c0392b;
+}
+
+/* ── Mobile — matches Figma node 952-558 ── */
+@media (max-width: 599px) {
+  .c-pdp23-inner {
+    padding: 28px 14px 23px;
+  }
+
+  .c-pdp23-heading {
+    letter-spacing: -0.3px;
+  }
+
+  .c-pdp23-stats {
+    gap: 4px;
+  }
+
+  .c-pdp23-descriptor {
+    padding: 0% 10%;
+  }
+
+  .c-pdp23-blocks {
+    gap: 13px;
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .c-pdp23-qa {
+    gap: 8px;
+  }
+
+  .c-pdp23-topics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .c-pdp23-chip {
+    height: 48px;
+  }
+
+  .c-pdp23-chip-icon {
+    font-size: 16px;
+  }
+
+  /* On mobile: stack image above text */
+  .c-pdp23-carousel {
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .c-pdp23-slide-img-wrap {
+    flex: none;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 329 / 297;
+  }
+
+  .c-pdp23-slide-text {
+    align-self: auto;
+    width: 100%;
+    padding: 14px;
+  }
+
+  .c-pdp23-slide-q {
+    font-size: 18px;
+    line-height: 1.22;
+  }
+
+  .c-pdp23-slide-a {
+    font-size: 16px;
+    line-height: 1.44;
+  }
+
+  /* Nav: no counter — just arrow / dots / arrow, centered as one group */
+  .c-pdp23-nav {
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .c-pdp23-count {
+    display: none;
+  }
+
+  .c-pdp23-dots {
+    margin-right: 0;
+    order: 2;
+  }
+
+  .c-pdp23-arrow--prev {
+    order: 1;
+  }
+
+  .c-pdp23-arrow--next {
+    order: 3;
+  }
+
+  .c-pdp23-arrow {
+    width: 34px;
+    height: 34px;
+    border-radius: 17px;
+  }
+
+  .c-pdp23-arrow svg {
+    width: 7px;
+    height: 12px;
+  }
+}
+
+@media (min-width: 600px) {
+  /* Section background spans full width; content column matches the Figma frame's
+     authored fixed width (1100px, confirmed via the Figma API) for all variants. */
+  .c-pdp23-inner {
+    max-width: 1100px;
+    padding: 40px 40px 26px;
+  }
+}

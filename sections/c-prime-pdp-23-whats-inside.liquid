@@ -1,0 +1,119 @@
+{% comment %} V_PRIME_PDP_23 | PDP 'What's inside' section: chapter map + Q&A {% endcomment %}
+
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-pdp-23.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-pdp-23.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+<script src="{{ 'c-prime-pdp-23.js' | asset_url }}" defer></script>
+
+<div class="c-pdp23-section" id="c-pdp23-whats-inside">
+  <div class="c-pdp23-inner">
+
+    <!-- Header -->
+    <div class="c-pdp23-header">
+      <h2 class="c-pdp23-heading">What's inside</h2>
+      <div class="c-pdp23-stats">
+        <span class="c-pdp23-stat"><strong>1000</strong> Illustrations</span>
+        <span class="c-pdp23-stat"><strong>12</strong> topics</span>
+        <span class="c-pdp23-stat"><strong>500</strong> knowledge points</span>
+      </div>
+      <p class="c-pdp23-descriptor"><strong>Hand-illustrated.</strong> Every question your grandchild has ever asked – answered.</p>
+    </div>
+
+    <!-- Content blocks: flex-column container; CSS `order` property controls Var A vs Var B stacking -->
+    <div class="c-pdp23-blocks">
+
+      <!-- Topics Grid — visible in Var A + Var B, hidden in Var C -->
+      <div class="c-pdp23-topics">
+        <div class="c-pdp23-topics-grid">
+          <span class="c-pdp23-chip"><span class="c-pdp23-chip-icon">🚀</span> Space &amp; Universe</span>
+          <span class="c-pdp23-chip"><span class="c-pdp23-chip-icon">🦕</span> Dinosaurs</span>
+          <span class="c-pdp23-chip"><span class="c-pdp23-chip-icon">🧬</span> The Human Body</span>
+          <span class="c-pdp23-chip"><span class="c-pdp23-chip-icon">🌊</span> Oceans &amp; Sea Life</span>
+          <span class="c-pdp23-chip"><span class="c-pdp23-chip-icon">⚡</span> Weather &amp; Nature</span>
+          <span class="c-pdp23-chip"><span class="c-pdp23-chip-icon">🏛️</span> History &amp; Civilisations</span>
+          <span class="c-pdp23-chip"><span class="c-pdp23-chip-icon">🦁</span> Animals &amp; Wildlife</span>
+          <span class="c-pdp23-chip"><span class="c-pdp23-chip-icon">🔬</span> Science &amp; Physics</span>
+          <span class="c-pdp23-chip"><span class="c-pdp23-chip-icon">🌿</span> Plants &amp; Biology</span>
+          <span class="c-pdp23-chip"><span class="c-pdp23-chip-icon">🧠</span> The Brain &amp; Mind</span>
+          <span class="c-pdp23-chip"><span class="c-pdp23-chip-icon">⚙️</span> Technology &amp; Inventions</span>
+          <span class="c-pdp23-chip"><span class="c-pdp23-chip-icon">🌍</span> Earth &amp; Geography</span>
+        </div>
+      </div>
+
+      <!-- Sample Questions carousel — visible in all variants -->
+      <div class="c-pdp23-qa">
+        <div class="c-pdp23-qa-header">Sample Questions</div>
+
+        <div class="c-pdp23-carousel" role="region" aria-label="Sample questions carousel">
+
+          <!-- Image track: one persistent box, swaps which photo is visible.
+               Each slide is a <picture> so mobile can serve its own crop via <source>. -->
+          <div class="c-pdp23-slide-img-wrap">
+            <!-- c-pdp23-slide-1.jpg / -1-mobile.jpg: real book-spread photo (sweat + forget-things pages) -->
+            <picture class="c-pdp23-slide-img c-pdp23-slide-img--active" data-index="0" aria-hidden="false">
+              <source media="(max-width: 599px)" srcset="{{ 'c-pdp23-slide-1-mobile.jpg' | asset_url }}">
+              <img class="c-pdp23-slide-img-el" src="{{ 'c-pdp23-slide-1.jpg' | asset_url }}" alt="Book spread showing the answer to Why Do We Sweat?" width="420" height="279">
+            </picture>
+            <!-- c-pdp23-slide-2.jpg / -2-mobile.jpg: same real spread photo as slide 1 -->
+            <picture class="c-pdp23-slide-img" data-index="1" aria-hidden="true">
+              <source media="(max-width: 599px)" srcset="{{ 'c-pdp23-slide-2-mobile.jpg' | asset_url }}">
+              <img class="c-pdp23-slide-img-el" src="{{ 'c-pdp23-slide-2.jpg' | asset_url }}" alt="Book spread showing the answer to Why Do We Forget Things?" width="420" height="279">
+            </picture>
+            <!-- c-pdp23-slide-3.jpg / -3-mobile.jpg: real book-spread photo (electric eels page) -->
+            <picture class="c-pdp23-slide-img" data-index="2" aria-hidden="true">
+              <source media="(max-width: 599px)" srcset="{{ 'c-pdp23-slide-3-mobile.jpg' | asset_url }}">
+              <img class="c-pdp23-slide-img-el" src="{{ 'c-pdp23-slide-3.jpg' | asset_url }}" alt="Book spread showing the answer to Why Can Electric Eels Generate Electricity?" width="420" height="279">
+            </picture>
+          </div>
+
+          <!-- Text card: one persistent card, swaps copy; nav stays pinned at its bottom -->
+          <div class="c-pdp23-slide-text">
+            <div class="c-pdp23-slide-copy c-pdp23-slide-copy--active" data-index="0" aria-hidden="false">
+              <h3 class="c-pdp23-slide-q">Why Do We Sweat?</h3>
+              <p class="c-pdp23-slide-a">Exercise or hot weather makes our bodies heat up. To cool down, sweat glands on our skin release sweat. When the sweat evaporates, it carries heat away from the body, helping keep your body at a healthy 98°F (37°C). Sweating is your body's natural cooling system – but don't forget to drink plenty of water to replace what you lose!</p>
+            </div>
+            <div class="c-pdp23-slide-copy" data-index="1" aria-hidden="true">
+              <h3 class="c-pdp23-slide-q">Why Do We Forget Things?</h3>
+              <p class="c-pdp23-slide-a">When we learn something new, our brain cells form connections to create a memory. If we don't use those memories often, the connections weaken – like a trail in the woods getting overgrown when no one walks on it. The brain also blurs out less important information to make space for new ones. That's how forgetting works.</p>
+            </div>
+            <div class="c-pdp23-slide-copy" data-index="2" aria-hidden="true">
+              <h3 class="c-pdp23-slide-q">Why Can Electric Eels Generate Electricity?</h3>
+              <p class="c-pdp23-slide-a">Electric eels have thousands of special cells called electrocytes that work like tiny batteries. When threatened or hunting, they stack these cells to produce an electric shock of up to 600 volts — strong enough to stun a horse. It's one of nature's most shocking superpowers!</p>
+            </div>
+
+            <!-- Navigation -->
+            <div class="c-pdp23-nav">
+              <div class="c-pdp23-dots" role="tablist">
+                <button class="c-pdp23-dot c-pdp23-dot--active" data-idx="0" role="tab" aria-label="Slide 1" aria-selected="true"></button>
+                <button class="c-pdp23-dot" data-idx="1" role="tab" aria-label="Slide 2" aria-selected="false"></button>
+                <button class="c-pdp23-dot" data-idx="2" role="tab" aria-label="Slide 3" aria-selected="false"></button>
+              </div>
+              <span class="c-pdp23-count"><span class="c-pdp23-count-current">1</span> / <span class="c-pdp23-count-total">3</span></span>
+              <button class="c-pdp23-arrow c-pdp23-arrow--prev" aria-label="Previous question" type="button">
+                <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1L1 6L6 11" stroke="#0D1B3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="c-pdp23-arrow c-pdp23-arrow--next" aria-label="Next question" type="button">
+                <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L6 6L1 11" stroke="#0D1B3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div><!-- .c-pdp23-carousel -->
+      </div><!-- .c-pdp23-qa -->
+
+    </div><!-- .c-pdp23-blocks -->
+
+  </div><!-- .c-pdp23-inner -->
+</div><!-- .c-pdp23-section -->
+
+{% schema %}
+{
+  "name": "PDP23 What's Inside",
+  "settings": [],
+  "presets": [
+    { "name": "PDP23 What's Inside" }
+  ]
+}
+{% endschema %}
