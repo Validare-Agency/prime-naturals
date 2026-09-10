@@ -13,9 +13,9 @@ function handleExperiments() {
   const isHeldOut =
     window.igData?.user.getTestGroup(HOLDOUT_EXPERIMENT_ID)?.id ===
     HOLDOUT_GROUP_ID;
-  document.body.classList.add(
-    isHeldOut ? "c-validareHoldout" : "c-validareOptimized"
-  );
+  // document.body.classList.add(
+  //   isHeldOut ? "c-validareHoldout" : "c-validareOptimized"
+  // );
   try {
     localStorage.setItem("validare_holdout", isHeldOut ? "1" : "0");
   } catch (e) {}

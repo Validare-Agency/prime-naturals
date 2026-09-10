@@ -315,6 +315,10 @@ body.c-primePdp23VarC .c-pdp23-topics {
     gap: 4px;
   }
 
+  .c-pdp23-descriptor {
+    padding: 0% 10%;
+  }
+
   .c-pdp23-blocks {
     gap: 13px;
     padding: 16px;
