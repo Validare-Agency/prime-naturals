@@ -691,7 +691,7 @@
                 has_filtering: has_filtering
               %}
             {%- when 'buy_buttons' -%}
-              {% render 'c-prime-pdp-22-bundle', product: product, section: section %}
+              {% render 'c-prime-pdp-25-bundle', product: product, section: section %}
               {%- render 'buy-buttons',
                  block: block,
                  product: product,
@@ -1202,21 +1202,22 @@
   {{ 'c-prime-pdp-17.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
 
-{%- comment -%} V_PRIME_PDP_22 | Encyclopedia - Upsell {%- endcomment -%}
+{%- comment -%} V_PRIME_PDP_25 | Unlock Bonus Free Gifts {%- endcomment -%}
 {%- if section.index > 3 -%}
-  <link rel="stylesheet" href="{{ 'c-prime-pdp-22.css' | asset_url }}" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="{{ 'c-prime-pdp-25.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- else -%}
-  {{ 'c-prime-pdp-22.css' | asset_url | stylesheet_tag }}
+  {{ 'c-prime-pdp-25.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
-<script src="{{ 'c-prime-pdp-22.js' | asset_url }}" defer></script>
+<script src="{{ 'c-prime-pdp-25.js' | asset_url }}" defer></script>
 
-{%- comment -%} V_PRIME_PDP_19 | PDP - Reviews - FB {%- endcomment -%}
-<script
-  id="c-fb-review-test-19-script"
-  src="{{ 'c-fb-review-test-19.js' | asset_url }}"
-  data-image="{{ 'c-fb-review-test-19.png' | asset_url }}"
-  defer
-></script>
+{%- comment -%} V_PRIME_PDP_25 | Offer Iteration: Winning BOGO + Gift Stack {%- endcomment -%}
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-pdp-25.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-pdp-25.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+<script src="{{ 'c-prime-pdp-25.js' | asset_url }}" defer></script>
+
 
 {% schema %}
 {

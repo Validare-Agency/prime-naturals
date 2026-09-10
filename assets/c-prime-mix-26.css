@@ -1,0 +1,167 @@
+/* <-------------------V_PRIME_MIX_26 | Grandparent-voice Testimonial Carousel-----------------> */
+
+/* Test Setup */
+/* Control: hide Var A carousel */
+.c-prime-mix-26-carousel { display: none; }
+
+/* Var A: hide Control carousel, show grandparent carousel */
+.c-primeMix26VarA .pib-carousel { display: none !important; }
+.c-primeMix26VarA .c-prime-mix-26-carousel { display: block; }
+
+/* Test Design */
+.c-prime-mix-26-carousel *,
+.c-prime-mix-26-carousel *::before,
+.c-prime-mix-26-carousel *::after { box-sizing: border-box; }
+
+.c-prime-mix-26-carousel {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #0d1b3e;
+  width: 100%;
+  max-width: 560px;
+  margin-bottom: 22px;
+}
+
+.c-pgp-heading {
+  text-align: center;
+  font-size: 15.5px;
+  font-weight: 800;
+  color: #0d1b3e;
+  white-space: nowrap;
+  margin: 0 0 5px 0;
+}
+
+.c-pgp-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid rgba(13, 27, 62, 0.08);
+  border-radius: 14px;
+  padding: 10px 58px 10px;
+  overflow: hidden;
+  box-shadow:
+    0 1px 3px rgba(13, 27, 62, 0.04),
+    0 4px 16px rgba(13, 27, 62, 0.06);
+}
+
+.c-pgp-arrow {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 23px;
+  height: 23px;
+  padding: 0;
+  line-height: 0;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+.c-pgp-arrow svg { display: block; width: 100%; height: 100%; }
+.c-pgp-arrow:hover { opacity: 1; }
+.c-pgp-arrow--prev { left: 7px; }
+.c-pgp-arrow--prev svg { transform: scaleX(-1); }
+.c-pgp-arrow--next { right: 7px; }
+
+.c-pgp-slides { position: relative; min-height: 96px; }
+.c-pgp-slide { display: none; animation: cPgpFadeIn 0.5s ease; }
+.c-pgp-slide.active { display: block; }
+
+@keyframes cPgpFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.c-pgp-text {
+  font-size: 13px;
+  font-style: italic;
+  color: #1a1a2e;
+  line-height: 1.67;
+  margin: 0 0 9px 0;
+}
+
+.c-pgp-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.c-pgp-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+}
+
+.c-pgp-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0d1b3e;
+  line-height: 1.2;
+  margin-bottom: 3px;
+}
+
+.c-pgp-meta {
+  font-size: 11.5px;
+  color: #9ca3af;
+  font-weight: 500;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.c-pgp-stars {
+  color: #f59e0b;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.c-pgp-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.c-pgp-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(13, 27, 62, 0.12);
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+  display: inline-block;
+}
+
+.c-pgp-dot.active {
+  background: #0d1b3e;
+  transform: scale(1.35);
+}
+
+.c-pgp-dot:hover {
+  background: rgba(13, 27, 62, 0.3);
+}
+
+@media (max-width: 480px) {
+  .c-prime-mix-26-carousel { max-width: 100%; }
+  .c-pgp-card { padding: 16px 30px 14px; }
+  .c-pgp-heading {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: #0D1B3E;
+  }
+  .c-pgp-text {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 12.5px;
+    font-style: italic;
+    color: #1A1A2E;
+  }
+  .c-pgp-slide.active {
+    padding: 0px 12px;
+  }
+}

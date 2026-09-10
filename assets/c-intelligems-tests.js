@@ -1,60 +1,30 @@
 let domLoaded = false;
 let igReady = false;
 
-// Validare Holdout, Generation 1. Sitewide, permanent. Never end this experiment.
-// Check the group by id, not by name, so a rename in Intelligems cannot silently open the gate.
+// Validare Holdout. Permanent, never end it.
 const HOLDOUT_EXPERIMENT_ID = "3ad2181f-d285-418c-b4d8-a52ce3a136a1";
 const HOLDOUT_GROUP_ID = "c41ea5b4-45b8-4edf-8687-844be31c4054";
-
-function resolveHoldout() {
-  const user = window.igData?.user;
-  if (!user) return;
-  const isHeldOut = user.getTestGroup(HOLDOUT_EXPERIMENT_ID)?.id === HOLDOUT_GROUP_ID;
-  document.documentElement.classList.add(isHeldOut ? "c-validareHoldout" : "c-validareOptimized");
-
-  // Cross-page flag for the optional per-test Intelligems audience rule.
-  // Audience JS Expressions run at page load, before igData exists, so they read this flag
-  // on the NEXT pageload instead: localStorage.getItem("validare_holdout") === "0".
-  // Inert until a test's audience rule is saved from the Intelligems UI to read it.
-  try {
-    localStorage.setItem("validare_holdout", isHeldOut ? "1" : "0");
-  } catch (e) {
-    // Storage blocked: no flag, and a rule reading it leaves the visitor unassigned, which is the safe side.
-  }
-
-  if (!isHeldOut) return;
-
-  // Held-out visitors must render Control in every test, without touching any test block.
-  // Every experiment except the holdout itself reads as unassigned for them.
-  try {
-    const getTestGroup = user.getTestGroup.bind(user);
-    user.getTestGroup = (id) => (id === HOLDOUT_EXPERIMENT_ID ? getTestGroup(id) : null);
-  } catch (e) {
-    // If the plugin ever locks this object, the html class above still gates every cleaned-up winner.
-  }
-}
 
 function handleExperiments() {
   if (!domLoaded || !igReady) return;
 
-  // Test: V_PRIME_PDP_19 | PDP - Reviews - FB
-  const primePdp19 = window.igData?.user.getTestGroup(
-    "7540f3a1-7d2c-4ee8-a965-35aab62c7aae"
+  // Holdout: V_PRIME_HOLDOUT_G1 (do not edit)
+  const isHeldOut =
+    window.igData?.user.getTestGroup(HOLDOUT_EXPERIMENT_ID)?.id ===
+    HOLDOUT_GROUP_ID;
+  document.body.classList.add(
+    isHeldOut ? "c-validareHoldout" : "c-validareOptimized"
   );
-  if (primePdp19?.name === "Var A") {
-    document.body.classList.add("c-primePdp19VarA");
-  }
+  try {
+    localStorage.setItem("validare_holdout", isHeldOut ? "1" : "0");
+  } catch (e) {}
 
-  // Test: V_PRIME_PDP_20 | Product Page - USPs - ATF
-  const primePdp20 = window.igData?.user.getTestGroup(
-    "7238475d-4fc1-46fd-99f1-7c262f87885c"
+  // Test: V_PRIME_MIX_26 | Grandparent-voice Testimonial Carousel
+  const primeMix26 = window.igData?.user.getTestGroup(
+    "09581346-2806-47e0-80ef-c94e215d67b1"
   );
-  if (primePdp20?.name === "Var A - Badges below thumbnails") {
-    document.body.classList.add("c-primePdp20VarA");
-  } else if (primePdp20?.name === "Var B - Badges below review card") {
-    document.body.classList.add("c-primePdp20VarB");
-  } else if (primePdp20?.name === "Var C - Badges within info stack") {
-    document.body.classList.add("c-primePdp20VarC");
+  if (primeMix26?.name === "Var A") {
+    document.body.classList.add("c-primeMix26VarA");
   }
 
   // Test: V_PRIME_PDP_22 | Encyclopedia - Upsell
@@ -75,14 +45,23 @@ function handleExperiments() {
     document.body.classList.add("c-primePdp22VarF");
   }
 
-  // Test: V_PRIME_MIX_29 | Free Shipping Threshold at 2-Book Tier
-  const primeMix29 = window.igData?.user.getTestGroup(
-    "90279e90-4c59-49c6-9784-5c632eb6c9b8"
+  // Test: V_PRIME_PDP_25 | Unlock Bonus Free Gifts
+  const primePdp25 = window.igData?.user.getTestGroup(
+    "59bf8132-e0c0-4d87-acec-2b3319273615"
   );
-  if (primeMix29?.name === "Var A") {
-    document.body.classList.add("c-primeMix29VarA");
-  } else if (primeMix29?.name === "Var B") {
-    document.body.classList.add("c-primeMix29VarB");
+  if (primePdp25?.name === "Var A - Inline gifts shown") {
+    document.body.classList.add("c-primePdp25VarA");
+  } else if (primePdp25?.name === "Var B - Gifts with lock thresholds") {
+    document.body.classList.add("c-primePdp25VarB");
+  } else if (
+    primePdp25?.name === "Var C - Bordered gift tiles with lock/unlock"
+  ) {
+    document.body.classList.add("c-primePdp25VarC");
+  } else if (
+    primePdp25?.name ===
+    "Var D - Bordered gift tiles with lock/unlock Threshold"
+  ) {
+    document.body.classList.add("c-primePdp25VarD");
   }
 
   // Test: V_PRIME_PDP_23 | PDP 'What's inside' section: chapter map + Q&A
@@ -121,13 +100,26 @@ document.addEventListener("click", (event) => {
   window.igEvents.push({ event: "click_gallery_thumnail" });
 });
 
+// Held-out visitors get Control in every test. Runs before handleExperiments().
+function holdOutFromAllTests() {
+  const user = window.igData?.user;
+  if (!user || user.validareHoldoutApplied) return;
+  if (user.getTestGroup(HOLDOUT_EXPERIMENT_ID)?.id !== HOLDOUT_GROUP_ID) return;
+  try {
+    const getTestGroup = user.getTestGroup.bind(user);
+    user.getTestGroup = (id) =>
+      id === HOLDOUT_EXPERIMENT_ID ? getTestGroup(id) : null;
+    user.validareHoldoutApplied = true;
+  } catch (e) {}
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   domLoaded = true;
   handleExperiments();
 });
 
 window.addEventListener("ig:ready", () => {
+  holdOutFromAllTests();
   igReady = true;
-  resolveHoldout();
   handleExperiments();
 });
