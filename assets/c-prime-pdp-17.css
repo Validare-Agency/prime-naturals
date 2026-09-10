@@ -9,8 +9,13 @@
    be scoped precisely from Liquid. Matches any element carrying a class that
    contains "kaching-bundles" (the app's own BEM namespace, per its existing
    c-prime-site-11.css overrides). CONFIRM the real root selector via browser
-   inspector and replace this with an exact match. */
-[class*="kaching-bundles"] {
+   inspector and replace this with an exact match.
+
+   Google Ads visitors (html.c-googleAdsVisitor, set in layout/theme.liquid)
+   are excluded from this hide rule — they see Kaching's normal bundle widget
+   instead of the custom .c-pdp25-variant bundle (hidden for them separately
+   in c-prime-pdp-25.css). */
+html:not(.c-googleAdsVisitor) [class*="kaching-bundles"] {
   display: none;
 }
 
