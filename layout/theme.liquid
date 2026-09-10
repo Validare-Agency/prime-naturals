@@ -8,6 +8,38 @@
     })(window, document, "clarity", "script", "qm54h4x4ew");
 </script>
   <head>
+    <script>
+      /* Google Ads traffic detection — must run before any stylesheet paints
+         so the c-googleAdsVisitor class is on <html> before c-prime-pdp-17.css
+         (Kaching bundle) and c-prime-pdp-25.css (.c-pdp25-variant) apply.
+         A fresh gclid (or utm_source=google + utm_medium=cpc) on the URL
+         means a new ad click just happened, so the is_google_ads_user cookie
+         is (re)set to a full 48 hours from now every time one is seen —
+         a repeat click resets the window rather than letting the original
+         expiry keep counting down. Absent a fresh param, the existing cookie
+         (if any) is just read, not renewed, so the 48-hour window still
+         expires on schedule for a visitor who doesn't click through again. */
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var isGoogleAdsVisitor =
+          params.has("gclid") ||
+          (params.get("utm_source") === "google" &&
+            params.get("utm_medium") === "cpc");
+        if (isGoogleAdsVisitor) {
+          document.cookie =
+            "is_google_ads_user=1; max-age=172800; path=/; SameSite=Lax";
+        } else {
+          isGoogleAdsVisitor = document.cookie
+            .split("; ")
+            .some(function (row) {
+              return row === "is_google_ads_user=1";
+            });
+        }
+        if (isGoogleAdsVisitor) {
+          document.documentElement.classList.add("c-googleAdsVisitor");
+        }
+      })();
+    </script>
     <script>/* >> Heatmap.com :: Snippet << */(function (h,e,a,t,m,ap) { (h._heatmap_paq = []).push([ 'setTrackerUrl', (h.heatUrl = e) + a]); h.hErrorLogs=h.hErrorLogs || []; ap=t.createElement('script');  ap.src=h.heatUrl+'preprocessor.min.js?sid='+m;  ap.defer=true; t.head.appendChild(ap); ['error', 'unhandledrejection'].forEach(function (ty) {     h.addEventListener(ty, function (et) { h.hErrorLogs.push({ type: ty, event: et }); }); });})(window,'https://dashboard.heatmap.com/','heatmap.php',document,5689);</script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
