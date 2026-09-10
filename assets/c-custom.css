@@ -145,6 +145,7 @@ img[src*="magnific_4second-loop-grandmothers.gif"] {
 }
 
 [data-label*="coming soon"] .card-information,
-[data-label*="coming soon"] .card__content .card__badge {
+[data-label*="coming soon"] .card__content .card__badge,
+[data-label*="coming soon"] .card__content .quick-add {
   display: none;
 }
