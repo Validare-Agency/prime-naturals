@@ -45,25 +45,6 @@ function handleExperiments() {
     document.body.classList.add("c-primePdp22VarF");
   }
 
-  // Test: V_PRIME_PDP_25 | Unlock Bonus Free Gifts
-  const primePdp25 = window.igData?.user.getTestGroup(
-    "59bf8132-e0c0-4d87-acec-2b3319273615"
-  );
-  if (primePdp25?.name === "Var A - Inline gifts shown") {
-    document.body.classList.add("c-primePdp25VarA");
-  } else if (primePdp25?.name === "Var B - Gifts with lock thresholds") {
-    document.body.classList.add("c-primePdp25VarB");
-  } else if (
-    primePdp25?.name === "Var C - Bordered gift tiles with lock/unlock"
-  ) {
-    document.body.classList.add("c-primePdp25VarC");
-  } else if (
-    primePdp25?.name ===
-    "Var D - Bordered gift tiles with lock/unlock Threshold"
-  ) {
-    document.body.classList.add("c-primePdp25VarD");
-  }
-
   // Test: V_PRIME_PDP_23 | PDP 'What's inside' section: chapter map + Q&A
   const primePdp23 = window.igData?.user.getTestGroup(
     "2fbd76e4-5c99-438c-b112-d031dff9c4bd"
