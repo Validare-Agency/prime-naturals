@@ -691,7 +691,7 @@
                 has_filtering: has_filtering
               %}
             {%- when 'buy_buttons' -%}
-              {% render 'c-prime-pdp-25-bundle', product: product, section: section %}
+              {% render 'c-prime-pdp-35-bundle', product: product, section: section %}
               {%- render 'buy-buttons',
                  block: block,
                  product: product,
@@ -1204,11 +1204,11 @@
 
 {%- comment -%} PDP Bundle Tier Picker {%- endcomment -%}
 {%- if section.index > 3 -%}
-  <link rel="stylesheet" href="{{ 'c-prime-pdp-25.css' | asset_url }}" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="{{ 'c-prime-pdp-35.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- else -%}
-  {{ 'c-prime-pdp-25.css' | asset_url | stylesheet_tag }}
+  {{ 'c-prime-pdp-35.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
-<script src="{{ 'c-prime-pdp-25.js' | asset_url }}" defer></script>
+<script src="{{ 'c-prime-pdp-35.js' | asset_url }}" defer></script>
 
 
 {% schema %}
