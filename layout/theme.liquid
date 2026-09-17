@@ -10,39 +10,61 @@
   <head>
     <script>
       /* Paid-search traffic detection — must run before any stylesheet paints
-         so the c-googleAdsVisitor class is on <html> before c-prime-pdp-17.css
-         (Kaching bundle) and c-prime-pdp-25.css (.c-pdp25-variant) apply.
-         Click IDs (gclid/gclsrc/dclid — Google Ads, Bing Ads, DoubleClick) are
-         checked on their own since they only appear on an actual paid click;
-         utm_medium is checked independently of utm_source so Demand
-         Gen/YouTube traffic that doesn't carry a click id is still caught. A
-         fresh match on the URL means a new paid click just happened, so the
-         is_google_ads_user cookie is (re)set to a full 48 hours from now
+         so the c-paidSearchVisitor class is on <html> before c-prime-pdp-17.css
+         (Kaching bundle) and c-prime-pdp-35.css (.c-pdp35-variant) apply.
+
+         Mirrors GA4's own "Paid Search" Default Channel Group rule: Source
+         matches a list of search sites AND Medium matches
+         /^(.*cp.*|ppc|retargeting|paid.*)$/. SEARCH_ENGINE_SOURCES below is a
+         practical subset covering every engine that sends real traffic to
+         this store — GA4's own internal source list is much larger and isn't
+         published in a form we can embed here, so extend this array if a new
+         one shows up in GA4's Traffic acquisition report under Paid Search.
+
+         Click IDs (gclid/gclsrc — Google Ads; dclid — DoubleClick/Display &
+         Video 360) auto-tag a hit as Google/cpc even with no utm_source or
+         utm_medium on the URL, the same way GA4 itself resolves a bare
+         gclid/dclid hit — so their presence fills in source="google" /
+         medium="cpc" whenever those params are otherwise missing, then still
+         has to pass the same source+medium check as everyone else.
+
+         A fresh match on the URL means a new paid click just happened, so the
+         is_paid_search_user cookie is (re)set to a full 48 hours from now
          every time one is seen — a repeat click resets the window rather
          than letting the original expiry keep counting down. Absent a fresh
          match, the existing cookie (if any) is just read, not renewed, so
          the 48-hour window still expires on schedule for a visitor who
          doesn't click through again. */
       (function () {
+        var SEARCH_ENGINE_SOURCES = [
+          "google", "bing", "yahoo", "duckduckgo", "baidu", "yandex",
+          "aol", "ask", "ecosia", "naver", "startpage", "qwant"
+        ];
+        var PAID_MEDIUM_REGEX = /^(.*cp.*|ppc|retargeting|paid.*)$/;
+
         var params = new URLSearchParams(window.location.search);
         var hasClickId =
           params.has("gclid") || params.has("gclsrc") || params.has("dclid");
-        var utmMedium = (params.get("utm_medium") || "").toLowerCase();
-        var isPaidMedium =
-          ["cpc", "ppc", "paid-search", "paidsearch"].indexOf(utmMedium) !== -1;
-        var isGoogleAdsVisitor = hasClickId || isPaidMedium;
-        if (isGoogleAdsVisitor) {
+
+        var source = (params.get("utm_source") || (hasClickId ? "google" : "")).toLowerCase();
+        var medium = (params.get("utm_medium") || (hasClickId ? "cpc" : "")).toLowerCase();
+
+        var isSearchSource = SEARCH_ENGINE_SOURCES.indexOf(source) !== -1;
+        var isPaidMedium = PAID_MEDIUM_REGEX.test(medium);
+        var isPaidSearchVisitor = isSearchSource && isPaidMedium;
+
+        if (isPaidSearchVisitor) {
           document.cookie =
-            "is_google_ads_user=1; max-age=172800; path=/; SameSite=Lax";
+            "is_paid_search_user=1; max-age=172800; path=/; SameSite=Lax";
         } else {
-          isGoogleAdsVisitor = document.cookie
+          isPaidSearchVisitor = document.cookie
             .split("; ")
             .some(function (row) {
-              return row === "is_google_ads_user=1";
+              return row === "is_paid_search_user=1";
             });
         }
-        if (isGoogleAdsVisitor) {
-          document.documentElement.classList.add("c-googleAdsVisitor");
+        if (isPaidSearchVisitor) {
+          document.documentElement.classList.add("c-paidSearchVisitor");
         }
       })();
     </script>
