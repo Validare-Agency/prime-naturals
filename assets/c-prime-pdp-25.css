@@ -9,10 +9,10 @@
   color: #1f3a5f;
 }
 
-/* Google Ads visitors (html.c-googleAdsVisitor, set in layout/theme.liquid)
+/* Paid search visitors (html.c-paidSearchVisitor, set in layout/theme.liquid)
    see Kaching's normal bundle widget instead — see the matching exclusion in
    c-prime-pdp-17.css that un-hides it for them. */
-html.c-googleAdsVisitor .c-pdp25-variant {
+html.c-paidSearchVisitor .c-pdp25-variant {
   display: none;
 }
 
