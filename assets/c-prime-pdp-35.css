@@ -29,10 +29,18 @@ body.c-primePdp35VarB .c-pdp35-gifts {
   color: #1f3a5f;
 }
 
-/* Paid search visitors (html.c-paidSearchVisitor, set in layout/theme.liquid)
-   see Kaching's normal bundle widget instead — see the matching exclusion in
-   c-prime-pdp-17.css that un-hides it for them. */
-html.c-paidSearchVisitor .c-pdp35-variant {
+/* This test only runs for visitors who are BOTH a paid search visitor
+   (html.c-paidSearchVisitor, set in layout/theme.liquid) AND bucketed into
+   Var A or Var B (body.c-primePdp35VarA/VarB, set in
+   assets/c-intelligems-tests.js — bucketing itself happens for everyone,
+   paid search or not, so this second check is required). Anyone missing
+   either half — a normal visitor in any bucket, or a paid search visitor in
+   Control/no group — keeps seeing Kaching's normal bundle widget, exactly as
+   before this test existed. See the matching exclusion in c-prime-pdp-17.css
+   that hides Kaching/native-form for that same paid-search + Var A/B
+   combination only. */
+html:not(.c-paidSearchVisitor) .c-pdp35-variant,
+html.c-paidSearchVisitor body:not(.c-primePdp35VarA):not(.c-primePdp35VarB) .c-pdp35-variant {
   display: none;
 }
 
@@ -197,20 +205,29 @@ html.c-paidSearchVisitor .c-pdp35-variant {
    Base .c-pdp35-row rules above (and the mobile overrides below) are
    untouched, so Control keeps the pre-existing look. */
 @media screen and (min-width: 750px) {
+  /* Unselected rows: thin light border, gray radio outline — only the
+     selected row (below) gets the bold navy border, per Figma node
+     1251:4472's "5 books" reference: every row's title/price/badge colors
+     stay the same regardless of selection, only the border and radio differ. */
   body.c-primePdp35VarA .c-pdp35-row,
   body.c-primePdp35VarB .c-pdp35-row {
-    border: 1.5px solid #0d1b3e;
+    border: 1px solid #d9e0e6;
     border-radius: 8px;
-    padding: 11.5px 13.5px;
+    padding: 14.7px 13.5px;
   }
 
   body.c-primePdp35VarA .c-pdp35-row__radio,
   body.c-primePdp35VarB .c-pdp35-row__radio {
-    border: 2px solid #0d1b3e;
+    border: 2px solid #c2cbd3;
   }
 
   body.c-primePdp35VarA .c-pdp35-row:has(.c-pdp35-row__radio:checked),
   body.c-primePdp35VarB .c-pdp35-row:has(.c-pdp35-row__radio:checked) {
+    border: 1.5px solid #0d1b3e;
+  }
+
+  body.c-primePdp35VarA .c-pdp35-row__radio:checked,
+  body.c-primePdp35VarB .c-pdp35-row__radio:checked {
     border-color: #0d1b3e;
   }
 
@@ -282,20 +299,26 @@ html.c-paidSearchVisitor .c-pdp35-variant {
    overrides earlier in this file) to keep "pre-existing mobile look" and
    "test variant mobile look" clearly apart, same as the desktop block above. */
 @media screen and (max-width: 749px) {
+  /* Same selected/unselected split as the desktop block above. */
   body.c-primePdp35VarA .c-pdp35-row,
   body.c-primePdp35VarB .c-pdp35-row {
-    border: 2px solid #0d1b3e;
+    border: 1px solid #d9e0e6;
     border-radius: 8px;
-    padding: 11px 13px;
+    padding: 14px 13px;
   }
 
   body.c-primePdp35VarA .c-pdp35-row__radio,
   body.c-primePdp35VarB .c-pdp35-row__radio {
-    border: 2px solid #0d1b3e;
+    border: 2px solid #c2cbd3;
   }
 
   body.c-primePdp35VarA .c-pdp35-row:has(.c-pdp35-row__radio:checked),
   body.c-primePdp35VarB .c-pdp35-row:has(.c-pdp35-row__radio:checked) {
+    border: 2px solid #0d1b3e;
+  }
+
+  body.c-primePdp35VarA .c-pdp35-row__radio:checked,
+  body.c-primePdp35VarB .c-pdp35-row__radio:checked {
     border-color: #0d1b3e;
   }
 
@@ -451,6 +474,18 @@ body.c-primePdp35VarB .c-pdp35-gifts__heading--short {
 .c-pdp35-gift--unlocked {
   border: 2px solid #2e8b57;
   opacity: 1;
+}
+
+/* At 1440px+ the purchase column is wide enough for the original Figma
+   168x168 fixed card size (the fluid sizing above exists specifically to
+   avoid overflow at the narrower 750-1400px laptop range — see that rule's
+   own comment). */
+@media screen and (min-width: 1440px) {
+  .c-pdp35-gift {
+    flex: 0 0 168px;
+    width: 168px;
+    height: 168px;
+  }
 }
 
 /* Locked-only dashed border, drawn as an SVG rect instead of CSS

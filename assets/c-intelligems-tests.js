@@ -58,14 +58,13 @@ function handleExperiments() {
   }
 
   // Test: V_PRIME_PDP_35 | Unlock Bonus Free Gifts
-  // TODO: replace with the real experiment ID once V_PRIME_PDP_35 is created
-  // in Intelligems (ported from V_PRIME_PDP_25's Var A + Var C).
-  const primePdp35 = { name: "Var A - Inline gifts shown" }
-  
-  if (primePdp35?.name === "Var A - Inline gifts shown") {
+  const primePdp35 = window.igData?.user.getTestGroup(
+    "97267cf0-b33c-48dc-a5e0-195f12d5587b"
+  );
+  if (primePdp35?.name === "Var A - Thumbnail unlock cards") {
     document.body.classList.add("c-primePdp35VarA");
   } else if (
-    primePdp35?.name === "Var B - Bordered gift tiles with lock/unlock"
+    primePdp35?.name === "Var B - Compact status cards"
   ) {
     document.body.classList.add("c-primePdp35VarB");
   }

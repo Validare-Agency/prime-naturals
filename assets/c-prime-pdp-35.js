@@ -216,9 +216,10 @@
   if (window.pdp35CartListenersInit) return;
   window.pdp35CartListenersInit = true;
 
-  // Mirrors the data-pdp35-unlock-qty values on the PDP gift cards above: 1-2
-  // books unlocks none, 3-4 unlocks the mystery gift, 5+ unlocks all three.
-  var GIFT_UNLOCK_THRESHOLDS = { mystery: 3, bookmark: 5, stickers: 5 };
+  // Mirrors the data-pdp35-unlock-qty values on the PDP gift cards above:
+  // 1-2 books unlocks none, 3 unlocks the mystery gift, 4 additionally
+  // unlocks the bookmark, 5 unlocks all three.
+  var GIFT_UNLOCK_THRESHOLDS = { mystery: 3, bookmark: 4, stickers: 5 };
 
   function fetchCart() {
     return fetch(window.routes.cart_url + '.js').then(function (response) {

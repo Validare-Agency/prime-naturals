@@ -691,6 +691,7 @@
                 has_filtering: has_filtering
               %}
             {%- when 'buy_buttons' -%}
+              {% render 'c-prime-pdp-17-bundle', product: product, section: section %}
               {% render 'c-prime-pdp-35-bundle', product: product, section: section %}
               {%- render 'buy-buttons',
                  block: block,
