@@ -11,11 +11,11 @@
    c-prime-site-11.css overrides). CONFIRM the real root selector via browser
    inspector and replace this with an exact match.
 
-   Google Ads visitors (html.c-googleAdsVisitor, set in layout/theme.liquid)
+   Paid search visitors (html.c-paidSearchVisitor, set in layout/theme.liquid)
    are excluded from this hide rule — they see Kaching's normal bundle widget
    instead of the custom .c-pdp25-variant bundle (hidden for them separately
    in c-prime-pdp-25.css). */
-html:not(.c-googleAdsVisitor) [class*="kaching-bundles"] {
+html:not(.c-paidSearchVisitor) [class*="kaching-bundles"] {
   display: none;
 }
 
@@ -29,7 +29,7 @@ html:not(.c-googleAdsVisitor) [class*="kaching-bundles"] {
    visibility rule above: hidden for normal visitors (who see our own
    self-contained .c-pdp25-variant button instead), shown whenever Kaching is
    what's actually visible. */
-html:not(.c-googleAdsVisitor) .main-product-form {
+html:not(.c-paidSearchVisitor) .main-product-form {
   display: none;
 }
 
