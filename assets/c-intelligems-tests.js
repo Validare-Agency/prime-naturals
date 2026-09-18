@@ -79,6 +79,14 @@ function decideKachingSwap(isPaidSearch, isVarAOrB) {
   if (kachingSwapAttempted) return;
   kachingSwapAttempted = true;
 
+  // Called unconditionally on every page (see handleExperiments below), but
+  // this whole mechanism — including the hide-style — only ever applies to
+  // Murphy/Leadership. Everywhere else, kachingSwapProductId is undefined
+  // and nothing here should run at all: no swap, no reveal call (nothing
+  // was hidden to begin with), otherwise a paid search visitor on ANY OTHER
+  // product would get its kaching-bundle cloned with product-id="undefined".
+  if (!kachingSwapProductId) return;
+
   if (!isPaidSearch) {
     kachingRevealBundle();
     return;
