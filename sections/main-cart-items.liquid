@@ -63,7 +63,7 @@
 
             <tbody>
               {%- for item in cart.items -%}
-                <tr class="cart-item cart-item--product-{{ item.product.handle }}" id="CartItem-{{ item.index | plus: 1 }}">
+                <tr class="cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pdp35_gift %} c-pdp35-gift-line{% endif %}" id="CartItem-{{ item.index | plus: 1 }}">
                   <td class="cart-item__media">
                     {% if item.image %}
                       {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
@@ -189,7 +189,11 @@
                         </dl>
                       {%- else -%}
                         <span class="price price--end">
-                          {{ item.original_line_price | money }}
+                          {%- if item.properties._pdp35_gift -%}
+                            FREE
+                          {%- else -%}
+                            {{ item.original_line_price | money }}
+                          {%- endif -%}
                         </span>
                       {%- endif -%}
 
@@ -212,6 +216,9 @@
 
                   <td class="cart-item__quantity">
                     <div class="cart-item__quantity-wrapper">
+                      {% if item.properties._pdp35_gift %}
+                        <span class="c-pdp35-cart-gift-badge">FREE</span>
+                      {% endif %}
                       <label class="visually-hidden" for="Quantity-{{ item.index | plus: 1 }}">
                         {{ 'products.product.quantity.label' | t }}
                       </label>
@@ -312,7 +319,11 @@
                         </dl>
                       {%- else -%}
                         <span class="price price--end">
-                          {{ item.original_line_price | money }}
+                          {%- if item.properties._pdp35_gift -%}
+                            FREE
+                          {%- else -%}
+                            {{ item.original_line_price | money }}
+                          {%- endif -%}
                         </span>
                       {%- endif -%}
 
