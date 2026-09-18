@@ -1,16 +1,22 @@
 let domLoaded = false;
 let igReady = false;
 
-// V_PRIME_PDP_35 | Kaching product-id swap, Murphy/Leadership only. Same
-// mechanism as the Snuggi price test on ab-test/V_PIL_PDP_04: kaching-bundle
-// is hidden from page load via an injected style (before we even know the
-// visitor's paid-search/test-bucket status, which only resolves later on
-// ig:ready), then for paid search + Var A/B visitors it's swapped to point
-// at the OTHER product id below (the id that carries the actual deal config
-// to use) and force-initialized via Kaching's own internal init function —
+// V_PRIME_PDP_35 | Kaching product-id swap, Murphy/Leadership + Var A/B
+// only. Same mechanism as the Snuggi price test on ab-test/V_PIL_PDP_04:
+// kaching-bundle is hidden via an injected style, swapped to point at the
+// OTHER product id below (the id that carries the actual deal config to
+// use), and force-initialized via Kaching's own internal init function —
 // staying hidden permanently, since the shopper sees .c-pdp35-variant
-// instead and is never meant to see this widget at all. Anyone else: the
-// original, un-swapped widget is revealed immediately.
+// instead and is never meant to see this widget at all.
+//
+// Deliberately NOT done unconditionally on page load: injecting the
+// hide-style and later removing it again — even with no swap involved — was
+// enough on its own to corrupt Kaching's own init for every OTHER visitor
+// (Control included), since it raced against Kaching's own script trying to
+// initialize while hidden. So nothing here runs at all — no style, no
+// touch — until we actually know it's paid search + Var A/B; anyone else
+// (not paid search, or paid search but Control/no group) sees the
+// completely untouched widget, exactly like the live store.
 //
 // Keys are the real product ids shoppers land on (murphys-law-for-kids =
 // "Murphy", murphys-law-for-kids-copy = "Leadership" despite its handle);
@@ -25,26 +31,12 @@ const KACHING_SWAP_TARGET_BY_PRODUCT_ID = {
 const kachingSwapProductId =
   KACHING_SWAP_TARGET_BY_PRODUCT_ID[String(window.__productIdFromTemplate)];
 
-let kachingRevealBundle = () => {};
 let kachingRevealBackstop = null;
-if (kachingSwapProductId) {
-  const kachingHideStyle = document.createElement("style");
-  kachingHideStyle.textContent = "kaching-bundle{display:none !important;}";
-  document.head.appendChild(kachingHideStyle);
 
-  let kachingRevealed = false;
-  kachingRevealBundle = () => {
-    if (kachingRevealed) return;
-    kachingRevealed = true;
-    clearTimeout(kachingRevealBackstop);
-    kachingHideStyle.remove();
-  };
-
-  // Absolute backstop — never leave the widget hidden forever, no matter
-  // what fails upstream (Intelligems, Kaching, or our own logic below).
-  // Cleared once a swap actually succeeds, since that case is meant to stay
-  // hidden permanently.
-  kachingRevealBackstop = setTimeout(kachingRevealBundle, 20000);
+function kachingRevealBundle() {
+  clearTimeout(kachingRevealBackstop);
+  const style = document.getElementById("c-kachingHideStyle");
+  if (style) style.remove();
 }
 
 function kachingWaitForInit(onReady, retriesLeft = 25) {
@@ -86,9 +78,23 @@ function decideKachingSwap(isPaidSearch, isVarAOrB) {
   if (!kachingSwapProductId) return;
 
   if (!isPaidSearch || !isVarAOrB) {
+    // No style was ever injected for this visitor — this is a no-op, just
+    // guards against a lingering style from some other code path.
     kachingRevealBundle();
     return;
   }
+
+  const kachingHideStyle = document.createElement("style");
+  kachingHideStyle.id = "c-kachingHideStyle";
+  kachingHideStyle.textContent = "kaching-bundle{display:none !important;}";
+  document.head.appendChild(kachingHideStyle);
+
+  // Absolute backstop — never leave the widget hidden forever, no matter
+  // what fails upstream (Intelligems, Kaching, or our own logic below).
+  // Cleared once a swap actually succeeds, since that case is meant to stay
+  // hidden permanently.
+  kachingRevealBackstop = setTimeout(kachingRevealBundle, 20000);
+
   kachingWaitForInit(() => kachingAttemptSwap(1));
 }
 
