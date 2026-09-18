@@ -65,20 +65,14 @@ let kachingSwapAttempted = false;
 
 // Called once we know this visitor's paid-search status and V_PRIME_PDP_35
 // bucket.
-//   - not paid search: no swap, reveal the original widget immediately.
-//   - paid search, Control/no group: Kaching IS what this visitor is meant
-//     to see (see the 3-way split in c-prime-pdp-17.css), so it has to
-//     actually swap to the correct product id, then reveal it.
-//   - paid search, Var A/B: the shopper sees .c-pdp35-variant instead, and
+//   - anyone NOT in Var A/B (not paid search, or paid search but Control/no
+//     group): no changes at all — same as the live store, reveal the
+//     original untouched widget immediately.
+//   - paid search + Var A/B: swap to the other product id, then stay
+//     HIDDEN permanently — the shopper sees .c-pdp35-variant instead, and
 //     the correct variant/price for checkout is already handled directly
-//     in c-prime-pdp-35.js's addToCart() (window.pdp35KachingSwapVariantId)
-//     — Kaching's own widget doesn't need to do anything here, so it's left
-//     alone entirely (no swap, no reinit), just hidden as-is. Swapping AND
-//     reinitializing it anyway (an earlier version of this) corrupted
-//     Kaching's own global cart-observer state (its _dealBlockElement
-//     reference), crashing on any later cart change with "rotateBundleNonce
-//     is not a function" / "validateItemSelection is not a function" — do
-//     not reintroduce that; there's nothing to gain from touching it here.
+//     in c-prime-pdp-35.js's addToCart() (window.pdp35KachingSwapVariantId).
+//     The swapped widget just keeps computing/updating in the background.
 function decideKachingSwap(isPaidSearch, isVarAOrB) {
   if (kachingSwapAttempted) return;
   kachingSwapAttempted = true;
@@ -91,16 +85,10 @@ function decideKachingSwap(isPaidSearch, isVarAOrB) {
   // product would get its kaching-bundle cloned with product-id="undefined".
   if (!kachingSwapProductId) return;
 
-  if (!isPaidSearch) {
+  if (!isPaidSearch || !isVarAOrB) {
     kachingRevealBundle();
     return;
   }
-
-  if (isVarAOrB) {
-    clearTimeout(kachingRevealBackstop);
-    return;
-  }
-
   kachingWaitForInit(() => kachingAttemptSwap(1));
 }
 
@@ -112,13 +100,20 @@ function kachingAttemptSwap(attempt) {
     return;
   }
 
+  // Remove the original BEFORE inserting/initializing the clone, rather
+  // than having both exist at once — if Kaching's own init code looks up
+  // "the" kaching-bundle via a plain document.querySelector, having two in
+  // the DOM simultaneously risks it grabbing the wrong (old) one.
+  const nextSibling = oldEl.nextSibling;
+  oldEl.remove();
+
   const newEl = document.createElement("kaching-bundle");
   Array.from(oldEl.attributes).forEach((attr) =>
     newEl.setAttribute(attr.name, attr.value)
   );
   newEl.setAttribute("product-id", kachingSwapProductId);
   newEl.removeAttribute("data-initialized");
-  parent.appendChild(newEl);
+  parent.insertBefore(newEl, nextSibling);
 
   let settled = false;
 
@@ -127,8 +122,9 @@ function kachingAttemptSwap(attempt) {
     settled = true;
     obs.disconnect();
     clearTimeout(fallback);
-    parent.replaceChild(newEl, oldEl);
-    kachingRevealBundle();
+    // Intentionally never revealed — this swapped widget is meant to keep
+    // computing/updating in the background, never shown to the shopper.
+    clearTimeout(kachingRevealBackstop);
   };
 
   const retryOrGiveUp = () => {
@@ -137,6 +133,9 @@ function kachingAttemptSwap(attempt) {
     obs.disconnect();
     clearTimeout(fallback);
     newEl.remove();
+    // Put the original back so there's always exactly one kaching-bundle in
+    // the DOM, never zero, while we retry or give up.
+    parent.insertBefore(oldEl, nextSibling);
 
     if (attempt < KACHING_SWAP_MAX_ATTEMPTS) {
       kachingAttemptSwap(attempt + 1);
