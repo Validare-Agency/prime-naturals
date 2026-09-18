@@ -2,28 +2,8 @@ let domLoaded = false;
 let igReady = false;
 
 // V_PRIME_PDP_35 | Kaching product-id swap, Murphy/Leadership + Var A/B
-// only. Same mechanism as the Snuggi price test on ab-test/V_PIL_PDP_04:
-// kaching-bundle is hidden via an injected style, swapped to point at the
-// OTHER product id below (the id that carries the actual deal config to
-// use), and force-initialized via Kaching's own internal init function —
-// staying hidden permanently, since the shopper sees .c-pdp35-variant
-// instead and is never meant to see this widget at all.
-//
-// Deliberately NOT done unconditionally on page load: injecting the
-// hide-style and later removing it again — even with no swap involved — was
-// enough on its own to corrupt Kaching's own init for every OTHER visitor
-// (Control included), since it raced against Kaching's own script trying to
-// initialize while hidden. So nothing here runs at all — no style, no
-// touch — until we actually know it's paid search + Var A/B; anyone else
-// (not paid search, or paid search but Control/no group) sees the
-// completely untouched widget, exactly like the live store.
-//
-// Keys are the real product ids shoppers land on (murphys-law-for-kids =
-// "Murphy", murphys-law-for-kids-copy = "Leadership" despite its handle);
-// values are the OTHER id whose Kaching config should render in its place.
-// The "-google-ads" duplicate handles/ids given earlier were only ever
-// reference for which two products this applies to, not the real URLs or
-// swap targets.
+// only — see Snuggi price test on ab-test/V_PIL_PDP_04 for the same
+// mechanism. Nothing here runs at all for any other visitor/product.
 const KACHING_SWAP_TARGET_BY_PRODUCT_ID = {
   "7568898293894": "7733150187654", // murphys-law-for-kids -> swap to this id
   "7587123658886": "7733149794438", // murphys-law-for-kids-copy -> swap to this id
@@ -55,31 +35,13 @@ const KACHING_SWAP_ATTEMPT_TIMEOUT = 4000;
 const KACHING_SWAP_MAX_ATTEMPTS = 3;
 let kachingSwapAttempted = false;
 
-// Called once we know this visitor's paid-search status and V_PRIME_PDP_35
-// bucket.
-//   - anyone NOT in Var A/B (not paid search, or paid search but Control/no
-//     group): no changes at all — same as the live store, reveal the
-//     original untouched widget immediately.
-//   - paid search + Var A/B: swap to the other product id, then stay
-//     HIDDEN permanently — the shopper sees .c-pdp35-variant instead, and
-//     the correct variant/price for checkout is already handled directly
-//     in c-prime-pdp-35.js's addToCart() (window.pdp35KachingSwapVariantId).
-//     The swapped widget just keeps computing/updating in the background.
 function decideKachingSwap(isPaidSearch, isVarAOrB) {
   if (kachingSwapAttempted) return;
   kachingSwapAttempted = true;
 
-  // Called unconditionally on every page (see handleExperiments below), but
-  // this whole mechanism — including the hide-style — only ever applies to
-  // Murphy/Leadership. Everywhere else, kachingSwapProductId is undefined
-  // and nothing here should run at all: no swap, no reveal call (nothing
-  // was hidden to begin with), otherwise a paid search visitor on ANY OTHER
-  // product would get its kaching-bundle cloned with product-id="undefined".
   if (!kachingSwapProductId) return;
 
   if (!isPaidSearch || !isVarAOrB) {
-    // No style was ever injected for this visitor — this is a no-op, just
-    // guards against a lingering style from some other code path.
     kachingRevealBundle();
     return;
   }
@@ -89,10 +51,7 @@ function decideKachingSwap(isPaidSearch, isVarAOrB) {
   kachingHideStyle.textContent = "kaching-bundle{display:none !important;}";
   document.head.appendChild(kachingHideStyle);
 
-  // Absolute backstop — never leave the widget hidden forever, no matter
-  // what fails upstream (Intelligems, Kaching, or our own logic below).
-  // Cleared once a swap actually succeeds, since that case is meant to stay
-  // hidden permanently.
+  // Backstop — never leave it hidden forever if something upstream fails.
   kachingRevealBackstop = setTimeout(kachingRevealBundle, 20000);
 
   kachingWaitForInit(() => kachingAttemptSwap(1));
@@ -106,10 +65,7 @@ function kachingAttemptSwap(attempt) {
     return;
   }
 
-  // Remove the original BEFORE inserting/initializing the clone, rather
-  // than having both exist at once — if Kaching's own init code looks up
-  // "the" kaching-bundle via a plain document.querySelector, having two in
-  // the DOM simultaneously risks it grabbing the wrong (old) one.
+  // Remove before inserting the clone, so only one ever exists at once.
   const nextSibling = oldEl.nextSibling;
   oldEl.remove();
 
