@@ -213,14 +213,20 @@
                     endif
 
                     assign hidden = false
+                    assign label_values = ''
                     if item.object_type == 'product'
                       if item.tags contains 'search-hidden'
                         assign hidden = true
                       endif
+                      for label in item.metafields.custom.labels.value
+                        assign label_text = label | split: '|' | first | strip | downcase
+                        assign label_values = label_values | append: label_text | append: ' '
+                      endfor
+                      assign label_values = label_values | strip
                     endif
                   %}
 
-                  <li class="grid__item{% if hidden %} hidden{% endif %}">
+                  <li class="grid__item{% if hidden %} hidden{% endif %}" data-label="{{ label_values }}">
                     {%- case item.object_type -%}
                       {%- when 'product' -%}
                         {% unless hidden %}

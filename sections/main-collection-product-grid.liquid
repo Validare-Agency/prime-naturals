@@ -152,9 +152,16 @@
                   if forloop.index > 2
                     assign lazy_load = true
                   endif
+
+                  assign label_values = ''
+                  for label in product.metafields.custom.labels.value
+                    assign label_text = label | split: '|' | first | strip | downcase
+                    assign label_values = label_values | append: label_text | append: ' '
+                  endfor
+                  assign label_values = label_values | strip
                 %}
                 {% unless product.tags contains 'collection-hidden' %}
-                  <li class="grid__item animate-item animate-item--child" style='--index: {{ forloop.index0 }};'>
+                  <li class="grid__item animate-item animate-item--child" data-label="{{ label_values }}" style='--index: {{ forloop.index0 }};'>
                     {% render 'card-product',
                       card_product: product,
                       media_aspect_ratio: section.settings.image_ratio,
