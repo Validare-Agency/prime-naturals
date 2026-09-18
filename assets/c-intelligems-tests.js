@@ -1,127 +1,6 @@
 let domLoaded = false;
 let igReady = false;
 
-// V_PRIME_PDP_35 | Kaching product-id swap, Murphy/Leadership + Var A/B
-// only — see Snuggi price test on ab-test/V_PIL_PDP_04 for the same
-// mechanism. Nothing here runs at all for any other visitor/product.
-const KACHING_SWAP_TARGET_BY_PRODUCT_ID = {
-  "7568898293894": "7733150187654", // murphys-law-for-kids -> swap to this id
-  "7587123658886": "7733149794438", // murphys-law-for-kids-copy -> swap to this id
-};
-const kachingSwapProductId =
-  KACHING_SWAP_TARGET_BY_PRODUCT_ID[String(window.__productIdFromTemplate)];
-
-let kachingRevealBackstop = null;
-
-function kachingRevealBundle() {
-  clearTimeout(kachingRevealBackstop);
-  const style = document.getElementById("c-kachingHideStyle");
-  if (style) style.remove();
-}
-
-function kachingWaitForInit(onReady, retriesLeft = 25) {
-  if (typeof window.__kachingBundlesInitializeInternal === "function") {
-    onReady();
-    return;
-  }
-  if (retriesLeft <= 0) {
-    kachingRevealBundle();
-    return;
-  }
-  setTimeout(() => kachingWaitForInit(onReady, retriesLeft - 1), 200);
-}
-
-const KACHING_SWAP_ATTEMPT_TIMEOUT = 4000;
-const KACHING_SWAP_MAX_ATTEMPTS = 3;
-let kachingSwapAttempted = false;
-
-function decideKachingSwap(isPaidSearch, isVarAOrB) {
-  if (kachingSwapAttempted) return;
-  kachingSwapAttempted = true;
-
-  if (!kachingSwapProductId) return;
-
-  if (!isPaidSearch || !isVarAOrB) {
-    kachingRevealBundle();
-    return;
-  }
-
-  const kachingHideStyle = document.createElement("style");
-  kachingHideStyle.id = "c-kachingHideStyle";
-  kachingHideStyle.textContent = "kaching-bundle{display:none !important;}";
-  document.head.appendChild(kachingHideStyle);
-
-  // Backstop — never leave it hidden forever if something upstream fails.
-  kachingRevealBackstop = setTimeout(kachingRevealBundle, 20000);
-
-  kachingWaitForInit(() => kachingAttemptSwap(1));
-}
-
-function kachingAttemptSwap(attempt) {
-  const oldEl = document.querySelector("kaching-bundle");
-  const parent = oldEl?.parentNode;
-  if (!oldEl || !parent) {
-    kachingRevealBundle();
-    return;
-  }
-
-  // Remove before inserting the clone, so only one ever exists at once.
-  const nextSibling = oldEl.nextSibling;
-  oldEl.remove();
-
-  const newEl = document.createElement("kaching-bundle");
-  Array.from(oldEl.attributes).forEach((attr) =>
-    newEl.setAttribute(attr.name, attr.value)
-  );
-  newEl.setAttribute("product-id", kachingSwapProductId);
-  newEl.removeAttribute("data-initialized");
-  parent.insertBefore(newEl, nextSibling);
-
-  let settled = false;
-
-  const confirmSwap = () => {
-    if (settled) return;
-    settled = true;
-    obs.disconnect();
-    clearTimeout(fallback);
-    // Intentionally never revealed — this swapped widget is meant to keep
-    // computing/updating in the background, never shown to the shopper.
-    clearTimeout(kachingRevealBackstop);
-  };
-
-  const retryOrGiveUp = () => {
-    if (settled) return;
-    settled = true;
-    obs.disconnect();
-    clearTimeout(fallback);
-    newEl.remove();
-    // Put the original back so there's always exactly one kaching-bundle in
-    // the DOM, never zero, while we retry or give up.
-    parent.insertBefore(oldEl, nextSibling);
-
-    if (attempt < KACHING_SWAP_MAX_ATTEMPTS) {
-      kachingAttemptSwap(attempt + 1);
-    } else {
-      // Exhausted retries — reveal the original, un-swapped widget rather
-      // than nothing.
-      kachingRevealBundle();
-    }
-  };
-
-  const fallback = setTimeout(() => {
-    if (newEl.children.length > 0) confirmSwap();
-    else retryOrGiveUp();
-  }, KACHING_SWAP_ATTEMPT_TIMEOUT);
-
-  const obs = new MutationObserver(() => {
-    if (settled || newEl.children.length === 0) return;
-    confirmSwap();
-  });
-  obs.observe(newEl, { childList: true });
-
-  window.__kachingBundlesInitializeInternal();
-}
-
 // Validare Holdout. Permanent, never end it.
 const HOLDOUT_EXPERIMENT_ID = "3ad2181f-d285-418c-b4d8-a52ce3a136a1";
 // const HOLDOUT_GROUP_ID = "c41ea5b4-45b8-4edf-8687-844be31c4054";
@@ -183,20 +62,11 @@ function handleExperiments() {
   const primePdp35 = window.igData?.user.getTestGroup(
     "97267cf0-b33c-48dc-a5e0-195f12d5587b"
   );
-  let primePdp35InVarAOrB = false;
   if (primePdp35?.name === "Var A - Thumbnail unlock cards") {
     document.body.classList.add("c-primePdp35VarA");
-    primePdp35InVarAOrB = true;
-  } else if (
-    primePdp35?.name === "Var B - Compact status cards"
-  ) {
+  } else if (primePdp35?.name === "Var B - Compact status cards") {
     document.body.classList.add("c-primePdp35VarB");
-    primePdp35InVarAOrB = true;
   }
-  decideKachingSwap(
-    document.documentElement.classList.contains("c-paidSearchVisitor"),
-    primePdp35InVarAOrB
-  );
 }
 
 let cartDrawerWasActive = false;

@@ -109,14 +109,11 @@
     assign c_pdp35_d_t3_variant_id = c_pdp35_variant.id
   endif
 
-  # Kaching product-id swap (paid search + Var A/B only, forced client-side
-  # in assets/c-intelligems-tests.js) — on these two specific real product
-  # pages, the ADD TO CART click below must add the swap target's variant
+  # On these two specific real product pages, paid search + Var A/B
+  # visitors' ADD TO CART click below must add this swap target's variant
   # instead of this page's own, so the correct Kaching deal config is what
-  # actually gets purchased, not just what's silently computing in the
-  # hidden widget. Gift items are unaffected — only the main item swaps.
-  # Kept in sync with KACHING_SWAP_TARGET_BY_PRODUCT_ID in
-  # assets/c-intelligems-tests.js.
+  # actually gets purchased — see assets/c-prime-pdp-35.js's addToCart().
+  # Gift items are unaffected — only the main item swaps.
   assign c_pdp35_kaching_swap_variant_id = blank
   if product.id == 7568898293894
     assign c_pdp35_kaching_swap_variant_id = all_products['murphys-law-for-kids-google-ads'].selected_or_first_available_variant.id
