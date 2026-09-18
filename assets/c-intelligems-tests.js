@@ -1,6 +1,143 @@
 let domLoaded = false;
 let igReady = false;
 
+// V_PRIME_PDP_35 | Kaching product-id swap, Murphy/Leadership only. Same
+// mechanism as the Snuggi price test on ab-test/V_PIL_PDP_04: kaching-bundle
+// is hidden from page load via an injected style (before we even know the
+// visitor's paid-search/test-bucket status, which only resolves later on
+// ig:ready), then for paid search + Var A/B visitors it's swapped to point
+// at the OTHER product id below (the id that carries the actual deal config
+// to use) and force-initialized via Kaching's own internal init function —
+// staying hidden permanently, since the shopper sees .c-pdp35-variant
+// instead and is never meant to see this widget at all. Anyone else: the
+// original, un-swapped widget is revealed immediately.
+//
+// Keys are the real product ids shoppers land on (murphys-law-for-kids =
+// "Murphy", murphys-law-for-kids-copy = "Leadership" despite its handle);
+// values are the OTHER id whose Kaching config should render in its place.
+// The "-google-ads" duplicate handles/ids given earlier were only ever
+// reference for which two products this applies to, not the real URLs or
+// swap targets.
+const KACHING_SWAP_TARGET_BY_PRODUCT_ID = {
+  "7568898293894": "7733150187654", // murphys-law-for-kids -> swap to this id
+  "7587123658886": "7733149794438", // murphys-law-for-kids-copy -> swap to this id
+};
+const kachingSwapProductId =
+  KACHING_SWAP_TARGET_BY_PRODUCT_ID[String(window.__productIdFromTemplate)];
+
+let kachingRevealBundle = () => {};
+let kachingRevealBackstop = null;
+if (kachingSwapProductId) {
+  const kachingHideStyle = document.createElement("style");
+  kachingHideStyle.textContent = "kaching-bundle{display:none !important;}";
+  document.head.appendChild(kachingHideStyle);
+
+  let kachingRevealed = false;
+  kachingRevealBundle = () => {
+    if (kachingRevealed) return;
+    kachingRevealed = true;
+    clearTimeout(kachingRevealBackstop);
+    kachingHideStyle.remove();
+  };
+
+  // Absolute backstop — never leave the widget hidden forever, no matter
+  // what fails upstream (Intelligems, Kaching, or our own logic below).
+  // Cleared once a swap actually succeeds, since that case is meant to stay
+  // hidden permanently.
+  kachingRevealBackstop = setTimeout(kachingRevealBundle, 20000);
+}
+
+function kachingWaitForInit(onReady, retriesLeft = 25) {
+  if (typeof window.__kachingBundlesInitializeInternal === "function") {
+    onReady();
+    return;
+  }
+  if (retriesLeft <= 0) {
+    kachingRevealBundle();
+    return;
+  }
+  setTimeout(() => kachingWaitForInit(onReady, retriesLeft - 1), 200);
+}
+
+const KACHING_SWAP_ATTEMPT_TIMEOUT = 4000;
+const KACHING_SWAP_MAX_ATTEMPTS = 3;
+let kachingSwapAttempted = false;
+
+// Called once we know whether this visitor is paid search AND bucketed into
+// V_PRIME_PDP_35's Var A or Var B — the exact same combination that shows
+// .c-pdp35-variant (see c-prime-pdp-35.css). Anyone else: reveal the
+// original Kaching widget immediately and let the normal
+// c-prime-pdp-17.css rules govern it.
+function decideKachingSwap(isPaidSearchVarAB) {
+  if (kachingSwapAttempted) return;
+  kachingSwapAttempted = true;
+
+  if (!isPaidSearchVarAB) {
+    kachingRevealBundle();
+    return;
+  }
+  kachingWaitForInit(() => kachingAttemptSwap(1));
+}
+
+function kachingAttemptSwap(attempt) {
+  const oldEl = document.querySelector("kaching-bundle");
+  const parent = oldEl?.parentNode;
+  if (!oldEl || !parent) {
+    kachingRevealBundle();
+    return;
+  }
+
+  const newEl = document.createElement("kaching-bundle");
+  Array.from(oldEl.attributes).forEach((attr) =>
+    newEl.setAttribute(attr.name, attr.value)
+  );
+  newEl.setAttribute("product-id", kachingSwapProductId);
+  newEl.removeAttribute("data-initialized");
+  parent.appendChild(newEl);
+
+  let settled = false;
+
+  const confirmSwap = () => {
+    if (settled) return;
+    settled = true;
+    obs.disconnect();
+    clearTimeout(fallback);
+    parent.replaceChild(newEl, oldEl);
+    // Intentionally never revealed — this swapped widget is meant to keep
+    // computing/updating in the background, never shown to the shopper.
+    clearTimeout(kachingRevealBackstop);
+  };
+
+  const retryOrGiveUp = () => {
+    if (settled) return;
+    settled = true;
+    obs.disconnect();
+    clearTimeout(fallback);
+    newEl.remove();
+
+    if (attempt < KACHING_SWAP_MAX_ATTEMPTS) {
+      kachingAttemptSwap(attempt + 1);
+    } else {
+      // Exhausted retries — reveal the original, un-swapped widget rather
+      // than nothing.
+      kachingRevealBundle();
+    }
+  };
+
+  const fallback = setTimeout(() => {
+    if (newEl.children.length > 0) confirmSwap();
+    else retryOrGiveUp();
+  }, KACHING_SWAP_ATTEMPT_TIMEOUT);
+
+  const obs = new MutationObserver(() => {
+    if (settled || newEl.children.length === 0) return;
+    confirmSwap();
+  });
+  obs.observe(newEl, { childList: true });
+
+  window.__kachingBundlesInitializeInternal();
+}
+
 // Validare Holdout. Permanent, never end it.
 const HOLDOUT_EXPERIMENT_ID = "3ad2181f-d285-418c-b4d8-a52ce3a136a1";
 // const HOLDOUT_GROUP_ID = "c41ea5b4-45b8-4edf-8687-844be31c4054";
@@ -62,13 +199,20 @@ function handleExperiments() {
   const primePdp35 = window.igData?.user.getTestGroup(
     "97267cf0-b33c-48dc-a5e0-195f12d5587b"
   );
+  let primePdp35InVarAOrB = false;
   if (primePdp35?.name === "Var A - Thumbnail unlock cards") {
     document.body.classList.add("c-primePdp35VarA");
+    primePdp35InVarAOrB = true;
   } else if (
     primePdp35?.name === "Var B - Compact status cards"
   ) {
     document.body.classList.add("c-primePdp35VarB");
+    primePdp35InVarAOrB = true;
   }
+  decideKachingSwap(
+    document.documentElement.classList.contains("c-paidSearchVisitor") &&
+      primePdp35InVarAOrB
+  );
 }
 
 let cartDrawerWasActive = false;

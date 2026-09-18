@@ -148,6 +148,17 @@
     if (!checked) return;
 
     var variantId = checked.getAttribute('data-variant-id');
+    // Kaching product-id swap (Murphy/Leadership only, set in
+    // snippets/c-prime-pdp-35-bundle.liquid + assets/c-intelligems-tests.js)
+    // — this button is only reachable at all when paid search + Var A/B are
+    // both true (see the CSS gate on .c-pdp35-variant), so pdp35VariantActive()
+    // here is just confirming the same thing this click already implies. The
+    // main item has to add the swap target's variant instead of this page's
+    // own, so the correct Kaching deal is what's actually purchased — gift
+    // items are untouched, they keep their own normal variant ids.
+    if (window.pdp35KachingSwapVariantId && pdp35VariantActive()) {
+      variantId = window.pdp35KachingSwapVariantId;
+    }
     var quantity = parseInt(checked.getAttribute('data-quantity'), 10) || 1;
     var bundleId = generateBundleId();
 

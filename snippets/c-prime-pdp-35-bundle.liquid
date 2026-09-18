@@ -109,6 +109,21 @@
     assign c_pdp35_d_t3_variant_id = c_pdp35_variant.id
   endif
 
+  # Kaching product-id swap (paid search + Var A/B only, forced client-side
+  # in assets/c-intelligems-tests.js) — on these two specific real product
+  # pages, the ADD TO CART click below must add the swap target's variant
+  # instead of this page's own, so the correct Kaching deal config is what
+  # actually gets purchased, not just what's silently computing in the
+  # hidden widget. Gift items are unaffected — only the main item swaps.
+  # Kept in sync with KACHING_SWAP_TARGET_BY_PRODUCT_ID in
+  # assets/c-intelligems-tests.js.
+  assign c_pdp35_kaching_swap_variant_id = blank
+  if product.id == 7568898293894
+    assign c_pdp35_kaching_swap_variant_id = all_products['murphys-law-for-kids-google-ads'].selected_or_first_available_variant.id
+  elsif product.id == 7587123658886
+    assign c_pdp35_kaching_swap_variant_id = all_products['leadership-enlightenment-for-kids-google-ads'].selected_or_first_available_variant.id
+  endif
+
   # V_PRIME_PDP_35 gift stack — 3 fixed gift products, each already a $0.00
   # variant in Shopify (compare_at_price carries the "value" shown struck
   # through). Unlock thresholds: 1-2 books unlocks none, 3 books unlocks the
@@ -123,6 +138,12 @@
   assign c_pdp35_gift_stickers_product = all_products['stickers']
   assign c_pdp35_gift_stickers_variant = c_pdp35_gift_stickers_product.selected_or_first_available_variant
 -%}
+
+{%- if c_pdp35_kaching_swap_variant_id != blank -%}
+<script>
+  window.pdp35KachingSwapVariantId = {{ c_pdp35_kaching_swap_variant_id | json }};
+</script>
+{%- endif -%}
 
 {%- comment -%} Exact badge icons from Figma (node 1135:1092 lock ring, node
   1060:4537's sibling check-circle) — captured once, reused across all 3 gift
