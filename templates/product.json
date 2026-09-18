@@ -1233,6 +1233,10 @@
         "custom_colors_text": "#121212"
       }
     },
+    "c-prime-pdp-27": {
+      "type": "c-prime-pdp-27",
+      "settings": {}
+    },
     "173367553295ab5061": {
       "type": "apps",
       "settings": {
@@ -1444,6 +1448,7 @@
   },
   "order": [
     "main",
+    "c-prime-pdp-27",
     "related-products",
     "image_with_text_ArcN4t",
     "icon_bar_N6dgQ3",

@@ -1,0 +1,405 @@
+/* <-------------------V_PRIME_PDP_27 | Physical-Size Information - "Exactly What Arrives"-----------------> */
+
+/* Test Setup */
+.c-pdp27__var-a,
+.c-pdp27__var-b,
+.c-pdp27__var-c,
+.c-pdp27__var-d,
+.c-pdp27__var-e,
+.c-pdp27__var-f {
+  display: none;
+}
+
+body.c-primePdp27VarA .c-pdp27__var-a { display: block; }
+body.c-primePdp27VarB .c-pdp27__var-b { display: block; }
+body.c-primePdp27VarC .c-pdp27__var-c { display: block; }
+body.c-primePdp27VarD .c-pdp27__var-d { display: block; }
+body.c-primePdp27VarE .c-pdp27__var-e { display: block; }
+body.c-primePdp27VarF .c-pdp27__var-f { display: block; }
+
+/* Test Design */
+
+/* ── Shared base ── */
+.c-pdp27 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* ── Var A: Badge Row ── */
+.c-pdp27__badge-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  margin-bottom: 16px;
+}
+
+.c-pdp27__badge-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0d1b3e;
+  line-height: 1;
+}
+
+.c-pdp27__badge-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: #0d1b3e;
+}
+
+.c-pdp27__badge-text {
+  white-space: nowrap;
+}
+
+.c-pdp27__badge-sep {
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* ── Var B & C: Accordions ── */
+.c-pdp27__accordions {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.c-pdp27__accordion {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.c-pdp27__accordion:last-child {
+  border-bottom: none;
+}
+
+.c-pdp27__accordion-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.c-pdp27__accordion-btn:hover {
+  background: #f9fafb;
+}
+
+.c-pdp27__accordion-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0d1b3e;
+  line-height: 1.3;
+}
+
+.c-pdp27__caret {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  color: #6b7280;
+  transition: transform 0.2s ease;
+}
+
+.c-pdp27__accordion-btn[aria-expanded="true"] .c-pdp27__caret {
+  transform: rotate(180deg);
+}
+
+.c-pdp27__accordion-body {
+  padding: 4px 16px 16px;
+  background: #fff;
+}
+
+/* ── Shared: Visual comparison ── */
+.c-pdp27__visual-wrap {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.c-pdp27__visual-items {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+/* Phone CSS shape */
+.c-pdp27__phone-shape {
+  width: 44px;
+  height: 88px;
+  background: #e5e7eb;
+  border: 2px solid #9ca3af;
+  border-radius: 8px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.c-pdp27__phone-shape::before {
+  content: '';
+  width: 14px;
+  height: 4px;
+  background: #9ca3af;
+  border-radius: 2px;
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.c-pdp27__phone-shape::after {
+  content: 'A phone';
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+/* Book CSS shape */
+.c-pdp27__book-shape {
+  width: 80px;
+  height: 114px;
+  background: linear-gradient(115deg, #8b1a1a 0%, #b91c1c 100%);
+  border-radius: 2px 4px 4px 2px;
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.c-pdp27__book-shape::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 9px;
+  background: #5a0f0f;
+  border-radius: 2px 0 0 2px;
+}
+
+.c-pdp27__book-shape::after {
+  content: 'The book';
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.c-pdp27__bigger-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 28px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0d1b3e;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 20px;
+  padding: 5px 12px;
+  line-height: 1;
+}
+
+.c-pdp27__arrow-icon {
+  width: 16px;
+  height: 16px;
+  color: #92400e;
+  flex-shrink: 0;
+}
+
+/* ── Shared: Spec rows ── */
+.c-pdp27__spec-dl {
+  margin: 12px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.c-pdp27__spec-dl--rows .c-pdp27__spec-row {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.c-pdp27__spec-dl--rows .c-pdp27__spec-row:last-child {
+  border-bottom: none;
+}
+
+.c-pdp27__spec-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 12px;
+}
+
+.c-pdp27__spec-dt {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #6b7280;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  min-width: 80px;
+}
+
+.c-pdp27__spec-dd {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0d1b3e;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.c-pdp27__spec-sub {
+  font-size: 12px;
+  font-weight: 400;
+  color: #6b7280;
+  margin-left: 4px;
+}
+
+/* ── Shared: Bullet list ── */
+.c-pdp27__bullets {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+}
+
+.c-pdp27__bullets li {
+  font-size: 14px;
+  color: #374151;
+  padding: 6px 0 6px 20px;
+  position: relative;
+  line-height: 1.45;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.c-pdp27__bullets li:last-child {
+  border-bottom: none;
+}
+
+.c-pdp27__bullets li::before {
+  content: '✔';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  font-size: 11px;
+  color: #059669;
+  line-height: 1;
+}
+
+/* ── Shared: Checklist ── */
+.c-pdp27__check-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+}
+
+.c-pdp27__check-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.5;
+  padding: 4px 0;
+}
+
+.c-pdp27__check-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #059669;
+  margin-top: 1px;
+}
+
+/* ── Var D & E: Card below ATC ── */
+.c-pdp27__card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 18px 16px;
+  margin-bottom: 16px;
+}
+
+.c-pdp27__card-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin: 0 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* ── Var F: Editorial block ── */
+.c-pdp27__editorial {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 18px 16px;
+  margin-bottom: 16px;
+}
+
+.c-pdp27__bullets--editorial {
+  margin-bottom: 16px;
+}
+
+.c-pdp27__spec-dl--editorial {
+  margin-top: 16px;
+  background: #f9fafb;
+}
+
+/* ── Desktop adjustments ── */
+@media screen and (min-width: 750px) {
+  .c-pdp27__badge-row {
+    gap: 12px;
+  }
+
+  .c-pdp27__badge-item {
+    font-size: 14px;
+  }
+
+  .c-pdp27__accordion-label {
+    font-size: 16px;
+  }
+
+  .c-pdp27__spec-dt {
+    min-width: 100px;
+  }
+
+  .c-pdp27__spec-dd {
+    font-size: 15px;
+  }
+
+  .c-pdp27__phone-shape {
+    width: 50px;
+    height: 100px;
+  }
+
+  .c-pdp27__book-shape {
+    width: 90px;
+    height: 128px;
+  }
+
+  .c-pdp27__card,
+  .c-pdp27__editorial {
+    padding: 22px 20px;
+  }
+}
