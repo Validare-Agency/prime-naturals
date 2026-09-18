@@ -72,14 +72,20 @@
         var liveDrawer = document.querySelector('cart-drawer');
         if (freshDrawer && liveDrawer) {
           var wasActive = liveDrawer.classList.contains('active');
-          // Update content in place rather than replaceWith()'ing the whole
-          // element — anything else holding a reference to this exact
-          // <cart-drawer> node (the theme's own header, Intelligems' own
-          // instrumentation) stays valid instead of going stale on every
-          // cart change.
+          var parent = liveDrawer.parentNode;
+          var nextSibling = liveDrawer.nextSibling;
           liveDrawer.innerHTML = freshDrawer.innerHTML;
           liveDrawer.className = freshDrawer.className;
           if (openDrawer || wasActive) liveDrawer.classList.add('active');
+          // Detach + reattach the SAME element (not replaceWith(), not just
+          // an innerHTML mutation) so its connectedCallback re-runs and
+          // rebinds internal behavior (open/close, click-outside-to-close)
+          // against the freshly swapped-in content — while any external
+          // reference to this exact <cart-drawer> node (the theme's own
+          // header, Intelligems' own instrumentation) stays valid, since
+          // it's still the same element, just reconnected.
+          parent.removeChild(liveDrawer);
+          parent.insertBefore(liveDrawer, nextSibling);
         }
         return refreshCartIconBubble();
       });
