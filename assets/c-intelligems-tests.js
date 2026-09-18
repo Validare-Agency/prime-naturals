@@ -1,6 +1,85 @@
 let domLoaded = false;
 let igReady = false;
 
+// V_PRIME_PDP_35 | Kaching product-id swap, Control only, Murphy/Leadership
+// only. Var A/B is never touched here at all — that side's cart-correctness
+// is handled directly in c-prime-pdp-35.js's addToCart(). Same mechanism as
+// the Snuggi price test on ab-test/V_PIL_PDP_04.
+const KACHING_SWAP_TARGET_BY_PRODUCT_ID = {
+  7568898293894: "7733150187654", // murphys-law-for-kids -> swap to this id
+  7587123658886: "7733149794438", // murphys-law-for-kids-copy -> swap to this id
+};
+const kachingSwapProductId =
+  KACHING_SWAP_TARGET_BY_PRODUCT_ID[String(window.__productIdFromTemplate)];
+let kachingSwapAttempted = false;
+
+function kachingWaitForInit(onReady, retriesLeft = 25) {
+  if (typeof window.__kachingBundlesInitializeInternal === "function") {
+    onReady();
+    return;
+  }
+  if (retriesLeft <= 0) return;
+  setTimeout(() => kachingWaitForInit(onReady, retriesLeft - 1), 200);
+}
+
+const KACHING_SWAP_ATTEMPT_TIMEOUT = 4000;
+const KACHING_SWAP_MAX_ATTEMPTS = 3;
+
+// Only ever called for Control (not paid search, or paid search + Var A/B,
+// never reach here at all — see the call site in handleExperiments).
+function decideKachingSwap(isControlPaidSearch) {
+  if (kachingSwapAttempted || !kachingSwapProductId || !isControlPaidSearch) {
+    return;
+  }
+  kachingSwapAttempted = true;
+  kachingWaitForInit(() => kachingAttemptSwap(1));
+}
+
+function kachingAttemptSwap(attempt) {
+  const oldEl = document.querySelector("kaching-bundle");
+  const parent = oldEl?.parentNode;
+  if (!oldEl || !parent) return;
+
+  const nextSibling = oldEl.nextSibling;
+  oldEl.remove();
+
+  const newEl = document.createElement("kaching-bundle");
+  Array.from(oldEl.attributes).forEach((attr) =>
+    newEl.setAttribute(attr.name, attr.value)
+  );
+  newEl.setAttribute("product-id", kachingSwapProductId);
+  newEl.removeAttribute("data-initialized");
+  parent.insertBefore(newEl, nextSibling);
+
+  let settled = false;
+
+  const retryOrGiveUp = () => {
+    if (settled) return;
+    settled = true;
+    obs.disconnect();
+    clearTimeout(fallback);
+    newEl.remove();
+    parent.insertBefore(oldEl, nextSibling);
+    if (attempt < KACHING_SWAP_MAX_ATTEMPTS) kachingAttemptSwap(attempt + 1);
+  };
+
+  const fallback = setTimeout(() => {
+    if (newEl.children.length === 0) retryOrGiveUp();
+    settled = true;
+    obs.disconnect();
+  }, KACHING_SWAP_ATTEMPT_TIMEOUT);
+
+  const obs = new MutationObserver(() => {
+    if (settled || newEl.children.length === 0) return;
+    settled = true;
+    obs.disconnect();
+    clearTimeout(fallback);
+  });
+  obs.observe(newEl, { childList: true });
+
+  window.__kachingBundlesInitializeInternal();
+}
+
 // Validare Holdout. Permanent, never end it.
 const HOLDOUT_EXPERIMENT_ID = "3ad2181f-d285-418c-b4d8-a52ce3a136a1";
 const HOLDOUT_GROUP_ID = "c41ea5b4-45b8-4edf-8687-844be31c4054";
@@ -63,9 +142,13 @@ function handleExperiments() {
   );
   if (primePdp27?.name === "Var A - Badge row near price") {
     document.body.classList.add("c-primePdp27VarA");
-  } else if (primePdp27?.name === "Var B - Visual comparison tab above purchase cards") {
+  } else if (
+    primePdp27?.name === "Var B - Visual comparison tab above purchase cards"
+  ) {
     document.body.classList.add("c-primePdp27VarB");
-  } else if (primePdp27?.name === "Var C - Row-based specs tab above purchase cards") {
+  } else if (
+    primePdp27?.name === "Var C - Row-based specs tab above purchase cards"
+  ) {
     document.body.classList.add("c-primePdp27VarC");
   } else if (primePdp27?.name === "Var D - Visual comparison card below ATC") {
     document.body.classList.add("c-primePdp27VarD");
@@ -74,6 +157,23 @@ function handleExperiments() {
   } else if (primePdp27?.name === "Var F - Editorial spec block below ATC") {
     document.body.classList.add("c-primePdp27VarF");
   }
+
+  // Test: V_PRIME_PDP_35 | Unlock Bonus Free Gifts
+  const primePdp35 = window.igData?.user.getTestGroup(
+    "97267cf0-b33c-48dc-a5e0-195f12d5587b"
+  );
+  let primePdp35InVarAOrB = false;
+  if (primePdp35?.name === "Var A - Thumbnail unlock cards") {
+    document.body.classList.add("c-primePdp35VarA");
+    primePdp35InVarAOrB = true;
+  } else if (primePdp35?.name === "Var B - Compact status cards") {
+    document.body.classList.add("c-primePdp35VarB");
+    primePdp35InVarAOrB = true;
+  }
+  decideKachingSwap(
+    document.documentElement.classList.contains("c-paidSearchVisitor") &&
+      !primePdp35InVarAOrB
+  );
 }
 
 let cartDrawerWasActive = false;
