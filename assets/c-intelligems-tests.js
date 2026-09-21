@@ -6,8 +6,8 @@ let igReady = false;
 // is handled directly in c-prime-pdp-35.js's addToCart(). Same mechanism as
 // the Snuggi price test on ab-test/V_PIL_PDP_04.
 const KACHING_SWAP_TARGET_BY_PRODUCT_ID = {
-  "7568898293894": "7733150187654", // murphys-law-for-kids -> swap to this id
-  "7587123658886": "7733149794438", // murphys-law-for-kids-copy -> swap to this id
+  7568898293894: "7733150187654", // murphys-law-for-kids -> swap to this id
+  7587123658886: "7733149794438", // murphys-law-for-kids-copy -> swap to this id
 };
 const kachingSwapProductId =
   KACHING_SWAP_TARGET_BY_PRODUCT_ID[String(window.__productIdFromTemplate)];
@@ -104,24 +104,6 @@ function handleExperiments() {
   );
   if (primeMix26?.name === "Var A") {
     document.body.classList.add("c-primeMix26VarA");
-  }
-
-  // Test: V_PRIME_PDP_22 | Encyclopedia - Upsell
-  const primePdp22 = window.igData?.user.getTestGroup(
-    "611c3873-2fc9-458b-82a5-f3ed383dd2ef"
-  );
-  if (primePdp22?.name === "Var A - Leadership checkbox") {
-    document.body.classList.add("c-primePdp22VarA");
-  } else if (primePdp22?.name === "Var B - Leadership ADD button") {
-    document.body.classList.add("c-primePdp22VarB");
-  } else if (primePdp22?.name === "Var C - Murphy checkbox") {
-    document.body.classList.add("c-primePdp22VarC");
-  } else if (primePdp22?.name === "Var D - Murphy ADD button") {
-    document.body.classList.add("c-primePdp22VarD");
-  } else if (primePdp22?.name === "Var E - Both checkbox") {
-    document.body.classList.add("c-primePdp22VarE");
-  } else if (primePdp22?.name === "Var F - Both ADD button") {
-    document.body.classList.add("c-primePdp22VarF");
   }
 
   // Test: V_PRIME_PDP_23 | PDP 'What's inside' section: chapter map + Q&A
