@@ -106,24 +106,6 @@ function handleExperiments() {
     document.body.classList.add("c-primeMix26VarA");
   }
 
-  // Test: V_PRIME_PDP_22 | Encyclopedia - Upsell
-  const primePdp22 = window.igData?.user.getTestGroup(
-    "611c3873-2fc9-458b-82a5-f3ed383dd2ef"
-  );
-  if (primePdp22?.name === "Var A - Leadership checkbox") {
-    document.body.classList.add("c-primePdp22VarA");
-  } else if (primePdp22?.name === "Var B - Leadership ADD button") {
-    document.body.classList.add("c-primePdp22VarB");
-  } else if (primePdp22?.name === "Var C - Murphy checkbox") {
-    document.body.classList.add("c-primePdp22VarC");
-  } else if (primePdp22?.name === "Var D - Murphy ADD button") {
-    document.body.classList.add("c-primePdp22VarD");
-  } else if (primePdp22?.name === "Var E - Both checkbox") {
-    document.body.classList.add("c-primePdp22VarE");
-  } else if (primePdp22?.name === "Var F - Both ADD button") {
-    document.body.classList.add("c-primePdp22VarF");
-  }
-
   // Test: V_PRIME_PDP_23 | PDP 'What's inside' section: chapter map + Q&A
   const primePdp23 = window.igData?.user.getTestGroup(
     "2fbd76e4-5c99-438c-b112-d031dff9c4bd"

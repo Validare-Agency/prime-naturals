@@ -1,6 +1,8 @@
 {%- comment -%}
   Renders the PDP bundle/offer selector. assets/c-prime-pdp-17.css styles it;
-  assets/c-prime-pdp-17.js wires row selection + Add to Cart.
+  assets/c-prime-pdp-17.js wires row selection + Add to Cart + (encyclopedia
+  only) the murphys upsell checkbox card, permanently rolled out from
+  V_PRIME_PDP_22's concluded winner ("Var C - Murphy checkbox").
 
   Accepts: product
 {%- endcomment -%}
@@ -86,6 +88,26 @@
   # Bundles quantity-discount config, not a separate duplicate product.
   assign c_pdp17_d_t2_variant_id = c_pdp17_variant.id
   assign c_pdp17_d_t3_variant_id = c_pdp17_variant.id
+
+  # V_PRIME_PDP_22 winner ("Var C - Murphy checkbox"), rolled out permanently
+  # here — encyclopedia only, checkbox-style upsell for murphys-law-for-kids.
+  # Ported in as the permanent default rather than left on c-prime-pdp-22.js/
+  # .css/.liquid, since that test's whole bundle slot was already superseded
+  # by c-prime-pdp-17-bundle.liquid (this file) for the non-paid-search
+  # audience it ran on — see assets/c-intelligems-tests.js and
+  # assets/c-prime-pdp-17.css's Test Setup for why paid search visitors never
+  # reach this file at all, and c-validareHoldout is additionally excluded
+  # below/in that CSS so the permanent holdout group keeps seeing pre-winner
+  # behavior. Compare price falls back to the site's standard "2x current
+  # price" anchor if the product has no (or an inverted) compare_at_price set.
+  if c_pdp17_is_encyclopedia
+    assign c_pdp17_upsell_murphys_product = all_products['murphys-law-for-kids']
+    assign c_pdp17_upsell_murphys_variant = c_pdp17_upsell_murphys_product.selected_or_first_available_variant
+    assign c_pdp17_upsell_murphys_compare = c_pdp17_upsell_murphys_variant.compare_at_price
+    if c_pdp17_upsell_murphys_compare == blank or c_pdp17_upsell_murphys_compare <= c_pdp17_upsell_murphys_variant.price
+      assign c_pdp17_upsell_murphys_compare = c_pdp17_upsell_murphys_variant.price | times: 2
+    endif
+  endif
 -%}
 
 <div class="c-pdp17-variant c-pdp17-variant--d">
@@ -100,6 +122,9 @@
         data-variant-id="{{ c_pdp17_t1_variant_id }}"
         data-quantity="1"
         data-pdp17-price-money="{{ c_pdp17_a_t1_price | money }}"
+        {%- if c_pdp17_upsell_murphys_variant %}
+        data-pdp17-price-with-upsell-money="{{ c_pdp17_a_t1_price | plus: c_pdp17_upsell_murphys_variant.price | money }}"
+        {%- endif %}
         checked
       >
       <span class="c-pdp17-row__body">
@@ -121,6 +146,9 @@
         data-variant-id="{{ c_pdp17_d_t2_variant_id }}"
         data-quantity="3"
         data-pdp17-price-money="{{ c_pdp17_d_t2_price | money }}"
+        {%- if c_pdp17_upsell_murphys_variant %}
+        data-pdp17-price-with-upsell-money="{{ c_pdp17_d_t2_price | plus: c_pdp17_upsell_murphys_variant.price | money }}"
+        {%- endif %}
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">Buy 2, Get 1 Free</span>
@@ -146,6 +174,9 @@
         data-variant-id="{{ c_pdp17_d_t3_variant_id }}"
         data-quantity="5"
         data-pdp17-price-money="{{ c_pdp17_d_t3_price | money }}"
+        {%- if c_pdp17_upsell_murphys_variant %}
+        data-pdp17-price-with-upsell-money="{{ c_pdp17_d_t3_price | plus: c_pdp17_upsell_murphys_variant.price | money }}"
+        {%- endif %}
       >
       <span class="c-pdp17-row__body">
         <span class="c-pdp17-row__title">Buy 3, Get 2 Free</span>
@@ -162,6 +193,42 @@
       </span>
     </label>
   </div>
+
+  {%- if c_pdp17_upsell_murphys_product != blank -%}
+    {%- comment -%}
+      V_PRIME_PDP_22 winner rollout — hidden entirely for c-validareHoldout
+      visitors (see Test Setup in assets/c-prime-pdp-17.css), who must keep
+      seeing pre-winner behavior forever. Never reached at all by paid search
+      visitors, since this whole snippet is already hidden for them in favor
+      of Kaching/.c-pdp35-variant (see that same Test Setup block).
+    {%- endcomment -%}
+    <div class="c-pdp17-upsell">
+      <p class="c-pdp17-upsell__eyebrow">Most Grandparents Bought This Together!</p>
+      <div class="c-pdp17-upsell__card" data-pdp17-upsell data-variant-id="{{ c_pdp17_upsell_murphys_variant.id }}">
+        <label class="c-pdp17-upsell__checkbox-wrap">
+          <input type="checkbox" class="c-pdp17-upsell__checkbox" data-pdp17-upsell-checkbox>
+        </label>
+        <img
+          class="c-pdp17-upsell__image"
+          src="{{ c_pdp17_upsell_murphys_product.featured_image | image_url: width: 184 }}"
+          alt="{{ c_pdp17_upsell_murphys_product.featured_image.alt | default: c_pdp17_upsell_murphys_product.title | escape }}"
+          loading="lazy"
+          width="92"
+          height="92"
+        >
+        <div class="c-pdp17-upsell__body">
+          <p class="c-pdp17-upsell__title">{{ c_pdp17_upsell_murphys_product.title }}</p>
+          <p class="c-pdp17-upsell__desc">Teaches your child to handle anything life throws at them</p>
+        </div>
+        <div class="c-pdp17-upsell__side">
+          <div class="c-pdp17-upsell__price-block">
+            <span class="c-pdp17-upsell__price">{{ c_pdp17_upsell_murphys_variant.price | money }}</span>
+            <span class="c-pdp17-upsell__compare">{{ c_pdp17_upsell_murphys_compare | money }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
 
   <button type="button" class="c-pdp17-atc button button--full-width" data-pdp17-atc>
     <span data-pdp17-atc-price>{{ c_pdp17_a_t1_price | money }}</span>&nbsp;ADD TO CART
