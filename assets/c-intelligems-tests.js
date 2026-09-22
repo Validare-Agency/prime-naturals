@@ -134,6 +134,24 @@ function handleExperiments() {
     document.documentElement.classList.contains("c-paidSearchVisitor") &&
       !primePdp35InVarAOrB
   );
+
+  // Test: V_PRIME_PDP_27 | Physical-Size Information - "Exactly What Arrives"
+  const primePdp27 = window.igData?.user.getTestGroup(
+    "ad3c1130-56a6-4aaa-a8bc-d22ebcc2cc64"
+  );
+  if (primePdp27?.id === "7d0e0615-de58-4c8c-a2fc-425fddb31f8d") {
+    document.body.classList.add("c-primePdp27VarA");
+  } else if (primePdp27?.id === "c82a6023-4e4c-4d51-8de0-3ed8db9f16ce") {
+    document.body.classList.add("c-primePdp27VarB");
+  } else if (primePdp27?.id === "e871cc71-7f5e-4756-9df6-a65c7e55b194") {
+    document.body.classList.add("c-primePdp27VarC");
+  } else if (primePdp27?.id === "8fdee977-6c36-4379-bbbb-4bd83be59175") {
+    document.body.classList.add("c-primePdp27VarD");
+  } else if (primePdp27?.id === "36f59724-5e21-411e-94c1-8988cfd83384") {
+    document.body.classList.add("c-primePdp27VarE");
+  } else if (primePdp27?.id === "640a45aa-d390-42b2-a8a8-28d5f305a890") {
+    document.body.classList.add("c-primePdp27VarF");
+  }
 }
 
 let cartDrawerWasActive = false;
