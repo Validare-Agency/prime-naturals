@@ -794,12 +794,17 @@
     "c-prime-pdp-23-whats-inside": {
       "type": "c-prime-pdp-23-whats-inside",
       "settings": {}
+    },
+    "c-prime-pdp-27": {
+      "type": "c-prime-pdp-27",
+      "settings": {}
     }
   },
   "order": [
     "c-prime-mix-26",
     "main",
     "c-prime-pdp-23-whats-inside",
+    "c-prime-pdp-27",
     "custom_liquid_mwcE4N",
     "custom_liquid_ycAyXQ",
     "custom_liquid_AwDERn",

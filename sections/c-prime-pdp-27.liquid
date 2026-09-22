@@ -3,6 +3,9 @@
 {%- else -%}
   {{ 'c-prime-pdp-27.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@500&display=swap" media="print" onload="this.media='all'">
 <script src="{{ 'c-prime-pdp-27.js' | asset_url }}" defer="defer"></script>
 
 <div class="c-pdp27">
@@ -10,23 +13,25 @@
 
     <!-- Var A: Compact badge row near price -->
     <div class="c-pdp27__var-a" aria-hidden="true">
-      <div class="c-pdp27__badge-row">
-        <span class="c-pdp27__badge-item">
-          <svg class="c-pdp27__badge-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM5 10h2v2H5zm0 4h2v2H5zm4-4h6v2H9zm0 4h6v2H9zm7-4h2v2h-2zm0 4h2v2h-2z"/></svg>
-          <span class="c-pdp27__badge-text">17.6 &times; 25 cm</span>
-        </span>
-        <span class="c-pdp27__badge-sep" aria-hidden="true">&middot;</span>
-        <span class="c-pdp27__badge-item">
-          <span class="c-pdp27__badge-text">1.8 cm thick</span>
-        </span>
-        <span class="c-pdp27__badge-sep" aria-hidden="true">&middot;</span>
-        <span class="c-pdp27__badge-item">
-          <span class="c-pdp27__badge-text">680 g</span>
-        </span>
-        <span class="c-pdp27__badge-sep" aria-hidden="true">&middot;</span>
-        <span class="c-pdp27__badge-item">
-          <span class="c-pdp27__badge-text">174 pages</span>
-        </span>
+      <div class="c-pdp27__badge-panel">
+        <div class="c-pdp27__badge-row">
+          <div class="c-pdp27__badge-card">
+            <p class="c-pdp27__badge-value">17.6 &times; 25 cm</p>
+            <p class="c-pdp27__badge-label">Size</p>
+          </div>
+          <div class="c-pdp27__badge-card">
+            <p class="c-pdp27__badge-value">1.8 cm thick</p>
+            <p class="c-pdp27__badge-label">Thick</p>
+          </div>
+          <div class="c-pdp27__badge-card">
+            <p class="c-pdp27__badge-value">680 g</p>
+            <p class="c-pdp27__badge-label">Weight</p>
+          </div>
+          <div class="c-pdp27__badge-card">
+            <p class="c-pdp27__badge-value">174</p>
+            <p class="c-pdp27__badge-label">Q&amp;As</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -43,15 +48,17 @@
             data-event-close="accordion_description_close"
           >
             <span class="c-pdp27__accordion-label">Description</span>
-            <svg class="c-pdp27__caret" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M7 10l5 5 5-5z"/></svg>
+            <svg class="c-pdp27__caret" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" focusable="false"><path d="M13.5 11.25L9 6.75L4.5 11.25" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           </button>
           <div class="c-pdp27__accordion-body" hidden>
-            <ul class="c-pdp27__bullets">
-              <li>Rewires curiosity into a lifelong learning habit</li>
-              <li>Boosts school performance, vocabulary &amp; memory</li>
-              <li>Competes with screens &ndash; kids choose it over YouTube</li>
-              <li>Perfect for ages 6&ndash;12, gift-ready hardcover</li>
-            </ul>
+            <div class="c-pdp27__pib-bullets-slot" data-mirror-target="pib-bullets">
+              <ul class="c-pdp27__bullets">
+                <li>Rewires curiosity into a lifelong learning habit</li>
+                <li>Boosts school performance, vocabulary &amp; memory</li>
+                <li>Competes with screens &ndash; kids choose it over YouTube</li>
+                <li>Perfect for ages 6&ndash;12, gift-ready hardcover</li>
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -64,43 +71,59 @@
             data-event-close="accordion_about_book_close"
           >
             <span class="c-pdp27__accordion-label">About the Book</span>
-            <svg class="c-pdp27__caret" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M7 10l5 5 5-5z"/></svg>
+            <svg class="c-pdp27__caret" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" focusable="false"><path d="M13.5 11.25L9 6.75L4.5 11.25" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           </button>
           <div class="c-pdp27__accordion-body" hidden>
-            <div class="c-pdp27__visual-wrap">
-              <div class="c-pdp27__visual-items">
-                <div class="c-pdp27__phone-shape" aria-hidden="true"></div>
-                <div class="c-pdp27__book-shape" aria-hidden="true"></div>
+            <div class="c-pdp27__tab-strip">
+              <div class="c-pdp27__tab-panel">
+                <div class="c-pdp27__scale-row">
+                  <div class="c-pdp27__scale-item">
+                    <div class="c-pdp27__tab-book-shape" aria-hidden="true">
+                      <span class="c-pdp27__tab-book-spine"></span>
+                      <span class="c-pdp27__tab-book-page-edge"></span>
+                    </div>
+                    <span class="c-pdp27__scale-caption">The book</span>
+                  </div>
+                  <div class="c-pdp27__scale-item">
+                    <div class="c-pdp27__tab-phone-shape" aria-hidden="true">
+                      <span class="c-pdp27__tab-phone-notch"></span>
+                    </div>
+                    <span class="c-pdp27__scale-caption">A phone</span>
+                  </div>
+                  <div class="c-pdp27__scale-callout">
+                    <span class="c-pdp27__callout-accent" aria-hidden="true"></span>
+                    <p class="c-pdp27__callout-text">Bigger than a phone</p>
+                  </div>
+                </div>
+                <div class="c-pdp27__tab-divider"></div>
+                <div class="c-pdp27__numbers">
+                  <div class="c-pdp27__numbers-item">
+                    <span class="c-pdp27__numbers-label">SIZE</span>
+                    <span class="c-pdp27__numbers-value">17.6 &times; 25 cm</span>
+                  </div>
+                  <div class="c-pdp27__numbers-divider"></div>
+                  <div class="c-pdp27__numbers-item">
+                    <span class="c-pdp27__numbers-label">THICKNESS</span>
+                    <span class="c-pdp27__numbers-value">1.8 cm thick &middot; about half a thumb</span>
+                  </div>
+                  <div class="c-pdp27__numbers-divider"></div>
+                  <div class="c-pdp27__numbers-item">
+                    <span class="c-pdp27__numbers-label">WEIGHT</span>
+                    <span class="c-pdp27__numbers-value">680 g</span>
+                  </div>
+                </div>
+                <ul class="c-pdp27__check-list c-pdp27__check-list--tab">
+                  <li>
+                    <span class="c-pdp27__check-mark" aria-hidden="true">&#10003;</span>
+                    About the same size as a colouring book
+                  </li>
+                  <li>
+                    <span class="c-pdp27__check-mark" aria-hidden="true">&#10003;</span>
+                    Large enough for grandparent and grandchild to read together side by side
+                  </li>
+                </ul>
               </div>
-              <p class="c-pdp27__bigger-label">
-                <svg class="c-pdp27__arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
-                Bigger than a phone
-              </p>
             </div>
-            <dl class="c-pdp27__spec-dl">
-              <div class="c-pdp27__spec-row">
-                <dt class="c-pdp27__spec-dt">SIZE</dt>
-                <dd class="c-pdp27__spec-dd">17.6 &times; 25 cm <span class="c-pdp27__spec-sub">B5</span></dd>
-              </div>
-              <div class="c-pdp27__spec-row">
-                <dt class="c-pdp27__spec-dt">THICKNESS</dt>
-                <dd class="c-pdp27__spec-dd">1.8 cm <span class="c-pdp27__spec-sub">about half a thumb</span></dd>
-              </div>
-              <div class="c-pdp27__spec-row">
-                <dt class="c-pdp27__spec-dt">WEIGHT</dt>
-                <dd class="c-pdp27__spec-dd">680 g</dd>
-              </div>
-            </dl>
-            <ul class="c-pdp27__check-list">
-              <li>
-                <svg class="c-pdp27__check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                About the same size as a colouring book
-              </li>
-              <li>
-                <svg class="c-pdp27__check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                Large enough for grandparent and grandchild to read together side by side
-              </li>
-            </ul>
           </div>
         </div>
 
@@ -120,15 +143,17 @@
             data-event-close="accordion_description_close"
           >
             <span class="c-pdp27__accordion-label">Description</span>
-            <svg class="c-pdp27__caret" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M7 10l5 5 5-5z"/></svg>
+            <svg class="c-pdp27__caret" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" focusable="false"><path d="M13.5 11.25L9 6.75L4.5 11.25" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           </button>
           <div class="c-pdp27__accordion-body" hidden>
-            <ul class="c-pdp27__bullets">
-              <li>Rewires curiosity into a lifelong learning habit</li>
-              <li>Boosts school performance, vocabulary &amp; memory</li>
-              <li>Competes with screens &ndash; kids choose it over YouTube</li>
-              <li>Perfect for ages 6&ndash;12, gift-ready hardcover</li>
-            </ul>
+            <div class="c-pdp27__pib-bullets-slot" data-mirror-target="pib-bullets">
+              <ul class="c-pdp27__bullets">
+                <li>Rewires curiosity into a lifelong learning habit</li>
+                <li>Boosts school performance, vocabulary &amp; memory</li>
+                <li>Competes with screens &ndash; kids choose it over YouTube</li>
+                <li>Perfect for ages 6&ndash;12, gift-ready hardcover</li>
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -141,31 +166,31 @@
             data-event-close="accordion_about_book_close"
           >
             <span class="c-pdp27__accordion-label">About the Book</span>
-            <svg class="c-pdp27__caret" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M7 10l5 5 5-5z"/></svg>
+            <svg class="c-pdp27__caret" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" focusable="false"><path d="M13.5 11.25L9 6.75L4.5 11.25" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           </button>
           <div class="c-pdp27__accordion-body" hidden>
-            <dl class="c-pdp27__spec-dl c-pdp27__spec-dl--rows">
-              <div class="c-pdp27__spec-row">
-                <dt class="c-pdp27__spec-dt">Size</dt>
-                <dd class="c-pdp27__spec-dd">17.6 &times; 25 cm <span class="c-pdp27__spec-sub">B5</span></dd>
+            <div class="c-pdp27__row-specs">
+              <div class="c-pdp27__row-spec">
+                <span class="c-pdp27__row-spec-label">Size<span class="c-pdp27__row-spec-plus">+</span></span>
+                <span class="c-pdp27__row-spec-value">17.6 x 25cm <span class="c-pdp27__row-spec-dot">&middot;</span> B5</span>
               </div>
-              <div class="c-pdp27__spec-row">
-                <dt class="c-pdp27__spec-dt">Thickness</dt>
-                <dd class="c-pdp27__spec-dd">1.8 cm <span class="c-pdp27__spec-sub">half a thumb</span></dd>
+              <div class="c-pdp27__row-spec">
+                <span class="c-pdp27__row-spec-label">Thickness</span>
+                <span class="c-pdp27__row-spec-value">1.8 cm <span class="c-pdp27__row-spec-dot">&middot;</span> half a thumb</span>
               </div>
-              <div class="c-pdp27__spec-row">
-                <dt class="c-pdp27__spec-dt">Pages</dt>
-                <dd class="c-pdp27__spec-dd">174 pages</dd>
+              <div class="c-pdp27__row-spec">
+                <span class="c-pdp27__row-spec-label">Pages</span>
+                <span class="c-pdp27__row-spec-value">174 pages</span>
               </div>
-              <div class="c-pdp27__spec-row">
-                <dt class="c-pdp27__spec-dt">Weight</dt>
-                <dd class="c-pdp27__spec-dd">680 g</dd>
+              <div class="c-pdp27__row-spec">
+                <span class="c-pdp27__row-spec-label">Weight</span>
+                <span class="c-pdp27__row-spec-value">680 g</span>
               </div>
-              <div class="c-pdp27__spec-row">
-                <dt class="c-pdp27__spec-dt">Binding</dt>
-                <dd class="c-pdp27__spec-dd">Hardcover <span class="c-pdp27__spec-sub">stays open flat</span></dd>
+              <div class="c-pdp27__row-spec">
+                <span class="c-pdp27__row-spec-label">Binding</span>
+                <span class="c-pdp27__row-spec-value">Hardcover <span class="c-pdp27__row-spec-dot">&middot;</span> stays open flat</span>
               </div>
-            </dl>
+            </div>
           </div>
         </div>
 
@@ -174,104 +199,127 @@
 
     <!-- Var D: Visual comparison card below ATC -->
     <div class="c-pdp27__var-d">
-      <div class="c-pdp27__card">
-        <h4 class="c-pdp27__card-title">EXACTLY WHAT ARRIVES</h4>
-        <div class="c-pdp27__visual-wrap">
-          <div class="c-pdp27__visual-items">
-            <div class="c-pdp27__phone-shape" aria-hidden="true"></div>
-            <div class="c-pdp27__book-shape" aria-hidden="true"></div>
+      <div class="c-pdp27__d-card">
+        <p class="c-pdp27__d-eyebrow">EXACTLY WHAT ARRIVES</p>
+        <div class="c-pdp27__tab-strip">
+          <div class="c-pdp27__tab-panel">
+            <div class="c-pdp27__scale-row">
+              <div class="c-pdp27__scale-item">
+                <div class="c-pdp27__tab-book-shape" aria-hidden="true">
+                  <span class="c-pdp27__tab-book-spine"></span>
+                  <span class="c-pdp27__tab-book-page-edge"></span>
+                </div>
+                <span class="c-pdp27__scale-caption">The book</span>
+              </div>
+              <div class="c-pdp27__scale-item">
+                <div class="c-pdp27__tab-phone-shape" aria-hidden="true">
+                  <span class="c-pdp27__tab-phone-notch"></span>
+                </div>
+                <span class="c-pdp27__scale-caption">A phone</span>
+              </div>
+              <div class="c-pdp27__scale-callout">
+                <span class="c-pdp27__callout-accent" aria-hidden="true"></span>
+                <p class="c-pdp27__callout-text">Bigger than a phone</p>
+              </div>
+            </div>
+            <div class="c-pdp27__d-numbers-wrap">
+              <div class="c-pdp27__tab-divider"></div>
+              <div class="c-pdp27__numbers">
+                <div class="c-pdp27__numbers-item">
+                  <span class="c-pdp27__numbers-label">SIZE</span>
+                  <span class="c-pdp27__numbers-value">17.6 &times; 25 cm</span>
+                </div>
+                <div class="c-pdp27__numbers-divider"></div>
+                <div class="c-pdp27__numbers-item">
+                  <span class="c-pdp27__numbers-label">THICKNESS</span>
+                  <span class="c-pdp27__numbers-value">1.8 cm thick &middot; about half a thumb</span>
+                </div>
+                <div class="c-pdp27__numbers-divider"></div>
+                <div class="c-pdp27__numbers-item">
+                  <span class="c-pdp27__numbers-label">WEIGHT</span>
+                  <span class="c-pdp27__numbers-value">680 g</span>
+                </div>
+              </div>
+            </div>
+            <ul class="c-pdp27__check-list c-pdp27__check-list--tab">
+              <li>
+                <span class="c-pdp27__check-mark" aria-hidden="true">&#10003;</span>
+                About the same size as a colouring book
+              </li>
+              <li>
+                <span class="c-pdp27__check-mark" aria-hidden="true">&#10003;</span>
+                Large enough for grandparent and grandchild to read together side by side
+              </li>
+            </ul>
           </div>
-          <p class="c-pdp27__bigger-label">
-            <svg class="c-pdp27__arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
-            Bigger than a phone
-          </p>
         </div>
-        <ul class="c-pdp27__check-list">
-          <li>
-            <svg class="c-pdp27__check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-            About the same size as a colouring book
-          </li>
-          <li>
-            <svg class="c-pdp27__check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-            Large enough for grandparent and grandchild to read together side by side
-          </li>
-        </ul>
       </div>
     </div>
 
     <!-- Var E: Row-based specs card below ATC -->
     <div class="c-pdp27__var-e">
-      <div class="c-pdp27__card">
-        <h4 class="c-pdp27__card-title">EXACTLY WHAT ARRIVES</h4>
-        <dl class="c-pdp27__spec-dl c-pdp27__spec-dl--rows">
-          <div class="c-pdp27__spec-row">
-            <dt class="c-pdp27__spec-dt">Size</dt>
-            <dd class="c-pdp27__spec-dd">17.8 &times; 25 cm <span class="c-pdp27__spec-sub">B5</span></dd>
+      <div class="c-pdp27__e-wrap">
+        <p class="c-pdp27__d-eyebrow">EXACTLY WHAT ARRIVES</p>
+        <div class="c-pdp27__row-specs">
+          <div class="c-pdp27__row-spec">
+            <span class="c-pdp27__row-spec-label">Size<span class="c-pdp27__row-spec-plus">+</span></span>
+            <span class="c-pdp27__row-spec-value">17.6 x 25 cm <span class="c-pdp27__row-spec-dot">&middot;</span> B5</span>
           </div>
-          <div class="c-pdp27__spec-row">
-            <dt class="c-pdp27__spec-dt">Thickness</dt>
-            <dd class="c-pdp27__spec-dd">1.8 cm thick <span class="c-pdp27__spec-sub">about half a thumb</span></dd>
+          <div class="c-pdp27__row-spec">
+            <span class="c-pdp27__row-spec-label">Thickness</span>
+            <span class="c-pdp27__row-spec-value">1.8 cm <span class="c-pdp27__row-spec-dot">&middot;</span> half a thumb</span>
           </div>
-          <div class="c-pdp27__spec-row">
-            <dt class="c-pdp27__spec-dt">Pages</dt>
-            <dd class="c-pdp27__spec-dd">174 pages</dd>
+          <div class="c-pdp27__row-spec">
+            <span class="c-pdp27__row-spec-label">Pages</span>
+            <span class="c-pdp27__row-spec-value">174 pages</span>
           </div>
-          <div class="c-pdp27__spec-row">
-            <dt class="c-pdp27__spec-dt">Weight</dt>
-            <dd class="c-pdp27__spec-dd">680 g</dd>
+          <div class="c-pdp27__row-spec">
+            <span class="c-pdp27__row-spec-label">Weight</span>
+            <span class="c-pdp27__row-spec-value">680 g</span>
           </div>
-          <div class="c-pdp27__spec-row">
-            <dt class="c-pdp27__spec-dt">Binding</dt>
-            <dd class="c-pdp27__spec-dd">Hardcover <span class="c-pdp27__spec-sub">stays open flat</span></dd>
+          <div class="c-pdp27__row-spec">
+            <span class="c-pdp27__row-spec-label">Binding</span>
+            <span class="c-pdp27__row-spec-value">Hardcover <span class="c-pdp27__row-spec-dot">&middot;</span> stays open flat</span>
           </div>
-        </dl>
-        <ul class="c-pdp27__check-list">
-          <li>
-            <svg class="c-pdp27__check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-            About the same size as a colouring book
-          </li>
-          <li>
-            <svg class="c-pdp27__check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-            Large enough for grandparent and grandchild to read together side by side
-          </li>
-        </ul>
+        </div>
       </div>
     </div>
 
     <!-- Var F: Editorial spec block below ATC -->
     <div class="c-pdp27__var-f">
-      <div class="c-pdp27__editorial">
-        <h4 class="c-pdp27__card-title">EXACTLY WHAT ARRIVES</h4>
-        <ul class="c-pdp27__bullets c-pdp27__bullets--editorial">
-          <li>Rewires curiosity into a lifelong learning habit</li>
-          <li>Boosts school performance, vocabulary &amp; memory</li>
-          <li>Competes with screens &ndash; kids choose it over YouTube</li>
-          <li>Perfect for ages 6&ndash;12, gift-ready hardcover</li>
-        </ul>
-        <dl class="c-pdp27__spec-dl c-pdp27__spec-dl--editorial">
-          <div class="c-pdp27__spec-row">
-            <dt class="c-pdp27__spec-dt">SIZE</dt>
-            <dd class="c-pdp27__spec-dd">17.6 &times; 25 cm</dd>
+      <div class="c-pdp27__d-card">
+        <p class="c-pdp27__d-eyebrow">EXACTLY WHAT ARRIVES</p>
+        <div class="c-pdp27__tab-strip">
+          <div class="c-pdp27__tab-panel">
+            <div class="c-pdp27__tab-divider"></div>
+            <div class="c-pdp27__numbers">
+              <div class="c-pdp27__numbers-item">
+                <span class="c-pdp27__numbers-label">SIZE</span>
+                <span class="c-pdp27__numbers-value">17.6 &times; 25 cm</span>
+              </div>
+              <div class="c-pdp27__numbers-divider"></div>
+              <div class="c-pdp27__numbers-item">
+                <span class="c-pdp27__numbers-label">THICKNESS</span>
+                <span class="c-pdp27__numbers-value">1.8 cm thick &middot; about half a thumb</span>
+              </div>
+              <div class="c-pdp27__numbers-divider"></div>
+              <div class="c-pdp27__numbers-item">
+                <span class="c-pdp27__numbers-label">WEIGHT</span>
+                <span class="c-pdp27__numbers-value">680 g</span>
+              </div>
+            </div>
+            <ul class="c-pdp27__check-list c-pdp27__check-list--tab">
+              <li>
+                <span class="c-pdp27__check-mark" aria-hidden="true">&#10003;</span>
+                About the same size as a colouring book
+              </li>
+              <li>
+                <span class="c-pdp27__check-mark" aria-hidden="true">&#10003;</span>
+                Large enough for grandparent and grandchild to read together side by side
+              </li>
+            </ul>
           </div>
-          <div class="c-pdp27__spec-row">
-            <dt class="c-pdp27__spec-dt">THICKNESS</dt>
-            <dd class="c-pdp27__spec-dd">1.8 cm thick <span class="c-pdp27__spec-sub">about half a thumb</span></dd>
-          </div>
-          <div class="c-pdp27__spec-row">
-            <dt class="c-pdp27__spec-dt">WEIGHT</dt>
-            <dd class="c-pdp27__spec-dd">680 g</dd>
-          </div>
-        </dl>
-        <ul class="c-pdp27__check-list">
-          <li>
-            <svg class="c-pdp27__check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-            About the same size as a colouring book
-          </li>
-          <li>
-            <svg class="c-pdp27__check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-            Large enough for grandparent and grandchild to read together side by side
-          </li>
-        </ul>
+        </div>
       </div>
     </div>
 
