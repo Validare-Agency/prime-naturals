@@ -134,6 +134,16 @@ function handleExperiments() {
     document.documentElement.classList.contains("c-paidSearchVisitor") &&
       !primePdp35InVarAOrB
   );
+
+  // Test: V_PRIME_CART_32 | Charity Donation Minicart Add-On
+  const primeCart32 = window.igData?.user.getTestGroup(
+    "09ae0d10-fdd8-4c8b-91e8-e282765ad1a2"
+  );
+  if (primeCart32?.name === "Var A - Opt-in") {
+    document.body.classList.add("c-primeCart32VarA");
+  } else if (primeCart32?.name === "Var B - Preselected") {
+    document.body.classList.add("c-primeCart32VarB");
+  }
 }
 
 let cartDrawerWasActive = false;
@@ -146,6 +156,7 @@ setInterval(() => {
     window.igEvents = window.igEvents || [];
     window.igEvents.push({ event: "cartDrawerOpen" });
     window.igEvents.push({ event: "view_cart" });
+    window.igEvents.push({ event: "Open_mini_cart" });
   } else if (!isActive) {
     cartDrawerWasActive = false;
   }
