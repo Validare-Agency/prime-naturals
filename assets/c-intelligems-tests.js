@@ -118,6 +118,23 @@ function handleExperiments() {
     document.body.classList.add("c-primePdp23VarC");
   }
 
+  // Test: V_PRIME_PDP_35 | Unlock Bonus Free Gifts
+  const primePdp35 = window.igData?.user.getTestGroup(
+    "97267cf0-b33c-48dc-a5e0-195f12d5587b"
+  );
+  let primePdp35InVarAOrB = false;
+  if (primePdp35?.name === "Var A - Thumbnail unlock cards") {
+    document.body.classList.add("c-primePdp35VarA");
+    primePdp35InVarAOrB = true;
+  } else if (primePdp35?.name === "Var B - Compact status cards") {
+    document.body.classList.add("c-primePdp35VarB");
+    primePdp35InVarAOrB = true;
+  }
+  decideKachingSwap(
+    document.documentElement.classList.contains("c-paidSearchVisitor") &&
+      !primePdp35InVarAOrB
+  );
+
   // Test: V_PRIME_PDP_27 | Physical-Size Information - "Exactly What Arrives"
   const primePdp27 = window.igData?.user.getTestGroup(
     "ad3c1130-56a6-4aaa-a8bc-d22ebcc2cc64"
@@ -139,23 +156,6 @@ function handleExperiments() {
   } else if (primePdp27?.name === "Var F - Editorial spec block below ATC") {
     document.body.classList.add("c-primePdp27VarF");
   }
-
-  // Test: V_PRIME_PDP_35 | Unlock Bonus Free Gifts
-  const primePdp35 = window.igData?.user.getTestGroup(
-    "97267cf0-b33c-48dc-a5e0-195f12d5587b"
-  );
-  let primePdp35InVarAOrB = false;
-  if (primePdp35?.name === "Var A - Thumbnail unlock cards") {
-    document.body.classList.add("c-primePdp35VarA");
-    primePdp35InVarAOrB = true;
-  } else if (primePdp35?.name === "Var B - Compact status cards") {
-    document.body.classList.add("c-primePdp35VarB");
-    primePdp35InVarAOrB = true;
-  }
-  decideKachingSwap(
-    document.documentElement.classList.contains("c-paidSearchVisitor") &&
-      !primePdp35InVarAOrB
-  );
 }
 
 let cartDrawerWasActive = false;
