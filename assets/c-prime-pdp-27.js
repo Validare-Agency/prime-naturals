@@ -24,6 +24,14 @@
   }
 
   function mirrorPibBullets() {
+    // Var B/C's Description-accordion markup (and its mirror slot) is always
+    // in the DOM, just CSS-hidden for other variants — so only actually
+    // mirror/hide the real bullets when B or C is the active variant.
+    var isAccordionVariant =
+      document.body.classList.contains('c-primePdp27VarB') ||
+      document.body.classList.contains('c-primePdp27VarC');
+    if (!isAccordionVariant) return;
+
     var source = document.querySelector('.pib-bullets');
     var targets = document.querySelectorAll('[data-mirror-target="pib-bullets"]');
     if (!source || !targets.length) return;
@@ -45,6 +53,7 @@
     // class list changes instead of assuming it's already set.
     var bodyClassObserver = new MutationObserver(function () {
       repositionPdp27();
+      mirrorPibBullets();
     });
     bodyClassObserver.observe(document.body, {
       attributes: true,

@@ -390,6 +390,7 @@ body.c-primePdp27VarF .c-pdp27__var-f { display: block; margin-top: 2rem; }
     flex: 1;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: flex-start;
     gap: 3px;
     padding-bottom: 0;
     border-bottom: none;
