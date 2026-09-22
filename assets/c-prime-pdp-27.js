@@ -22,7 +22,7 @@
       pibBullets.parentNode.insertBefore(pdp27, pibBullets);
     }
   }
-
+// test
   function mirrorPibBullets() {
     // Var B/C's Description-accordion markup (and its mirror slot) is always
     // in the DOM, just CSS-hidden for other variants — so only actually
