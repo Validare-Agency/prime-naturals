@@ -1,23 +1,23 @@
 // V_PRIME_PDP_27 | Physical-Size Information - "Exactly What Arrives"
 (function () {
   function repositionPdp27() {
-    var pdp27 = document.querySelector('.c-pdp27');
+    const pdp27 = document.querySelector('.c-pdp27');
     if (!pdp27) return;
 
-    var isBelowAtc =
+    const isBelowAtc =
       document.body.classList.contains('c-primePdp27VarD') ||
       document.body.classList.contains('c-primePdp27VarE') ||
       document.body.classList.contains('c-primePdp27VarF');
 
     if (isBelowAtc) {
-      var atcAnchor = document.querySelector('.pib-trust');
+      const atcAnchor = document.querySelector('.pib-trust');
       if (atcAnchor && atcAnchor.parentNode) {
         atcAnchor.parentNode.insertBefore(pdp27, atcAnchor.nextSibling);
       }
       return;
     }
 
-    var pibBullets = document.querySelector('.pib-bullets');
+    const pibBullets = document.querySelector('.pib-bullets');
     if (pibBullets && pibBullets.parentNode) {
       pibBullets.parentNode.insertBefore(pdp27, pibBullets);
     }
@@ -27,13 +27,13 @@
     // Var B/C's Description-accordion markup (and its mirror slot) is always
     // in the DOM, just CSS-hidden for other variants — so only actually
     // mirror/hide the real bullets when B or C is the active variant.
-    var isAccordionVariant =
+    const isAccordionVariant =
       document.body.classList.contains('c-primePdp27VarB') ||
       document.body.classList.contains('c-primePdp27VarC');
     if (!isAccordionVariant) return;
 
-    var source = document.querySelector('.pib-bullets');
-    var targets = document.querySelectorAll('[data-mirror-target="pib-bullets"]');
+    const source = document.querySelector('.pib-bullets');
+    const targets = document.querySelectorAll('[data-mirror-target="pib-bullets"]');
     if (!source || !targets.length) return;
 
     targets.forEach(function (slot) {
@@ -51,7 +51,7 @@
     // The Intelligems test-group body class can land after this script runs
     // (it waits on an async "ig:ready" event), so re-run whenever body's
     // class list changes instead of assuming it's already set.
-    var bodyClassObserver = new MutationObserver(function () {
+    const bodyClassObserver = new MutationObserver(function () {
       repositionPdp27();
       mirrorPibBullets();
     });
@@ -60,14 +60,14 @@
       attributeFilter: ['class'],
     });
 
-    var buttons = document.querySelectorAll('.c-pdp27__accordion-btn');
+    const buttons = document.querySelectorAll('.c-pdp27__accordion-btn');
     if (!buttons.length) return;
 
     buttons.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var isExpanded = this.getAttribute('aria-expanded') === 'true';
-        var body = this.closest('.c-pdp27__accordion').querySelector('.c-pdp27__accordion-body');
-        var eventName = isExpanded
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        const body = this.closest('.c-pdp27__accordion').querySelector('.c-pdp27__accordion-body');
+        const eventName = isExpanded
           ? this.getAttribute('data-event-close')
           : this.getAttribute('data-event-open');
 
