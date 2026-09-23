@@ -174,6 +174,7 @@ setInterval(() => {
     window.igEvents = window.igEvents || [];
     window.igEvents.push({ event: "cartDrawerOpen" });
     window.igEvents.push({ event: "view_cart" });
+    window.igEvents.push({ event: "Open_mini_cart" });
   } else if (!isActive) {
     cartDrawerWasActive = false;
   }
