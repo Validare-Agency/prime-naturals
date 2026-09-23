@@ -130,7 +130,7 @@
                           {%- for item in cart.items -%}
                             <li
                               id="CartDrawer-Item-{{ item.index | plus: 1 }}"
-                              class="cart-drawer-item cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pdp35_gift %} c-pdp35-gift-line{% endif %}"
+                              class="cart-drawer-item cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pdp35_gift %} c-pdp35-gift-line{% endif %}{% if item.product.handle == '2-book-donation' %} c-cart32-donation-line{% endif %}"
                               role="row" data-index="{{ item.index | plus: 1 }}"
                             >
                               <div class="loading-overlay hidden">
@@ -519,6 +519,8 @@
               {% endif %}
           {% endcase %}
         {% endfor %}
+        {%- comment -%} V_PRIME_CART_32 | Charity Donation Minicart Add-On {%- endcomment -%}
+        {%- render 'c-prime-cart-32-donation' -%}
       </div>
       <div class="drawer__footer">
         {% for block in section.blocks %}
@@ -546,6 +548,14 @@
             {% when 'subtotals' %}
               <div class="cart-drawer__footer" style="--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;" {{ block.shopify_attributes }}>
                 <div class="cart-drawer__totals{% if block.settings.savings_position == 'bellow' %} cart-drawer__totals--reverse{% endif %}" role="status" style='--spacing:{{ block.settings.savings_spacing | divided_by: 10.0 }}rem;'>
+                  {%- comment -%} V_PRIME_CART_32 | Charity Donation Minicart Add-On — shown per variant in assets/c-prime-cart-32.css {%- endcomment -%}
+                  {%- for item in cart.items -%}
+                    {%- if item.product.handle == '2-book-donation' -%}
+                      <p class='cart-drawer__totals__row cart-drawer__totals__row--spaced c-cart32-total-row' style='--text-size:{{ block.settings.savings_text_size | divided_by: 10.0 }}rem;'>
+                        <span>Donate a book</span><span class='text-color-{{ block.settings.savings_text_color }}'>{{ item.final_line_price | money }}</span>
+                      </p>
+                    {%- endif -%}
+                  {%- endfor -%}
                   {% if block.settings.display_total_savings %}
                     {% assign total_savings = total_compare_price | minus: cart.total_price %}
                     {% if total_savings > 0 %}
