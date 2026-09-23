@@ -57,6 +57,19 @@ body.c-primePdp27VarF .c-pdp27__var-f { display: block; margin-top: 2rem; }
   }
 }
 
+@media screen and (max-width: 380px) {
+  .c-pdp27__badge-panel {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .c-pdp27__badge-card {
+    padding: 7px 9px;
+  }
+}
+
 .c-pdp27__badge-row {
   display: flex;
   align-items: flex-start;
