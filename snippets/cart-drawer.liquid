@@ -519,6 +519,7 @@
               {% endif %}
           {% endcase %}
         {% endfor %}
+<<<<<<< Updated upstream
 
         {%- comment -%} V_PRIME_CART_32 | Charity Donation Module — hidden for Control via CSS {%- endcomment -%}
         <div class="c-primeCart32-module" id="c-primeCart32-module" aria-live="polite">
@@ -550,7 +551,11 @@
             </p>
           </div>
         </div>
+=======
+>>>>>>> Stashed changes
       </div>
+      {%- comment -%} V_PRIME_CART_32 | Charity Donation Minicart Add-On — between body and footer so it stays pinned to the bottom of the drawer {%- endcomment -%}
+      {%- render 'c-prime-cart-32-donation' -%}
       <div class="drawer__footer">
         {% for block in section.blocks %}
           {% case block.type %}
