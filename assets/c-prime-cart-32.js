@@ -124,10 +124,6 @@
     var box = input.closest('[data-c-cart32]');
     // Only a Var B untick opts out of its default-on — Var A has no default.
     if (getVariant() === 'B') setOptedOut(!input.checked);
-    // Event: donation_cta_click — shopper ticks/unticks the donation (not
-    // fired for Var B's automatic default-on add).
-    window.igEvents = window.igEvents || [];
-    window.igEvents.push({ event: 'donation_cta_click' });
     setDonation(box, input.checked);
   });
 
