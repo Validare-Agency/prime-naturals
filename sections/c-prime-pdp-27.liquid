@@ -1,4 +1,25 @@
 {%- if section.index > 3 -%}
+  {%- comment -%}
+    Inlined synchronously so the variant gating applies before first paint —
+    the full stylesheet below loads async (media=print swap trick) and would
+    otherwise let all six variants flash visible together for a moment.
+  {%- endcomment -%}
+  <style>
+    .c-pdp27__var-a,
+    .c-pdp27__var-b,
+    .c-pdp27__var-c,
+    .c-pdp27__var-d,
+    .c-pdp27__var-e,
+    .c-pdp27__var-f {
+      display: none;
+    }
+    body.c-primePdp27VarA .c-pdp27__var-a { display: block; }
+    body.c-primePdp27VarB .c-pdp27__var-b { display: block; }
+    body.c-primePdp27VarC .c-pdp27__var-c { display: block; }
+    body.c-primePdp27VarD .c-pdp27__var-d { display: block; margin-top: 2rem; }
+    body.c-primePdp27VarE .c-pdp27__var-e { display: block; margin-top: 2rem; }
+    body.c-primePdp27VarF .c-pdp27__var-f { display: block; margin-top: 2rem; }
+  </style>
   <link rel="stylesheet" href="{{ 'c-prime-pdp-27.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- else -%}
   {{ 'c-prime-pdp-27.css' | asset_url | stylesheet_tag }}
