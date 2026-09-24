@@ -632,7 +632,7 @@
                   <span class='button__label'>
                     {{ 'sections.cart.checkout' | t }}
                     {% if block.settings.display_price %}
-                      • {{ cart.total_price | money }}
+                      • <span id="c-primeCart32-checkout-price">{{ cart.total_price | money }}</span>
                     {% endif %}
                   </span>
                 </button>
