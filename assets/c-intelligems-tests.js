@@ -136,13 +136,6 @@ function handleExperiments() {
       !primePdp35InVarAOrB
   );
 
-<<<<<<< Updated upstream
-  // Test: V_PRIME_CART_32 | Charity Donation Minicart Add-On
-  const primeCart32 = window.igData?.user.getTestGroup(
-    "09ae0d10-fdd8-4c8b-91e8-e282765ad1a2"
-  );
-  if (primeCart32?.name === "Var A - Opt-in") {
-=======
   // Test: V_PRIME_PDP_27 | Physical-Size Information - "Exactly What Arrives"
   const primePdp27 = window.igData?.user.getTestGroup(
     "ad3c1130-56a6-4aaa-a8bc-d22ebcc2cc64"
@@ -162,9 +155,10 @@ function handleExperiments() {
   }
 
   // Test: V_PRIME_CART_32 | Charity Donation Minicart Add-On — Give the Gift of Reading (BFCM)
-  const primeCart32 = { id: "bc53f2c0-d5e5-4829-91b5-298e23b0a3b6" }
-  if (primeCart32?.id === "bc53f2c0-d5e5-4829-91b5-298e23b0a3b6") {
->>>>>>> Stashed changes
+  const primeCart32 = window.igData?.user.getTestGroup(
+    "09ae0d10-fdd8-4c8b-91e8-e282765ad1a2"
+  );
+  if (primeCart32?.name === "Var A - Opt-in") {
     document.body.classList.add("c-primeCart32VarA");
   } else if (primeCart32?.name === "Var B - Preselected") {
     document.body.classList.add("c-primeCart32VarB");

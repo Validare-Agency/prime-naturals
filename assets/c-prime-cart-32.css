@@ -1,17 +1,9 @@
-/* <-------------------V_PRIME_CART_32 | Charity Donation Minicart Add-On-----------------> */
+/* <-------------------V_PRIME_CART_32 | Charity Donation Minicart Add-On — Give the Gift of Reading (BFCM)-----------------> */
 
 /* Test Setup */
-<<<<<<< Updated upstream
-.c-primeCart32-module {
-  display: none;
-}
 
-.c-primeCart32VarA .c-primeCart32-module,
-.c-primeCart32VarB .c-primeCart32-module {
-  display: block;
-=======
-.c-cart32-dock,
-.c-cart32-total-row {
+/* Hide dock for Control; show for Var A and Var B */
+.c-cart32-dock {
   display: none;
 }
 
@@ -20,48 +12,48 @@ body.c-primeCart32VarB .c-cart32-dock {
   display: block;
 }
 
+/* Suppress double border between dock and drawer footer */
 body.c-primeCart32VarA .c-cart32-dock + .drawer__footer,
 body.c-primeCart32VarB .c-cart32-dock + .drawer__footer {
   border-top: 0;
->>>>>>> Stashed changes
 }
 
-/* Var-specific headlines — VarA headline shown by default, VarB hidden */
-.c-primeCart32-headline--varB {
+/* Title variants — VarA title shown by default; VarB swaps it */
+.c-cart32__title-b {
   display: none;
 }
 
-.c-primeCart32VarB .c-primeCart32-headline--varA {
+body.c-primeCart32VarB .c-cart32__title-a {
   display: none;
 }
 
-.c-primeCart32VarB .c-primeCart32-headline--varB {
+body.c-primeCart32VarB .c-cart32__title-b {
+  display: inline;
+}
+
+/* Proof-text variants */
+.c-cart32__proof-b {
+  display: none;
+}
+
+body.c-primeCart32VarB .c-cart32__proof-a {
+  display: none;
+}
+
+body.c-primeCart32VarB .c-cart32__proof-b {
+  display: inline;
+}
+
+/* Decline helper: hidden for Control and VarB; Var A only */
+.c-cart32__decline {
+  display: none;
+}
+
+body.c-primeCart32VarA .c-cart32__decline {
   display: block;
 }
 
-/* Decline line: Var A only */
-.c-primeCart32-decline {
-  display: none !important;
-}
-
-.c-primeCart32VarA .c-primeCart32-decline {
-  display: block !important;
-}
-
-/* Fine print — VarA copy shown by default, VarB copy hidden */
-.c-primeCart32-fine-print--varB {
-  display: none;
-}
-
-.c-primeCart32VarB .c-primeCart32-fine-print--varA {
-  display: none;
-}
-
-.c-primeCart32VarB .c-primeCart32-fine-print--varB {
-  display: block;
-}
-
-/* Donation line item in pricing summary: hidden until active */
+/* Donation line-item row in pricing summary — hidden until JS activates it */
 .c-primeCart32-line-item {
   display: none;
 }
@@ -72,20 +64,10 @@ body.c-primeCart32VarB .c-cart32-dock + .drawer__footer {
 
 
 /* Test Design */
-<<<<<<< Updated upstream
 
-/* Module container */
-.c-primeCart32-module {
-  margin: 0 0 1.2rem;
-  padding: 1.2rem 1.4rem;
-  background-color: #fff8f0;
-  border-radius: 8px;
-  border: 1px solid #e8ddd1;
-=======
-/* Strip between the drawer body and footer. On tall screens the theme keeps
-   the footer pinned (only the body scrolls), so this sits right above it.
-   At max-height: 650px the theme scrolls the whole drawer instead — sticky
-   keeps the card pinned to the bottom there too. */
+/* Sticky strip between drawer body and footer.
+   On tall screens the theme pins the footer (body scrolls only),
+   so the card stays right above it. */
 .c-cart32-dock {
   position: sticky;
   bottom: 0;
@@ -96,6 +78,7 @@ body.c-primeCart32VarB .c-cart32-dock + .drawer__footer {
   border-top: 0.1rem solid rgba(var(--color-foreground), 0.2);
 }
 
+/* Card */
 .c-cart32 {
   display: flex;
   flex-direction: column;
@@ -105,116 +88,150 @@ body.c-primeCart32VarB .c-cart32-dock + .drawer__footer {
   border: 1px solid rgba(13, 27, 62, 0.14);
   border-radius: 12px;
   font-family: var(--font-body-family);
-  transition: opacity 0.2s;
->>>>>>> Stashed changes
 }
 
-/* Header row */
-.c-primeCart32-header {
+/* Title row (icon + text) */
+.c-cart32__title {
   display: flex;
-  align-items: flex-start;
-  gap: 0.6rem;
-  margin-bottom: 0.5rem;
-}
-
-.c-primeCart32-icon {
-  font-size: 1.5rem;
-  line-height: 1.2;
-  flex-shrink: 0;
-}
-
-.c-primeCart32-headline--varA,
-.c-primeCart32-headline--varB {
-  font-size: 1.35rem;
-  font-weight: 700;
+  align-items: center;
+  gap: 7px;
   margin: 0;
+  font-size: 14px;
+  font-weight: 700;
   line-height: 1.3;
   color: #1a1a1a;
 }
 
-/* Body text */
-.c-primeCart32-body {
-  font-size: 1.2rem;
-  color: #555;
-  line-height: 1.5;
-  margin: 0 0 1rem;
+.c-cart32__icon {
+  flex-shrink: 0;
 }
 
-/* CTA button — pill shape */
-.c-primeCart32-cta {
+.c-cart32__title-a,
+.c-cart32__title-b {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* Body text */
+.c-cart32__text {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #555;
+}
+
+/* Toggle pill — the <label> wrapping the checkbox */
+.c-cart32__toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 50px;
+  border: 1.5px solid rgba(0, 0, 0, 0.2);
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.c-cart32__toggle:hover {
+  border-color: rgba(0, 0, 0, 0.35);
+}
+
+/* Visually hide the native checkbox */
+.c-cart32__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
+}
+
+/* Circular checkbox indicator */
+.c-cart32__check {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.7rem;
-  width: 100%;
-  padding: 0.85rem 1.4rem;
-  border-radius: 50px;
-  border: 2px solid #1a1a1a;
-  background-color: #fff;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-  text-align: center;
-  line-height: 1.2;
-}
-
-.c-primeCart32-cta:hover {
-  background-color: #f5f5f5;
-}
-
-.c-primeCart32-cta__icon {
-  display: inline-flex;
-  align-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 0, 0, 0.22);
   flex-shrink: 0;
-  color: currentColor;
-  transition: color 0.2s ease;
+  color: transparent; /* checkmark path invisible until selected */
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+/* Confirm area (heart + label text) */
+.c-cart32__confirm {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.c-cart32__label {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #1a1a1a;
 }
 
 /* Heart icon: hidden until selected */
-.c-primeCart32-cta__icon--heart {
+.c-cart32__heart {
   display: none;
+  flex-shrink: 0;
 }
 
-/* Selected state: CTA turns green */
-.c-primeCart32-module--selected .c-primeCart32-cta {
-  background-color: #22a06b;
-  border-color: #22a06b;
+/* ── Selected state (JS adds c-cart32--selected to the card) ── */
+.c-cart32--selected .c-cart32__toggle {
+  border-color: #2d9e6b;
+  background: #f0faf5;
+}
+
+.c-cart32--selected .c-cart32__check {
+  background: #2d9e6b;
+  border-color: #2d9e6b;
   color: #fff;
 }
 
-.c-primeCart32-module--selected .c-primeCart32-cta__icon--heart {
-  display: inline-flex;
+.c-cart32--selected .c-cart32__heart {
+  display: block;
 }
 
-/* Decline link */
-.c-primeCart32-decline {
+/* Decline helper (Var A only via body-class guard above) */
+.c-cart32__decline {
   background: none;
   border: none;
-  padding: 0.5rem 0 0;
-  font-size: 1.1rem;
+  padding: 2px 0 0;
+  font-size: 11.5px;
   color: #888;
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 2px;
   text-align: center;
   width: 100%;
+  font-family: var(--font-body-family);
 }
 
-.c-primeCart32-decline:hover {
+.c-cart32__decline:hover {
   color: #555;
 }
 
 /* Fine print */
-.c-primeCart32-fine-print {
-  font-size: 1.05rem;
-  color: #999;
+.c-cart32__proof {
+  margin: 0;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #98a2ac;
   text-align: center;
-  margin: 0.6rem 0 0;
 }
 
-/* Donation line item row in pricing summary */
+/* Donation line-item row in pricing summary */
 .c-primeCart32-line-item {
   justify-content: space-between;
   align-items: center;
@@ -227,41 +244,7 @@ body.c-primeCart32VarB .c-cart32-dock + .drawer__footer {
   font-weight: 500;
 }
 
-/* Mobile adjustments */
-@media screen and (max-width: 749px) {
-  .c-primeCart32-module {
-    padding: 1rem 1.2rem;
-  }
-
-  .c-primeCart32-body {
-    font-size: 1.15rem;
-  }
-
-  .c-primeCart32-cta {
-    font-size: 1.2rem;
-    padding: 0.8rem 1.2rem;
-  }
-}
-<<<<<<< Updated upstream
-=======
-
-.c-cart32__heart {
-  display: none;
-  flex-shrink: 0;
-}
-
-.c-cart32__input:checked ~ .c-cart32__confirm .c-cart32__heart {
-  display: block;
-}
-
-.c-cart32__proof {
-  font-size: 11.5px;
-  font-weight: 700;
-  line-height: 17.3px;
-  color: #98a2ac;
-}
-
-/* Compact on short screens — the card should never crowd out the cart */
+/* ── Compact on short screens — card should never crowd out the cart ── */
 @media screen and (max-height: 820px) {
   .c-cart32 {
     gap: 8px;
@@ -269,13 +252,12 @@ body.c-primeCart32VarB .c-cart32-dock + .drawer__footer {
   }
 
   .c-cart32__title {
-    font-size: 15px;
-    line-height: 19px;
+    font-size: 13px;
   }
 
   .c-cart32__text {
     font-size: 12px;
-    line-height: 17px;
+    line-height: 1.4;
   }
 
   .c-cart32__toggle {
@@ -284,7 +266,7 @@ body.c-primeCart32VarB .c-cart32-dock + .drawer__footer {
 
   .c-cart32__proof {
     font-size: 11px;
-    line-height: 15px;
+    line-height: 1.4;
   }
 }
 
@@ -300,8 +282,7 @@ body.c-primeCart32VarB .c-cart32-dock + .drawer__footer {
   }
 
   .c-cart32__title {
-    font-size: 14px;
-    line-height: 18px;
+    font-size: 12px;
   }
 
   .c-cart32__text {
@@ -313,14 +294,14 @@ body.c-primeCart32VarB .c-cart32-dock + .drawer__footer {
   }
 
   .c-cart32__label {
-    font-size: 13px;
-    line-height: 17px;
+    font-size: 12px;
   }
 }
 
 @media screen and (max-height: 560px) {
   .c-cart32__title,
-  .c-cart32__proof {
+  .c-cart32__proof,
+  .c-cart32__decline {
     display: none;
   }
 
@@ -328,4 +309,3 @@ body.c-primeCart32VarB .c-cart32-dock + .drawer__footer {
     padding: 8px;
   }
 }
->>>>>>> Stashed changes

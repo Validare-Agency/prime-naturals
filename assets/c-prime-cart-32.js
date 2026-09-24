@@ -1,4 +1,4 @@
-// assets/c-prime-cart-32.js — V_PRIME_CART_32 | Charity Donation Minicart Add-On
+// assets/c-prime-cart-32.js — V_PRIME_CART_32 | Charity Donation Minicart Add-On — Give the Gift of Reading (BFCM)
 
 (function () {
   var DONATION_CENTS = 200; // $2.00
@@ -17,11 +17,10 @@
     var subtotalEl = document.getElementById('c-primeCart32-subtotal-money');
     if (subtotalEl) subtotalEl.textContent = formatted;
 
-    // Update checkout button label (only when display_price is enabled)
+    // Update checkout button label when display_price is enabled (label contains '•')
     if (btn) {
       var label = btn.querySelector('.button__label');
       if (label) {
-        // Cache original text on first encounter
         if (!btn.dataset.originalLabel) {
           btn.dataset.originalLabel = label.textContent.trim().replace(/\s+/g, ' ');
         }
@@ -33,7 +32,7 @@
       }
     }
 
-    // Show/hide donation line item row
+    // Show/hide donation line-item row in the pricing summary
     var lineItem = document.getElementById('c-primeCart32-line-item');
     if (lineItem) {
       lineItem.classList.toggle('c-primeCart32-line-item--active', isDonating);
@@ -42,51 +41,48 @@
   }
 
   function initDonationModule() {
-    var module = document.getElementById('c-primeCart32-module');
-    if (!module) return;
+    var card = document.querySelector('[data-c-cart32]');
+    if (!card) return;
 
-    var ctaBtn = document.getElementById('c-primeCart32-cta');
-    if (!ctaBtn) return;
+    var checkbox = card.querySelector('.c-cart32__input');
+    if (!checkbox) return;
 
-    // Reset originalLabel cache so fresh totals are read after re-renders
+    // Reset cached label so a re-rendered button is read fresh
     var btn = document.getElementById('CartDrawer-Checkout');
     if (btn) btn.removeAttribute('data-original-label');
 
-    // Var B: apply preselected state on (re-)init
     var isVarB = document.body.classList.contains('c-primeCart32VarB');
-    if (isVarB) {
-      module.classList.add('c-primeCart32-module--selected');
-      ctaBtn.setAttribute('aria-pressed', 'true');
-      updateTotals(true);
-    } else {
-      // Var A: ensure unselected on re-render
-      module.classList.remove('c-primeCart32-module--selected');
-      ctaBtn.setAttribute('aria-pressed', 'false');
-      updateTotals(false);
+
+    // Var B: force the checkbox into the preselected state on every init
+    if (isVarB && !checkbox.checked) {
+      checkbox.checked = true;
     }
 
-    // Clone to remove any stale event listeners after re-renders
-    var freshCta = ctaBtn.cloneNode(true);
-    ctaBtn.parentNode.replaceChild(freshCta, ctaBtn);
+    // Sync the card class and the totals with the current checkbox state
+    card.classList.toggle('c-cart32--selected', checkbox.checked);
+    updateTotals(checkbox.checked);
 
-    freshCta.addEventListener('click', function () {
-      var isSelected = module.classList.toggle('c-primeCart32-module--selected');
-      freshCta.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
-      updateTotals(isSelected);
+    // Clone to drop any stale event listeners from a previous render
+    var freshCheckbox = checkbox.cloneNode(true);
+    checkbox.parentNode.replaceChild(freshCheckbox, checkbox);
+
+    freshCheckbox.addEventListener('change', function () {
+      card.classList.toggle('c-cart32--selected', this.checked);
+      updateTotals(this.checked);
       window.igEvents = window.igEvents || [];
       window.igEvents.push({ event: 'donation_cta_click' });
     });
 
-    // Decline button (Var A only)
-    var declineBtn = document.getElementById('c-primeCart32-decline');
+    // Decline helper button (Var A only — CSS guards visibility)
+    var declineBtn = card.querySelector('.c-cart32__decline');
     if (declineBtn) {
       var freshDecline = declineBtn.cloneNode(true);
       declineBtn.parentNode.replaceChild(freshDecline, declineBtn);
       freshDecline.addEventListener('click', function () {
-        if (!module.classList.contains('c-primeCart32-module--selected')) return;
-        module.classList.remove('c-primeCart32-module--selected');
-        var cta = document.getElementById('c-primeCart32-cta');
-        if (cta) cta.setAttribute('aria-pressed', 'false');
+        var cb = card.querySelector('.c-cart32__input');
+        if (!cb || !cb.checked) return;
+        cb.checked = false;
+        card.classList.remove('c-cart32--selected');
         updateTotals(false);
         window.igEvents = window.igEvents || [];
         window.igEvents.push({ event: 'donation_cta_click' });
@@ -94,14 +90,17 @@
     }
   }
 
-  // Init on DOMContentLoaded
+  // Init on DOMContentLoaded (or immediately if the DOM is already ready)
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initDonationModule);
   } else {
     initDonationModule();
   }
 
-  // Re-init when cart items re-render (qty updates, add-to-cart, etc.)
+  // Re-init when the cart items area re-renders (qty changes, add-to-cart, etc.)
+  // The donation card itself sits outside CartDrawer-CartItems so it survives
+  // re-renders, but the checkout button's data-base-amount and the subtotal
+  // element may be refreshed — re-reading them here keeps totals accurate.
   document.addEventListener('DOMContentLoaded', function () {
     var cartItemsEl = document.getElementById('CartDrawer-CartItems');
     if (!cartItemsEl) return;
