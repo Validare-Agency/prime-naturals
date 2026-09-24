@@ -1,0 +1,62 @@
+<div class="c-pmb30-wrap" data-subtotal="{{ cart.items_subtotal_price }}">
+  {%- if section.index > 3 -%}
+    <link rel="stylesheet" href="{{ 'c-prime-mix-30.css' | asset_url }}" media="print" onload="this.media='all'">
+  {%- else -%}
+    {{ 'c-prime-mix-30.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+
+  <div class="c-pmb30-card">
+
+    <div class="c-pmb30-head">
+      <span class="c-pmb30-head-icon" aria-hidden="true">🎁</span>
+      <strong class="c-pmb30-head-title">Black Friday Gift Rewards</strong>
+    </div>
+
+    <p class="c-pmb30-status">
+      <span class="c-pmb30-status-dot" aria-hidden="true"></span>
+      <span class="c-pmb30-status-text">Add $59 more to unlock free stickers</span>
+    </p>
+
+    <div class="c-pmb30-bar-outer">
+
+      <div class="c-pmb30-track">
+        <div class="c-pmb30-fill" style="width:0%"></div>
+        <div class="c-pmb30-marker c-pmb30-marker--next" data-threshold="5900" style="left:39.6%">
+          <span class="c-pmb30-micon" aria-hidden="true">🎟️</span>
+        </div>
+        <div class="c-pmb30-marker" data-threshold="7900" style="left:53.0%">
+          <span class="c-pmb30-micon" aria-hidden="true">🧩</span>
+        </div>
+        <div class="c-pmb30-marker" data-threshold="9900" style="left:66.4%">
+          <span class="c-pmb30-micon" aria-hidden="true">🎴</span>
+        </div>
+        <div class="c-pmb30-marker" data-threshold="14900" style="left:100%">
+          <span class="c-pmb30-micon" aria-hidden="true">📚</span>
+        </div>
+      </div>
+
+      <div class="c-pmb30-lbl-row">
+        <div class="c-pmb30-lbl" style="left:39.6%">
+          <span class="c-pmb30-lbl-amt">$59</span>
+          <span class="c-pmb30-lbl-gift">Free stickers</span>
+        </div>
+        <div class="c-pmb30-lbl" style="left:53.0%">
+          <span class="c-pmb30-lbl-amt">$79</span>
+          <span class="c-pmb30-lbl-gift">Free sticker<br>puzzle</span>
+        </div>
+        <div class="c-pmb30-lbl" style="left:66.4%">
+          <span class="c-pmb30-lbl-amt">$99</span>
+          <span class="c-pmb30-lbl-gift">Free gift<br>card 20$</span>
+        </div>
+        <div class="c-pmb30-lbl c-pmb30-lbl--last" style="left:100%">
+          <span class="c-pmb30-lbl-amt">$149</span>
+          <span class="c-pmb30-lbl-gift c-pmb30-label-mobile">Free mystery book</span>
+          <span class="c-pmb30-lbl-gift c-pmb30-label-desktop">Free mystery Gift</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="{{ 'c-prime-mix-30.js' | asset_url }}" defer></script>
+</div>

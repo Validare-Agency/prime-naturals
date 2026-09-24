@@ -162,6 +162,14 @@ function handleExperiments() {
   } else if (primeCart32?.id === "63c92951-09f5-43e6-9cc9-656bd70479fa") {
     document.body.classList.add("c-primeCart32VarB");
   }
+
+  // Test: V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM)
+  const primeMix30 = window.igData?.user.getTestGroup(
+    "d6e0d425-a1eb-4507-9ff9-eb899b475a2f"
+  );
+  if (primeMix30?.name === "Var A") {
+    document.body.classList.add("c-primeMix30VarA");
+  }
 }
 
 let cartDrawerWasActive = false;
