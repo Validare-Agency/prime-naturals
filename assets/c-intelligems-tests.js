@@ -106,18 +106,6 @@ function handleExperiments() {
     document.body.classList.add("c-primeMix26VarA");
   }
 
-  // Test: V_PRIME_PDP_23 | PDP 'What's inside' section: chapter map + Q&A
-  const primePdp23 = window.igData?.user.getTestGroup(
-    "2fbd76e4-5c99-438c-b112-d031dff9c4bd"
-  );
-  if (primePdp23?.name === "Var A - Topics then Q&A") {
-    document.body.classList.add("c-primePdp23VarA");
-  } else if (primePdp23?.name === "Var B - Q&A then topics") {
-    document.body.classList.add("c-primePdp23VarB");
-  } else if (primePdp23?.name === "Var C - Q&A only") {
-    document.body.classList.add("c-primePdp23VarC");
-  }
-
   // Test: V_PRIME_PDP_35 | Unlock Bonus Free Gifts
   const primePdp35 = window.igData?.user.getTestGroup(
     "97267cf0-b33c-48dc-a5e0-195f12d5587b"
