@@ -1,0 +1,64 @@
+{%- comment -%}
+  V_PRIME_CART_32 | Charity Donation Minicart Add-On — Give the Gift of Reading (BFCM)
+
+  Rendered from snippets/cart-drawer.liquid (end of the drawer body). The
+  donation is a real cart line — the '2-book-donation' product — so its
+  checked state comes straight from the cart here, and every drawer re-render
+  keeps it in sync. Add/remove + Var B's default-on is handled in
+  assets/c-prime-cart-32.js; show/hide per variant in assets/c-prime-cart-32.css.
+{%- endcomment -%}
+{%- assign c_cart32_product = all_products['2-book-donation'] -%}
+{%- if c_cart32_product != blank and cart != empty -%}
+  {%- liquid
+    assign c_cart32_line_key = ''
+    assign c_cart32_other_count = 0
+    for item in cart.items
+      if item.product_id == c_cart32_product.id
+        assign c_cart32_line_key = item.key
+      else
+        assign c_cart32_other_count = c_cart32_other_count | plus: item.quantity
+      endif
+    endfor
+  -%}
+  <div
+    class="c-cart32"
+    data-c-cart32
+    data-variant-id="{{ c_cart32_product.selected_or_first_available_variant.id }}"
+    data-line-key="{{ c_cart32_line_key }}"
+    data-other-count="{{ c_cart32_other_count }}"
+  >
+    <p class="c-cart32__title">
+      <svg class="c-cart32__icon" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <path d="M3 3.375C3 3.07663 3.11853 2.79048 3.3295 2.57951C3.54048 2.36853 3.82663 2.25 4.125 2.25H7.5C8.05704 2.25741 8.59152 2.4712 9 2.85C9.40848 2.4712 9.94296 2.25741 10.5 2.25H13.875C14.1734 2.25 14.4595 2.36853 14.6705 2.57951C14.8815 2.79048 15 3.07663 15 3.375V12.375C15 12.6734 14.8815 12.9595 14.6705 13.1705C14.4595 13.3815 14.1734 13.5 13.875 13.5H10.5C10.1022 13.5 9.72064 13.658 9.43934 13.9393C9.15804 14.2206 9 14.6022 9 15C9 14.6022 8.84196 14.2206 8.56066 13.9393C8.27936 13.658 7.89782 13.5 7.5 13.5H4.125C3.82663 13.5 3.54048 13.3815 3.3295 13.1705C3.11853 12.9595 3 12.6734 3 12.375V3.375Z" stroke="#C0392B" stroke-width="1.33333" stroke-linejoin="round"/>
+        <path d="M9 4.35V15" stroke="#C0392B" stroke-width="1.33333"/>
+      </svg>
+      <span class="c-cart32__title-a">Donate a Book — Just $2</span>
+      <span class="c-cart32__title-b">Add a $2 Book Donation</span>
+    </p>
+    <p class="c-cart32__text">
+      Your little one is getting the best gift there is — a book to learn and grow with. Millions of kids never get that chance. Your $2 sends one of them a book.
+    </p>
+    <label class="c-cart32__toggle">
+      <input
+        type="checkbox"
+        class="c-cart32__input"
+        {% if c_cart32_line_key != blank %}checked{% endif %}
+      >
+      <span class="c-cart32__check" aria-hidden="true">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+          <path d="M1.85547 6.77858L5.01261 9.93572L11.1412 3.71429" stroke="white" stroke-width="2.04286" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="c-cart32__confirm">
+        <svg class="c-cart32__heart" width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <path d="M6.49952 11.2125L2.11202 6.98752C1.67174 6.4663 1.44441 5.79812 1.47547 5.11654C1.50652 4.43496 1.79368 3.79022 2.27954 3.31121C2.7654 2.8322 3.41415 2.55421 4.0961 2.53282C4.77804 2.51143 5.44294 2.74822 5.95786 3.19585L6.49952 3.73752L7.04119 3.19585C7.55118 2.68586 8.24287 2.39935 8.96411 2.39935C9.68534 2.39935 10.377 2.68586 10.887 3.19585C11.397 3.70584 11.6835 4.39753 11.6835 5.11877C11.6835 5.84 11.397 6.53169 10.887 7.04168L6.49952 11.2125Z" fill="#C0392B"/>
+        </svg>
+        <span class="c-cart32__label">Yes, donate $2 and send a book</span>
+      </span>
+    </label>
+    <p class="c-cart32__proof">
+      <span class="c-cart32__proof-a">12,000 books donated to kids and counting.</span>
+      <span class="c-cart32__proof-b">$2,000 books donated and counting.</span>
+    </p>
+  </div>
+{%- endif -%}

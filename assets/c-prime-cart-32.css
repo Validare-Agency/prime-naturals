@@ -1,0 +1,178 @@
+/* <-------------------V_PRIME_CART_32 | Charity Donation Minicart Add-On-----------------> */
+
+/* Test Setup */
+.c-cart32,
+.c-cart32-total-row {
+  display: none;
+}
+
+body.c-primeCart32VarA .c-cart32,
+body.c-primeCart32VarB .c-cart32 {
+  display: flex;
+}
+
+body.c-primeCart32VarA .c-cart32-total-row,
+body.c-primeCart32VarB .c-cart32-total-row {
+  display: flex;
+}
+
+/* Var B has its own headline + fine print */
+.c-cart32__title-b,
+.c-cart32__proof-b,
+body.c-primeCart32VarB .c-cart32__title-a,
+body.c-primeCart32VarB .c-cart32__proof-a {
+  display: none;
+}
+
+body.c-primeCart32VarB .c-cart32__title-b,
+body.c-primeCart32VarB .c-cart32__proof-b {
+  display: inline;
+}
+
+/* The donation is shown via the card + totals row instead of as a line item */
+body.c-primeCart32VarA .c-cart32-donation-line,
+body.c-primeCart32VarB .c-cart32-donation-line {
+  display: none;
+}
+
+/* Test Design */
+.c-cart32 {
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0 0;
+  padding: 16px 16px 14px;
+  background: #fffdf5;
+  border: 1px solid rgba(13, 27, 62, 0.14);
+  border-radius: 12px;
+  font-family: var(--font-body-family);
+  transition: opacity 0.2s;
+  margin-bottom: 20px;
+}
+
+.c-cart32--loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.c-cart32 p {
+  margin: 0;
+}
+
+.c-cart32__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body-family);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20.8px;
+  color: #0d1b3e;
+}
+
+.c-cart32__icon {
+  flex-shrink: 0;
+}
+
+.c-cart32__text {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20.3px;
+  color: #111112;
+}
+
+@media screen and (min-width: 750px) {
+  .c-cart32__text {
+    font-size: 12.5px;
+  }
+}
+
+.c-cart32__toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid #d9e0e6;
+  border-radius: 12px;
+  font-weight: 700;
+  color: #0d1b3e;
+  cursor: pointer;
+}
+
+.c-cart32__toggle:has(.c-cart32__input:checked) {
+  background: rgba(46, 139, 87, 0.07);
+  border-color: #2e8b57;
+  color: #2e8b57;
+}
+
+.c-cart32__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.c-cart32__check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border: 1px solid #dedede;
+  border-radius: 8px;
+}
+
+.c-cart32__check svg {
+  display: none;
+}
+
+.c-cart32__input:checked + .c-cart32__check {
+  background: #2e8b57;
+  border-color: #2e8b57;
+}
+
+.c-cart32__input:checked + .c-cart32__check svg {
+  display: block;
+}
+
+.c-cart32__input:focus-visible + .c-cart32__check {
+  outline: 2px solid #0d1b3e;
+  outline-offset: 2px;
+}
+
+.c-cart32__confirm {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.c-cart32__label {
+  font-size: 13px;
+  line-height: 18.2px;
+}
+
+@media screen and (min-width: 750px) {
+  .c-cart32__label {
+    font-size: 13.5px;
+    line-height: 18.9px;
+  }
+}
+
+.c-cart32__heart {
+  display: none;
+  flex-shrink: 0;
+}
+
+.c-cart32__input:checked ~ .c-cart32__confirm .c-cart32__heart {
+  display: block;
+}
+
+.c-cart32__proof {
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 17.3px;
+  color: #98a2ac;
+}
