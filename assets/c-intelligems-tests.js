@@ -98,14 +98,6 @@ function handleExperiments() {
     localStorage.setItem("validare_holdout", isHeldOut ? "1" : "0");
   } catch (e) {}
 
-  // Test: V_PRIME_MIX_26 | Grandparent-voice Testimonial Carousel
-  const primeMix26 = window.igData?.user.getTestGroup(
-    "09581346-2806-47e0-80ef-c94e215d67b1"
-  );
-  if (primeMix26?.name === "Var A") {
-    document.body.classList.add("c-primeMix26VarA");
-  }
-
   // Test: V_PRIME_PDP_23 | PDP 'What's inside' section: chapter map + Q&A
   const primePdp23 = window.igData?.user.getTestGroup(
     "2fbd76e4-5c99-438c-b112-d031dff9c4bd"
