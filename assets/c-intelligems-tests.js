@@ -98,14 +98,6 @@ function handleExperiments() {
     localStorage.setItem("validare_holdout", isHeldOut ? "1" : "0");
   } catch (e) {}
 
-  // Test: V_PRIME_MIX_26 | Grandparent-voice Testimonial Carousel
-  const primeMix26 = window.igData?.user.getTestGroup(
-    "09581346-2806-47e0-80ef-c94e215d67b1"
-  );
-  if (primeMix26?.name === "Var A") {
-    document.body.classList.add("c-primeMix26VarA");
-  }
-
   // Test: V_PRIME_PDP_35 | Unlock Bonus Free Gifts
   const primePdp35 = window.igData?.user.getTestGroup(
     "97267cf0-b33c-48dc-a5e0-195f12d5587b"
