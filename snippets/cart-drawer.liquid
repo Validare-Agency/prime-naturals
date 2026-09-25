@@ -124,6 +124,8 @@
                   method="post"
                 >
                   <div id="CartDrawer-CartItems" class="drawer__contents js-contents">
+                    {%- comment -%} V_PRIME_CART_37 | Gift-Threshold Progress Bar — hidden/shown via CSS {%- endcomment -%}
+                    {%- render 'c-prime-cart-37-bar' -%}
                     {%- if cart != empty -%}
                       <div class="drawer__cart-items-wrapper">
                         <ul class="cart-items list-unstyled">
@@ -461,6 +463,8 @@
                 {% if display %}
                   {% render 'upsell-block', block: block, type: 'cart-drawer' %}
                 {% endif %}
+                {%- comment -%} V_PRIME_CART_37 | Var A always-on 3-book upsell — hidden/shown via CSS {%- endcomment -%}
+                {% render 'c-prime-cart-37-upsells', product_list: block.settings.product_list, block: block %}
               {% endif %}
             {% when 'gift' %}
               {% if block.settings.position == 'body' %}

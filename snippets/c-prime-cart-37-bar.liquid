@@ -1,0 +1,103 @@
+{% comment %}
+  V_PRIME_CART_37 | MiniCart Gift-Threshold Progress Bar (BFCM)
+  Always rendered. Shown for Var A (.c-primeCart37VarA body class) only via CSS.
+  Milestones: $59 free stickers | $79 free sticker puzzle | $99 free gift card | $149 free mystery book
+{% endcomment %}
+
+{% liquid
+  assign c37_sub   = cart.items_subtotal_price
+  assign c37_t1    = 5900
+  assign c37_t2    = 7900
+  assign c37_t3    = 9900
+  assign c37_t4    = 14900
+
+  assign c37_fill  = c37_sub | times: 100 | divided_by: c37_t4
+  if c37_fill > 100
+    assign c37_fill = 100
+  endif
+
+  if c37_sub >= c37_t4
+    assign c37_state     = 'all'
+    assign c37_remaining = 0
+    assign c37_next_gift = ''
+  elsif c37_sub >= c37_t3
+    assign c37_state     = 'tier3'
+    assign c37_remaining = c37_t4 | minus: c37_sub
+    assign c37_next_gift = 'early access + 20% off'
+  elsif c37_sub >= c37_t2
+    assign c37_state     = 'tier2'
+    assign c37_remaining = c37_t3 | minus: c37_sub
+    assign c37_next_gift = 'a free gift card'
+  elsif c37_sub >= c37_t1
+    assign c37_state     = 'tier1'
+    assign c37_remaining = c37_t2 | minus: c37_sub
+    assign c37_next_gift = 'a free sticker puzzle'
+  else
+    assign c37_state     = 'start'
+    assign c37_remaining = c37_t1 | minus: c37_sub
+    assign c37_next_gift = 'free stickers'
+  endif
+
+  assign c37_tier_cents  = '5900|7900|9900|14900' | split: '|'
+  assign c37_tier_dollar = '$59|$79|$99|$149'      | split: '|'
+  assign c37_tier_gift   = 'Free stickers|Free sticker puzzle|Free gift card|Free mystery book' | split: '|'
+  assign c37_tier_icon   = '🎁|🎨|💳|📚'             | split: '|'
+%}
+
+<div class="c-cart37-rewards"
+     data-subtotal-cents="{{ c37_sub }}"
+     data-t1="{{ c37_t1 }}"
+     data-t2="{{ c37_t2 }}"
+     data-t3="{{ c37_t3 }}"
+     data-t4="{{ c37_t4 }}"
+     aria-label="Black Friday Gift Rewards">
+
+  <div class="c-cart37-header">
+    <span class="c-cart37-dot" aria-hidden="true"></span>
+    <span class="c-cart37-title">🎄 Black Friday Gift Rewards</span>
+  </div>
+
+  <p class="c-cart37-subhead">
+    {%- if c37_state == 'all' -%}
+      🎉 You've unlocked all Black Friday rewards!
+    {%- else -%}
+      Add <strong>{{ c37_remaining | money_without_trailing_zeros }}</strong> more to unlock your next free gift
+    {%- endif -%}
+  </p>
+
+  <div class="c-cart37-track-wrap">
+    <div class="c-cart37-track">
+      <div class="c-cart37-fill" data-fill="{{ c37_fill }}" style="width: {{ c37_fill }}%;"></div>
+    </div>
+
+    <div class="c-cart37-milestones" aria-hidden="true">
+      {%- for tier_str in c37_tier_cents -%}
+        {%- assign tc  = tier_str | plus: 0 -%}
+        {%- assign fi  = forloop.index0 -%}
+        {%- assign pos = tc | times: 100 | divided_by: c37_t4 -%}
+
+        {%- if c37_sub >= tc -%}
+          {%- assign ms_mod = 'c-cart37-ms--unlocked' -%}
+        {%- elsif c37_state == 'start'  and tc == c37_t1 -%}
+          {%- assign ms_mod = 'c-cart37-ms--current' -%}
+        {%- elsif c37_state == 'tier1'  and tc == c37_t2 -%}
+          {%- assign ms_mod = 'c-cart37-ms--current' -%}
+        {%- elsif c37_state == 'tier2'  and tc == c37_t3 -%}
+          {%- assign ms_mod = 'c-cart37-ms--current' -%}
+        {%- elsif c37_state == 'tier3'  and tc == c37_t4 -%}
+          {%- assign ms_mod = 'c-cart37-ms--current' -%}
+        {%- else -%}
+          {%- assign ms_mod = 'c-cart37-ms--locked' -%}
+        {%- endif -%}
+
+        <div class="c-cart37-ms {{ ms_mod }}" style="left: {{ pos }}%;" data-tier-cents="{{ tc }}">
+          <div class="c-cart37-ms__circle">
+            {%- if c37_sub >= tc -%}✓{%- else -%}{{ c37_tier_icon[fi] }}{%- endif -%}
+          </div>
+          <span class="c-cart37-ms__amount">{{ c37_tier_dollar[fi] }}</span>
+          <span class="c-cart37-ms__gift">{{ c37_tier_gift[fi] }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
