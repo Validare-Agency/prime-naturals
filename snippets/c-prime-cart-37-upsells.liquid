@@ -1,0 +1,110 @@
+{% comment %}
+  V_PRIME_CART_37 | Always-on 3-book upsell for Var A.
+  Hidden in Control; shown only in .c-primeCart37VarA via CSS.
+
+  Accepts:
+    product_list — passed from the existing product_upsells block so handles
+                   don't need to be hard-coded here. The block's product_list
+                   already contains all 3 books; this snippet just skips the
+                   hide-in-cart-items check so all 3 always render.
+    block        — the same block, used to pick per-product images / descs.
+
+  Button label: "Add" for books 1–2, "Add +" for book 3 (Kids Encyclopedia).
+{% endcomment %}
+
+<div class="c-cart37-upsells">
+  <p class="c-cart37-upsells__label">78% of parents add these 🧠</p>
+
+  {%- for c37_product in product_list -%}
+    {%- liquid
+      assign fi = forloop.index0
+
+      if fi == 0
+        assign c37_img  = block.settings.product_1_image
+        assign c37_desc = block.settings.product_1_desc
+      elsif fi == 1
+        assign c37_img  = block.settings.product_2_image
+        assign c37_desc = block.settings.product_2_desc
+      else
+        assign c37_img  = block.settings.product_3_image
+        assign c37_desc = block.settings.product_3_desc
+      endif
+
+      if c37_img == blank
+        assign c37_img = c37_product.featured_image
+      endif
+
+      assign c37_variant  = c37_product.first_available_variant
+      assign c37_price    = c37_variant.price
+      assign c37_compare  = c37_variant.compare_at_price
+      if c37_compare == blank or c37_compare <= c37_price
+        assign c37_compare = 0
+      endif
+
+      assign c37_fid = 'c-cart37-form-' | append: section.id | append: '-' | append: fi
+      assign c37_is_last = forloop.last
+    -%}
+
+    {%- if c37_product.title != blank -%}
+      <div class="c-cart37-upsell-card color-background-1" data-handle="{{ c37_product.handle }}">
+
+        {%- if c37_img != blank -%}
+          <div class="c-cart37-upsell-img">
+            <img
+              src="{{ c37_img | image_url: width: 200 }}"
+              alt="{{ c37_img.alt | default: c37_product.title | escape }}"
+              loading="lazy"
+              width="80"
+              height="80"
+            >
+          </div>
+        {%- endif -%}
+
+        <div class="c-cart37-upsell-body">
+          <div class="c-cart37-upsell-title-row">
+            <h4 class="c-cart37-upsell-title">{{ c37_product.title | escape }}</h4>
+            <div class="c-cart37-upsell-prices">
+              <span class="c-cart37-price-sale accent-color-accent-1">{{ c37_price | money }}</span>
+              {%- if c37_compare > 0 -%}
+                <s class="c-cart37-price-cmp">{{ c37_compare | money }}</s>
+              {%- endif -%}
+            </div>
+          </div>
+          {%- unless c37_desc == blank -%}
+            <p class="c-cart37-upsell-desc">{{ c37_desc }}</p>
+          {%- endunless -%}
+        </div>
+
+        <product-form data-is-cart-upsell="true" data-section="{{ section.id }}-cart37-{{ fi }}">
+          {%- form 'product', c37_product,
+            id:         c37_fid,
+            class:      'form',
+            novalidate: 'novalidate',
+            data-type:  'add-to-cart-form'
+          -%}
+            <input type="hidden" name="id" value="{{ c37_variant.id }}">
+            <button
+              type="submit"
+              class="c-cart37-add-btn button button--has-spinner"
+              {% if c37_variant.available == false %}disabled{% endif %}
+            >
+              <span>
+                {%- if c37_variant.available -%}
+                  {%- if c37_is_last -%}Add +{%- else -%}Add{%- endif -%}
+                {%- else -%}
+                  {{ 'products.product.sold_out' | t }}
+                {%- endif -%}
+              </span>
+              <div class="loading-overlay__spinner">
+                <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                  <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                </svg>
+              </div>
+            </button>
+          {%- endform -%}
+        </product-form>
+
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>

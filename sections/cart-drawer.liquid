@@ -39,6 +39,30 @@
 {%- endif -%}
 <script src="{{ 'c-prime-cart-32.js' | asset_url }}" defer></script>
 
+{%- comment -%}
+  V_PRIME_CART_37 | MiniCart Gift-Threshold Progress Bar (BFCM)
+
+  window.cart37GiftVariants maps each spend tier to its free-gift variant ID.
+  Tier 1 ($59) reuses the existing 'stickers' gift product from V_PRIME_PDP_35.
+  Tier 4 ($149) reuses the 'mystery-gift' product from V_PRIME_PDP_35.
+  TODO: Create Shopify gift products (price $0) for tiers 2 and 3 and replace
+        the null values below with their variant IDs.
+{%- endcomment -%}
+<script>
+  window.cart37GiftVariants = {
+    tier1: { variantId: {{ all_products['stickers'].selected_or_first_available_variant.id | json }} },
+    tier2: { variantId: null },  // TODO: sticker-puzzle gift product variant ID
+    tier3: { variantId: null },  // TODO: gift-card-205 gift product variant ID
+    tier4: { variantId: {{ all_products['mystery-gift'].selected_or_first_available_variant.id | json }} }
+  };
+</script>
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-cart-37.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-cart-37.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+<script src="{{ 'c-prime-cart-37.js' | asset_url }}" defer></script>
+
 {% schema %}
 {
   "name": "Cart drawer",

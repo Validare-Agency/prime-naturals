@@ -1,0 +1,314 @@
+/* <-------------------V_PRIME_CART_37 | MiniCart Gift-Threshold Progress Bar (BFCM)-----------------> */
+
+/* ─── Test Setup ────────────────────────────────────────────────────────────── */
+
+/* Rewards bar: hidden for Control, shown for Var A */
+.c-cart37-rewards {
+  display: none;
+}
+body.c-primeCart37VarA .c-cart37-rewards {
+  display: block;
+}
+
+/* Var A 3-book upsell: hidden for Control, shown for Var A */
+.c-cart37-upsells {
+  display: none;
+}
+body.c-primeCart37VarA .c-cart37-upsells {
+  display: block;
+}
+
+/* Hide existing free-shipping progress bar in Var A (replaced by rewards bar) */
+body.c-primeCart37VarA .cart-progress {
+  display: none !important;
+}
+
+/* Hide the original upsell block in Var A (replaced by c-cart37-upsells) */
+body.c-primeCart37VarA .cart-drawer-upsells-container {
+  display: none !important;
+}
+/* Restore the upsell container itself in case all products were flagged hidden
+   (the !important inline style from upsell-block.liquid). Both selectors are
+   needed: the one above suppresses Control's container in Var A while the
+   c-cart37-upsells snippet takes over. */
+
+/* ─── Test Design ────────────────────────────────────────────────────────────── */
+
+/* ── Var A mini-cart background tint ─────────────────────────────── */
+body.c-primeCart37VarA .cart-drawer__body,
+body.c-primeCart37VarA .cart-drawer-item {
+  background: #fff5f5;
+}
+
+/* ── Rewards bar container ────────────────────────────────────────── */
+.c-cart37-rewards {
+  margin: 0 0 8px;
+  padding: 12px 14px 14px;
+  background: #fff;
+  border: 1.5px solid #e8c0c0;
+  border-radius: 10px;
+}
+
+/* ── Header row ───────────────────────────────────────────────────── */
+.c-cart37-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 6px;
+}
+.c-cart37-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e05c2e;
+  flex-shrink: 0;
+}
+.c-cart37-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0d1b3e;
+  line-height: 1.2;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* ── Subheadline ──────────────────────────────────────────────────── */
+.c-cart37-subhead {
+  font-size: 13px;
+  color: #374151;
+  margin: 0 0 14px;
+  line-height: 1.4;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.c-cart37-subhead strong {
+  color: #c0392b;
+  font-weight: 800;
+}
+
+/* ── Track ────────────────────────────────────────────────────────── */
+.c-cart37-track-wrap {
+  position: relative;
+  /* bottom space = milestone circle (half above track) + amount + gift label */
+  padding-bottom: 58px;
+  /* small horizontal inset so edge circles don't clip */
+  margin: 0 8px;
+}
+.c-cart37-track {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.c-cart37-fill {
+  height: 100%;
+  background: #c0392b;
+  border-radius: 4px;
+  transition: width 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── Milestone markers ────────────────────────────────────────────── */
+.c-cart37-milestones {
+  position: absolute;
+  /* vertically center on track: track top = 0, track h = 8px */
+  top: 4px; /* half track height — reference point for milestones */
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+.c-cart37-ms {
+  position: absolute;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+/* last milestone shouldn't over-clip right edge */
+.c-cart37-ms:last-child {
+  transform: translateX(-75%);
+}
+/* first milestone shouldn't clip left */
+.c-cart37-ms:first-child {
+  transform: translateX(-25%);
+}
+
+/* Circle */
+.c-cart37-ms__circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #d1d5db;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1;
+  margin-top: -14px; /* pull up so circle straddles the track */
+  box-sizing: border-box;
+  transition: border-color 0.3s, background 0.3s;
+}
+.c-cart37-ms--unlocked .c-cart37-ms__circle {
+  background: #c0392b;
+  border-color: #c0392b;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+}
+.c-cart37-ms--current .c-cart37-ms__circle {
+  border-color: #c0392b;
+  background: #fff;
+  color: #c0392b;
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.18);
+}
+.c-cart37-ms--locked .c-cart37-ms__circle {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #9ca3af;
+}
+
+/* Labels */
+.c-cart37-ms__amount,
+.c-cart37-ms__gift {
+  display: block;
+  text-align: center;
+  white-space: nowrap;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.2;
+}
+.c-cart37-ms__amount {
+  font-size: 10px;
+  font-weight: 700;
+  color: #0d1b3e;
+  margin-top: 5px;
+}
+.c-cart37-ms__gift {
+  font-size: 9px;
+  color: #6b7280;
+  max-width: 56px;
+  white-space: normal;
+  text-align: center;
+}
+
+/* ── Var A upsell replacement ────────────────────────────────────── */
+.c-cart37-upsells {
+  margin-top: 0;
+}
+.c-cart37-upsells__label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0d1b3e;
+  text-align: center;
+  margin: 0 0 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.c-cart37-upsell-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 8px;
+  background: #fff;
+}
+.c-cart37-upsell-card:last-child {
+  margin-bottom: 0;
+}
+.c-cart37-upsell-img {
+  flex-shrink: 0;
+}
+.c-cart37-upsell-img img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+.c-cart37-upsell-body {
+  flex: 1;
+  min-width: 0;
+}
+.c-cart37-upsell-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 3px;
+}
+.c-cart37-upsell-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0d1b3e;
+  line-height: 1.3;
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.c-cart37-upsell-prices {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.c-cart37-price-sale {
+  font-size: 13px;
+  font-weight: 800;
+  color: #c0392b;
+}
+.c-cart37-price-cmp {
+  font-size: 11px;
+  color: #9ca3af;
+  text-decoration-color: #9ca3af;
+}
+.c-cart37-upsell-desc {
+  font-size: 11px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.4;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.c-cart37-upsell-card .form {
+  display: contents;
+}
+.c-cart37-add-btn {
+  flex-shrink: 0;
+  padding: 8px 14px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  border-radius: 6px !important;
+  white-space: nowrap;
+  min-height: unset !important;
+  line-height: 1 !important;
+}
+
+/* ── Responsive adjustments ──────────────────────────────────────── */
+@media (max-width: 480px) {
+  .c-cart37-rewards {
+    padding: 10px 12px 12px;
+  }
+  .c-cart37-ms__gift {
+    max-width: 48px;
+    font-size: 8.5px;
+  }
+  .c-cart37-ms__amount {
+    font-size: 9.5px;
+  }
+  .c-cart37-ms__circle {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+    margin-top: -12px;
+  }
+  .c-cart37-upsell-img img {
+    width: 52px;
+    height: 52px;
+  }
+  .c-cart37-upsell-title {
+    font-size: 12px;
+  }
+  .c-cart37-add-btn {
+    padding: 7px 11px !important;
+    font-size: 12px !important;
+  }
+}

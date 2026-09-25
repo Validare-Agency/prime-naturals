@@ -142,6 +142,14 @@ function handleExperiments() {
   } else if (primeCart32?.id === "63c92951-09f5-43e6-9cc9-656bd70479fa") {
     document.body.classList.add("c-primeCart32VarB");
   }
+
+  // Test: V_PRIME_CART_37 | MiniCart Gift-Threshold Progress Bar (BFCM)
+  const primeCart37 = window.igData?.user.getTestGroup(
+    "1e564aa3-7b0c-40c6-a1c0-d538eb3b8ced"
+  );
+  if (primeCart37?.name === "Var A") {
+    document.body.classList.add("c-primeCart37VarA");
+  }
 }
 
 let cartDrawerWasActive = false;
@@ -155,6 +163,7 @@ setInterval(() => {
     window.igEvents.push({ event: "cartDrawerOpen" });
     window.igEvents.push({ event: "view_cart" });
     window.igEvents.push({ event: "Open_mini_cart" });
+    window.igEvents.push({ event: "mini_cart_opens" });
   } else if (!isActive) {
     cartDrawerWasActive = false;
   }
