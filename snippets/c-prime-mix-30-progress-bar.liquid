@@ -8,54 +8,62 @@
   <div class="c-pmb30-card">
 
     <div class="c-pmb30-head">
-      <span class="c-pmb30-head-icon" aria-hidden="true">🎁</span>
+      <span class="c-pmb30-head-icon" aria-hidden="true">🎄</span>
       <strong class="c-pmb30-head-title">Black Friday Gift Rewards</strong>
     </div>
 
     <p class="c-pmb30-status">
-      <span class="c-pmb30-status-dot" aria-hidden="true"></span>
+      <span class="c-pmb30-status-icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="8" width="18" height="4" rx="1"/>
+          <path d="M12 8v13"/>
+          <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/>
+          <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/>
+        </svg>
+      </span>
       <span class="c-pmb30-status-text">Add $59 more to unlock free stickers</span>
     </p>
 
-    <div class="c-pmb30-bar-outer">
-
+    <div class="c-pmb30-bar">
       <div class="c-pmb30-track">
-        <div class="c-pmb30-fill" style="width:0%"></div>
-        <div class="c-pmb30-marker c-pmb30-marker--next" data-threshold="5900" style="left:39.6%">
-          <span class="c-pmb30-micon" aria-hidden="true">🎟️</span>
-        </div>
-        <div class="c-pmb30-marker" data-threshold="7900" style="left:53.0%">
-          <span class="c-pmb30-micon" aria-hidden="true">🧩</span>
-        </div>
-        <div class="c-pmb30-marker" data-threshold="9900" style="left:66.4%">
-          <span class="c-pmb30-micon" aria-hidden="true">🎴</span>
-        </div>
-        <div class="c-pmb30-marker" data-threshold="14900" style="left:100%">
-          <span class="c-pmb30-micon" aria-hidden="true">📚</span>
-        </div>
+        <div class="c-pmb30-fill" style="width:0"></div>
       </div>
 
-      <div class="c-pmb30-lbl-row">
-        <div class="c-pmb30-lbl" style="left:39.6%">
-          <span class="c-pmb30-lbl-amt">$59</span>
-          <span class="c-pmb30-lbl-gift">Free stickers</span>
+      {%- comment -%}
+        Gift products are $0 with the unlock threshold stored as the
+        compare-at price (falls back to price if compare-at is blank).
+      {%- endcomment -%}
+      {%- assign c_pmb30_next_set = false -%}
+      {%- assign c_pmb30_handles = 'free-stickers,free-sticker-puzzle,free-gift-card-20,free-mystery-book' | split: ',' -%}
+      {%- for c_pmb30_handle in c_pmb30_handles -%}
+        {%- assign c_pmb30_gift = all_products[c_pmb30_handle] -%}
+        {%- if c_pmb30_gift == blank -%}{%- continue -%}{%- endif -%}
+        {%- assign c_pmb30_threshold = c_pmb30_gift.compare_at_price | default: c_pmb30_gift.price -%}
+        {%- assign c_pmb30_state = '' -%}
+        {%- if cart.items_subtotal_price >= c_pmb30_threshold -%}
+          {%- assign c_pmb30_state = ' c-pmb30-milestone--reached' -%}
+        {%- elsif c_pmb30_next_set == false -%}
+          {%- assign c_pmb30_state = ' c-pmb30-milestone--next' -%}
+          {%- assign c_pmb30_next_set = true -%}
+        {%- endif -%}
+        <div
+          class="c-pmb30-milestone{{ c_pmb30_state }}"
+          data-threshold="{{ c_pmb30_threshold }}"
+          data-gift="{{ c_pmb30_gift.title | downcase | escape }}"
+        >
+          <span class="c-pmb30-marker">
+            {%- if c_pmb30_gift.featured_image -%}
+              {{ c_pmb30_gift.featured_image | image_url: width: 112 | image_tag: alt: '', width: 56, height: 56, loading: 'lazy' }}
+            {%- endif -%}
+          </span>
+          <span class="c-pmb30-lbl">
+            <span class="c-pmb30-lbl-amt">{{ c_pmb30_threshold | money_without_trailing_zeros }}</span>
+            <span class="c-pmb30-lbl-gift">{{ c_pmb30_gift.title | escape }}</span>
+          </span>
         </div>
-        <div class="c-pmb30-lbl" style="left:53.0%">
-          <span class="c-pmb30-lbl-amt">$79</span>
-          <span class="c-pmb30-lbl-gift">Free sticker<br>puzzle</span>
-        </div>
-        <div class="c-pmb30-lbl" style="left:66.4%">
-          <span class="c-pmb30-lbl-amt">$99</span>
-          <span class="c-pmb30-lbl-gift">Free gift<br>card 20$</span>
-        </div>
-        <div class="c-pmb30-lbl c-pmb30-lbl--last" style="left:100%">
-          <span class="c-pmb30-lbl-amt">$149</span>
-          <span class="c-pmb30-lbl-gift c-pmb30-label-mobile">Free mystery book</span>
-          <span class="c-pmb30-lbl-gift c-pmb30-label-desktop">Free mystery Gift</span>
-        </div>
-      </div>
-
+      {%- endfor -%}
     </div>
+
   </div>
 
   <script src="{{ 'c-prime-mix-30.js' | asset_url }}" defer></script>

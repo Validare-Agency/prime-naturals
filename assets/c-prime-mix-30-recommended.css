@@ -1,0 +1,190 @@
+/* <-------------------V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM) — Recommended books-----------------> */
+
+/* Test Setup */
+.c-mix30-rec {
+  display: none;
+}
+body.c-primeMix30VarA .c-mix30-rec {
+  display: block;
+}
+
+/* Test Design */
+.c-mix30-rec {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(13, 27, 62, 0.1);
+  font-family: 'Maven Pro', var(--font-body-family);
+  color: #1f3a5f;
+}
+
+.c-mix30-rec *,
+.c-mix30-rec *::before,
+.c-mix30-rec *::after {
+  box-sizing: border-box;
+}
+
+.c-mix30-rec__title {
+  margin: 0;
+  font-family: 'Poppins', var(--font-heading-family);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  color: #0d1b3e;
+}
+
+.c-mix30-rec__subtitle {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: 0;
+  color: #6b7280;
+}
+
+.c-mix30-rec__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.c-mix30-rec__card {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid rgba(13, 27, 62, 0.12);
+  border-radius: 11px;
+}
+
+.c-mix30-rec__media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 112px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.c-mix30-rec__media img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.c-mix30-rec__name {
+  display: block;
+  min-height: 32px;
+  margin-top: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0;
+  color: #1f3a5f;
+  text-decoration: none;
+}
+
+.c-mix30-rec__prices {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 7px 0 15px;
+}
+
+.c-mix30-rec__price {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 16px;
+  color: #1f3a5f;
+}
+
+.c-mix30-rec__compare {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 13px;
+  color: #6b7280;
+}
+
+.c-mix30-rec__atc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 33px;
+  margin-top: auto;
+  padding: 10px;
+  border: 0;
+  border-radius: 0;
+  background: #c0392b;
+  color: #fff;
+  font-family: 'Maven Pro', var(--font-body-family);
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 12.5px;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.c-mix30-rec__atc:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+@media screen and (max-width: 749px) {
+  .c-mix30-rec {
+    padding-top: 13px;
+  }
+
+  .c-mix30-rec__title {
+    font-size: 16px;
+    line-height: 19px;
+  }
+
+  .c-mix30-rec__subtitle {
+    font-size: 11.5px;
+    line-height: 16px;
+  }
+
+  .c-mix30-rec__grid {
+    gap: 9px;
+    margin-top: 10px;
+  }
+
+  .c-mix30-rec__card {
+    padding: 9px;
+  }
+
+  .c-mix30-rec__media {
+    height: 96px;
+  }
+
+  .c-mix30-rec__name {
+    min-height: 45px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .c-mix30-rec__price {
+    font-size: 14px;
+    line-height: 15px;
+  }
+
+  .c-mix30-rec__compare {
+    font-size: 11px;
+    line-height: 12px;
+  }
+
+  .c-mix30-rec__atc {
+    min-height: 30px;
+    padding: 9px;
+    font-size: 11.5px;
+    line-height: 11.5px;
+  }
+}

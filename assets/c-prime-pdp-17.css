@@ -61,6 +61,13 @@ body.c-validareHoldout .c-pdp17-upsell {
   display: none;
 }
 
+/* V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM) — Var A hides the
+   Murphy upsell card so the gift progress bar stands alone. Remove with the
+   MIX_30 test cleanup. */
+body.c-primeMix30VarA .c-pdp17-upsell {
+  display: none;
+}
+
 /* Test Design */
 .c-pdp17-variant {
   border-radius: 10px;

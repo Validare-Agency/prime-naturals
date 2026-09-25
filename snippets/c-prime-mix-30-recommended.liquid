@@ -1,0 +1,60 @@
+{%- comment -%}
+  V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM) — "Recommended books"
+  row under the payment icons (.pib-trust), encyclopedia only. Hidden unless
+  body.c-primeMix30VarA (see c-prime-mix-30-recommended.css). The leadership
+  book lives on the 'murphys-law-for-kids-copy' handle — same product
+  c-prime-pdp-22-bundle.liquid sells as "leadership".
+{%- endcomment -%}
+{%- liquid
+  assign c_mix30_rec_handles = 'murphys-law-for-kids,murphys-law-for-kids-copy' | split: ','
+-%}
+
+<div class="c-mix30-rec">
+  {{ 'c-prime-mix-30-recommended.css' | asset_url | stylesheet_tag }}
+
+  <p class="c-mix30-rec__title">Recommended books</p>
+  <p class="c-mix30-rec__subtitle">Choose more books to unlock more gifts</p>
+
+  <div class="c-mix30-rec__grid">
+    {%- for c_mix30_rec_handle in c_mix30_rec_handles -%}
+      {%- liquid
+        assign c_mix30_rec_product = all_products[c_mix30_rec_handle]
+        if c_mix30_rec_product == blank
+          continue
+        endif
+        assign c_mix30_rec_variant = c_mix30_rec_product.selected_or_first_available_variant
+        assign c_mix30_rec_compare = c_mix30_rec_variant.compare_at_price
+        if c_mix30_rec_compare == blank or c_mix30_rec_compare <= c_mix30_rec_variant.price
+          assign c_mix30_rec_compare = c_mix30_rec_variant.price | times: 2
+        endif
+      -%}
+      <div class="c-mix30-rec__card">
+        <a class="c-mix30-rec__media" href="{{ c_mix30_rec_product.url }}">
+          <img
+            src="{{ c_mix30_rec_product.featured_image | image_url: width: 300 }}"
+            alt="{{ c_mix30_rec_product.featured_image.alt | default: c_mix30_rec_product.title | escape }}"
+            width="150"
+            height="150"
+            loading="lazy"
+          >
+        </a>
+        <a class="c-mix30-rec__name" href="{{ c_mix30_rec_product.url }}">{{ c_mix30_rec_product.title }}</a>
+        <div class="c-mix30-rec__prices">
+          <span class="c-mix30-rec__price">{{ c_mix30_rec_variant.price | money }}</span>
+          <s class="c-mix30-rec__compare">{{ c_mix30_rec_compare | money }}</s>
+        </div>
+        <button
+          type="button"
+          class="c-mix30-rec__atc"
+          data-mix30-rec-atc
+          data-variant-id="{{ c_mix30_rec_variant.id }}"
+          {% unless c_mix30_rec_variant.available %}disabled{% endunless %}
+        >
+          {%- if c_mix30_rec_variant.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+        </button>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <script src="{{ 'c-prime-mix-30-recommended.js' | asset_url }}" defer></script>
+</div>

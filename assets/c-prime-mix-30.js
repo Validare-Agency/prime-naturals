@@ -1,59 +1,75 @@
 // V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM)
 (function () {
-  var THRESHOLDS = [
-    { cents: 5900, gift: 'free stickers' },
-    { cents: 7900, gift: 'free sticker puzzle' },
-    { cents: 9900, gift: 'free gift card 20$' },
-    { cents: 14900, gift: 'free mystery book', giftDesktop: 'free mystery Gift' }
-  ];
-  var MAX_CENTS = 14900;
+  var currentCents = 0;
+
+  // Thresholds come from the gift products' compare-at prices, rendered by
+  // snippets/c-prime-mix-30-progress-bar.liquid.
+  function getThresholds(wrap) {
+    return Array.prototype.map.call(wrap.querySelectorAll('.c-pmb30-milestone'), function (m) {
+      return { cents: parseInt(m.dataset.threshold, 10), gift: m.dataset.gift };
+    });
+  }
+
+  // Milestones are evenly spaced (not proportional to price), so the fill is
+  // interpolated between each milestone's center on the track.
+  function fillWidth(wrap, subtotalCents) {
+    var track = wrap.querySelector('.c-pmb30-track');
+    var milestones = wrap.querySelectorAll('.c-pmb30-milestone');
+    if (!track || !track.offsetWidth) return null;
+
+    var points = [{ cents: 0, px: 0 }];
+    milestones.forEach(function (m) {
+      points.push({ cents: parseInt(m.dataset.threshold, 10), px: m.offsetLeft });
+    });
+
+    var last = points[points.length - 1];
+    if (subtotalCents >= last.cents) return track.offsetWidth + 'px';
+
+    for (var i = 1; i < points.length; i++) {
+      if (subtotalCents < points[i].cents) {
+        var a = points[i - 1];
+        var b = points[i];
+        var ratio = (subtotalCents - a.cents) / (b.cents - a.cents);
+        return a.px + ratio * (b.px - a.px) + 'px';
+      }
+    }
+    return null;
+  }
 
   function updateBar(subtotalCents) {
     var wrap = document.querySelector('.c-pmb30-wrap');
     if (!wrap) return;
+    currentCents = subtotalCents;
 
     var fillEl = wrap.querySelector('.c-pmb30-fill');
     var statusEl = wrap.querySelector('.c-pmb30-status-text');
-    var markers = wrap.querySelectorAll('.c-pmb30-marker');
+    var milestones = wrap.querySelectorAll('.c-pmb30-milestone');
 
-    // Update fill width
-    var pct = Math.min((subtotalCents / MAX_CENTS) * 100, 100);
-    if (fillEl) fillEl.style.width = pct + '%';
-
-    // Update marker states
-    markers.forEach(function (m) {
-      var threshold = parseInt(m.dataset.threshold, 10);
-      m.classList.remove('c-pmb30-marker--reached', 'c-pmb30-marker--next');
-      if (subtotalCents >= threshold) {
-        m.classList.add('c-pmb30-marker--reached');
-      }
-    });
+    var width = fillWidth(wrap, subtotalCents);
+    if (fillEl && width !== null) fillEl.style.width = width;
 
     // Find next threshold not yet reached
+    var thresholds = getThresholds(wrap);
     var next = null;
-    for (var i = 0; i < THRESHOLDS.length; i++) {
-      if (subtotalCents < THRESHOLDS[i].cents) {
-        next = THRESHOLDS[i];
+    for (var i = 0; i < thresholds.length; i++) {
+      if (subtotalCents < thresholds[i].cents) {
+        next = thresholds[i];
         break;
       }
     }
 
-    // Mark the next milestone
-    if (next) {
-      var nextMarker = wrap.querySelector('.c-pmb30-marker[data-threshold="' + next.cents + '"]');
-      if (nextMarker) nextMarker.classList.add('c-pmb30-marker--next');
-    }
+    milestones.forEach(function (m) {
+      var threshold = parseInt(m.dataset.threshold, 10);
+      m.classList.toggle('c-pmb30-milestone--reached', subtotalCents >= threshold);
+      m.classList.toggle('c-pmb30-milestone--next', !!next && threshold === next.cents);
+    });
 
-    // Update status text
     if (statusEl) {
       if (!next) {
         statusEl.textContent = "You've unlocked all gifts! 🎉";
       } else {
-        var neededCents = next.cents - subtotalCents;
-        var neededDollars = Math.ceil(neededCents / 100);
-        var isDesktop = window.innerWidth >= 750;
-        var giftLabel = (isDesktop && next.giftDesktop) ? next.giftDesktop : next.gift;
-        statusEl.textContent = 'Add $' + neededDollars + ' more to unlock ' + giftLabel;
+        var neededDollars = Math.ceil((next.cents - subtotalCents) / 100);
+        statusEl.textContent = 'Add $' + neededDollars + ' more to unlock ' + next.gift;
       }
     }
   }
@@ -69,10 +85,19 @@
     var wrap = document.querySelector('.c-pmb30-wrap');
     if (!wrap) return;
     // Use Liquid-rendered subtotal for instant first paint
-    var initialCents = parseInt(wrap.dataset.subtotal || '0', 10);
-    updateBar(initialCents);
+    updateBar(parseInt(wrap.dataset.subtotal || '0', 10));
     // Then fetch live data to catch any cart changes since page load
     fetchAndUpdate();
+
+    // The bar is hidden until the Var A body class lands, and milestone
+    // positions change per breakpoint — re-measure the fill whenever the
+    // track's size changes.
+    var track = wrap.querySelector('.c-pmb30-track');
+    if (track && 'ResizeObserver' in window) {
+      new ResizeObserver(function () { updateBar(currentCents); }).observe(track);
+    } else {
+      window.addEventListener('resize', function () { updateBar(currentCents); });
+    }
   }
 
   if (document.readyState === 'loading') {
