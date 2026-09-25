@@ -57,6 +57,7 @@ body.c-primeMix30VarA .c-mix30-rec {
   background: #fff;
   border: 1px solid rgba(13, 27, 62, 0.12);
   border-radius: 11px;
+  box-shadow: 0 6px 20px 0 rgba(13, 27, 62, 0.06);
 }
 
 .c-mix30-rec__media {

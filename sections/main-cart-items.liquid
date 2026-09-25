@@ -63,7 +63,7 @@
 
             <tbody>
               {%- for item in cart.items -%}
-                <tr class="cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pdp35_gift %} c-pdp35-gift-line{% endif %}" id="CartItem-{{ item.index | plus: 1 }}">
+                <tr class="cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pdp35_gift %} c-pdp35-gift-line{% endif %}{% if item.properties._pmb30_gift %} c-pmb30-gift-line{% endif %}" id="CartItem-{{ item.index | plus: 1 }}">
                   <td class="cart-item__media">
                     {% if item.image %}
                       {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
@@ -218,6 +218,9 @@
                     <div class="cart-item__quantity-wrapper">
                       {% if item.properties._pdp35_gift %}
                         <span class="c-pdp35-cart-gift-badge">FREE</span>
+                      {% endif %}
+                      {% if item.properties._pmb30_gift %}
+                        <span class="c-pmb30-cart-gift-badge">FREE</span>
                       {% endif %}
                       <label class="visually-hidden" for="Quantity-{{ item.index | plus: 1 }}">
                         {{ 'products.product.quantity.label' | t }}

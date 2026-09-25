@@ -39,6 +39,35 @@
 {%- endif -%}
 <script src="{{ 'c-prime-cart-32.js' | asset_url }}" defer></script>
 
+{%- comment -%}
+  V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM) — free gift lines
+  auto-added/removed by cart total (assets/c-prime-mix-30-gifts.js). Gift
+  products are $0 with their unlock threshold as the compare-at price — keep
+  the handle list in sync with snippets/c-prime-mix-30-progress-bar.liquid.
+  Remove with the MIX_30 test cleanup.
+{%- endcomment -%}
+{%- assign c_pmb30_handles = 'free-stickers,free-sticker-puzzle,free-gift-card-20,free-mystery-book' | split: ',' -%}
+<script>
+  window.primeMix30Gifts = [
+    {%- for c_pmb30_handle in c_pmb30_handles -%}
+      {%- assign c_pmb30_gift = all_products[c_pmb30_handle] -%}
+      {%- if c_pmb30_gift == blank -%}{%- continue -%}{%- endif -%}
+      {%- assign c_pmb30_variant = c_pmb30_gift.selected_or_first_available_variant -%}
+      {
+        id: {{ c_pmb30_variant.id | json }},
+        threshold: {{ c_pmb30_gift.compare_at_price | default: c_pmb30_gift.price | json }},
+        available: {{ c_pmb30_variant.available | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ];
+</script>
+<script src="{{ 'c-prime-mix-30-gifts.js' | asset_url }}" defer></script>
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-mix-30-cart.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-mix-30-cart.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Cart drawer",

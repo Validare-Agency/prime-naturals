@@ -116,6 +116,11 @@
   transition: width 0.4s ease;
 }
 
+/* Preview: cart + currently selected bundle (not yet added) */
+.c-pmb30-fill--preview {
+  background: rgba(192, 57, 43, 0.25);
+}
+
 .c-pmb30-milestone {
   position: absolute;
   top: 0;

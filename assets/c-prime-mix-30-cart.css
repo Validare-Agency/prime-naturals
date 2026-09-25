@@ -1,0 +1,31 @@
+/* <-------------------V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM) — cart gift lines-----------------> */
+
+/* c-pmb30-gift-line is set in snippets/cart-drawer.liquid and
+   sections/main-cart-items.liquid on lines carrying the _pmb30_gift property.
+   Gift lines are managed entirely by assets/c-prime-mix-30-gifts.js from the
+   cart total, so neither quantity nor removal is editable here — a removed
+   gift would just be re-added on the next sync. */
+.c-pmb30-gift-line quantity-input,
+.c-pmb30-gift-line cart-remove-button {
+  display: none !important;
+}
+
+/* FREE tag sits in the quantity slot the hidden stepper used to occupy */
+.c-pmb30-gift-line .cart-item__quantity,
+.c-pmb30-gift-line .cart-item__quantity-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.c-pmb30-cart-gift-badge {
+  display: inline-block;
+  white-space: nowrap;
+  background: #2e8b57;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-radius: 3px;
+  padding: 3px 10px;
+}

@@ -1,4 +1,11 @@
-<div class="c-pmb30-wrap" data-subtotal="{{ cart.items_subtotal_price }}">
+{%- comment -%} Gift lines never count toward the thresholds {%- endcomment -%}
+{%- assign c_pmb30_cart_cents = 0 -%}
+{%- for item in cart.items -%}
+  {%- unless item.properties._pmb30_gift -%}
+    {%- assign c_pmb30_cart_cents = c_pmb30_cart_cents | plus: item.final_line_price -%}
+  {%- endunless -%}
+{%- endfor -%}
+<div class="c-pmb30-wrap" data-subtotal="{{ c_pmb30_cart_cents }}">
   {%- if section.index > 3 -%}
     <link rel="stylesheet" href="{{ 'c-prime-mix-30.css' | asset_url }}" media="print" onload="this.media='all'">
   {%- else -%}
@@ -26,6 +33,7 @@
 
     <div class="c-pmb30-bar">
       <div class="c-pmb30-track">
+        <div class="c-pmb30-fill c-pmb30-fill--preview" style="width:0"></div>
         <div class="c-pmb30-fill" style="width:0"></div>
       </div>
 
@@ -40,7 +48,7 @@
         {%- if c_pmb30_gift == blank -%}{%- continue -%}{%- endif -%}
         {%- assign c_pmb30_threshold = c_pmb30_gift.compare_at_price | default: c_pmb30_gift.price -%}
         {%- assign c_pmb30_state = '' -%}
-        {%- if cart.items_subtotal_price >= c_pmb30_threshold -%}
+        {%- if c_pmb30_cart_cents >= c_pmb30_threshold -%}
           {%- assign c_pmb30_state = ' c-pmb30-milestone--reached' -%}
         {%- elsif c_pmb30_next_set == false -%}
           {%- assign c_pmb30_state = ' c-pmb30-milestone--next' -%}

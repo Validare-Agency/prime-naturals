@@ -130,7 +130,7 @@
                           {%- for item in cart.items -%}
                             <li
                               id="CartDrawer-Item-{{ item.index | plus: 1 }}"
-                              class="cart-drawer-item cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pdp35_gift %} c-pdp35-gift-line{% endif %}{% if item.product.handle == '2-book-donation' %} c-cart32-donation-line{% endif %}"
+                              class="cart-drawer-item cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pdp35_gift %} c-pdp35-gift-line{% endif %}{% if item.properties._pmb30_gift %} c-pmb30-gift-line{% endif %}{% if item.product.handle == '2-book-donation' %} c-cart32-donation-line{% endif %}"
                               role="row" data-index="{{ item.index | plus: 1 }}"
                             >
                               <div class="loading-overlay hidden">
@@ -297,6 +297,9 @@
                                     <div class="cart-item__quantity-wrapper">
                                       {% if item.properties._pdp35_gift %}
                                         <span class="c-pdp35-cart-gift-badge">FREE</span>
+                                      {% endif %}
+                                      {% if item.properties._pmb30_gift %}
+                                        <span class="c-pmb30-cart-gift-badge">FREE</span>
                                       {% endif %}
                                       <quantity-input
                                         class="quantity cart-quantity color-{{ block.settings.quantity_container_color_scheme }}{% if block.settings.quantity_round_btns %} cart-quantity--round-btns{% endif %}{% if block.settings.quantity_outline_btns %} cart-quantity--outline-btns{% endif %}"

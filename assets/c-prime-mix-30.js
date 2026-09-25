@@ -1,6 +1,16 @@
 // V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM)
 (function () {
-  var currentCents = 0;
+  var cartCents = 0;
+
+  // Price of the bundle currently selected in the PDP17 offer selector (not
+  // yet in the cart). Shown as a light "preview" fill on top of the cart total.
+  function selectedCents() {
+    var radio = document.querySelector('.c-pdp17-variant .c-pdp17-row__radio:checked');
+    // PDP17 is hidden for paid search visitors (Kaching bundle instead)
+    if (!radio || !radio.closest('.c-pdp17-variant').offsetParent) return 0;
+    var digits = (radio.getAttribute('data-pdp17-price-money') || '').replace(/[^0-9]/g, '');
+    return parseInt(digits || '0', 10);
+  }
 
   // Thresholds come from the gift products' compare-at prices, rendered by
   // snippets/c-prime-mix-30-progress-bar.liquid.
@@ -10,16 +20,27 @@
     });
   }
 
+  // Always leave this much track visible before an unreached milestone, so
+  // "almost there" never looks like "reached".
+  var MIN_GAP_PX = 8;
+
   // Milestones are evenly spaced (not proportional to price), so the fill is
-  // interpolated between each milestone's center on the track.
+  // interpolated per segment — from the previous marker's right edge to the
+  // next marker's left edge. The fill only slides under a marker once its
+  // threshold is actually reached.
   function fillWidth(wrap, subtotalCents) {
     var track = wrap.querySelector('.c-pmb30-track');
     var milestones = wrap.querySelectorAll('.c-pmb30-milestone');
     if (!track || !track.offsetWidth) return null;
 
-    var points = [{ cents: 0, px: 0 }];
+    var points = [{ cents: 0, px: 0, r: 0 }];
     milestones.forEach(function (m) {
-      points.push({ cents: parseInt(m.dataset.threshold, 10), px: m.offsetLeft });
+      var marker = m.querySelector('.c-pmb30-marker');
+      points.push({
+        cents: parseInt(m.dataset.threshold, 10),
+        px: m.offsetLeft,
+        r: marker ? marker.offsetWidth / 2 : 0
+      });
     });
 
     var last = points[points.length - 1];
@@ -29,24 +50,31 @@
       if (subtotalCents < points[i].cents) {
         var a = points[i - 1];
         var b = points[i];
+        var start = a.px + a.r;
+        var end = b.px - b.r - MIN_GAP_PX;
         var ratio = (subtotalCents - a.cents) / (b.cents - a.cents);
-        return a.px + ratio * (b.px - a.px) + 'px';
+        return start + ratio * (end - start) + 'px';
       }
     }
     return null;
   }
 
-  function updateBar(subtotalCents) {
+  function updateBar() {
     var wrap = document.querySelector('.c-pmb30-wrap');
     if (!wrap) return;
-    currentCents = subtotalCents;
 
-    var fillEl = wrap.querySelector('.c-pmb30-fill');
+    // Status + milestone states follow the projected total (cart + selection)
+    var subtotalCents = cartCents + selectedCents();
+
+    var fillEl = wrap.querySelector('.c-pmb30-fill:not(.c-pmb30-fill--preview)');
+    var previewEl = wrap.querySelector('.c-pmb30-fill--preview');
     var statusEl = wrap.querySelector('.c-pmb30-status-text');
     var milestones = wrap.querySelectorAll('.c-pmb30-milestone');
 
-    var width = fillWidth(wrap, subtotalCents);
+    var width = fillWidth(wrap, cartCents);
     if (fillEl && width !== null) fillEl.style.width = width;
+    var previewWidth = fillWidth(wrap, subtotalCents);
+    if (previewEl && previewWidth !== null) previewEl.style.width = previewWidth;
 
     // Find next threshold not yet reached
     var thresholds = getThresholds(wrap);
@@ -77,7 +105,14 @@
   function fetchAndUpdate() {
     fetch('/cart.js')
       .then(function (r) { return r.json(); })
-      .then(function (data) { updateBar(data.items_subtotal_price); })
+      .then(function (data) {
+        // Gift lines never count toward the thresholds (same rule as
+        // c-prime-mix-30-gifts.js)
+        cartCents = data.items.reduce(function (sum, item) {
+          return item.properties && item.properties._pmb30_gift ? sum : sum + item.final_line_price;
+        }, 0);
+        updateBar();
+      })
       .catch(function () {});
   }
 
@@ -85,7 +120,8 @@
     var wrap = document.querySelector('.c-pmb30-wrap');
     if (!wrap) return;
     // Use Liquid-rendered subtotal for instant first paint
-    updateBar(parseInt(wrap.dataset.subtotal || '0', 10));
+    cartCents = parseInt(wrap.dataset.subtotal || '0', 10);
+    updateBar();
     // Then fetch live data to catch any cart changes since page load
     fetchAndUpdate();
 
@@ -94,9 +130,9 @@
     // track's size changes.
     var track = wrap.querySelector('.c-pmb30-track');
     if (track && 'ResizeObserver' in window) {
-      new ResizeObserver(function () { updateBar(currentCents); }).observe(track);
+      new ResizeObserver(updateBar).observe(track);
     } else {
-      window.addEventListener('resize', function () { updateBar(currentCents); });
+      window.addEventListener('resize', updateBar);
     }
   }
 
@@ -105,6 +141,14 @@
   } else {
     init();
   }
+
+  // Bundle selection moves the preview fill
+  document.addEventListener('change', function (event) {
+    if (event.target.closest && event.target.closest('.c-pdp17-row__radio')) updateBar();
+  });
+
+  // Gift lines were added/removed by c-prime-mix-30-gifts.js
+  document.addEventListener('c-pmb30:gifts-synced', fetchAndUpdate);
 
   // Listen for common Shopify theme cart update events
   document.addEventListener('cart:refresh', fetchAndUpdate);
