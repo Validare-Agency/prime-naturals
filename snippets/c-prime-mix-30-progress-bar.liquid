@@ -1,0 +1,84 @@
+{%- comment -%} Gift lines never count toward the thresholds {%- endcomment -%}
+{%- assign c_pmb30_cart_cents = 0 -%}
+{%- for item in cart.items -%}
+  {%- unless item.properties._pmb30_gift or item.properties._pc37_gift -%}
+    {%- assign c_pmb30_cart_cents = c_pmb30_cart_cents | plus: item.final_line_price -%}
+  {%- endunless -%}
+{%- endfor -%}
+<div class="c-pmb30-wrap" data-subtotal="{{ c_pmb30_cart_cents }}">
+  <div class="c-pmb30-card">
+
+    <div class="c-pmb30-head">
+      <span class="c-pmb30-head-icon" aria-hidden="true">🎄</span>
+      <strong class="c-pmb30-head-title">Black Friday Gift Rewards</strong>
+    </div>
+
+    <p class="c-pmb30-status">
+      <span class="c-pmb30-status-icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="8" width="18" height="4" rx="1"/>
+          <path d="M12 8v13"/>
+          <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/>
+          <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/>
+        </svg>
+      </span>
+      <span class="c-pmb30-status-text">Add $59 more to unlock free stickers</span>
+    </p>
+
+    <div class="c-pmb30-bar">
+      <div class="c-pmb30-track">
+        <div class="c-pmb30-fill c-pmb30-fill--preview" style="width:0"></div>
+        <div class="c-pmb30-fill" style="width:0"></div>
+      </div>
+
+      {%- comment -%}
+        Gift products are $0 with the unlock threshold stored as the
+        compare-at price. A "handle:cents" entry sets it explicitly instead
+        (the $20 gift card is a Shopify gift card product — no compare-at).
+        Keep the list in sync with sections/cart-drawer.liquid.
+      {%- endcomment -%}
+      {%- assign c_pmb30_next_set = false -%}
+      {%- assign c_pmb30_handles = 'free-stickers,free-sticker-puzzle,free-gift-card-20:9900,free-mystery-book' | split: ',' -%}
+      {%- for c_pmb30_entry in c_pmb30_handles -%}
+        {%- assign c_pmb30_parts = c_pmb30_entry | split: ':' -%}
+        {%- assign c_pmb30_gift = all_products[c_pmb30_parts[0]] -%}
+        {%- if c_pmb30_gift == blank -%}{%- continue -%}{%- endif -%}
+        {%- if c_pmb30_parts[1] != blank -%}
+          {%- assign c_pmb30_threshold = c_pmb30_parts[1] | plus: 0 -%}
+        {%- else -%}
+          {%- assign c_pmb30_threshold = c_pmb30_gift.compare_at_price | default: c_pmb30_gift.price -%}
+        {%- endif -%}
+        {%- assign c_pmb30_state = '' -%}
+        {%- if c_pmb30_cart_cents >= c_pmb30_threshold -%}
+          {%- assign c_pmb30_state = ' c-pmb30-milestone--reached' -%}
+        {%- elsif c_pmb30_next_set == false -%}
+          {%- assign c_pmb30_state = ' c-pmb30-milestone--next' -%}
+          {%- assign c_pmb30_next_set = true -%}
+        {%- endif -%}
+        <div
+          class="c-pmb30-milestone{{ c_pmb30_state }}"
+          data-threshold="{{ c_pmb30_threshold }}"
+          data-gift="{{ c_pmb30_gift.title | downcase | escape }}"
+        >
+          <span class="c-pmb30-marker">
+            {%- if c_pmb30_gift.featured_image -%}
+              {{ c_pmb30_gift.featured_image | image_url: width: 112 | image_tag: alt: '', width: 56, height: 56, loading: 'lazy' }}
+            {%- endif -%}
+          </span>
+          <span class="c-pmb30-lbl">
+            <span class="c-pmb30-lbl-amt">{{ c_pmb30_threshold | money_without_trailing_zeros }}</span>
+            {%- if forloop.last -%}
+            <span class="c-pmb30-lbl-gift c-pmb30-lbl-gift--mobile">Free mystery book</span>
+            <span class="c-pmb30-lbl-gift c-pmb30-lbl-gift--desktop">Free mystery Gift</span>
+          {%- else -%}
+            <span class="c-pmb30-lbl-gift">{{ c_pmb30_gift.title | escape }}</span>
+          {%- endif -%}
+            <span class="c-pmb30-lbl-unlocked">Unlocked</span>
+          </span>
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+
+</div>

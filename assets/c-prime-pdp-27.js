@@ -28,8 +28,10 @@
     // in the DOM, just CSS-hidden for other variants — so only actually
     // mirror/hide the real bullets when B or C is the active variant.
     var isAccordionVariant =
-      document.body.classList.contains('c-primePdp27VarB') ||
-      document.body.classList.contains('c-primePdp27VarC');
+      (document.body.classList.contains('c-primePdp27VarB') ||
+        document.body.classList.contains('c-primePdp27VarC')) &&
+      // V_PRIME_MIX_30 Var A hides PDP27 entirely, so keep the real bullets
+      !document.body.classList.contains('c-primeMix30VarA');
     if (!isAccordionVariant) return;
 
     var source = document.querySelector('.pib-bullets');

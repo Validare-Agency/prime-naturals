@@ -7,7 +7,9 @@
   // JS gate, the same way c-prime-pdp-35.js's pdp35VariantActive() guards its
   // own gift-eligibility check against a stale/missing class.
   function pdp17UpsellEligible() {
-    return !document.body.classList.contains('c-validareHoldout');
+    return !document.body.classList.contains('c-validareHoldout') &&
+      // V_PRIME_MIX_30 Var A hides the upsell card too (see c-prime-pdp-17.css)
+      !document.body.classList.contains('c-primeMix30VarA');
   }
 
   function getUpsellCheckbox(root) {
