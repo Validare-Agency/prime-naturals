@@ -16,6 +16,13 @@
     return parseInt(digits || '0', 10);
   }
 
+  // Number of books in the selected bundle (0 when nothing selectable)
+  function selectedQty() {
+    if (!selectedCents()) return 0;
+    var radio = document.querySelector('.c-pdp17-variant .c-pdp17-row__radio:checked');
+    return parseInt(radio.getAttribute('data-quantity') || '0', 10);
+  }
+
   // Thresholds come from the gift products' compare-at prices, rendered by
   // snippets/c-prime-mix-30-progress-bar.liquid.
   function getThresholds(wrap) {
@@ -63,6 +70,20 @@
     return null;
   }
 
+  // Status copy as text nodes (gift titles come from product data) with the
+  // amount / book count wrapped in a red highlight.
+  function setStatus(el, before, highlight, after) {
+    el.textContent = '';
+    el.appendChild(document.createTextNode(before));
+    if (highlight) {
+      var hl = document.createElement('span');
+      hl.className = 'c-pmb30-status-hl';
+      hl.textContent = highlight;
+      el.appendChild(hl);
+    }
+    if (after) el.appendChild(document.createTextNode(after));
+  }
+
   function updateBar() {
     var wrap = document.querySelector('.c-pmb30-wrap');
     if (!wrap) return;
@@ -99,18 +120,26 @@
     if (statusEl) {
       var last = thresholds[thresholds.length - 1];
       var beforeLast = thresholds[thresholds.length - 2];
-      if (last && beforeLast && bookQty > 0 && cartCents >= beforeLast.cents && cartCents < last.cents) {
+      // Books in the cart + the selected bundle — same total the bar shows
+      var projQty = bookQty + selectedQty();
+      var projBookCents = bookCents + selectedCents();
+      if (last && beforeLast && projQty > 0 && subtotalCents >= beforeLast.cents && subtotalCents < last.cents) {
         // Past the second-to-last milestone, extra books are heavily
-        // discounted by the cart's quantity pricing, so a dollar amount would
-        // be misleading — count books instead, at the cart's own per-book
-        // price. Based on the cart alone (not the selected bundle).
-        var books = Math.max(1, Math.ceil((last.cents - cartCents) / (bookCents / bookQty)));
-        statusEl.textContent = 'Add ' + books + ' more book' + (books === 1 ? '' : 's') + ' to unlock ' + last.gift;
+        // discounted by quantity pricing, so a dollar amount would be
+        // misleading — count books instead, at the current per-book price.
+        var books = Math.max(1, Math.ceil((last.cents - subtotalCents) / (projBookCents / projQty)));
+        var lastGift = last.gift.charAt(0).toUpperCase() + last.gift.slice(1);
+        setStatus(
+          statusEl,
+          lastGift + ' at ',
+          '$' + Math.round(last.cents / 100),
+          ': Add ' + books + ' more book' + (books === 1 ? '' : 's') + ' to get it now'
+        );
       } else if (!next) {
-        statusEl.textContent = "You've unlocked all gifts! 🎉";
+        setStatus(statusEl, 'Congrats! You have unlocked all the gifts.');
       } else {
         var neededDollars = Math.ceil((next.cents - subtotalCents) / 100);
-        statusEl.textContent = 'Add $' + neededDollars + ' more to unlock ' + next.gift;
+        setStatus(statusEl, 'Add $' + neededDollars + ' more to unlock ' + next.gift);
       }
     }
   }

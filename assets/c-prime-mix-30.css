@@ -76,7 +76,7 @@
 }
 
 .c-pmb30-status-text {
-  font-size: 14px;
+  font-size: 13.5px;
   font-family: 'Maven Pro', var(--font-body-family);
   font-weight: 700;
   line-height: 20px;
@@ -110,15 +110,16 @@
   left: -1px;
   top: -1px;
   bottom: -1px;
-  max-width: calc(100% + 2px);
+  max-width: calc(100% + 0px);
   border-radius: 999px;
   background: #c0392b;
   transition: width 0.4s ease;
 }
 
-/* Preview: cart + currently selected bundle (not yet added) */
+/* Preview: cart + currently selected bundle (not yet added) — same red as
+   the cart fill, so selecting a bundle just moves the bar */
 .c-pmb30-fill--preview {
-  background: rgba(192, 57, 43, 0.4);
+  background: #c0392b;
 }
 
 .c-pmb30-milestone {
@@ -164,9 +165,9 @@
 }
 
 .c-pmb30-lbl-amt {
-  font-size: 12px;
-  font-family: 'Maven Pro', var(--font-body-family);
-  font-weight: 700;
+  font-size: 11px;
+  font-family: 'Maven Pro', var(--font-body-family) !important;
+  font-weight: 700 !important;
   line-height: 15px;
   color: #0d1b3e;
   transition: color 0.3s ease;
@@ -191,9 +192,26 @@
   box-shadow: 0 0 0 3px #f5ddd5;
 }
 
-.c-pmb30-milestone--reached .c-pmb30-lbl-amt,
-.c-pmb30-milestone--next .c-pmb30-lbl-amt {
-  color: #c0392b;
+.c-pmb30-milestone--reached .c-pmb30-lbl-amt {
+  color: #2e8b57;
+}
+
+/* Reached milestones swap the gift name for a green "Unlocked" */
+.c-pmb30-lbl-unlocked {
+  display: none;
+  font-size: 9.5px;
+  font-family: 'Maven Pro', var(--font-body-family);
+  font-weight: 700;
+  line-height: 12px;
+  color: #2e8b57;
+}
+
+.c-pmb30-milestone--reached .c-pmb30-lbl-gift {
+  display: none;
+}
+
+.c-pmb30-milestone--reached .c-pmb30-lbl-unlocked {
+  display: block;
 }
 
 @media screen and (min-width: 750px) {
@@ -226,7 +244,7 @@
   }
 
   .c-pmb30-lbl-amt {
-    font-size: 15px;
+    font-size: 14px;
     line-height: 18px;
   }
 
@@ -236,4 +254,15 @@
     font-size: 14px;
     line-height: 15px;
   }
+
+  .c-pmb30-lbl-unlocked {
+    margin-top: 2px;
+    font-size: 14px;
+    line-height: 15px;
+  }
+}
+
+/* Last-step status: "$149" highlight in "Free mystery book at $149: …" */
+.c-pmb30-status-hl {
+  color: #c0392b;
 }
