@@ -224,21 +224,8 @@ body:not(.c-primeCart37VarA) .c-pc37-upsells,
   display: none !important;
 }
 
-.c-pc37-gift-line .cart-item__quantity,
-.c-pc37-gift-line .cart-item__quantity-wrapper {
-  display: flex;
-  align-items: center;
-}
-
-.c-pc37-cart-gift-badge {
-  display: inline-block;
-  white-space: nowrap;
-  background: #2e8b57;
-  color: #ffffff;
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  border-radius: 3px;
-  padding: 3px 10px;
+/* Gift lines don't show variant options (e.g. the gift card's
+   "Denominations: $20.00") — their only properties are hidden _ ones */
+.c-pc37-gift-line dl {
+  display: none;
 }
