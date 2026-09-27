@@ -182,6 +182,15 @@
   white-space: normal;
 }
 
+/* Small phones: tighter labels so neighbouring gift names don't touch */
+@media screen and (max-width: 389px) {
+  .c-pmb30-lbl-gift {
+    width: 58px;
+    font-size: 10px;
+    line-height: 12px;
+  }
+}
+
 /* Reached + next milestone states */
 .c-pmb30-milestone--reached .c-pmb30-marker,
 .c-pmb30-milestone--next .c-pmb30-marker {

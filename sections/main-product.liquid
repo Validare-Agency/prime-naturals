@@ -287,8 +287,9 @@
               {%- if block.settings.custom_liquid contains 'pib-wrap' -%}
                 {%- render 'c-prime-mix-30-progress-bar' -%}
               {%- endif -%}
-              {%- if block.settings.custom_liquid contains 'pib-trust' and product.handle == 'kidss-encyclopedia-10-000-whys' -%}
-                {%- render 'c-prime-mix-30-recommended' -%}
+              {%- assign c_mix30_rec_books = 'kidss-encyclopedia-10-000-whys,murphys-law-for-kids,murphys-law-for-kids-copy' | split: ',' -%}
+              {%- if block.settings.custom_liquid contains 'pib-trust' and c_mix30_rec_books contains product.handle -%}
+                {%- render 'c-prime-mix-30-recommended', books: c_mix30_rec_books -%}
               {%- endif -%}
             {%- when 'collapsible_tab' -%}
               <div class="product__accordion accordion accordion--{{ block.settings.heading_size }}{% if block.settings.display_top_border %} accordion--top-border{% endif %} quick-add-hidden" style="--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;" {{ block.shopify_attributes }}>
@@ -1237,6 +1238,13 @@
   {{ 'c-prime-mix-30.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
 <script src="{{ 'c-prime-mix-30.js' | asset_url }}" defer></script>
+{%- comment -%} V_PRIME_MIX_30 — assets for snippets/c-prime-mix-30-recommended.liquid {%- endcomment -%}
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-mix-30-recommended.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-mix-30-recommended.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+<script src="{{ 'c-prime-mix-30-recommended.js' | asset_url }}" defer></script>
 
 
 {% schema %}
