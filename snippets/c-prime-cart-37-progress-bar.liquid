@@ -19,7 +19,6 @@
 {%- assign c_pc37_positions = '25.4,49.6,73.9,98.2' | split: ',' -%}
 {%- assign c_pc37_marker_r = 13 -%}
 {%- assign c_pc37_gap = 8 -%}
-{%- assign c_pc37_last_step_books = 2 -%}
 
 {%- comment -%} Resolve gifts: threshold, product {%- endcomment -%}
 {%- assign c_pc37_thresholds = '' -%}
@@ -102,11 +101,11 @@
           Congrats! You have unlocked all the gifts.
         {%- elsif c_pc37_next_index == c_pc37_last_index and c_pc37_last_index > 0 -%}
           {%- comment -%}
-            Past the second-to-last milestone extra books are heavily
-            discounted by quantity pricing, so a dollar amount would be
-            misleading — fixed book count copy instead.
+            Only the last milestone left — fixed promo copy, no amount
+            needed or book count (extra books are heavily discounted by
+            quantity pricing).
           {%- endcomment -%}
-          {{ c_pc37_titles[c_pc37_last_index] | escape }} at <span class="c-pc37-status__hl">{{ c_pc37_last_t | money_without_trailing_zeros }}</span>: Add {{ c_pc37_last_step_books }} more books to get it now
+          {{ c_pc37_titles[c_pc37_last_index] | escape }} at <span class="c-pc37-status__hl">{{ c_pc37_last_t | money_without_trailing_zeros }}</span>: get the new encyclopedia at 20% off
         {%- else -%}
           {%- assign c_pc37_next_t = c_pc37_thresholds[c_pc37_next_index] | plus: 0 -%}
           {%- assign c_pc37_needed = c_pc37_next_t | minus: c_pc37_cents | divided_by: 100.0 | ceil | times: 100 -%}

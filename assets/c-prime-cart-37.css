@@ -7,11 +7,15 @@
 .c-primeCart37VarA .c-pc37-wrap {
   display: block;
 }
+/* Var A: the gift bar replaces the drawer's free-shipping progress bar */
+.c-primeCart37VarA cart-drawer .cart-progress {
+  display: none;
+}
 
 /* Test Design */
 
 .c-pc37-wrap {
-  margin: 16px 16px 0;
+  margin: 16px 0px 0;
 }
 
 .c-pc37-card {
