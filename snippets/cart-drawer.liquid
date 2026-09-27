@@ -468,6 +468,8 @@
                 %}
                 {% if display %}
                   {% render 'upsell-block', block: block, type: 'cart-drawer' %}
+                  {%- comment -%} V_PRIME_CART_37 — Var A copy with the encyclopedia as a 3rd upsell {%- endcomment -%}
+                  {% render 'c-prime-cart-37-upsell-block', block: block, type: 'cart-drawer', extra_handle: 'kidss-encyclopedia-10-000-whys', extra_title: 'Kid&#39;s Encyclopedia "10,000 Whys"', extra_desc: 'Real questions kids ask - animals, space, human body & more.' %}
                 {% endif %}
               {% endif %}
             {% when 'gift' %}

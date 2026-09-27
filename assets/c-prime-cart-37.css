@@ -11,6 +11,12 @@
 .c-primeCart37VarA cart-drawer .cart-progress {
   display: none;
 }
+/* Var A: 3-book upsell copy (snippets/c-prime-cart-37-upsell-block.liquid)
+   replaces the drawer's original 2-book upsell block */
+body:not(.c-primeCart37VarA) .c-pc37-upsells,
+.c-primeCart37VarA cart-drawer .cart-drawer-upsells-container:not(.c-pc37-upsells) {
+  display: none !important;
+}
 
 /* Test Design */
 
