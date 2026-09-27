@@ -1,11 +1,3 @@
-{%- comment -%}
-  V_PRIME_MIX_30 Var A shows its "Recommended books" row under the payment
-  icons instead, so PDP27 stays fully hidden there. Remove with the MIX_30
-  test cleanup.
-{%- endcomment -%}
-<style>
-  body.c-primeMix30VarA .c-pdp27 { display: none !important; }
-</style>
 {%- if section.index > 3 -%}
   {%- comment -%}
     Inlined synchronously so the variant gating applies before first paint —
@@ -27,6 +19,10 @@
     body.c-primePdp27VarD .c-pdp27__var-d { display: block; margin-top: 2rem; }
     body.c-primePdp27VarE .c-pdp27__var-e { display: block; margin-top: 2rem; }
     body.c-primePdp27VarF .c-pdp27__var-f { display: block; margin-top: 2rem; }
+    /* V_PRIME_MIX_30 Var A shows its "Recommended books" row instead, so PDP27
+       stays fully hidden — mirrors assets/c-prime-pdp-27.css. Remove with the
+       MIX_30 test cleanup. */
+    body.c-primeMix30VarA .c-pdp27 { display: none !important; }
   </style>
   <link rel="stylesheet" href="{{ 'c-prime-pdp-27.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- else -%}
