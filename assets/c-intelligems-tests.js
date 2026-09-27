@@ -171,6 +171,14 @@ function handleExperiments() {
   if (primeMix30?.name === "Var A") {
     document.body.classList.add("c-primeMix30VarA");
   }
+
+  // Test: V_PRIME_CART_37 | MiniCart Gift-Threshold Progress Bar (BFCM)
+  const primeCart37 = window.igData?.user.getTestGroup(
+    "1e564aa3-7b0c-40c6-a1c0-d538eb3b8ced"
+  );
+  if (primeCart37?.id === "bd8e7af0-8a44-4885-8d6f-f111dbfd8a10") {
+    document.body.classList.add("c-primeCart37VarA");
+  }
 }
 
 let cartDrawerWasActive = false;
