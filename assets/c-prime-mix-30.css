@@ -266,3 +266,18 @@
 .c-pmb30-status-hl {
   color: #c0392b;
 }
+
+/* Mobile/desktop label split for the 4th gift milestone */
+.c-pmb30-lbl-gift--desktop {
+  display: none;
+}
+
+@media screen and (min-width: 750px) {
+  .c-pmb30-lbl-gift--mobile {
+    display: none;
+  }
+
+  .c-pmb30-lbl-gift--desktop {
+    display: block;
+  }
+}

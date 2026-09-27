@@ -84,7 +84,12 @@
           </span>
           <span class="c-pmb30-lbl">
             <span class="c-pmb30-lbl-amt">{{ c_pmb30_threshold | money_without_trailing_zeros }}</span>
+            {%- if forloop.last -%}
+            <span class="c-pmb30-lbl-gift c-pmb30-lbl-gift--mobile">Free mystery book</span>
+            <span class="c-pmb30-lbl-gift c-pmb30-lbl-gift--desktop">Free mystery Gift</span>
+          {%- else -%}
             <span class="c-pmb30-lbl-gift">{{ c_pmb30_gift.title | escape }}</span>
+          {%- endif -%}
             <span class="c-pmb30-lbl-unlocked">Unlocked</span>
           </span>
         </div>
