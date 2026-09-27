@@ -109,6 +109,8 @@
               <div class='cart-timer color-{{ block.settings.color_scheme }}' style="--font-size:{{ block.settings.font_size }}rem;--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;" {{ block.shopify_attributes }}>
                 {{ block.settings.timer_text | replace: '[timer]', timer }}
               </div>
+              {%- comment -%} V_PRIME_CART_37 — gift bar under the timer (hidden unless Var A) {%- endcomment -%}
+              {%- render 'c-prime-cart-37-progress-bar' -%}
             {% when 'cart_items' %}
               <cart-drawer-items
                 {% if cart == empty %}
@@ -130,7 +132,7 @@
                           {%- for item in cart.items -%}
                             <li
                               id="CartDrawer-Item-{{ item.index | plus: 1 }}"
-                              class="cart-drawer-item cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pdp35_gift %} c-pdp35-gift-line{% endif %}{% if item.properties._pmb30_gift %} c-pmb30-gift-line{% endif %}{% if item.product.handle == '2-book-donation' %} c-cart32-donation-line{% endif %}"
+                              class="cart-drawer-item cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pdp35_gift %} c-pdp35-gift-line{% endif %}{% if item.properties._pmb30_gift %} c-pmb30-gift-line{% endif %}{% if item.properties._pc37_gift %} c-pc37-gift-line{% endif %}{% if item.product.handle == '2-book-donation' %} c-cart32-donation-line{% endif %}"
                               role="row" data-index="{{ item.index | plus: 1 }}"
                             >
                               <div class="loading-overlay hidden">
@@ -300,6 +302,9 @@
                                       {% endif %}
                                       {% if item.properties._pmb30_gift %}
                                         <span class="c-pmb30-cart-gift-badge">FREE</span>
+                                      {% endif %}
+                                      {% if item.properties._pc37_gift %}
+                                        <span class="c-pc37-cart-gift-badge">FREE</span>
                                       {% endif %}
                                       <quantity-input
                                         class="quantity cart-quantity color-{{ block.settings.quantity_container_color_scheme }}{% if block.settings.quantity_round_btns %} cart-quantity--round-btns{% endif %}{% if block.settings.quantity_outline_btns %} cart-quantity--outline-btns{% endif %}"
