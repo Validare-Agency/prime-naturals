@@ -9,10 +9,6 @@
  */
 {
   "sections": {
-    "c-prime-mix-26": {
-      "type": "c-prime-mix-26",
-      "settings": {}
-    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -75,7 +71,6 @@
         }
       },
       "block_order": [
-        "c_prime_mix_26",
         "custom_liquid_mN8rj9",
         "kaching_bundles_app_block_wRxFW8",
         "kaching_bundles_app_block_googleAds",
@@ -697,7 +692,6 @@
     }
   },
   "order": [
-    "c-prime-mix-26",
     "main",
     "related-products",
     "image_with_text_ArcN4t",
