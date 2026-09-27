@@ -192,6 +192,8 @@ setInterval(() => {
     window.igEvents.push({ event: "cartDrawerOpen" });
     window.igEvents.push({ event: "view_cart" });
     window.igEvents.push({ event: "Open_mini_cart" });
+    // V_PRIME_CART_37: mini_cart_opens — drawer opened by a PDP add-to-cart or the cart icon
+    window.igEvents.push({ event: "mini_cart_opens" });
   } else if (!isActive) {
     cartDrawerWasActive = false;
   }
