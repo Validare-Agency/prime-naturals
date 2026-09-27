@@ -1,3 +1,16 @@
+{%- comment -%}
+  V_PRIME_MIX_30 — free gift products are only ever added to the cart by
+  assets/c-prime-mix-30-gifts.js, never browsable. Their PDPs redirect home
+  before anything renders (Liquid can't send a real 301). Keep the handle
+  list in sync with sections/cart-drawer.liquid.
+{%- endcomment -%}
+{%- assign c_pmb30_gift_handles = 'free-stickers,free-sticker-puzzle,free-gift-card-20,free-mystery-book' | split: ',' -%}
+{%- if c_pmb30_gift_handles contains product.handle and request.design_mode == false -%}
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="refresh" content="0; url={{ routes.root_url }}">
+  <script>window.location.replace({{ routes.root_url | json }});</script>
+  <style>html { visibility: hidden; }</style>
+{%- endif -%}
 <section
   id="MainProduct-{{ section.id }}"
   class="page-width section-{{ section.id }}-padding"
@@ -1216,6 +1229,14 @@
   {{ 'c-prime-pdp-35.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
 <script src="{{ 'c-prime-pdp-35.js' | asset_url }}" defer></script>
+
+{%- comment -%} V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM) — assets for snippets/c-prime-mix-30-progress-bar.liquid {%- endcomment -%}
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-mix-30.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-mix-30.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+<script src="{{ 'c-prime-mix-30.js' | asset_url }}" defer></script>
 
 
 {% schema %}

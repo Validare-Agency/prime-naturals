@@ -155,7 +155,8 @@
         bookCents = 0;
         bookQty = 0;
         data.items.forEach(function (item) {
-          if (item.properties && item.properties._pmb30_gift) return;
+          // Either gift test's lines (MIX_30 / CART_37) never count
+          if (item.properties && (item.properties._pmb30_gift || item.properties._pc37_gift)) return;
           cartCents += item.final_line_price;
           if (item.handle === '2-book-donation') return;
           bookCents += item.final_line_price;

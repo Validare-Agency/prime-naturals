@@ -15,6 +15,8 @@
   window.primeMix30GiftsInit = true;
 
   var GIFT_PROP = '_pmb30_gift';
+  // V_PRIME_CART_37's gift lines — never ours to add, remove or count
+  var OTHER_GIFT_PROP = '_pc37_gift';
 
   // Captured before this file patches fetch below, so our own cart requests
   // never re-trigger a sync.
@@ -36,6 +38,10 @@
 
   function isGiftLine(item) {
     return !!(item.properties && item.properties[GIFT_PROP]);
+  }
+
+  function isOtherTestGiftLine(item) {
+    return !!(item.properties && item.properties[OTHER_GIFT_PROP]);
   }
 
   // Any line of a gift product, whether or not this script added it
@@ -81,7 +87,7 @@
     // Gift products added any other way (e.g. a /cart/add?id= link) are never
     // honored — removed for every visitor, Var A or not.
     cart.items.forEach(function (item) {
-      if (isGiftVariant(item) && !isGiftLine(item)) changes.push({ key: item.key, quantity: 0 });
+      if (isGiftVariant(item) && !isGiftLine(item) && !isOtherTestGiftLine(item)) changes.push({ key: item.key, quantity: 0 });
     });
 
     gifts().forEach(function (gift) {
