@@ -116,10 +116,10 @@
   transition: width 0.4s ease;
 }
 
-/* Preview: cart + currently selected bundle (not yet added) — same red as
-   the cart fill, so selecting a bundle just moves the bar */
+/* Preview: cart + currently selected bundle (not yet added) — lighter than
+   the cart fill, so the solid fill always shows the real cart total */
 .c-pmb30-fill--preview {
-  background: #c0392b;
+  background: rgba(192, 57, 43, 0.4);
 }
 
 .c-pmb30-milestone {
