@@ -125,7 +125,7 @@
         setStatus(statusEl, 'Congrats! You have unlocked all the gifts.');
       } else {
         var neededDollars = Math.ceil((next.cents - cartCents) / 100);
-        setStatus(statusEl, 'Add $' + neededDollars + ' more to unlock ' + next.gift);
+        setStatus(statusEl, 'Add ', '$' + neededDollars, ' more to unlock ' + next.gift);
       }
     }
   }
