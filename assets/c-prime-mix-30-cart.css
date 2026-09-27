@@ -10,22 +10,8 @@
   display: none !important;
 }
 
-/* FREE tag sits in the quantity slot the hidden stepper used to occupy */
-.c-pmb30-gift-line .cart-item__quantity,
-.c-pmb30-gift-line .cart-item__quantity-wrapper {
-  display: flex;
-  align-items: center;
-}
-
-.c-pmb30-cart-gift-badge {
-  display: inline-block;
-  white-space: nowrap;
-  background: #2e8b57;
-  color: #ffffff;
-  font-size: 9px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  border-radius: 3px;
-  padding: 3px 10px;
+/* Gift lines don't show variant options (e.g. the gift card's
+   "Denominations: $20.00") — their only properties are hidden _ ones */
+.c-pmb30-gift-line dl {
+  display: none;
 }
