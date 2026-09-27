@@ -38,11 +38,16 @@
     return !!(item.properties && item.properties[GIFT_PROP]);
   }
 
+  // Any line of a gift product, whether or not this script added it
+  function isGiftVariant(item) {
+    return gifts().some(function (g) { return g.id === item.variant_id; });
+  }
+
   // Cart total the thresholds are measured against — gift lines never count
   // toward unlocking other gifts.
   function eligibleSubtotal(cart) {
     return cart.items.reduce(function (sum, item) {
-      return isGiftLine(item) ? sum : sum + item.final_line_price;
+      return isGiftLine(item) || isGiftVariant(item) ? sum : sum + item.final_line_price;
     }, 0);
   }
   window.primeMix30EligibleSubtotal = eligibleSubtotal;
@@ -72,6 +77,12 @@
     var subtotal = eligibleSubtotal(cart);
     var changes = [];
     var adds = [];
+
+    // Gift products added any other way (e.g. a /cart/add?id= link) are never
+    // honored — removed for every visitor, Var A or not.
+    cart.items.forEach(function (item) {
+      if (isGiftVariant(item) && !isGiftLine(item)) changes.push({ key: item.key, quantity: 0 });
+    });
 
     gifts().forEach(function (gift) {
       // Most gifts are $0 products; free-gift-card-20 is priced $99 and made

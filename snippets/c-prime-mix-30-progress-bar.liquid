@@ -1,11 +1,22 @@
 {%- comment -%} Gift lines never count toward the thresholds {%- endcomment -%}
 {%- assign c_pmb30_cart_cents = 0 -%}
+{%- assign c_pmb30_book_cents = 0 -%}
+{%- assign c_pmb30_book_qty = 0 -%}
 {%- for item in cart.items -%}
   {%- unless item.properties._pmb30_gift -%}
     {%- assign c_pmb30_cart_cents = c_pmb30_cart_cents | plus: item.final_line_price -%}
+    {%- unless item.product.handle == '2-book-donation' -%}
+      {%- assign c_pmb30_book_cents = c_pmb30_book_cents | plus: item.final_line_price -%}
+      {%- assign c_pmb30_book_qty = c_pmb30_book_qty | plus: item.quantity -%}
+    {%- endunless -%}
   {%- endunless -%}
 {%- endfor -%}
-<div class="c-pmb30-wrap" data-subtotal="{{ c_pmb30_cart_cents }}">
+<div
+  class="c-pmb30-wrap"
+  data-subtotal="{{ c_pmb30_cart_cents }}"
+  data-book-cents="{{ c_pmb30_book_cents }}"
+  data-book-qty="{{ c_pmb30_book_qty }}"
+>
   {%- if section.index > 3 -%}
     <link rel="stylesheet" href="{{ 'c-prime-mix-30.css' | asset_url }}" media="print" onload="this.media='all'">
   {%- else -%}

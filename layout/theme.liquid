@@ -8,6 +8,19 @@
     })(window, document, "clarity", "script", "qm54h4x4ew");
 </script>
   <head>
+    {%- comment -%}
+      V_PRIME_MIX_30 — free gift products are only ever added to the cart by
+      assets/c-prime-mix-30-gifts.js, never browsable. Their PDPs redirect
+      home before anything renders (Liquid can't send a real 301). Keep the
+      handle list in sync with sections/cart-drawer.liquid.
+    {%- endcomment -%}
+    {%- assign c_pmb30_gift_handles = 'free-stickers,free-sticker-puzzle,free-gift-card-20,free-mystery-book' | split: ',' -%}
+    {%- if template.name == 'product' and c_pmb30_gift_handles contains product.handle and request.design_mode == false -%}
+      <meta name="robots" content="noindex, nofollow">
+      <meta http-equiv="refresh" content="0; url={{ routes.root_url }}">
+      <script>window.location.replace({{ routes.root_url | json }});</script>
+      <style>html { visibility: hidden; }</style>
+    {%- endif -%}
     <script>
       /* Paid-search traffic detection — must run before any stylesheet paints
          so the c-paidSearchVisitor class is on <html> before c-prime-pdp-17.css

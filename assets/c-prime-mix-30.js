@@ -1,6 +1,10 @@
 // V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM)
 (function () {
   var cartCents = 0;
+  // Book lines only (no gifts, no CART_32 donation) — used for the
+  // "Add N more books" copy on the last milestone.
+  var bookCents = 0;
+  var bookQty = 0;
 
   // Price of the bundle currently selected in the PDP17 offer selector (not
   // yet in the cart). Shown as a light "preview" fill on top of the cart total.
@@ -93,7 +97,16 @@
     });
 
     if (statusEl) {
-      if (!next) {
+      var last = thresholds[thresholds.length - 1];
+      var beforeLast = thresholds[thresholds.length - 2];
+      if (last && beforeLast && bookQty > 0 && cartCents >= beforeLast.cents && cartCents < last.cents) {
+        // Past the second-to-last milestone, extra books are heavily
+        // discounted by the cart's quantity pricing, so a dollar amount would
+        // be misleading — count books instead, at the cart's own per-book
+        // price. Based on the cart alone (not the selected bundle).
+        var books = Math.max(1, Math.ceil((last.cents - cartCents) / (bookCents / bookQty)));
+        statusEl.textContent = 'Add ' + books + ' more book' + (books === 1 ? '' : 's') + ' to unlock ' + last.gift;
+      } else if (!next) {
         statusEl.textContent = "You've unlocked all gifts! 🎉";
       } else {
         var neededDollars = Math.ceil((next.cents - subtotalCents) / 100);
@@ -108,9 +121,16 @@
       .then(function (data) {
         // Gift lines never count toward the thresholds (same rule as
         // c-prime-mix-30-gifts.js)
-        cartCents = data.items.reduce(function (sum, item) {
-          return item.properties && item.properties._pmb30_gift ? sum : sum + item.final_line_price;
-        }, 0);
+        cartCents = 0;
+        bookCents = 0;
+        bookQty = 0;
+        data.items.forEach(function (item) {
+          if (item.properties && item.properties._pmb30_gift) return;
+          cartCents += item.final_line_price;
+          if (item.handle === '2-book-donation') return;
+          bookCents += item.final_line_price;
+          bookQty += item.quantity;
+        });
         updateBar();
       })
       .catch(function () {});
@@ -121,6 +141,8 @@
     if (!wrap) return;
     // Use Liquid-rendered subtotal for instant first paint
     cartCents = parseInt(wrap.dataset.subtotal || '0', 10);
+    bookCents = parseInt(wrap.dataset.bookCents || '0', 10);
+    bookQty = parseInt(wrap.dataset.bookQty || '0', 10);
     updateBar();
     // Then fetch live data to catch any cart changes since page load
     fetchAndUpdate();
