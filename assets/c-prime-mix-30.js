@@ -5,6 +5,8 @@
   // "Add N more books" copy on the last milestone.
   var bookCents = 0;
   var bookQty = 0;
+  // Books to ask for on the last step ("Add 2 more books to get it now")
+  var LAST_STEP_BOOKS = 2;
 
   // Price of the bundle currently selected in the PDP17 offer selector (not
   // yet in the cart). Shown as a light "preview" fill on top of the cart total.
@@ -122,12 +124,11 @@
       var beforeLast = thresholds[thresholds.length - 2];
       // Books in the cart + the selected bundle — same total the bar shows
       var projQty = bookQty + selectedQty();
-      var projBookCents = bookCents + selectedCents();
       if (last && beforeLast && projQty > 0 && subtotalCents >= beforeLast.cents && subtotalCents < last.cents) {
         // Past the second-to-last milestone, extra books are heavily
         // discounted by quantity pricing, so a dollar amount would be
-        // misleading — count books instead, at the current per-book price.
-        var books = Math.max(1, Math.ceil((last.cents - subtotalCents) / (projBookCents / projQty)));
+        // misleading — fixed book count copy instead.
+        var books = LAST_STEP_BOOKS;
         var lastGift = last.gift.charAt(0).toUpperCase() + last.gift.slice(1);
         setStatus(
           statusEl,

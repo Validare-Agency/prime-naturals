@@ -50,14 +50,21 @@
 
       {%- comment -%}
         Gift products are $0 with the unlock threshold stored as the
-        compare-at price (falls back to price if compare-at is blank).
+        compare-at price. A "handle:cents" entry sets it explicitly instead
+        (the $20 gift card is a Shopify gift card product — no compare-at).
+        Keep the list in sync with sections/cart-drawer.liquid.
       {%- endcomment -%}
       {%- assign c_pmb30_next_set = false -%}
-      {%- assign c_pmb30_handles = 'free-stickers,free-sticker-puzzle,free-gift-card-20,free-mystery-book' | split: ',' -%}
-      {%- for c_pmb30_handle in c_pmb30_handles -%}
-        {%- assign c_pmb30_gift = all_products[c_pmb30_handle] -%}
+      {%- assign c_pmb30_handles = 'free-stickers,free-sticker-puzzle,free-gift-card-20:9900,free-mystery-book' | split: ',' -%}
+      {%- for c_pmb30_entry in c_pmb30_handles -%}
+        {%- assign c_pmb30_parts = c_pmb30_entry | split: ':' -%}
+        {%- assign c_pmb30_gift = all_products[c_pmb30_parts[0]] -%}
         {%- if c_pmb30_gift == blank -%}{%- continue -%}{%- endif -%}
-        {%- assign c_pmb30_threshold = c_pmb30_gift.compare_at_price | default: c_pmb30_gift.price -%}
+        {%- if c_pmb30_parts[1] != blank -%}
+          {%- assign c_pmb30_threshold = c_pmb30_parts[1] | plus: 0 -%}
+        {%- else -%}
+          {%- assign c_pmb30_threshold = c_pmb30_gift.compare_at_price | default: c_pmb30_gift.price -%}
+        {%- endif -%}
         {%- assign c_pmb30_state = '' -%}
         {%- if c_pmb30_cart_cents >= c_pmb30_threshold -%}
           {%- assign c_pmb30_state = ' c-pmb30-milestone--reached' -%}

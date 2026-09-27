@@ -85,9 +85,10 @@
     });
 
     gifts().forEach(function (gift) {
-      // Most gifts are $0 products; free-gift-card-20 is priced $99 and made
-      // free by a Shopify automatic discount at a $99+ cart — which is also
-      // its threshold here, so it's only ever added when that discount applies.
+      // Most gifts are $0 products; free-gift-card-20 is a Shopify gift card
+      // product made free by an automatic discount at a $99+ cart — its $99
+      // threshold is set explicitly in sections/cart-drawer.liquid, so it's
+      // only ever added when that discount applies.
       var justified = active && gift.available && subtotal >= gift.threshold;
       var lines = cart.items.filter(function (item) {
         return isGiftLine(item) && item.variant_id === gift.id;
