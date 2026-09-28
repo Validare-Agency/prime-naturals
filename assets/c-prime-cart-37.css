@@ -216,11 +216,11 @@ body:not(.c-primeCart37VarA) .c-pc37-upsells,
 
 /* Cart gift lines (drawer + cart page) — c-pc37-gift-line is set in
    snippets/cart-drawer.liquid and sections/main-cart-items.liquid on lines
-   carrying the _pc37_gift property. Gift lines are managed entirely by
-   assets/c-prime-cart-37.js from the cart total, so neither quantity nor
-   removal is editable — a removed gift would just be re-added. */
-.c-pc37-gift-line quantity-input,
-.c-pc37-gift-line cart-remove-button {
+   carrying the _pc37_gift property. Gift quantity is managed by
+   assets/c-prime-cart-37.js from the cart total, so it isn't editable. The
+   delete icon stays: a shopper can decline a gift, and the script remembers
+   that for this cart instead of re-adding it. */
+.c-pc37-gift-line quantity-input {
   display: none !important;
 }
 

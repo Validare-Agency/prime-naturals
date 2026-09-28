@@ -45,6 +45,44 @@
     return !!(item.properties && item.properties[GIFT_PROP]);
   }
 
+  // Gifts the shopper removed with the delete icon — never re-added for the
+  // same cart. Keyed by the Shopify cart token, so a new cart (e.g. after
+  // checkout) starts with every gift available again.
+  var DECLINED_KEY = 'c-pc37-declined-gifts';
+  var cartToken = null;
+
+  function readDeclined() {
+    try {
+      return JSON.parse(localStorage.getItem(DECLINED_KEY)) || { token: null, ids: [] };
+    } catch (e) {
+      return { token: null, ids: [] };
+    }
+  }
+
+  function writeDeclined(declined) {
+    try { localStorage.setItem(DECLINED_KEY, JSON.stringify(declined)); } catch (e) {}
+  }
+
+  function declinedIds(cart) {
+    var declined = readDeclined();
+    if (declined.token && cart.token && declined.token !== cart.token) {
+      writeDeclined({ token: cart.token, ids: [] });
+      return [];
+    }
+    if (!declined.token && cart.token && declined.ids.length) {
+      declined.token = cart.token;
+      writeDeclined(declined);
+    }
+    return declined.ids;
+  }
+
+  function declineGift(id) {
+    var declined = readDeclined();
+    if (declined.ids.indexOf(id) === -1) declined.ids.push(id);
+    if (!declined.token) declined.token = cartToken;
+    writeDeclined(declined);
+  }
+
   function isOtherTestGiftLine(item) {
     return !!(item.properties && item.properties[OTHER_GIFT_PROP]);
   }
@@ -85,6 +123,8 @@
   function diffGifts(cart) {
     var active = variantActive();
     var subtotal = eligibleSubtotal(cart);
+    var declined = declinedIds(cart);
+    cartToken = cart.token;
     var changes = [];
     var adds = [];
 
@@ -99,7 +139,8 @@
       // product made free by an automatic discount at a $99+ cart — its $99
       // threshold is set explicitly in sections/cart-drawer.liquid, so it's
       // only ever added when that discount applies.
-      var justified = active && gift.available && subtotal >= gift.threshold;
+      var justified = active && gift.available && subtotal >= gift.threshold &&
+        declined.indexOf(gift.id) === -1;
       var lines = cart.items.filter(function (item) {
         return isGiftLine(item) && item.variant_id === gift.id;
       });
@@ -237,6 +278,15 @@
     if (isCartMutation(url)) this.addEventListener('loadend', scheduleSync);
     return xhrOpen.apply(this, arguments);
   };
+
+  // Delete icon on a gift line → remember it as declined before the theme's
+  // removal request lands (capture phase, so it runs before theme handlers)
+  document.addEventListener('click', function (event) {
+    var removeButton = event.target.closest && event.target.closest('cart-remove-button');
+    if (!removeButton) return;
+    var line = removeButton.closest('[data-c-pc37-gift-id]');
+    if (line) declineGift(parseInt(line.getAttribute('data-c-pc37-gift-id'), 10));
+  }, true);
 
   // Run once the visitor's bucket is known (class lands asynchronously)
   function startWhenDecided() {
