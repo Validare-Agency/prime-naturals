@@ -1,0 +1,9 @@
+/* <-------------------V_PRIME_PDP_24 | Product gallery Images-----------------> */
+
+/* Test Setup */
+  /* Image swaps are JS-driven (src/srcset attribute updates on existing <img> elements).
+     No show/hide overrides are needed — the slider element count stays intact. */
+
+/* Test Design */
+  /* No structural layout changes for this test — gallery dimensions and
+     thumbnail strip are identical across Control, Var A, and Var B. */
