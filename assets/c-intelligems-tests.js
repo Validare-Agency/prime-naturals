@@ -82,8 +82,7 @@ function kachingAttemptSwap(attempt) {
 
 // Validare Holdout. Permanent, never end it.
 const HOLDOUT_EXPERIMENT_ID = "3ad2181f-d285-418c-b4d8-a52ce3a136a1";
-// const HOLDOUT_GROUP_ID = "c41ea5b4-45b8-4edf-8687-844be31c4054";
-const HOLDOUT_GROUP_ID = "123";
+const HOLDOUT_GROUP_ID = "c41ea5b4-45b8-4edf-8687-844be31c4054";
 
 function handleExperiments() {
   if (!domLoaded || !igReady) return;
