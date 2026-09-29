@@ -1,12 +1,6 @@
 // V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM)
 (function () {
   var cartCents = 0;
-  // Book lines only (no gifts, no CART_32 donation) — used for the
-  // "Add N more books" copy on the last milestone.
-  var bookCents = 0;
-  var bookQty = 0;
-  // Books to ask for on the last step ("Add 2 more books to get it now")
-  var LAST_STEP_BOOKS = 2;
 
   // Price of the bundle currently selected in the PDP17 offer selector (not
   // yet in the cart). Shown as a light "preview" fill on top of the cart total.
@@ -16,13 +10,6 @@
     if (!radio || !radio.closest('.c-pdp17-variant').offsetParent) return 0;
     var digits = (radio.getAttribute('data-pdp17-price-money') || '').replace(/[^0-9]/g, '');
     return parseInt(digits || '0', 10);
-  }
-
-  // Number of books in the selected bundle (0 when nothing selectable)
-  function selectedQty() {
-    if (!selectedCents()) return 0;
-    var radio = document.querySelector('.c-pdp17-variant .c-pdp17-row__radio:checked');
-    return parseInt(radio.getAttribute('data-quantity') || '0', 10);
   }
 
   // Thresholds come from the gift products' compare-at prices, rendered by
@@ -90,8 +77,10 @@
     var wrap = document.querySelector('.c-pmb30-wrap');
     if (!wrap) return;
 
-    // Status + milestone states follow the projected total (cart + selection)
-    var subtotalCents = cartCents + selectedCents();
+    // Solid fill, milestone states and status follow the real cart total
+    // only — the gifts actually in (or about to be synced into) the cart.
+    // The selected bundle just extends the lighter preview fill.
+    var projectedCents = cartCents + selectedCents();
 
     var fillEl = wrap.querySelector('.c-pmb30-fill:not(.c-pmb30-fill--preview)');
     var previewEl = wrap.querySelector('.c-pmb30-fill--preview');
@@ -100,14 +89,14 @@
 
     var width = fillWidth(wrap, cartCents);
     if (fillEl && width !== null) fillEl.style.width = width;
-    var previewWidth = fillWidth(wrap, subtotalCents);
+    var previewWidth = fillWidth(wrap, projectedCents);
     if (previewEl && previewWidth !== null) previewEl.style.width = previewWidth;
 
     // Find next threshold not yet reached
     var thresholds = getThresholds(wrap);
     var next = null;
     for (var i = 0; i < thresholds.length; i++) {
-      if (subtotalCents < thresholds[i].cents) {
+      if (cartCents < thresholds[i].cents) {
         next = thresholds[i];
         break;
       }
@@ -115,32 +104,28 @@
 
     milestones.forEach(function (m) {
       var threshold = parseInt(m.dataset.threshold, 10);
-      m.classList.toggle('c-pmb30-milestone--reached', subtotalCents >= threshold);
+      m.classList.toggle('c-pmb30-milestone--reached', cartCents >= threshold);
       m.classList.toggle('c-pmb30-milestone--next', !!next && threshold === next.cents);
     });
 
     if (statusEl) {
       var last = thresholds[thresholds.length - 1];
       var beforeLast = thresholds[thresholds.length - 2];
-      // Books in the cart + the selected bundle — same total the bar shows
-      var projQty = bookQty + selectedQty();
-      if (last && beforeLast && projQty > 0 && subtotalCents >= beforeLast.cents && subtotalCents < last.cents) {
-        // Past the second-to-last milestone, extra books are heavily
-        // discounted by quantity pricing, so a dollar amount would be
-        // misleading — fixed book count copy instead.
-        var books = LAST_STEP_BOOKS;
+      if (last && beforeLast && cartCents >= beforeLast.cents && cartCents < last.cents) {
+        // Only the last milestone left — fixed promo copy, no amount needed or
+        // book count (extra books are heavily discounted by quantity pricing).
         var lastGift = last.gift.charAt(0).toUpperCase() + last.gift.slice(1);
         setStatus(
           statusEl,
           lastGift + ' at ',
           '$' + Math.round(last.cents / 100),
-          ': Add ' + books + ' more book' + (books === 1 ? '' : 's') + ' to get it now'
+          ': get the new encyclopedia at 20% off'
         );
       } else if (!next) {
         setStatus(statusEl, 'Congrats! You have unlocked all the gifts.');
       } else {
-        var neededDollars = Math.ceil((next.cents - subtotalCents) / 100);
-        setStatus(statusEl, 'Add $' + neededDollars + ' more to unlock ' + next.gift);
+        var neededDollars = Math.ceil((next.cents - cartCents) / 100);
+        setStatus(statusEl, 'Add ', '$' + neededDollars, ' more to unlock ' + next.gift);
       }
     }
   }
@@ -152,16 +137,14 @@
         // Gift lines never count toward the thresholds (same rule as
         // c-prime-mix-30-gifts.js)
         cartCents = 0;
-        bookCents = 0;
-        bookQty = 0;
         data.items.forEach(function (item) {
           // Either gift test's lines (MIX_30 / CART_37) never count
           if (item.properties && (item.properties._pmb30_gift || item.properties._pc37_gift)) return;
           cartCents += item.final_line_price;
-          if (item.handle === '2-book-donation') return;
-          bookCents += item.final_line_price;
-          bookQty += item.quantity;
         });
+        // Exactly the total the gift sync measures, when it's loaded (it also
+        // skips gift products added any other way)
+        if (window.primeMix30EligibleSubtotal) cartCents = window.primeMix30EligibleSubtotal(data);
         updateBar();
       })
       .catch(function () {});
@@ -172,8 +155,6 @@
     if (!wrap) return;
     // Use Liquid-rendered subtotal for instant first paint
     cartCents = parseInt(wrap.dataset.subtotal || '0', 10);
-    bookCents = parseInt(wrap.dataset.bookCents || '0', 10);
-    bookQty = parseInt(wrap.dataset.bookQty || '0', 10);
     updateBar();
     // Then fetch live data to catch any cart changes since page load
     fetchAndUpdate();

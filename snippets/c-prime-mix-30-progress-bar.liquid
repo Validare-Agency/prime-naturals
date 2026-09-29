@@ -1,22 +1,11 @@
 {%- comment -%} Gift lines never count toward the thresholds {%- endcomment -%}
 {%- assign c_pmb30_cart_cents = 0 -%}
-{%- assign c_pmb30_book_cents = 0 -%}
-{%- assign c_pmb30_book_qty = 0 -%}
 {%- for item in cart.items -%}
   {%- unless item.properties._pmb30_gift or item.properties._pc37_gift -%}
     {%- assign c_pmb30_cart_cents = c_pmb30_cart_cents | plus: item.final_line_price -%}
-    {%- unless item.product.handle == '2-book-donation' -%}
-      {%- assign c_pmb30_book_cents = c_pmb30_book_cents | plus: item.final_line_price -%}
-      {%- assign c_pmb30_book_qty = c_pmb30_book_qty | plus: item.quantity -%}
-    {%- endunless -%}
   {%- endunless -%}
 {%- endfor -%}
-<div
-  class="c-pmb30-wrap"
-  data-subtotal="{{ c_pmb30_cart_cents }}"
-  data-book-cents="{{ c_pmb30_book_cents }}"
-  data-book-qty="{{ c_pmb30_book_qty }}"
->
+<div class="c-pmb30-wrap" data-subtotal="{{ c_pmb30_cart_cents }}">
   <div class="c-pmb30-card">
 
     <div class="c-pmb30-head">
@@ -78,7 +67,12 @@
           </span>
           <span class="c-pmb30-lbl">
             <span class="c-pmb30-lbl-amt">{{ c_pmb30_threshold | money_without_trailing_zeros }}</span>
+            {%- if forloop.last -%}
+            <span class="c-pmb30-lbl-gift c-pmb30-lbl-gift--mobile">Free mystery book</span>
+            <span class="c-pmb30-lbl-gift c-pmb30-lbl-gift--desktop">Free mystery Gift</span>
+          {%- else -%}
             <span class="c-pmb30-lbl-gift">{{ c_pmb30_gift.title | escape }}</span>
+          {%- endif -%}
             <span class="c-pmb30-lbl-unlocked">Unlocked</span>
           </span>
         </div>
