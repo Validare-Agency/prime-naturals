@@ -149,16 +149,3 @@ img[src*="magnific_4second-loop-grandmothers.gif"] {
 [data-label*="coming soon"] .card__content .quick-add {
   display: none;
 }
-
-
-/* Cart drawer upsell spacing — all visitors (Control + Var A), both the
-   original upsell block and the CART_37 3-book copy. Not a test change: keep
-   it (move it elsewhere) when CART_37 is cleaned up. */
-   cart-drawer .cart-drawer-upsells-container .upsell__title .upsell__price {
-    margin-right: 1.5rem;
-  }
-  
-  cart-drawer .cart-drawer-upsells-container .upsell__add-btn {
-    margin-left: 0;
-  }
-  
