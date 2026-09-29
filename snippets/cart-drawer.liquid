@@ -109,6 +109,8 @@
               <div class='cart-timer color-{{ block.settings.color_scheme }}' style="--font-size:{{ block.settings.font_size }}rem;--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;" {{ block.shopify_attributes }}>
                 {{ block.settings.timer_text | replace: '[timer]', timer }}
               </div>
+              {%- comment -%} V_PRIME_CART_37 — gift bar under the timer (hidden unless Var A) {%- endcomment -%}
+              {%- render 'c-prime-cart-37-progress-bar' -%}
             {% when 'cart_items' %}
               <cart-drawer-items
                 {% if cart == empty %}
@@ -130,8 +132,8 @@
                           {%- for item in cart.items -%}
                             <li
                               id="CartDrawer-Item-{{ item.index | plus: 1 }}"
-                              class="cart-drawer-item cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pdp35_gift %} c-pdp35-gift-line{% endif %}{% if item.properties._pmb30_gift %} c-pmb30-gift-line{% endif %}{% if item.product.handle == '2-book-donation' %} c-cart32-donation-line{% endif %}"
-                              role="row" data-index="{{ item.index | plus: 1 }}"
+                              class="cart-drawer-item cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pdp35_gift %} c-pdp35-gift-line{% endif %}{% if item.properties._pmb30_gift %} c-pmb30-gift-line{% endif %}{% if item.properties._pc37_gift %} c-pc37-gift-line{% endif %}{% if item.product.handle == '2-book-donation' %} c-cart32-donation-line{% endif %}"
+                              role="row" data-index="{{ item.index | plus: 1 }}"{% if item.properties._pc37_gift %} data-c-pc37-gift-id="{{ item.variant_id }}"{% endif %}
                             >
                               <div class="loading-overlay hidden">
                                 <div class="loading-overlay__spinner">
@@ -460,6 +462,8 @@
                 %}
                 {% if display %}
                   {% render 'upsell-block', block: block, type: 'cart-drawer' %}
+                  {%- comment -%} V_PRIME_CART_37 — Var A copy with the encyclopedia as a 3rd upsell {%- endcomment -%}
+                  {% render 'c-prime-cart-37-upsell-block', block: block, type: 'cart-drawer', extra_handle: 'kidss-encyclopedia-10-000-whys', extra_title: 'Kid&#39;s Encyclopedia "10,000 Whys"', extra_desc: 'Real questions kids ask - animals, space, human body & more.' %}
                 {% endif %}
               {% endif %}
             {% when 'gift' %}

@@ -1,0 +1,244 @@
+/* <-------------------V_PRIME_CART_37 | MiniCart Gift-Threshold Progress Bar (BFCM)-----------------> */
+
+/* Test Setup */
+.c-pc37-wrap {
+  display: none;
+}
+.c-primeCart37VarA .c-pc37-wrap {
+  display: block;
+}
+/* Var A: the gift bar replaces the drawer's free-shipping progress bar */
+.c-primeCart37VarA cart-drawer .cart-progress {
+  display: none;
+}
+/* Var A: 3-book upsell copy (snippets/c-prime-cart-37-upsell-block.liquid)
+   replaces the drawer's original 2-book upsell block */
+body:not(.c-primeCart37VarA) .c-pc37-upsells,
+.c-primeCart37VarA cart-drawer .cart-drawer-upsells-container:not(.c-pc37-upsells) {
+  display: none !important;
+}
+
+/* Test Design */
+
+.c-pc37-wrap {
+  margin: 16px 0px 0;
+}
+
+.c-pc37-card {
+  box-sizing: border-box;
+  width: 100%;
+  border: 2px solid #c0392b;
+  border-radius: 12px;
+  background: #fffdf5;
+  padding: 11px 13px 18px;
+  font-family: 'Maven Pro', var(--font-body-family);
+  color: #0d1b3e;
+}
+
+.c-pc37-card *,
+.c-pc37-card *::before,
+.c-pc37-card *::after {
+  box-sizing: border-box;
+}
+
+/* Header */
+.c-pc37-head {
+  display: flex;
+  align-items: center;
+  height: 29px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: -0.1px;
+  color: #0d1b3e;
+}
+
+/* Status line */
+.c-pc37-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+}
+
+.c-pc37-status__icon {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #c0392b;
+}
+
+.c-pc37-status__icon svg {
+  display: block;
+}
+
+.c-pc37-status__text {
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 17px;
+  letter-spacing: -0.1px;
+  color: #0d1b3e;
+}
+
+.c-pc37-status__hl {
+  color: #c0392b;
+}
+
+/* Bar: track + evenly spaced milestones */
+.c-pc37-bar {
+  --c-pc37-marker: 26px;
+  position: relative;
+  height: 72px;
+  margin: 9px 26px 0 3px;
+}
+
+.c-pc37-track {
+  display: block !important;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--c-pc37-marker) / 2 - 4px);
+  height: 8px;
+  border: 1px solid rgba(13, 27, 62, 0.1);
+  border-radius: 4.5px;
+  background: #f3f3f3;
+}
+
+/* Empty div — base.css hides div:empty, so this must be forced on */
+.c-pc37-fill {
+  display: block !important;
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  bottom: -1px;
+  max-width: calc(100% + 2px);
+  border-radius: 4.5px;
+  background: #c0392b;
+}
+
+.c-pc37-milestone {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+/* Keep in sync with c_pc37_positions in snippets/c-prime-cart-37-progress-bar.liquid */
+.c-pc37-milestone:nth-child(2) { left: 25.4%; }
+.c-pc37-milestone:nth-child(3) { left: 49.6%; }
+.c-pc37-milestone:nth-child(4) { left: 73.9%; }
+.c-pc37-milestone:nth-child(5) { left: 98.2%; }
+
+.c-pc37-marker {
+  display: block;
+  width: var(--c-pc37-marker);
+  height: var(--c-pc37-marker);
+  border: 1.14px solid rgba(13, 27, 62, 0.3);
+  border-radius: 50%;
+  background: #fff;
+  overflow: hidden;
+}
+
+.c-pc37-marker img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.c-pc37-lbl {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 64px;
+  margin-top: 9px;
+}
+
+.c-pc37-lbl__amt {
+  font-family: 'Maven Pro', var(--font-body-family) !important;
+  font-size: 11px;
+  font-weight: 700 !important;
+  line-height: 13px;
+  letter-spacing: 0.1px;
+  color: #0d1b3e;
+}
+
+.c-pc37-lbl__gift {
+  font-size: 9.5px;
+  font-weight: 400;
+  line-height: 12px;
+  color: #6b7280;
+}
+
+/* Reached + next milestone states */
+.c-pc37-milestone--reached .c-pc37-marker,
+.c-pc37-milestone--next .c-pc37-marker {
+  border: 1.7px solid #c0392b;
+}
+
+.c-pc37-milestone--next .c-pc37-marker {
+  box-shadow: 0 0 0 3.3px rgba(192, 57, 43, 0.16);
+}
+
+.c-pc37-milestone--next .c-pc37-lbl__amt {
+  color: #c0392b;
+}
+
+.c-pc37-milestone--reached .c-pc37-lbl__amt {
+  color: #2e8b57;
+}
+
+/* Reached milestones swap the gift name for a green "Unlocked" */
+.c-pc37-lbl__unlocked {
+  display: none;
+  font-size: 9.5px;
+  font-weight: 700;
+  line-height: 12px;
+  color: #2e8b57;
+}
+
+.c-pc37-milestone--reached .c-pc37-lbl__gift {
+  display: none;
+}
+
+.c-pc37-milestone--reached .c-pc37-lbl__unlocked {
+  display: block;
+}
+
+/* Cart gift lines (drawer + cart page) — c-pc37-gift-line is set in
+   snippets/cart-drawer.liquid and sections/main-cart-items.liquid on lines
+   carrying the _pc37_gift property. Gift quantity is managed by
+   assets/c-prime-cart-37.js from the cart total, so it isn't editable. The
+   delete icon stays: a shopper can decline a gift, and the script remembers
+   that for this cart instead of re-adding it. */
+.c-pc37-gift-line quantity-input {
+  display: none !important;
+}
+
+/* Gift lines don't show variant options (e.g. the gift card's
+   "Denominations: $20.00") — their only properties are hidden _ ones */
+.c-pc37-gift-line dl {
+  display: none;
+}
+
+
+/* Cart drawer upsell spacing — all visitors (Control + Var A), both the
+   original upsell block and the CART_37 3-book copy. Not a test change: keep
+   it (move it elsewhere) when CART_37 is cleaned up. */
+   cart-drawer .cart-drawer-upsells-container .upsell__title .upsell__price {
+    margin-right: 1.5rem;
+  }
+  
+  cart-drawer .cart-drawer-upsells-container .upsell__add-btn {
+    margin-left: 0;
+  }
+  

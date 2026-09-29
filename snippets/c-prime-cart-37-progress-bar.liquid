@@ -1,0 +1,150 @@
+{%- comment -%}
+  V_PRIME_CART_37 | MiniCart Gift-Threshold Progress Bar (BFCM)
+  Rendered from snippets/cart-drawer.liquid under the countdown timer. CSS/JS
+  are loaded by sections/cart-drawer.liquid. The drawer is re-rendered on
+  every cart change, so every state (fill, milestones, status) is computed
+  here from the cart total — no client-side measuring.
+
+  Gift products are $0 with the unlock threshold as the compare-at price; a
+  "handle:cents" entry sets it explicitly (the $20 gift card is a Shopify gift
+  card product — no compare-at). Keep the list in sync with
+  sections/cart-drawer.liquid.
+{%- endcomment -%}
+{%- assign c_pc37_entries = 'free-stickers,free-sticker-puzzle,free-gift-card-20:9900,free-mystery-book' | split: ',' -%}
+
+{%- comment -%}
+  Milestone centers along the bar (% of its width), per Figma — keep in sync
+  with the .c-pc37-milestone:nth-child() positions in c-prime-cart-37.css.
+{%- endcomment -%}
+{%- assign c_pc37_positions = '25.4,49.6,73.9,98.2' | split: ',' -%}
+{%- assign c_pc37_marker_r = 13 -%}
+{%- assign c_pc37_gap = 8 -%}
+
+{%- comment -%} Resolve gifts: threshold, product {%- endcomment -%}
+{%- assign c_pc37_thresholds = '' -%}
+{%- assign c_pc37_gift_ids = '' -%}
+{%- assign c_pc37_titles = '' -%}
+{%- for c_pc37_entry in c_pc37_entries -%}
+  {%- assign c_pc37_parts = c_pc37_entry | split: ':' -%}
+  {%- assign c_pc37_gift = all_products[c_pc37_parts[0]] -%}
+  {%- if c_pc37_gift == blank -%}{%- continue -%}{%- endif -%}
+  {%- if c_pc37_parts[1] != blank -%}
+    {%- assign c_pc37_t = c_pc37_parts[1] | plus: 0 -%}
+  {%- else -%}
+    {%- assign c_pc37_t = c_pc37_gift.compare_at_price | default: c_pc37_gift.price -%}
+  {%- endif -%}
+  {%- assign c_pc37_thresholds = c_pc37_thresholds | append: c_pc37_t | append: ',' -%}
+  {%- assign c_pc37_gift_ids = c_pc37_gift_ids | append: c_pc37_gift.selected_or_first_available_variant.id | append: ',' -%}
+  {%- assign c_pc37_titles = c_pc37_titles | append: c_pc37_gift.title | append: '|' -%}
+{%- endfor -%}
+{%- assign c_pc37_thresholds = c_pc37_thresholds | split: ',' -%}
+{%- assign c_pc37_gift_ids = c_pc37_gift_ids | split: ',' -%}
+{%- assign c_pc37_titles = c_pc37_titles | split: '|' -%}
+
+{%- comment -%}
+  Cart total the thresholds are measured against — gift lines (either test's)
+  and gift products never count. Same rule as assets/c-prime-cart-37.js.
+{%- endcomment -%}
+{%- assign c_pc37_cents = 0 -%}
+{%- for item in cart.items -%}
+  {%- assign c_pc37_vid = item.variant_id | append: '' -%}
+  {%- if item.properties._pc37_gift or item.properties._pmb30_gift or c_pc37_gift_ids contains c_pc37_vid -%}{%- continue -%}{%- endif -%}
+  {%- assign c_pc37_cents = c_pc37_cents | plus: item.final_line_price -%}
+{%- endfor -%}
+
+{%- comment -%}
+  Fill: interpolated per segment, from the previous marker's right edge to the
+  next marker's left edge (minus a small gap), so an unreached milestone never
+  looks reached. Past the last milestone the bar is full.
+{%- endcomment -%}
+{%- assign c_pc37_count = c_pc37_thresholds.size -%}
+{%- assign c_pc37_last_index = c_pc37_count | minus: 1 -%}
+{%- assign c_pc37_last_t = c_pc37_thresholds[c_pc37_last_index] | plus: 0 -%}
+{%- assign c_pc37_fill = '100%' -%}
+{%- assign c_pc37_next_index = -1 -%}
+{%- if c_pc37_cents < c_pc37_last_t -%}
+  {%- assign c_pc37_prev_t = 0 -%}
+  {%- assign c_pc37_prev_p = 0 -%}
+  {%- assign c_pc37_prev_r = 0 -%}
+  {%- for c_pc37_t_str in c_pc37_thresholds -%}
+    {%- assign c_pc37_t = c_pc37_t_str | plus: 0 -%}
+    {%- if c_pc37_cents < c_pc37_t -%}
+      {%- assign c_pc37_next_index = forloop.index0 -%}
+      {%- assign c_pc37_p = c_pc37_positions[forloop.index0] | plus: 0.0 -%}
+      {%- assign c_pc37_ratio = c_pc37_cents | minus: c_pc37_prev_t | times: 1.0 -%}
+      {%- assign c_pc37_span = c_pc37_t | minus: c_pc37_prev_t -%}
+      {%- assign c_pc37_ratio = c_pc37_ratio | divided_by: c_pc37_span -%}
+      {%- assign c_pc37_pct = c_pc37_p | minus: c_pc37_prev_p | times: c_pc37_ratio | plus: c_pc37_prev_p | round: 3 -%}
+      {%- assign c_pc37_end_offset = c_pc37_marker_r | plus: c_pc37_gap | plus: c_pc37_prev_r | times: -1 -%}
+      {%- assign c_pc37_px = c_pc37_end_offset | times: c_pc37_ratio | plus: c_pc37_prev_r | round: 2 -%}
+      {%- assign c_pc37_fill = 'calc(' | append: c_pc37_pct | append: '% + ' | append: c_pc37_px | append: 'px)' -%}
+      {%- break -%}
+    {%- endif -%}
+    {%- assign c_pc37_prev_t = c_pc37_t -%}
+    {%- assign c_pc37_prev_p = c_pc37_positions[forloop.index0] | plus: 0.0 -%}
+    {%- assign c_pc37_prev_r = c_pc37_marker_r -%}
+  {%- endfor -%}
+{%- endif -%}
+
+<div class="c-pc37-wrap">
+  <div class="c-pc37-card">
+    <p class="c-pc37-head">🎄 Black Friday Gift Rewards</p>
+
+    <p class="c-pc37-status">
+      <span class="c-pc37-status__icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
+          <path d="M9.16667 3.2077H8.15833C8.29494 2.9505 8.34635 2.65657 8.30517 2.36827C8.26398 2.07997 8.13232 1.81219 7.92917 1.60353C7.78545 1.39461 7.58676 1.2295 7.35506 1.12645C7.12336 1.02341 6.86768 0.986448 6.61628 1.01965C6.36488 1.05285 6.12757 1.15493 5.93056 1.3146C5.73356 1.47426 5.58455 1.68529 5.5 1.92436C5.41545 1.68529 5.26644 1.47426 5.06944 1.3146C4.87243 1.15493 4.63512 1.05285 4.38372 1.01965C4.13232 0.986448 3.87664 1.02341 3.64494 1.12645C3.41324 1.2295 3.21455 1.39461 3.07083 1.60353C2.86768 1.81219 2.73602 2.07997 2.69483 2.36827C2.65365 2.65657 2.70506 2.9505 2.84167 3.2077H1.83333C1.71178 3.2077 1.5952 3.25598 1.50924 3.34194C1.42329 3.42789 1.375 3.54447 1.375 3.66603V5.04103C1.375 5.16259 1.42329 5.27916 1.50924 5.36512C1.5952 5.45107 1.71178 5.49936 1.83333 5.49936H2.29167V9.16603C2.29167 9.28759 2.33996 9.40417 2.42591 9.49012C2.51186 9.57607 2.62844 9.62436 2.75 9.62436H8.25C8.37156 9.62436 8.48814 9.57607 8.57409 9.49012C8.66005 9.40417 8.70833 9.28759 8.70833 9.16603V5.49936H9.16667C9.28822 5.49936 9.4048 5.45107 9.49076 5.36512C9.57671 5.27916 9.625 5.16259 9.625 5.04103V3.66603C9.625 3.54447 9.57671 3.42789 9.49076 3.34194C9.4048 3.25598 9.28822 3.2077 9.16667 3.2077ZM6.6 2.19936C6.64815 2.15121 6.70532 2.11301 6.76823 2.08696C6.83114 2.0609 6.89857 2.04748 6.96667 2.04748C7.03476 2.04748 7.10219 2.0609 7.16511 2.08696C7.22802 2.11301 7.28518 2.15121 7.33333 2.19936C7.38148 2.24751 7.41968 2.30468 7.44574 2.36759C7.4718 2.4305 7.48521 2.49793 7.48521 2.56603C7.48521 2.63412 7.4718 2.70155 7.44574 2.76447C7.41968 2.82738 7.38148 2.88454 7.33333 2.9327C7.15 3.11603 6.6 3.2077 6.14167 3.2077C6.1875 2.74936 6.37083 2.3827 6.6 2.19936ZM3.66667 2.19936C3.71379 2.14942 3.77063 2.10964 3.83368 2.08245C3.89673 2.05526 3.96467 2.04123 4.03333 2.04123C4.102 2.04123 4.16994 2.05526 4.23299 2.08245C4.29604 2.10964 4.35287 2.14942 4.4 2.19936C4.62917 2.3827 4.8125 2.74936 4.85833 3.2077C4.4 3.2077 3.85 3.11603 3.66667 2.9327C3.61673 2.88557 3.57694 2.82874 3.54975 2.76568C3.52256 2.70263 3.50853 2.63469 3.50853 2.56603C3.50853 2.49736 3.52256 2.42942 3.54975 2.36637C3.57694 2.30332 3.61673 2.24649 3.66667 2.19936ZM5.04167 9.16603H3.20833V5.49936H5.04167V9.16603ZM5.04167 4.5827H2.29167V4.12436H5.04167V4.5827ZM7.79167 9.16603H5.95833V5.49936H7.79167V9.16603ZM8.70833 4.5827H5.95833V4.12436H8.70833V4.5827Z" fill="#fff"/>
+        </svg>
+      </span>
+      <span class="c-pc37-status__text">
+        {%- if c_pc37_next_index == -1 -%}
+          Congrats! You have unlocked all the gifts.
+        {%- elsif c_pc37_next_index == c_pc37_last_index and c_pc37_last_index > 0 -%}
+          {%- comment -%}
+            Only the last milestone left — fixed promo copy, no amount
+            needed or book count (extra books are heavily discounted by
+            quantity pricing).
+          {%- endcomment -%}
+          {{ c_pc37_titles[c_pc37_last_index] | escape }} at <span class="c-pc37-status__hl">{{ c_pc37_last_t | money_without_trailing_zeros }}</span>: get the new encyclopedia at 20% off
+        {%- else -%}
+          {%- assign c_pc37_next_t = c_pc37_thresholds[c_pc37_next_index] | plus: 0 -%}
+          {%- assign c_pc37_needed = c_pc37_next_t | minus: c_pc37_cents | divided_by: 100.0 | ceil | times: 100 -%}
+          Add <span class="c-pc37-status__hl">{{ c_pc37_needed | money_without_trailing_zeros }}</span> more to unlock your next free gift
+        {%- endif -%}
+      </span>
+    </p>
+
+    <div class="c-pc37-bar">
+      <div class="c-pc37-track">
+        <div class="c-pc37-fill" style="width: {{ c_pc37_fill }};"></div>
+      </div>
+
+      {%- assign c_pc37_i = 0 -%}
+      {%- for c_pc37_entry in c_pc37_entries -%}
+        {%- assign c_pc37_parts = c_pc37_entry | split: ':' -%}
+        {%- assign c_pc37_gift = all_products[c_pc37_parts[0]] -%}
+        {%- if c_pc37_gift == blank -%}{%- continue -%}{%- endif -%}
+        {%- assign c_pc37_t = c_pc37_thresholds[c_pc37_i] | plus: 0 -%}
+        {%- assign c_pc37_state = '' -%}
+        {%- if c_pc37_cents >= c_pc37_t -%}
+          {%- assign c_pc37_state = ' c-pc37-milestone--reached' -%}
+        {%- elsif c_pc37_i == c_pc37_next_index -%}
+          {%- assign c_pc37_state = ' c-pc37-milestone--next' -%}
+        {%- endif -%}
+        <div class="c-pc37-milestone{{ c_pc37_state }}">
+          <span class="c-pc37-marker">
+            {%- if c_pc37_gift.featured_image -%}
+              {{ c_pc37_gift.featured_image | image_url: width: 104 | image_tag: alt: '', width: 52, height: 52, loading: 'lazy' }}
+            {%- endif -%}
+          </span>
+          <span class="c-pc37-lbl">
+            <span class="c-pc37-lbl__amt">{{ c_pc37_t | money_without_trailing_zeros }}</span>
+            <span class="c-pc37-lbl__gift">{{ c_pc37_gift.title | escape }}</span>
+            <span class="c-pc37-lbl__unlocked">Unlocked</span>
+          </span>
+        </div>
+        {%- assign c_pc37_i = c_pc37_i | plus: 1 -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
