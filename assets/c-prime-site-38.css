@@ -1,0 +1,13 @@
+/* <-------------------V_PRIME_SITE_38 | Reduce 3-Book and 5-Book Bundle Prices by $10-----------------> */
+
+/* Test Setup */
+/* Control keeps the original c-prime-pdp-17-bundle.liquid; Var A swaps in
+   the c-prime-site-38-bundle.liquid fork. Paid search visitors still never
+   see either (html.c-paidSearchVisitor .c-pdp17-variant in c-prime-pdp-17.css). */
+body:not(.c-primeSite38VarA) .c-site38-variant,
+body.c-primeSite38VarA .c-pdp17-variant:not(.c-site38-variant) {
+  display: none;
+}
+
+/* Test Design */
+/* No styling changes — only the tier 2/3 prices differ (set in Liquid). */
