@@ -105,10 +105,11 @@
   assign c_pdp17_d_t2_variant_id = c_pdp17_variant.id
   assign c_pdp17_d_t3_variant_id = c_pdp17_variant.id
 
-  # V_PRIME_SITE_38: tiers 2/3 add each book's duplicate price-test product
-  # instead — its own Kaching config charges the $10-lower prices above.
-  # Tier 1 stays on the live product. Falls back to the live product if the
-  # duplicate is missing/unavailable.
+  # V_PRIME_SITE_38: every tier adds each book's duplicate price-test product
+  # instead — its own Kaching config charges the $10-lower tier 2/3 prices
+  # above (tier 1 is the same price as the live product). Keeps the cart on
+  # one product, matching the Var A cart upsells. Falls back to the live
+  # product if the duplicate is missing/unavailable.
   # (murphys-law-for-kids-copy is the live Leadership Enlightenment product.)
   assign c_site38_price_test_handle = blank
   case product.handle
@@ -122,6 +123,7 @@
   if c_site38_price_test_handle != blank
     assign c_site38_price_test_variant = all_products[c_site38_price_test_handle].selected_or_first_available_variant
     if c_site38_price_test_variant.available
+      assign c_pdp17_t1_variant_id = c_site38_price_test_variant.id
       assign c_pdp17_d_t2_variant_id = c_site38_price_test_variant.id
       assign c_pdp17_d_t3_variant_id = c_site38_price_test_variant.id
     endif
@@ -144,6 +146,14 @@
     assign c_pdp17_upsell_murphys_compare = c_pdp17_upsell_murphys_variant.compare_at_price
     if c_pdp17_upsell_murphys_compare == blank or c_pdp17_upsell_murphys_compare <= c_pdp17_upsell_murphys_variant.price
       assign c_pdp17_upsell_murphys_compare = c_pdp17_upsell_murphys_variant.price | times: 2
+    endif
+
+    # V_PRIME_SITE_38: the checkbox adds Murphy's price-test duplicate too
+    # (same price; card still shows the live product's image/title).
+    assign c_site38_upsell_variant_id = c_pdp17_upsell_murphys_variant.id
+    assign c_site38_murphys_test_variant = all_products['murphys-law-for-kids-price-test'].selected_or_first_available_variant
+    if c_site38_murphys_test_variant.available
+      assign c_site38_upsell_variant_id = c_site38_murphys_test_variant.id
     endif
   endif
 -%}
@@ -242,7 +252,7 @@
     {%- endcomment -%}
     <div class="c-pdp17-upsell">
       <p class="c-pdp17-upsell__eyebrow">Most Grandparents Bought This Together!</p>
-      <div class="c-pdp17-upsell__card" data-pdp17-upsell data-variant-id="{{ c_pdp17_upsell_murphys_variant.id }}">
+      <div class="c-pdp17-upsell__card" data-pdp17-upsell data-variant-id="{{ c_site38_upsell_variant_id }}">
         <label class="c-pdp17-upsell__checkbox-wrap">
           <input type="checkbox" class="c-pdp17-upsell__checkbox" data-pdp17-upsell-checkbox>
         </label>
