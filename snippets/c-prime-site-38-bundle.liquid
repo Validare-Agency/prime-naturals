@@ -1,0 +1,284 @@
+{%- comment -%}
+  V_PRIME_SITE_38 | Reduce 3-Book and 5-Book Bundle Prices by $10 — Var A.
+  Forked from c-prime-pdp-17-bundle.liquid (do not merge changes back into
+  that file). Only the tier 2/3 prices differ: each is $10 lower, with
+  compare prices unchanged (so Save grows by $10). Keeps the .c-pdp17-variant
+  root class so assets/c-prime-pdp-17.js/.css drive it unchanged; show/hide
+  vs the Control snippet lives in assets/c-prime-site-38.css.
+
+  Renders the PDP bundle/offer selector. assets/c-prime-pdp-17.css styles it;
+  assets/c-prime-pdp-17.js wires row selection + Add to Cart + (encyclopedia
+  only) the murphys upsell checkbox card, permanently rolled out from
+  V_PRIME_PDP_22's concluded winner ("Var C - Murphy checkbox").
+
+  Accepts: product
+{%- endcomment -%}
+
+{%- liquid
+  assign c_pdp17_variant = product.selected_or_first_available_variant
+  assign c_pdp17_base_cents = c_pdp17_variant.price
+  # Shopify's per-market currency conversion doesn't land on a clean .90
+  # ending the way the confirmed USD price points do (e.g. CAD showed
+  # $57.00 on our rows vs the $56.90 Shopify itself actually charges at
+  # cart) — round every displayed price up to the next whole unit then
+  # back off 10 cents, so it always ends in .90 like the rest of the site.
+  # No-op for the USD prices (3990/6990/... already end in 90).
+  assign c_pdp17_base_cents = c_pdp17_base_cents | divided_by: 100.0 | ceil | times: 100 | minus: 10
+
+  # Tier 1 always adds the live product's own variant — no bundling needed for
+  # a single book.
+  assign c_pdp17_t1_variant_id = c_pdp17_variant.id
+
+  # This store sells to 5 markets (US/AU/CA/NZ/UK) with Shopify auto-converting
+  # variant.price to whatever currency the shopper is in — so c_pdp17_base_cents
+  # is ALREADY a correctly-converted local amount, never literally "3990".
+  # Every tier price below is therefore derived as a RATIO off that local base
+  # price (matching the confirmed USD price points' own implied percentage),
+  # not a hardcoded USD cents number — otherwise every non-USD market would
+  # get the wrong tier's price entirely (a currency-agnostic handle check is
+  # needed to know WHICH book this is, since the localized price can't be
+  # compared against a fixed number to tell them apart).
+  assign c_pdp17_is_encyclopedia = false
+  if product.handle == 'kidss-encyclopedia-10-000-whys'
+    assign c_pdp17_is_encyclopedia = true
+  endif
+
+  # Tier 1: 1 book, base price, no discount. Compare price is the site's
+  # existing "50% off" anchor (base x2), same as shown everywhere else on the PDP.
+  assign c_pdp17_a_t1_price = c_pdp17_base_cents
+  assign c_pdp17_a_t1_compare = c_pdp17_base_cents | times: 2
+
+  # Free shipping threshold: $55 USD-equivalent, vetted per-currency map.
+  assign c_pdp17_ship_threshold_cents = 5500
+  case cart.currency.iso_code
+    when 'AUD' or 'CAD'
+      assign c_pdp17_ship_threshold_cents = 8000
+    when 'GBP'
+      assign c_pdp17_ship_threshold_cents = 4500
+    when 'NZD'
+      assign c_pdp17_ship_threshold_cents = 9500
+  endcase
+
+  # BOGO framing: tier 2/3 (3 books / 5 books) plus a free-shipping badge on
+  # both once their price clears the threshold above. These are DISPLAY
+  # prices only — the real discount is applied at checkout by that product's
+  # own native Kaching Bundles quantity-discount config (see below), so these
+  # numbers must stay in sync with whatever Kaching is configured to charge.
+  # V_PRIME_SITE_38: each USD price point is $10 lower than Control's
+  # (7990/9990 -> 6990/8990, 5990/8990 -> 4990/7990), kept as the same ratio
+  # off the local base price so other markets get the equivalent reduction.
+  if c_pdp17_is_encyclopedia
+    assign c_pdp17_d_t2_price = c_pdp17_base_cents | times: 6990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp17_d_t3_price = c_pdp17_base_cents | times: 8990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+  else
+    assign c_pdp17_d_t2_price = c_pdp17_base_cents | times: 4990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp17_d_t3_price = c_pdp17_base_cents | times: 7990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+  endif
+
+  # Compare price is N x the current per-book price (savings are layered on
+  # top of the already-discounted single-book price, not the original MSRP).
+  assign c_pdp17_d_t2_compare = c_pdp17_base_cents | times: 3
+  assign c_pdp17_d_t2_save = c_pdp17_d_t2_compare | minus: c_pdp17_d_t2_price
+
+  assign c_pdp17_d_t3_compare = c_pdp17_base_cents | times: 5
+  assign c_pdp17_d_t3_save = c_pdp17_d_t3_compare | minus: c_pdp17_d_t3_price
+
+  assign c_pdp17_d_t2_ships_free = false
+  if c_pdp17_d_t2_price >= c_pdp17_ship_threshold_cents
+    assign c_pdp17_d_t2_ships_free = true
+  endif
+  # V_PRIME_SITE_38: Murphy's Law / Leadership (murphys-law-for-kids-copy) keep
+  # the free shipping badge on 3 books even though $49.90 is now under the
+  # threshold — same as Control shows at $59.90.
+  if product.handle == 'murphys-law-for-kids' or product.handle == 'murphys-law-for-kids-copy'
+    assign c_pdp17_d_t2_ships_free = true
+  endif
+
+  assign c_pdp17_d_t3_ships_free = false
+  if c_pdp17_d_t3_price >= c_pdp17_ship_threshold_cents
+    assign c_pdp17_d_t3_ships_free = true
+  endif
+
+  # Tiers 2/3 add the SAME real product variant as tier 1, just at quantity 3
+  # or 5 — the tiered price is produced by that product's own native Kaching
+  # Bundles quantity-discount config, not a separate duplicate product.
+  assign c_pdp17_d_t2_variant_id = c_pdp17_variant.id
+  assign c_pdp17_d_t3_variant_id = c_pdp17_variant.id
+
+  # V_PRIME_SITE_38: every tier adds each book's duplicate price-test product
+  # instead — its own Kaching config charges the $10-lower tier 2/3 prices
+  # above (tier 1 is the same price as the live product). Keeps the cart on
+  # one product, matching the Var A cart upsells. Falls back to the live
+  # product if the duplicate is missing/unavailable.
+  # (murphys-law-for-kids-copy is the live Leadership Enlightenment product.)
+  assign c_site38_price_test_handle = blank
+  case product.handle
+    when 'kidss-encyclopedia-10-000-whys'
+      assign c_site38_price_test_handle = 'kidss-encyclopedia-10-000-whys-price-test'
+    when 'murphys-law-for-kids'
+      assign c_site38_price_test_handle = 'murphys-law-for-kids-price-test'
+    when 'murphys-law-for-kids-copy'
+      assign c_site38_price_test_handle = 'leadership-enlightenment-for-kids-price-test'
+  endcase
+  if c_site38_price_test_handle != blank
+    assign c_site38_price_test_variant = all_products[c_site38_price_test_handle].selected_or_first_available_variant
+    if c_site38_price_test_variant.available
+      assign c_pdp17_t1_variant_id = c_site38_price_test_variant.id
+      assign c_pdp17_d_t2_variant_id = c_site38_price_test_variant.id
+      assign c_pdp17_d_t3_variant_id = c_site38_price_test_variant.id
+    endif
+  endif
+
+  # V_PRIME_PDP_22 winner ("Var C - Murphy checkbox"), rolled out permanently
+  # here — encyclopedia only, checkbox-style upsell for murphys-law-for-kids.
+  # Ported in as the permanent default rather than left on c-prime-pdp-22.js/
+  # .css/.liquid, since that test's whole bundle slot was already superseded
+  # by c-prime-pdp-17-bundle.liquid (this file) for the non-paid-search
+  # audience it ran on — see assets/c-intelligems-tests.js and
+  # assets/c-prime-pdp-17.css's Test Setup for why paid search visitors never
+  # reach this file at all, and c-validareHoldout is additionally excluded
+  # below/in that CSS so the permanent holdout group keeps seeing pre-winner
+  # behavior. Compare price falls back to the site's standard "2x current
+  # price" anchor if the product has no (or an inverted) compare_at_price set.
+  if c_pdp17_is_encyclopedia
+    assign c_pdp17_upsell_murphys_product = all_products['murphys-law-for-kids']
+    assign c_pdp17_upsell_murphys_variant = c_pdp17_upsell_murphys_product.selected_or_first_available_variant
+    assign c_pdp17_upsell_murphys_compare = c_pdp17_upsell_murphys_variant.compare_at_price
+    if c_pdp17_upsell_murphys_compare == blank or c_pdp17_upsell_murphys_compare <= c_pdp17_upsell_murphys_variant.price
+      assign c_pdp17_upsell_murphys_compare = c_pdp17_upsell_murphys_variant.price | times: 2
+    endif
+
+    # V_PRIME_SITE_38: the checkbox adds Murphy's price-test duplicate too
+    # (same price; card still shows the live product's image/title).
+    assign c_site38_upsell_variant_id = c_pdp17_upsell_murphys_variant.id
+    assign c_site38_murphys_test_variant = all_products['murphys-law-for-kids-price-test'].selected_or_first_available_variant
+    if c_site38_murphys_test_variant.available
+      assign c_site38_upsell_variant_id = c_site38_murphys_test_variant.id
+    endif
+  endif
+-%}
+
+<div class="c-pdp17-variant c-pdp17-variant--d c-site38-variant">
+  <p class="c-pdp17-eyebrow">&#9889; FLASH SALE &mdash; PRICES INCREASE IN 4 HOURS</p>
+
+  <div class="c-pdp17-rows" role="radiogroup" aria-label="Bundle options">
+    <label class="c-pdp17-row">
+      <input
+        type="radio"
+        name="c-site38-tier-{{ section.id }}"
+        class="c-pdp17-row__radio"
+        data-variant-id="{{ c_pdp17_t1_variant_id }}"
+        data-quantity="1"
+        data-pdp17-price-money="{{ c_pdp17_a_t1_price | money }}"
+        {%- if c_pdp17_upsell_murphys_variant %}
+        data-pdp17-price-with-upsell-money="{{ c_pdp17_a_t1_price | plus: c_pdp17_upsell_murphys_variant.price | money }}"
+        {%- endif %}
+        checked
+      >
+      <span class="c-pdp17-row__body">
+        <span class="c-pdp17-row__title">1 Book</span>
+        <span class="c-pdp17-row__subtitle">For 1 child</span>
+      </span>
+      <span class="c-pdp17-row__prices">
+        <span class="c-pdp17-row__price">{{ c_pdp17_a_t1_price | money }}</span>
+        <span class="c-pdp17-row__compare">{{ c_pdp17_a_t1_compare | money }}</span>
+      </span>
+    </label>
+
+    <label class="c-pdp17-row">
+      <span class="c-pdp17-row__badge c-pdp17-row__badge--popular c-pdp17-row__badge--sentence">Most popular</span>
+      <input
+        type="radio"
+        name="c-site38-tier-{{ section.id }}"
+        class="c-pdp17-row__radio"
+        data-variant-id="{{ c_pdp17_d_t2_variant_id }}"
+        data-quantity="3"
+        data-pdp17-price-money="{{ c_pdp17_d_t2_price | money }}"
+        {%- if c_pdp17_upsell_murphys_variant %}
+        data-pdp17-price-with-upsell-money="{{ c_pdp17_d_t2_price | plus: c_pdp17_upsell_murphys_variant.price | money }}"
+        {%- endif %}
+      >
+      <span class="c-pdp17-row__body">
+        <span class="c-pdp17-row__title">Buy 2, Get 1 Free</span>
+        <span class="c-pdp17-row__subtitle">3 books &mdash; best for siblings</span>
+        <span class="c-pdp17-row__perk">&#127873; 1 full book, on us</span>
+        {%- if c_pdp17_d_t2_ships_free -%}
+          <span class="c-pdp17-row__perk c-pdp17-row__perk--ship">&#128666; FREE shipping</span>
+        {%- endif -%}
+      </span>
+      <span class="c-pdp17-row__prices">
+        <span class="c-pdp17-row__price">{{ c_pdp17_d_t2_price | money }}</span>
+        <span class="c-pdp17-row__compare">{{ c_pdp17_d_t2_compare | money }}</span>
+        <span class="c-pdp17-row__save">Save {{ c_pdp17_d_t2_save | money }}</span>
+      </span>
+    </label>
+
+    <label class="c-pdp17-row">
+      <span class="c-pdp17-row__badge c-pdp17-row__badge--popular c-pdp17-row__badge--sentence">One for every grandchild</span>
+      <input
+        type="radio"
+        name="c-site38-tier-{{ section.id }}"
+        class="c-pdp17-row__radio"
+        data-variant-id="{{ c_pdp17_d_t3_variant_id }}"
+        data-quantity="5"
+        data-pdp17-price-money="{{ c_pdp17_d_t3_price | money }}"
+        {%- if c_pdp17_upsell_murphys_variant %}
+        data-pdp17-price-with-upsell-money="{{ c_pdp17_d_t3_price | plus: c_pdp17_upsell_murphys_variant.price | money }}"
+        {%- endif %}
+      >
+      <span class="c-pdp17-row__body">
+        <span class="c-pdp17-row__title">Buy 3, Get 2 Free</span>
+        <span class="c-pdp17-row__subtitle">5 books &mdash; best gift pack</span>
+        <span class="c-pdp17-row__perk">&#127873; 2 full books, on us</span>
+        {%- if c_pdp17_d_t3_ships_free -%}
+          <span class="c-pdp17-row__perk c-pdp17-row__perk--ship">&#128666; FREE shipping</span>
+        {%- endif -%}
+      </span>
+      <span class="c-pdp17-row__prices">
+        <span class="c-pdp17-row__price">{{ c_pdp17_d_t3_price | money }}</span>
+        <span class="c-pdp17-row__compare">{{ c_pdp17_d_t3_compare | money }}</span>
+        <span class="c-pdp17-row__save">Save {{ c_pdp17_d_t3_save | money }}</span>
+      </span>
+    </label>
+  </div>
+
+  {%- if c_pdp17_upsell_murphys_product != blank -%}
+    {%- comment -%}
+      V_PRIME_PDP_22 winner rollout — hidden entirely for c-validareHoldout
+      visitors (see Test Setup in assets/c-prime-pdp-17.css), who must keep
+      seeing pre-winner behavior forever. Never reached at all by paid search
+      visitors, since this whole snippet is already hidden for them in favor
+      of Kaching/.c-pdp35-variant (see that same Test Setup block).
+    {%- endcomment -%}
+    <div class="c-pdp17-upsell">
+      <p class="c-pdp17-upsell__eyebrow">Most Grandparents Bought This Together!</p>
+      <div class="c-pdp17-upsell__card" data-pdp17-upsell data-variant-id="{{ c_site38_upsell_variant_id }}">
+        <label class="c-pdp17-upsell__checkbox-wrap">
+          <input type="checkbox" class="c-pdp17-upsell__checkbox" data-pdp17-upsell-checkbox>
+        </label>
+        <img
+          class="c-pdp17-upsell__image"
+          src="{{ c_pdp17_upsell_murphys_product.featured_image | image_url: width: 184 }}"
+          alt="{{ c_pdp17_upsell_murphys_product.featured_image.alt | default: c_pdp17_upsell_murphys_product.title | escape }}"
+          loading="lazy"
+          width="92"
+          height="92"
+        >
+        <div class="c-pdp17-upsell__body">
+          <p class="c-pdp17-upsell__title">{{ c_pdp17_upsell_murphys_product.title }}</p>
+          <p class="c-pdp17-upsell__desc">Teaches your child to handle anything life throws at them</p>
+        </div>
+        <div class="c-pdp17-upsell__side">
+          <div class="c-pdp17-upsell__price-block">
+            <span class="c-pdp17-upsell__price">{{ c_pdp17_upsell_murphys_variant.price | money }}</span>
+            <span class="c-pdp17-upsell__compare">{{ c_pdp17_upsell_murphys_compare | money }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <button type="button" class="c-pdp17-atc button button--full-width" data-pdp17-atc>
+    <span data-pdp17-atc-price>{{ c_pdp17_a_t1_price | money }}</span>&nbsp;ADD TO CART
+  </button>
+</div>

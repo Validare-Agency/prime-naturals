@@ -712,6 +712,8 @@
               %}
             {%- when 'buy_buttons' -%}
               {% render 'c-prime-pdp-17-bundle', product: product, section: section %}
+              {%- comment -%} V_PRIME_SITE_38 Var A — swapped with the one above by c-prime-site-38.css {%- endcomment -%}
+              {% render 'c-prime-site-38-bundle', product: product, section: section %}
               {% render 'c-prime-pdp-35-bundle', product: product, section: section %}
               {%- render 'buy-buttons',
                  block: block,
@@ -1222,6 +1224,14 @@
 {%- else -%}
   {{ 'c-prime-pdp-17.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
+
+{%- comment -%} V_PRIME_SITE_38 | Reduce 3-Book and 5-Book Bundle Prices by $10 {%- endcomment -%}
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-site-38.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-site-38.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+<script src="{{ 'c-prime-site-38.js' | asset_url }}" defer></script>
 
 {%- comment -%} PDP Bundle Tier Picker {%- endcomment -%}
 {%- if section.index > 3 -%}

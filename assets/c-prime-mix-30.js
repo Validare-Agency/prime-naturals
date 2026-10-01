@@ -5,9 +5,13 @@
   // Price of the bundle currently selected in the PDP17 offer selector (not
   // yet in the cart). Shown as a light "preview" fill on top of the cart total.
   function selectedCents() {
-    var radio = document.querySelector('.c-pdp17-variant .c-pdp17-row__radio:checked');
-    // PDP17 is hidden for paid search visitors (Kaching bundle instead)
-    if (!radio || !radio.closest('.c-pdp17-variant').offsetParent) return 0;
+    // PDP17 is hidden for paid search visitors (Kaching bundle instead), and
+    // V_PRIME_SITE_38 renders a second, hidden-per-group copy — use the visible one
+    var radio = Array.prototype.find.call(
+      document.querySelectorAll('.c-pdp17-variant .c-pdp17-row__radio:checked'),
+      function (r) { return r.closest('.c-pdp17-variant').offsetParent; }
+    );
+    if (!radio) return 0;
     var digits = (radio.getAttribute('data-pdp17-price-money') || '').replace(/[^0-9]/g, '');
     return parseInt(digits || '0', 10);
   }

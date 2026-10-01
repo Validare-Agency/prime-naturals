@@ -113,6 +113,27 @@
   {{ 'c-prime-cart-37.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
 
+{%- comment -%}
+  V_PRIME_SITE_38 | Reduce 3-Book and 5-Book Bundle Prices by $10 — Var A
+  cart upsells add each book's price-test duplicate instead of the live
+  product (assets/c-prime-site-38.js), so their Kaching pricing matches the
+  PDP. Keyed by live variant id. Keep in sync with the handle map in
+  snippets/c-prime-site-38-bundle.liquid. Remove with the SITE_38 cleanup.
+{%- endcomment -%}
+{%- assign c_site38_pairs = 'kidss-encyclopedia-10-000-whys:kidss-encyclopedia-10-000-whys-price-test,murphys-law-for-kids:murphys-law-for-kids-price-test,murphys-law-for-kids-copy:leadership-enlightenment-for-kids-price-test' | split: ',' -%}
+<script>
+  window.primeSite38PriceTestVariants = {
+    {%- for c_site38_pair in c_site38_pairs -%}
+      {%- assign c_site38_handles = c_site38_pair | split: ':' -%}
+      {%- assign c_site38_live = all_products[c_site38_handles[0]].selected_or_first_available_variant -%}
+      {%- assign c_site38_test = all_products[c_site38_handles[1]].selected_or_first_available_variant -%}
+      {%- if c_site38_live == blank or c_site38_test == blank or c_site38_test.available == false -%}{%- continue -%}{%- endif -%}
+      {{ c_site38_live.id | json }}: { id: {{ c_site38_test.id | json }}, handle: {{ c_site38_handles[1] | json }} },
+    {%- endfor -%}
+  };
+</script>
+<script src="{{ 'c-prime-site-38.js' | asset_url }}" defer></script>
+
 {% schema %}
 {
   "name": "Cart drawer",
