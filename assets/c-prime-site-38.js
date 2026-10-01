@@ -19,6 +19,16 @@
   // Var A: cart drawer upsells add the price-test duplicate of each book
   // (window.primeSite38PriceTestVariants, from sections/cart-drawer.liquid)
   // so Kaching prices them the same as the Var A PDP bundle.
+  // Hide the whole upsells block (incl. its "78% of parents add these"
+  // title) once every card in it is hidden — Liquid only does this for
+  // cards it hid itself, not the ones hidden below.
+  function hideEmptyUpsellBlocks() {
+    document.querySelectorAll('.cart-drawer-upsells-container').forEach(function (container) {
+      var hasVisible = container.querySelector('cart-drawer-upsell:not(.hidden)');
+      container.classList.toggle('hidden', !hasVisible);
+    });
+  }
+
   function swapCartUpsells() {
     var map = window.primeSite38PriceTestVariants;
     if (!map || !document.body.classList.contains('c-primeSite38VarA')) return;
@@ -37,6 +47,7 @@
         upsell.classList.add('hidden');
       }
     });
+    hideEmptyUpsellBlocks();
   }
 
   // The drawer is re-rendered after every cart change, and the Var A body
