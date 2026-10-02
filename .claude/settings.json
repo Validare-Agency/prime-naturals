@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -e 's/\"formId\": \"RByxN6\"/\"formId\": \"X8rRRs\"/' -e 's/hide the elements for the VOL 2/hide the elements for the Bible book waiting list/' templates/product.vol2.json)",
+      "Bash(python3 -c ' *)"
+    ]
+  }
+}
