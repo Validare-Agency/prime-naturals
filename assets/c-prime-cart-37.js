@@ -163,7 +163,7 @@
     return { changes: changes, adds: adds };
   }
 
-  // --- Cart UI refresh (same fetch+swap technique as c-prime-pdp-35.js) ---
+  // --- Cart UI refresh (same fetch+swap technique as c-prime-mix-30-gifts.js) ---
   function refreshCartDrawer() {
     return rawFetch(window.routes.cart_url + '?section_id=cart-drawer')
       .then(function (r) { return r.text(); })

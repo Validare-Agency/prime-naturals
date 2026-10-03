@@ -49,7 +49,7 @@
     });
   }
 
-  // Same drawer + icon bubble swap c-prime-pdp-35.js uses.
+  // Re-render the cart drawer + cart icon bubble sections in place.
   function refreshCartDrawer() {
     return Promise.all([
       fetch(window.routes.cart_url + '?section_id=cart-drawer').then(function (response) {

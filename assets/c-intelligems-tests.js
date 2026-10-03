@@ -1,10 +1,8 @@
 let domLoaded = false;
 let igReady = false;
 
-// V_PRIME_PDP_35 | Kaching product-id swap, Control only, Murphy/Leadership
-// only. Var A/B is never touched here at all — that side's cart-correctness
-// is handled directly in c-prime-pdp-35.js's addToCart(). Same mechanism as
-// the Snuggi price test on ab-test/V_PIL_PDP_04.
+// Kaching product-id swap for paid search visitors, Murphy/Leadership only.
+// Same mechanism as the Snuggi price test on ab-test/V_PIL_PDP_04.
 const KACHING_SWAP_TARGET_BY_PRODUCT_ID = {
   7568898293894: "7733150187654", // murphys-law-for-kids -> swap to this id
   7587123658886: "7733149794438", // murphys-law-for-kids-copy -> swap to this id
@@ -25,10 +23,8 @@ function kachingWaitForInit(onReady, retriesLeft = 25) {
 const KACHING_SWAP_ATTEMPT_TIMEOUT = 4000;
 const KACHING_SWAP_MAX_ATTEMPTS = 3;
 
-// Only ever called for Control (not paid search, or paid search + Var A/B,
-// never reach here at all — see the call site in handleExperiments).
-function decideKachingSwap(isControlPaidSearch) {
-  if (kachingSwapAttempted || !kachingSwapProductId || !isControlPaidSearch) {
+function decideKachingSwap(isPaidSearch) {
+  if (kachingSwapAttempted || !kachingSwapProductId || !isPaidSearch) {
     return;
   }
   kachingSwapAttempted = true;
@@ -98,21 +94,8 @@ function handleExperiments() {
     localStorage.setItem("validare_holdout", isHeldOut ? "1" : "0");
   } catch (e) {}
 
-  // Test: V_PRIME_PDP_35 | Unlock Bonus Free Gifts
-  const primePdp35 = window.igData?.user.getTestGroup(
-    "97267cf0-b33c-48dc-a5e0-195f12d5587b"
-  );
-  let primePdp35InVarAOrB = false;
-  if (primePdp35?.name === "Var A - Thumbnail unlock cards") {
-    document.body.classList.add("c-primePdp35VarA");
-    primePdp35InVarAOrB = true;
-  } else if (primePdp35?.name === "Var B - Compact status cards") {
-    document.body.classList.add("c-primePdp35VarB");
-    primePdp35InVarAOrB = true;
-  }
   decideKachingSwap(
-    document.documentElement.classList.contains("c-paidSearchVisitor") &&
-      !primePdp35InVarAOrB
+    document.documentElement.classList.contains("c-paidSearchVisitor")
   );
 
   // Test: V_PRIME_PDP_27 | Physical-Size Information - "Exactly What Arrives"
