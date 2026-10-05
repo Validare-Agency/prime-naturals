@@ -116,16 +116,6 @@ function handleExperiments() {
     document.body.classList.add("c-primePdp27VarF");
   }
 
-  // Test: V_PRIME_CART_32 | Charity Donation Minicart Add-On — Give the Gift of Reading (BFCM)
-  const primeCart32 = window.igData?.user.getTestGroup(
-    "09ae0d10-fdd8-4c8b-91e8-e282765ad1a2"
-  );
-  if (primeCart32?.id === "bc53f2c0-d5e5-4829-91b5-298e23b0a3b6") {
-    document.body.classList.add("c-primeCart32VarA");
-  } else if (primeCart32?.id === "63c92951-09f5-43e6-9cc9-656bd70479fa") {
-    document.body.classList.add("c-primeCart32VarB");
-  }
-
   // Test: V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM)
   const primeMix30 = window.igData?.user.getTestGroup(
     "d6e0d425-a1eb-4507-9ff9-eb899b475a2f"
@@ -161,7 +151,6 @@ setInterval(() => {
     window.igEvents = window.igEvents || [];
     window.igEvents.push({ event: "cartDrawerOpen" });
     window.igEvents.push({ event: "view_cart" });
-    window.igEvents.push({ event: "Open_mini_cart" });
     // V_PRIME_CART_37: mini_cart_opens — drawer opened by a PDP add-to-cart or the cart icon
     window.igEvents.push({ event: "mini_cart_opens" });
   } else if (!isActive) {
