@@ -1,0 +1,41 @@
+/* <-------------------V_PRIME_PDP_39 | Google Traffic Bundle Prices -$10-----------------> */
+
+/* Test Setup */
+
+/* Non-paid-search visitors never see this test — the Intelligems config targets
+   Google Paid Search only, and the c-paidSearchVisitor gate below enforces it
+   in CSS as a second safeguard. Always hidden for everyone NOT on paid search. */
+html:not(.c-paidSearchVisitor) .c-pdp39-variant {
+  display: none;
+}
+
+/* Paid-search Control: c-prime-pdp-17.css already hides .c-pdp17-variant for
+   html.c-paidSearchVisitor, so the Control tier (no c-primePdp39VarA body class)
+   keeps seeing Kaching unchanged — no additional rule needed here. */
+
+/* Paid-search Var A: override the blanket .c-pdp17-variant hide and show the
+   custom 5-tier bundle snippet. Specificity (0,4,0) beats pdp-17.css (0,2,0). */
+html.c-paidSearchVisitor body.c-primePdp39VarA .c-pdp39-variant {
+  display: block;
+}
+
+/* Paid-search Var A: hide Kaching so only the custom snippet is visible.
+   Mirrors the inverse of the non-paid-search hide rule in c-prime-pdp-17.css. */
+html.c-paidSearchVisitor body.c-primePdp39VarA [class*="kaching-bundles"] {
+  display: none;
+}
+
+/* Paid-search Var A: hide the native buy_buttons form — the custom snippet
+   has its own self-contained Add to Cart button (.c-pdp17-atc), so the native
+   form would create a duplicate CTA. Same pattern as c-prime-pdp-17.css uses
+   for non-paid-search visitors. */
+html.c-paidSearchVisitor body.c-primePdp39VarA .main-product-form {
+  display: none;
+}
+
+/* Test Design */
+/* No structural restyling — the snippet reuses all .c-pdp17-* component
+   classes already defined in assets/c-prime-pdp-17.css, so the visual
+   treatment (rows, badges, prices, ATC button) is identical to the existing
+   bundle selector. Only the selling prices and % OFF labels differ from the
+   Control Kaching bundle, which is the only intended visual change. */

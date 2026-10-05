@@ -1,0 +1,278 @@
+{%- comment -%}
+  V_PRIME_PDP_39 | Google Traffic Bundle Prices -$10 — Var A.
+  Shown only to paid-search visitors in the Var A bucket; c-prime-pdp-39.css
+  overrides the c-prime-pdp-17.css rule that hides .c-pdp17-variant for paid
+  search, and hides Kaching for those same visitors.
+
+  Five-tier linear bundle (1–5 books). Tier-2-through-5 prices are exactly
+  $10 lower than the current Kaching Control prices. Tier 1 (single book)
+  price is unchanged. Prices are ratio-based off the live product's own
+  variant.price so every market currency scales correctly.
+
+  Cart pricing: each tier adds a '-pdp39' price-test product variant at the
+  right quantity. That product's Kaching quantity-break config is set to
+  charge the Var A prices. Falls back to the live product variant if the
+  price-test product is unavailable.
+
+  ATC + row selection: handled by assets/c-prime-pdp-17.js, which initialises
+  every .c-pdp17-variant on the page at DOMContentLoaded.
+
+  Accepts: product, section
+{%- endcomment -%}
+
+{%- liquid
+  assign c_pdp39_variant     = product.selected_or_first_available_variant
+  assign c_pdp39_base_cents  = c_pdp39_variant.price
+  # Round to the nearest whole-unit then back off 10 cents so prices always
+  # end in .90 regardless of Shopify's per-market currency conversion.
+  assign c_pdp39_base_cents  = c_pdp39_base_cents | divided_by: 100.0 | ceil | times: 100 | minus: 10
+
+  assign c_pdp39_is_encyclopedia = false
+  if product.handle == 'kidss-encyclopedia-10-000-whys'
+    assign c_pdp39_is_encyclopedia = true
+  endif
+
+  # Tier 1 — unchanged from the live single-book price.
+  assign c_pdp39_t1_price   = c_pdp39_base_cents
+  assign c_pdp39_t1_compare = c_pdp39_base_cents | times: 2
+
+  # Free-shipping threshold: $55 USD-equivalent, same per-currency map used
+  # throughout the site's other bundle snippets.
+  assign c_pdp39_ship_threshold_cents = 5500
+  case cart.currency.iso_code
+    when 'AUD' or 'CAD'
+      assign c_pdp39_ship_threshold_cents = 8000
+    when 'GBP'
+      assign c_pdp39_ship_threshold_cents = 4500
+    when 'NZD'
+      assign c_pdp39_ship_threshold_cents = 9500
+  endcase
+
+  # Tiers 2–5 Var A prices: each is $10 below the current Kaching Control
+  # price. Stored as ratios off the local base price so non-USD markets get
+  # the equivalent reduction (same approach as c-prime-site-38-bundle.liquid).
+  #
+  # Encyclopedia (base $39.90 USD):
+  #   Control  $69.90 / $79.90 / $89.90 / $99.90
+  #   Var A    $59.90 / $69.90 / $79.90 / $89.90  (ratios 5990/3990 … 8990/3990)
+  #
+  # Companion / Murphy / Leadership (base $29.90 USD):
+  #   Control  $58.90 / $79.90 / $89.90 / $99.90
+  #   Var A    $48.90 / $69.90 / $79.90 / $89.90  (ratios 4890/2990 … 8990/2990)
+  if c_pdp39_is_encyclopedia
+    assign c_pdp39_t2_price = c_pdp39_base_cents | times: 5990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp39_t3_price = c_pdp39_base_cents | times: 6990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp39_t4_price = c_pdp39_base_cents | times: 7990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp39_t5_price = c_pdp39_base_cents | times: 8990.0 | divided_by: 3990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+  else
+    assign c_pdp39_t2_price = c_pdp39_base_cents | times: 4890.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp39_t3_price = c_pdp39_base_cents | times: 6990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp39_t4_price = c_pdp39_base_cents | times: 7990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+    assign c_pdp39_t5_price = c_pdp39_base_cents | times: 8990.0 | divided_by: 2990.0 | round: 0 | divided_by: 100.0 | ceil | times: 100 | minus: 10
+  endif
+
+  # Compare prices: N × base (cost of N books at the individual base price).
+  assign c_pdp39_t2_compare = c_pdp39_base_cents | times: 2
+  assign c_pdp39_t3_compare = c_pdp39_base_cents | times: 3
+  assign c_pdp39_t4_compare = c_pdp39_base_cents | times: 4
+  assign c_pdp39_t5_compare = c_pdp39_base_cents | times: 5
+
+  # Save amounts (used for % OFF label).
+  assign c_pdp39_t1_save = c_pdp39_t1_compare | minus: c_pdp39_t1_price
+  assign c_pdp39_t2_save = c_pdp39_t2_compare | minus: c_pdp39_t2_price
+  assign c_pdp39_t3_save = c_pdp39_t3_compare | minus: c_pdp39_t3_price
+  assign c_pdp39_t4_save = c_pdp39_t4_compare | minus: c_pdp39_t4_price
+  assign c_pdp39_t5_save = c_pdp39_t5_compare | minus: c_pdp39_t5_price
+
+  # % OFF: save × 100 / compare, rounded to nearest whole number.
+  assign c_pdp39_t1_pct = c_pdp39_t1_save | times: 100 | divided_by: c_pdp39_t1_compare | round
+  assign c_pdp39_t2_pct = c_pdp39_t2_save | times: 100 | divided_by: c_pdp39_t2_compare | round
+  assign c_pdp39_t3_pct = c_pdp39_t3_save | times: 100 | divided_by: c_pdp39_t3_compare | round
+  assign c_pdp39_t4_pct = c_pdp39_t4_save | times: 100 | divided_by: c_pdp39_t4_compare | round
+  assign c_pdp39_t5_pct = c_pdp39_t5_save | times: 100 | divided_by: c_pdp39_t5_compare | round
+
+  # Free-shipping flags.
+  assign c_pdp39_t2_ships_free = false
+  assign c_pdp39_t3_ships_free = false
+  assign c_pdp39_t4_ships_free = false
+  assign c_pdp39_t5_ships_free = false
+  if c_pdp39_t2_price >= c_pdp39_ship_threshold_cents
+    assign c_pdp39_t2_ships_free = true
+  endif
+  if c_pdp39_t3_price >= c_pdp39_ship_threshold_cents
+    assign c_pdp39_t3_ships_free = true
+  endif
+  if c_pdp39_t4_price >= c_pdp39_ship_threshold_cents
+    assign c_pdp39_t4_ships_free = true
+  endif
+  if c_pdp39_t5_price >= c_pdp39_ship_threshold_cents
+    assign c_pdp39_t5_ships_free = true
+  endif
+  # Murphy/Leadership: keep free shipping badge on tier 2 even though $48.90
+  # is below the USD threshold — matches the treatment established for site-38.
+  if product.handle == 'murphys-law-for-kids' or product.handle == 'murphys-law-for-kids-copy'
+    assign c_pdp39_t2_ships_free = true
+  endif
+
+  # Variant IDs — default to the live product variant; override with the
+  # price-test duplicate when it exists and is available.
+  assign c_pdp39_t1_variant_id = c_pdp39_variant.id
+  assign c_pdp39_t2_variant_id = c_pdp39_variant.id
+  assign c_pdp39_t3_variant_id = c_pdp39_variant.id
+  assign c_pdp39_t4_variant_id = c_pdp39_variant.id
+  assign c_pdp39_t5_variant_id = c_pdp39_variant.id
+
+  assign c_pdp39_price_test_handle = blank
+  case product.handle
+    when 'kidss-encyclopedia-10-000-whys'
+      assign c_pdp39_price_test_handle = 'kidss-encyclopedia-10-000-whys-pdp39'
+    when 'murphys-law-for-kids'
+      assign c_pdp39_price_test_handle = 'murphys-law-for-kids-pdp39'
+    when 'murphys-law-for-kids-copy'
+      assign c_pdp39_price_test_handle = 'leadership-enlightenment-for-kids-pdp39'
+  endcase
+  if c_pdp39_price_test_handle != blank
+    assign c_pdp39_price_test_variant = all_products[c_pdp39_price_test_handle].selected_or_first_available_variant
+    if c_pdp39_price_test_variant.available
+      assign c_pdp39_t1_variant_id = c_pdp39_price_test_variant.id
+      assign c_pdp39_t2_variant_id = c_pdp39_price_test_variant.id
+      assign c_pdp39_t3_variant_id = c_pdp39_price_test_variant.id
+      assign c_pdp39_t4_variant_id = c_pdp39_price_test_variant.id
+      assign c_pdp39_t5_variant_id = c_pdp39_price_test_variant.id
+    endif
+  endif
+-%}
+
+<div class="c-pdp17-variant c-pdp39-variant">
+  <p class="c-pdp17-eyebrow">&#9889; FLASH SALE &mdash; PRICES INCREASE IN 4 HOURS</p>
+
+  <div class="c-pdp17-rows" role="radiogroup" aria-label="Bundle options">
+
+    {{- '<!-- Tier 1: 1 book — single-book price unchanged -->' -}}
+    <label class="c-pdp17-row">
+      <input
+        type="radio"
+        name="c-pdp39-tier-{{ section.id }}"
+        class="c-pdp17-row__radio"
+        data-variant-id="{{ c_pdp39_t1_variant_id }}"
+        data-quantity="1"
+        data-pdp17-price-money="{{ c_pdp39_t1_price | money }}"
+        checked
+      >
+      <span class="c-pdp17-row__body">
+        <span class="c-pdp17-row__title">1 Book</span>
+        <span class="c-pdp17-row__subtitle">For 1 child</span>
+      </span>
+      <span class="c-pdp17-row__prices">
+        <span class="c-pdp17-row__price">{{ c_pdp39_t1_price | money }}</span>
+        <span class="c-pdp17-row__compare">{{ c_pdp39_t1_compare | money }}</span>
+        <span class="c-pdp17-row__save">{{ c_pdp39_t1_pct }}% OFF</span>
+      </span>
+    </label>
+
+    {{- '<!-- Tier 2: 2 books — $10 lower than Control -->' -}}
+    <label class="c-pdp17-row">
+      <span class="c-pdp17-row__badge c-pdp17-row__badge--popular c-pdp17-row__badge--sentence">Most Popular</span>
+      <input
+        type="radio"
+        name="c-pdp39-tier-{{ section.id }}"
+        class="c-pdp17-row__radio"
+        data-variant-id="{{ c_pdp39_t2_variant_id }}"
+        data-quantity="2"
+        data-pdp17-price-money="{{ c_pdp39_t2_price | money }}"
+      >
+      <span class="c-pdp17-row__body">
+        <span class="c-pdp17-row__title">2 Books</span>
+        <span class="c-pdp17-row__subtitle">For 2 children</span>
+        {%- if c_pdp39_t2_ships_free -%}
+          <span class="c-pdp17-row__perk c-pdp17-row__perk--ship">&#128666; FREE shipping</span>
+        {%- endif -%}
+      </span>
+      <span class="c-pdp17-row__prices">
+        <span class="c-pdp17-row__price">{{ c_pdp39_t2_price | money }}</span>
+        <span class="c-pdp17-row__compare">{{ c_pdp39_t2_compare | money }}</span>
+        <span class="c-pdp17-row__save">{{ c_pdp39_t2_pct }}% OFF</span>
+      </span>
+    </label>
+
+    {{- '<!-- Tier 3: 3 books — $10 lower than Control -->' -}}
+    <label class="c-pdp17-row">
+      <span class="c-pdp17-row__badge c-pdp17-row__badge--popular c-pdp17-row__badge--sentence">Best Value</span>
+      <input
+        type="radio"
+        name="c-pdp39-tier-{{ section.id }}"
+        class="c-pdp17-row__radio"
+        data-variant-id="{{ c_pdp39_t3_variant_id }}"
+        data-quantity="3"
+        data-pdp17-price-money="{{ c_pdp39_t3_price | money }}"
+      >
+      <span class="c-pdp17-row__body">
+        <span class="c-pdp17-row__title">3 Books</span>
+        <span class="c-pdp17-row__subtitle">For 3 children</span>
+        {%- if c_pdp39_t3_ships_free -%}
+          <span class="c-pdp17-row__perk c-pdp17-row__perk--ship">&#128666; FREE shipping</span>
+        {%- endif -%}
+      </span>
+      <span class="c-pdp17-row__prices">
+        <span class="c-pdp17-row__price">{{ c_pdp39_t3_price | money }}</span>
+        <span class="c-pdp17-row__compare">{{ c_pdp39_t3_compare | money }}</span>
+        <span class="c-pdp17-row__save">{{ c_pdp39_t3_pct }}% OFF</span>
+      </span>
+    </label>
+
+    {{- '<!-- Tier 4: 4 books — $10 lower than Control -->' -}}
+    <label class="c-pdp17-row">
+      <span class="c-pdp17-row__badge c-pdp17-row__badge--popular c-pdp17-row__badge--sentence">Biggest Saving</span>
+      <input
+        type="radio"
+        name="c-pdp39-tier-{{ section.id }}"
+        class="c-pdp17-row__radio"
+        data-variant-id="{{ c_pdp39_t4_variant_id }}"
+        data-quantity="4"
+        data-pdp17-price-money="{{ c_pdp39_t4_price | money }}"
+      >
+      <span class="c-pdp17-row__body">
+        <span class="c-pdp17-row__title">4 Books</span>
+        <span class="c-pdp17-row__subtitle">For 4 children</span>
+        {%- if c_pdp39_t4_ships_free -%}
+          <span class="c-pdp17-row__perk c-pdp17-row__perk--ship">&#128666; FREE shipping</span>
+        {%- endif -%}
+      </span>
+      <span class="c-pdp17-row__prices">
+        <span class="c-pdp17-row__price">{{ c_pdp39_t4_price | money }}</span>
+        <span class="c-pdp17-row__compare">{{ c_pdp39_t4_compare | money }}</span>
+        <span class="c-pdp17-row__save">{{ c_pdp39_t4_pct }}% OFF</span>
+      </span>
+    </label>
+
+    {{- '<!-- Tier 5: 5 books — $10 lower than Control -->' -}}
+    <label class="c-pdp17-row">
+      <span class="c-pdp17-row__badge c-pdp17-row__badge--popular c-pdp17-row__badge--sentence">Best Gift Pack</span>
+      <input
+        type="radio"
+        name="c-pdp39-tier-{{ section.id }}"
+        class="c-pdp17-row__radio"
+        data-variant-id="{{ c_pdp39_t5_variant_id }}"
+        data-quantity="5"
+        data-pdp17-price-money="{{ c_pdp39_t5_price | money }}"
+      >
+      <span class="c-pdp17-row__body">
+        <span class="c-pdp17-row__title">5 Books</span>
+        <span class="c-pdp17-row__subtitle">For 5 children</span>
+        {%- if c_pdp39_t5_ships_free -%}
+          <span class="c-pdp17-row__perk c-pdp17-row__perk--ship">&#128666; FREE shipping</span>
+        {%- endif -%}
+      </span>
+      <span class="c-pdp17-row__prices">
+        <span class="c-pdp17-row__price">{{ c_pdp39_t5_price | money }}</span>
+        <span class="c-pdp17-row__compare">{{ c_pdp39_t5_compare | money }}</span>
+        <span class="c-pdp17-row__save">{{ c_pdp39_t5_pct }}% OFF</span>
+      </span>
+    </label>
+
+  </div>
+
+  <button type="button" class="c-pdp17-atc button button--full-width" data-pdp17-atc>
+    <span data-pdp17-atc-price>{{ c_pdp39_t1_price | money }}</span>&nbsp;ADD TO CART
+  </button>
+</div>

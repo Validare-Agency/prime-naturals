@@ -149,6 +149,14 @@ function handleExperiments() {
   if (primeSite38?.name === "Var A") {
     document.body.classList.add("c-primeSite38VarA");
   }
+
+  // Test: V_PRIME_PDP_39 | Google Traffic Bundle Prices -$10
+  const primePdp39 = window.igData?.user.getTestGroup(
+    "5a3c61c8-dd7b-45b6-8364-38370e761e8a"
+  );
+  if (primePdp39?.name === "Var A") {
+    document.body.classList.add("c-primePdp39VarA");
+  }
 }
 
 let cartDrawerWasActive = false;
