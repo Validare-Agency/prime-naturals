@@ -714,6 +714,8 @@
               {% render 'c-prime-pdp-17-bundle', product: product, section: section %}
               {%- comment -%} V_PRIME_SITE_38 Var A — swapped with the one above by c-prime-site-38.css {%- endcomment -%}
               {% render 'c-prime-site-38-bundle', product: product, section: section %}
+              {%- comment -%} V_PRIME_PDP_31 | Gift-Bundle Combo Replacing Tier 3 {%- endcomment -%}
+              {% render 'c-prime-pdp-31-bundle', product: product, section: section %}
               {%- render 'buy-buttons',
                  block: block,
                  product: product,
@@ -1231,6 +1233,14 @@
   {{ 'c-prime-site-38.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
 <script src="{{ 'c-prime-site-38.js' | asset_url }}" defer></script>
+
+{%- comment -%} V_PRIME_PDP_31 | Gift-Bundle Combo Replacing Tier 3 {%- endcomment -%}
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-pdp-31.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-pdp-31.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+<script src="{{ 'c-prime-pdp-31.js' | asset_url }}" defer></script>
 
 {%- comment -%} V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM) — assets for snippets/c-prime-mix-30-progress-bar.liquid {%- endcomment -%}
 {%- if section.index > 3 -%}

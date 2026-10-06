@@ -1,0 +1,444 @@
+/* <-------------------V_PRIME_PDP_31 | Gift-Bundle Combo Replacing Tier 3-----------------> */
+
+/* Test Setup */
+  /* Hide the pdp31 wrapper for Control and all non-pdp31 visitors */
+  .c-pdp31-wrapper { display: none; }
+
+  /* Show the pdp31 wrapper for any pdp31 variant */
+  body.c-primePdp31VarA .c-pdp31-wrapper,
+  body.c-primePdp31VarB .c-pdp31-wrapper,
+  body.c-primePdp31VarC .c-pdp31-wrapper { display: block; }
+
+  /* Hide the pdp17 and site38 bundles when pdp31 is active */
+  body.c-primePdp31VarA .c-pdp17-variant,
+  body.c-primePdp31VarB .c-pdp17-variant,
+  body.c-primePdp31VarC .c-pdp17-variant,
+  body.c-primePdp31VarA .c-site38-variant,
+  body.c-primePdp31VarB .c-site38-variant,
+  body.c-primePdp31VarC .c-site38-variant { display: none !important; }
+
+  /* Show only the active variant's bundle card; hide the others */
+  .c-pdp31-card--var-a,
+  .c-pdp31-card--var-b,
+  .c-pdp31-card--var-c { display: none; }
+
+  body.c-primePdp31VarA .c-pdp31-card--var-a { display: block; }
+  body.c-primePdp31VarB .c-pdp31-card--var-b { display: block; }
+  body.c-primePdp31VarC .c-pdp31-card--var-c { display: block; }
+
+/* Test Design */
+
+/* ---- Eyebrow flash-sale text (matches pdp17 style) ---- */
+.c-pdp31-eyebrow {
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 1rem;
+  letter-spacing: 0.02em;
+}
+
+/* ---- Tier 1 compact row ---- */
+.c-pdp31-tier1 {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 1.2rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  background: #fff;
+  transition: border-color 0.15s ease;
+}
+
+.c-pdp31-tier1:has(.c-pdp31-tier1__radio:checked) {
+  border-color: #222;
+}
+
+.c-pdp31-tier1__radio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.c-pdp31-tier1__indicator {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #c0c0c0;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.c-pdp31-tier1:has(.c-pdp31-tier1__radio:checked) .c-pdp31-tier1__indicator {
+  border-color: #222;
+  background: #222;
+  box-shadow: inset 0 0 0 4px #fff;
+}
+
+.c-pdp31-tier1__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.c-pdp31-tier1__title {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.c-pdp31-tier1__sub {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.c-pdp31-tier1__prices {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.1rem;
+}
+
+.c-pdp31-tier1__price {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.c-pdp31-tier1__compare {
+  font-size: 1.1rem;
+  color: #999;
+  text-decoration: line-through;
+}
+
+/* ---- Bundle offer wrapper ---- */
+.c-pdp31-offer {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #e0e0e0;
+  margin-bottom: 1.2rem;
+}
+
+/* ---- Red offer header bar ---- */
+.c-pdp31-offer__header {
+  background: #c0392b;
+  color: #fff;
+  padding: 1rem 1.4rem;
+  text-align: center;
+}
+
+.c-pdp31-offer__headline {
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin: 0 0 0.25rem;
+  line-height: 1.3;
+}
+
+.c-pdp31-offer__sub {
+  font-size: 1.1rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* ---- Bundle card (label wraps everything for click-to-select) ---- */
+.c-pdp31-card {
+  display: block;
+  cursor: pointer;
+  background: #fff;
+}
+
+/* Hidden real radio; visual state driven by indicator + :has() */
+.c-pdp31-card__radio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Card header row: radio indicator + title */
+.c-pdp31-card__header-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 1.2rem 1.4rem 0.8rem;
+}
+
+.c-pdp31-card__indicator {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  border: 2px solid #c0c0c0;
+  border-radius: 50%;
+  background: #fff;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.c-pdp31-card:has(.c-pdp31-card__radio:checked) .c-pdp31-card__indicator {
+  border-color: #c0392b;
+  background: #c0392b;
+  box-shadow: inset 0 0 0 4px #fff;
+}
+
+.c-pdp31-card__title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.c-pdp31-card__title {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.c-pdp31-card__subtitle {
+  font-size: 1.15rem;
+  color: #555;
+}
+
+/* Card body: headline, desc, books, footer */
+.c-pdp31-card__body {
+  padding: 0 1.4rem 1.4rem;
+}
+
+.c-pdp31-card__headline {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0.6rem 0 0.4rem;
+}
+
+.c-pdp31-card__desc {
+  font-size: 1.2rem;
+  color: #555;
+  margin: 0 0 1.2rem;
+  line-height: 1.4;
+}
+
+/* ---- Three-book grid ---- */
+.c-pdp31-books {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.c-pdp31-books__plus {
+  flex-shrink: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #bbb;
+  padding-top: 28px; /* aligns with cover image center */
+  line-height: 1;
+}
+
+.c-pdp31-book {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.3rem;
+}
+
+.c-pdp31-book__img-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 90px;
+  margin: 0 auto 0.3rem;
+}
+
+.c-pdp31-book__img-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+
+/* FREE badge overlaid on the free-book cover */
+.c-pdp31-book__free-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #c0392b;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 0 4px 0 6px;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.c-pdp31-book__role {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.c-pdp31-book__role--free {
+  color: #e67e22;
+}
+
+.c-pdp31-book__name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.c-pdp31-book__desc {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.c-pdp31-book__price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+  color: #222;
+}
+
+.c-pdp31-book__price--free {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.c-pdp31-book__price--free s {
+  color: #999;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.c-pdp31-book__free-text {
+  color: #c0392b;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+/* ---- Tagline (green) ---- */
+.c-pdp31-card__tagline {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #27ae60;
+  margin: 0 0 1rem;
+  line-height: 1.4;
+}
+
+/* ---- Card footer: full value, bundle price, savings ---- */
+.c-pdp31-card__footer {
+  border-top: 1px solid #f0f0f0;
+  padding-top: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.c-pdp31-card__full-value {
+  font-size: 1.1rem;
+  color: #888;
+  margin: 0;
+}
+
+.c-pdp31-card__full-value s {
+  text-decoration: line-through;
+}
+
+.c-pdp31-card__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.c-pdp31-card__bundle-price {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #222;
+}
+
+.c-pdp31-card__shipping {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #27ae60;
+}
+
+.c-pdp31-card__save {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #27ae60;
+  margin: 0;
+}
+
+/* ---- Shared ATC button ---- */
+.c-pdp31-atc {
+  margin-top: 0;
+}
+
+.c-pdp31-atc:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---- Mobile: stack books vertically on very small screens ---- */
+@media screen and (max-width: 480px) {
+  .c-pdp31-books {
+    gap: 0.3rem;
+  }
+
+  .c-pdp31-books__plus {
+    padding-top: 22px;
+    font-size: 1.6rem;
+  }
+
+  .c-pdp31-book__role,
+  .c-pdp31-book__desc {
+    font-size: 0.9rem;
+  }
+
+  .c-pdp31-book__name {
+    font-size: 1rem;
+  }
+
+  .c-pdp31-book__price {
+    font-size: 1.1rem;
+  }
+
+  .c-pdp31-card__bundle-price {
+    font-size: 1.7rem;
+  }
+
+  .c-pdp31-offer__headline {
+    font-size: 1.25rem;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .c-pdp31-books {
+    gap: 1rem;
+  }
+
+  .c-pdp31-books__plus {
+    padding-top: 35px;
+  }
+
+  .c-pdp31-book__img-wrap {
+    max-width: 100px;
+  }
+
+  .c-pdp31-card__headline {
+    font-size: 1.8rem;
+  }
+}
