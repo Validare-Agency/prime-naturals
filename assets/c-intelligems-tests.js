@@ -149,6 +149,18 @@ function handleExperiments() {
   if (primeSite38?.name === "Var A") {
     document.body.classList.add("c-primeSite38VarA");
   }
+
+  // Test: V_PRIME_PDP_31 | Gift-Bundle Combo Replacing Tier 3
+  const primePdp31 = window.igData?.user.getTestGroup(
+    "60561491-16ad-4e6f-935d-6047fb642d0c"
+  );
+  if (primePdp31?.name === "Var A - Encyclopedia+Murphy's, Leadership free") {
+    document.body.classList.add("c-primePdp31VarA");
+  } else if (primePdp31?.name === "Var B - Encyclopedia+Leadership, Murphy's free") {
+    document.body.classList.add("c-primePdp31VarB");
+  } else if (primePdp31?.name === "Var C - 2× Encyclopedia, Murphy's free") {
+    document.body.classList.add("c-primePdp31VarC");
+  }
 }
 
 let cartDrawerWasActive = false;

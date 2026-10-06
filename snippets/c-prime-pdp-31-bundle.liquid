@@ -1,0 +1,377 @@
+{%- comment -%}
+  V_PRIME_PDP_31 | Gift-Bundle Combo Replacing Tier 3
+  Renders only on the encyclopedia PDP (kidss-encyclopedia-10-000-whys).
+  Three variants (A/B/C) are all rendered; CSS shows the right one via body class.
+  Body classes applied by assets/c-intelligems-tests.js:
+    c-primePdp31VarA / c-primePdp31VarB / c-primePdp31VarC
+  Styled by assets/c-prime-pdp-31.css, wired by assets/c-prime-pdp-31.js.
+  Accepts: product, section
+{%- endcomment -%}
+
+{%- if product.handle == 'kidss-encyclopedia-10-000-whys' -%}
+
+{%- liquid
+  # Base encyclopedia price — same .90-ending formula as c-prime-pdp-17-bundle.liquid
+  assign c_pdp31_enc_variant = product.selected_or_first_available_variant
+  assign c_pdp31_enc_price = c_pdp31_enc_variant.price | divided_by: 100.0 | ceil | times: 100 | minus: 10
+
+  # Murphy's Law For Kids
+  assign c_pdp31_murphys_product = all_products['murphys-law-for-kids']
+  assign c_pdp31_murphys_variant = c_pdp31_murphys_product.selected_or_first_available_variant
+  assign c_pdp31_murphys_price = c_pdp31_murphys_variant.price | divided_by: 100.0 | ceil | times: 100 | minus: 10
+
+  # Leadership Enlightenment For Kids (handle is murphys-law-for-kids-copy on this store)
+  assign c_pdp31_leadership_product = all_products['murphys-law-for-kids-copy']
+  assign c_pdp31_leadership_variant = c_pdp31_leadership_product.selected_or_first_available_variant
+  assign c_pdp31_leadership_price = c_pdp31_leadership_variant.price | divided_by: 100.0 | ceil | times: 100 | minus: 10
+
+  # Tier 1: 1 encyclopedia
+  assign c_pdp31_t1_price = c_pdp31_enc_price
+  assign c_pdp31_t1_compare = c_pdp31_enc_price | times: 2
+
+  # Var A: Encyclopedia + Murphy's paid, Leadership free
+  assign c_pdp31_vara_price = c_pdp31_enc_price | plus: c_pdp31_murphys_price
+  assign c_pdp31_vara_full  = c_pdp31_enc_price | plus: c_pdp31_murphys_price | plus: c_pdp31_leadership_price
+  assign c_pdp31_vara_save  = c_pdp31_leadership_price
+
+  # Var B: Encyclopedia + Leadership paid, Murphy's free
+  assign c_pdp31_varb_price = c_pdp31_enc_price | plus: c_pdp31_leadership_price
+  assign c_pdp31_varb_full  = c_pdp31_enc_price | plus: c_pdp31_leadership_price | plus: c_pdp31_murphys_price
+  assign c_pdp31_varb_save  = c_pdp31_murphys_price
+
+  # Var C: 2× Encyclopedia, Murphy's free
+  assign c_pdp31_varc_price = c_pdp31_enc_price | times: 2
+  assign c_pdp31_varc_full  = c_pdp31_enc_price | times: 2 | plus: c_pdp31_murphys_price
+  assign c_pdp31_varc_save  = c_pdp31_murphys_price
+-%}
+
+<div class="c-pdp31-wrapper">
+
+  <p class="c-pdp31-eyebrow">&#9889; FLASH SALE &mdash; PRICES INCREASE IN 4 HOURS</p>
+
+  {%- comment -%} Tier 1 — compact radio row, single book {%- endcomment -%}
+  <label class="c-pdp31-tier1" for="c-pdp31-t1-{{ section.id }}">
+    <input
+      type="radio"
+      id="c-pdp31-t1-{{ section.id }}"
+      name="c-pdp31-tier-{{ section.id }}"
+      class="c-pdp31-tier1__radio"
+      data-pdp31-tier="t1"
+      data-variant-id="{{ c_pdp31_enc_variant.id }}"
+      data-quantity="1"
+      data-pdp31-price="{{ c_pdp31_t1_price | money }}"
+      checked
+    >
+    <span class="c-pdp31-tier1__indicator" aria-hidden="true"></span>
+    <span class="c-pdp31-tier1__body">
+      <span class="c-pdp31-tier1__title">1 Book</span>
+      <span class="c-pdp31-tier1__sub">For 1 child</span>
+    </span>
+    <span class="c-pdp31-tier1__prices">
+      <span class="c-pdp31-tier1__price">{{ c_pdp31_t1_price | money }}</span>
+      <span class="c-pdp31-tier1__compare">{{ c_pdp31_t1_compare | money }}</span>
+    </span>
+  </label>
+
+  {%- comment -%} Bundle offer: red header + three variant cards (CSS shows the active one) {%- endcomment -%}
+  <div class="c-pdp31-offer">
+    <div class="c-pdp31-offer__header">
+      <p class="c-pdp31-offer__headline">Limited-time offer &mdash; buy any 2 books, the 3rd is free</p>
+      <p class="c-pdp31-offer__sub">No code needed. Added automatically at checkout.</p>
+    </div>
+
+    {%- comment -%} ——————————————————————————————————————————————
+      VAR A: Encyclopedia + Murphy's paid | Leadership FREE
+    —————————————————————————————————————————————— {%- endcomment -%}
+    <label
+      class="c-pdp31-card c-pdp31-card--var-a"
+      for="c-pdp31-bundle-a-{{ section.id }}"
+      data-pdp31-vid-paid1="{{ c_pdp31_enc_variant.id }}"
+      data-pdp31-vid-paid2="{{ c_pdp31_murphys_variant.id }}"
+      data-pdp31-vid-free="{{ c_pdp31_leadership_variant.id }}"
+      data-pdp31-price="{{ c_pdp31_vara_price | money }}"
+    >
+      <input
+        type="radio"
+        id="c-pdp31-bundle-a-{{ section.id }}"
+        name="c-pdp31-tier-{{ section.id }}"
+        class="c-pdp31-card__radio"
+        data-pdp31-tier="bundle"
+        data-pdp31-price="{{ c_pdp31_vara_price | money }}"
+      >
+      <div class="c-pdp31-card__header-row">
+        <span class="c-pdp31-card__indicator" aria-hidden="true"></span>
+        <span class="c-pdp31-card__title-block">
+          <span class="c-pdp31-card__title">The Complete Gift Set</span>
+          <span class="c-pdp31-card__subtitle">3 books &mdash; One of each &mdash; Leadership Enlightenment on us</span>
+        </span>
+      </div>
+      <div class="c-pdp31-card__body">
+        <h3 class="c-pdp31-card__headline">Curated for all-round development</h3>
+        <p class="c-pdp31-card__desc">Knowledge alone isn&rsquo;t enough. They also need confidence and resilience. One book for each.</p>
+        <div class="c-pdp31-books">
+          <div class="c-pdp31-book">
+            <div class="c-pdp31-book__img-wrap">
+              <img
+                src="{{ product.featured_image | image_url: width: 200 }}"
+                alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                loading="lazy"
+                width="80"
+                height="80"
+              >
+            </div>
+            <p class="c-pdp31-book__role">The mind</p>
+            <p class="c-pdp31-book__name">{{ product.title }}</p>
+            <p class="c-pdp31-book__desc">Makes them curious. Answers the questions you can&rsquo;t</p>
+            <p class="c-pdp31-book__price">{{ c_pdp31_enc_price | money }}</p>
+          </div>
+          <div class="c-pdp31-books__plus" aria-hidden="true">+</div>
+          <div class="c-pdp31-book">
+            <div class="c-pdp31-book__img-wrap">
+              <img
+                src="{{ c_pdp31_murphys_product.featured_image | image_url: width: 200 }}"
+                alt="{{ c_pdp31_murphys_product.featured_image.alt | default: c_pdp31_murphys_product.title | escape }}"
+                loading="lazy"
+                width="80"
+                height="80"
+              >
+            </div>
+            <p class="c-pdp31-book__role">The Backbone</p>
+            <p class="c-pdp31-book__name">{{ c_pdp31_murphys_product.title }}</p>
+            <p class="c-pdp31-book__desc">Makes them resilient. Teaches them to laugh it off when things go wrong</p>
+            <p class="c-pdp31-book__price">{{ c_pdp31_murphys_price | money }}</p>
+          </div>
+          <div class="c-pdp31-books__plus" aria-hidden="true">+</div>
+          <div class="c-pdp31-book c-pdp31-book--free">
+            <div class="c-pdp31-book__img-wrap">
+              <img
+                src="{{ c_pdp31_leadership_product.featured_image | image_url: width: 200 }}"
+                alt="{{ c_pdp31_leadership_product.featured_image.alt | default: c_pdp31_leadership_product.title | escape }}"
+                loading="lazy"
+                width="80"
+                height="80"
+              >
+              <span class="c-pdp31-book__free-badge" aria-hidden="true">FREE</span>
+            </div>
+            <p class="c-pdp31-book__role c-pdp31-book__role--free">The Voice</p>
+            <p class="c-pdp31-book__name">{{ c_pdp31_leadership_product.title }}</p>
+            <p class="c-pdp31-book__desc">Makes them confident. Teaches them to speak up and be heard</p>
+            <p class="c-pdp31-book__price c-pdp31-book__price--free">
+              <s>{{ c_pdp31_leadership_price | money }}</s>
+              <strong class="c-pdp31-book__free-text">FREE</strong>
+            </p>
+          </div>
+        </div>
+        <p class="c-pdp31-card__tagline">One makes them ask. One keeps them going. One gets them heard.</p>
+        <div class="c-pdp31-card__footer">
+          <p class="c-pdp31-card__full-value"><s>{{ c_pdp31_vara_full | money }} bought separately</s></p>
+          <div class="c-pdp31-card__price-row">
+            <span class="c-pdp31-card__bundle-price">{{ c_pdp31_vara_price | money }}</span>
+            <span class="c-pdp31-card__shipping">FREE shipping</span>
+          </div>
+          <p class="c-pdp31-card__save">You save {{ c_pdp31_vara_save | money }}</p>
+        </div>
+      </div>
+    </label>
+
+    {%- comment -%} ——————————————————————————————————————————————
+      VAR B: Encyclopedia + Leadership paid | Murphy's FREE
+    —————————————————————————————————————————————— {%- endcomment -%}
+    <label
+      class="c-pdp31-card c-pdp31-card--var-b"
+      for="c-pdp31-bundle-b-{{ section.id }}"
+      data-pdp31-vid-paid1="{{ c_pdp31_enc_variant.id }}"
+      data-pdp31-vid-paid2="{{ c_pdp31_leadership_variant.id }}"
+      data-pdp31-vid-free="{{ c_pdp31_murphys_variant.id }}"
+      data-pdp31-price="{{ c_pdp31_varb_price | money }}"
+    >
+      <input
+        type="radio"
+        id="c-pdp31-bundle-b-{{ section.id }}"
+        name="c-pdp31-tier-{{ section.id }}"
+        class="c-pdp31-card__radio"
+        data-pdp31-tier="bundle"
+        data-pdp31-price="{{ c_pdp31_varb_price | money }}"
+      >
+      <div class="c-pdp31-card__header-row">
+        <span class="c-pdp31-card__indicator" aria-hidden="true"></span>
+        <span class="c-pdp31-card__title-block">
+          <span class="c-pdp31-card__title">The Complete Gift Set</span>
+          <span class="c-pdp31-card__subtitle">3 books &mdash; One book each &mdash; Murphy&rsquo;s Law on us</span>
+        </span>
+      </div>
+      <div class="c-pdp31-card__body">
+        <h3 class="c-pdp31-card__headline">Curated for all-round development</h3>
+        <p class="c-pdp31-card__desc">Knowledge alone isn&rsquo;t enough. They also need confidence and resilience. One book for each.</p>
+        <div class="c-pdp31-books">
+          <div class="c-pdp31-book">
+            <div class="c-pdp31-book__img-wrap">
+              <img
+                src="{{ product.featured_image | image_url: width: 200 }}"
+                alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                loading="lazy"
+                width="80"
+                height="80"
+              >
+            </div>
+            <p class="c-pdp31-book__role">The mind</p>
+            <p class="c-pdp31-book__name">{{ product.title }}</p>
+            <p class="c-pdp31-book__desc">Makes them curious. Answers the questions you can&rsquo;t</p>
+            <p class="c-pdp31-book__price">{{ c_pdp31_enc_price | money }}</p>
+          </div>
+          <div class="c-pdp31-books__plus" aria-hidden="true">+</div>
+          <div class="c-pdp31-book">
+            <div class="c-pdp31-book__img-wrap">
+              <img
+                src="{{ c_pdp31_leadership_product.featured_image | image_url: width: 200 }}"
+                alt="{{ c_pdp31_leadership_product.featured_image.alt | default: c_pdp31_leadership_product.title | escape }}"
+                loading="lazy"
+                width="80"
+                height="80"
+              >
+            </div>
+            <p class="c-pdp31-book__role">The Voice</p>
+            <p class="c-pdp31-book__name">{{ c_pdp31_leadership_product.title }}</p>
+            <p class="c-pdp31-book__desc">Makes them confident. Teaches them to speak up and be heard</p>
+            <p class="c-pdp31-book__price">{{ c_pdp31_leadership_price | money }}</p>
+          </div>
+          <div class="c-pdp31-books__plus" aria-hidden="true">+</div>
+          <div class="c-pdp31-book c-pdp31-book--free">
+            <div class="c-pdp31-book__img-wrap">
+              <img
+                src="{{ c_pdp31_murphys_product.featured_image | image_url: width: 200 }}"
+                alt="{{ c_pdp31_murphys_product.featured_image.alt | default: c_pdp31_murphys_product.title | escape }}"
+                loading="lazy"
+                width="80"
+                height="80"
+              >
+              <span class="c-pdp31-book__free-badge" aria-hidden="true">FREE</span>
+            </div>
+            <p class="c-pdp31-book__role c-pdp31-book__role--free">The Backbone</p>
+            <p class="c-pdp31-book__name">{{ c_pdp31_murphys_product.title }}</p>
+            <p class="c-pdp31-book__desc">Makes them resilient. Teaches them to laugh it off when things go wrong</p>
+            <p class="c-pdp31-book__price c-pdp31-book__price--free">
+              <s>{{ c_pdp31_murphys_price | money }}</s>
+              <strong class="c-pdp31-book__free-text">FREE</strong>
+            </p>
+          </div>
+        </div>
+        <p class="c-pdp31-card__tagline">One makes them ask. One keeps them going. One gets them heard.</p>
+        <div class="c-pdp31-card__footer">
+          <p class="c-pdp31-card__full-value"><s>{{ c_pdp31_varb_full | money }} bought separately</s></p>
+          <div class="c-pdp31-card__price-row">
+            <span class="c-pdp31-card__bundle-price">{{ c_pdp31_varb_price | money }}</span>
+            <span class="c-pdp31-card__shipping">FREE shipping</span>
+          </div>
+          <p class="c-pdp31-card__save">You save {{ c_pdp31_varb_save | money }}</p>
+        </div>
+      </div>
+    </label>
+
+    {%- comment -%} ——————————————————————————————————————————————
+      VAR C: 2× Encyclopedia paid | Murphy's FREE
+    —————————————————————————————————————————————— {%- endcomment -%}
+    <label
+      class="c-pdp31-card c-pdp31-card--var-c"
+      for="c-pdp31-bundle-c-{{ section.id }}"
+      data-pdp31-vid-paid1="{{ c_pdp31_enc_variant.id }}"
+      data-pdp31-vid-paid2="{{ c_pdp31_enc_variant.id }}"
+      data-pdp31-vid-free="{{ c_pdp31_murphys_variant.id }}"
+      data-pdp31-price="{{ c_pdp31_varc_price | money }}"
+    >
+      <input
+        type="radio"
+        id="c-pdp31-bundle-c-{{ section.id }}"
+        name="c-pdp31-tier-{{ section.id }}"
+        class="c-pdp31-card__radio"
+        data-pdp31-tier="bundle"
+        data-pdp31-price="{{ c_pdp31_varc_price | money }}"
+      >
+      <div class="c-pdp31-card__header-row">
+        <span class="c-pdp31-card__indicator" aria-hidden="true"></span>
+        <span class="c-pdp31-card__title-block">
+          <span class="c-pdp31-card__title">The Complete Gift Set</span>
+          <span class="c-pdp31-card__subtitle">3 books &mdash; One book each &mdash; Murphy&rsquo;s Law on us</span>
+        </span>
+      </div>
+      <div class="c-pdp31-card__body">
+        <h3 class="c-pdp31-card__headline">Curated for all-round development</h3>
+        <p class="c-pdp31-card__desc">Knowledge alone isn&rsquo;t enough. They also need confidence and resilience. One book for each.</p>
+        <div class="c-pdp31-books">
+          <div class="c-pdp31-book">
+            <div class="c-pdp31-book__img-wrap">
+              <img
+                src="{{ product.featured_image | image_url: width: 200 }}"
+                alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                loading="lazy"
+                width="80"
+                height="80"
+              >
+            </div>
+            <p class="c-pdp31-book__role">The mind</p>
+            <p class="c-pdp31-book__name">{{ product.title }}</p>
+            <p class="c-pdp31-book__desc">Makes them curious. Answers the questions you can&rsquo;t</p>
+            <p class="c-pdp31-book__price">{{ c_pdp31_enc_price | money }}</p>
+          </div>
+          <div class="c-pdp31-books__plus" aria-hidden="true">+</div>
+          <div class="c-pdp31-book">
+            <div class="c-pdp31-book__img-wrap">
+              <img
+                src="{{ product.featured_image | image_url: width: 200 }}"
+                alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                loading="lazy"
+                width="80"
+                height="80"
+              >
+            </div>
+            <p class="c-pdp31-book__role">The mind</p>
+            <p class="c-pdp31-book__name">{{ product.title }}</p>
+            <p class="c-pdp31-book__desc">Makes them curious. Answers the questions you can&rsquo;t</p>
+            <p class="c-pdp31-book__price">{{ c_pdp31_enc_price | money }}</p>
+          </div>
+          <div class="c-pdp31-books__plus" aria-hidden="true">+</div>
+          <div class="c-pdp31-book c-pdp31-book--free">
+            <div class="c-pdp31-book__img-wrap">
+              <img
+                src="{{ c_pdp31_murphys_product.featured_image | image_url: width: 200 }}"
+                alt="{{ c_pdp31_murphys_product.featured_image.alt | default: c_pdp31_murphys_product.title | escape }}"
+                loading="lazy"
+                width="80"
+                height="80"
+              >
+              <span class="c-pdp31-book__free-badge" aria-hidden="true">FREE</span>
+            </div>
+            <p class="c-pdp31-book__role c-pdp31-book__role--free">The Backbone</p>
+            <p class="c-pdp31-book__name">{{ c_pdp31_murphys_product.title }}</p>
+            <p class="c-pdp31-book__desc">Makes them resilient. Teaches them to laugh it off when things go wrong</p>
+            <p class="c-pdp31-book__price c-pdp31-book__price--free">
+              <s>{{ c_pdp31_murphys_price | money }}</s>
+              <strong class="c-pdp31-book__free-text">FREE</strong>
+            </p>
+          </div>
+        </div>
+        <p class="c-pdp31-card__tagline">One to wonder with. One to fall back on.</p>
+        <div class="c-pdp31-card__footer">
+          <p class="c-pdp31-card__full-value"><s>{{ c_pdp31_varc_full | money }} bought separately</s></p>
+          <div class="c-pdp31-card__price-row">
+            <span class="c-pdp31-card__bundle-price">{{ c_pdp31_varc_price | money }}</span>
+            <span class="c-pdp31-card__shipping">FREE shipping</span>
+          </div>
+          <p class="c-pdp31-card__save">You save {{ c_pdp31_varc_save | money }}</p>
+        </div>
+      </div>
+    </label>
+
+  </div>{%- comment -%} /.c-pdp31-offer {%- endcomment -%}
+
+  <button
+    type="button"
+    class="c-pdp31-atc button button--full-width"
+    data-pdp31-atc
+  >
+    <span data-pdp31-atc-price>{{ c_pdp31_t1_price | money }}</span><span data-pdp31-atc-label>&nbsp;ADD TO CART</span>
+  </button>
+
+</div>{%- comment -%} /.c-pdp31-wrapper {%- endcomment -%}
+
+{%- endif -%}
