@@ -1,15 +1,5 @@
 {%- render 'cart-drawer' -%}
 
-{%- comment -%} V_PRIME_CART_32 | Charity Donation Minicart Add-On — donation card
-  (snippets/c-prime-cart-32-donation.liquid) + totals row, both rendered from
-  snippets/cart-drawer.liquid. {%- endcomment -%}
-{%- if section.index > 3 -%}
-  <link rel="stylesheet" href="{{ 'c-prime-cart-32.css' | asset_url }}" media="print" onload="this.media='all'">
-{%- else -%}
-  {{ 'c-prime-cart-32.css' | asset_url | stylesheet_tag }}
-{%- endif -%}
-<script src="{{ 'c-prime-cart-32.js' | asset_url }}" defer></script>
-
 {%- comment -%}
   V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM) — free gift lines
   auto-added/removed by cart total (assets/c-prime-mix-30-gifts.js). Gift
