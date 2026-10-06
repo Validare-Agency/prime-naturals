@@ -1,0 +1,27 @@
+/* <-------------------V_PRIME_PDP_33 | Teacher-Authority Image (PDP)-----------------> */
+
+/* Test Setup */
+  /* Control: injected slide is never added — body class is not set, JS does nothing */
+  /* Var A: .c-primePdp33VarA is added to <body>; JS inserts the slide/thumbnail/dot */
+
+/* Test Design */
+  /* Ensure injected slide image fills the gallery container consistently */
+  .c-primePdp33-slide .product__media {
+    width: 100%;
+    height: 100%;
+  }
+
+  .c-primePdp33-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Thumbnail image sizing to match existing thumbnails */
+  .c-primePdp33-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
