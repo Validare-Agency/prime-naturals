@@ -149,6 +149,14 @@ function handleExperiments() {
   if (primeSite38?.name === "Var A") {
     document.body.classList.add("c-primeSite38VarA");
   }
+
+  // Test: V_PRIME_PDP_33 | Teacher-Authority Image (PDP)
+  const primePdp33 = window.igData?.user.getTestGroup(
+    "e2ff9660-5cad-4f61-a3cc-4215139fe80f"
+  );
+  if (primePdp33?.name === "Var A") {
+    document.body.classList.add("c-primePdp33VarA");
+  }
 }
 
 let cartDrawerWasActive = false;
@@ -175,6 +183,13 @@ document.addEventListener("click", (event) => {
   if (!thumbnail) return;
   window.igEvents = window.igEvents || [];
   window.igEvents.push({ event: "click_gallery_thumnail" });
+});
+
+// V_PRIME_PDP_33: enagagement_product_images - fires when user engages with product imgs in gallery
+document.addEventListener("click", (event) => {
+  if (!event.target.closest('[id^="MediaGallery-"]')) return;
+  window.igEvents = window.igEvents || [];
+  window.igEvents.push({ event: "enagagement_product_images" });
 });
 
 // Held-out visitors get Control in every test. Runs before handleExperiments().
