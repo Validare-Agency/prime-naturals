@@ -530,27 +530,6 @@
         "mobile_padding_bottom": 56
       }
     },
-    "178791830636e97774": {
-      "type": "apps",
-      "blocks": {
-        "judge_me_reviews_review_widget_FbtBRQ": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "no_reviews",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_FbtBRQ"
-      ],
-      "settings": {
-        "display_id": false,
-        "include_margins": true
-      }
-    },
     "results": {
       "type": "c-preorder-results",
       "blocks": {
@@ -669,6 +648,109 @@
         "mobile_padding_top": 24,
         "mobile_padding_bottom": 56
       }
+    },
+    "faq": {
+      "type": "c-preorder-faq",
+      "blocks": {
+        "group_1": {
+          "type": "group",
+          "settings": {
+            "title": "Pre-order",
+            "color": "red"
+          }
+        },
+        "question_1": {
+          "type": "question",
+          "settings": {
+            "question": "When am I charged?",
+            "answer": "<p>At checkout, like any order. Your copy is reserved as soon as you order.</p>",
+            "open": true
+          }
+        },
+        "question_2": {
+          "type": "question",
+          "settings": {
+            "question": "When does it ship?",
+            "answer": "<p>Vol. 2 ships on October 11, straight from our warehouse. It usually arrives about 7 days after it ships.</p>",
+            "open": false
+          }
+        },
+        "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "Can I cancel my pre-order?",
+            "answer": "<p>[Add your cancellation policy here.]</p>",
+            "open": false
+          }
+        },
+        "question_4": {
+          "type": "question",
+          "settings": {
+            "question": "Will it arrive before the holidays?",
+            "answer": "<p>Yes. Vol. 2 ships October 11 and usually arrives about 7 days later — well ahead of the holidays.</p>",
+            "open": false
+          }
+        },
+        "group_2": {
+          "type": "group",
+          "settings": {
+            "title": "About the book",
+            "color": "grey"
+          }
+        },
+        "question_5": {
+          "type": "question",
+          "settings": {
+            "question": "Is Vol. 2 different from Vol. 1?",
+            "answer": "<p>Yes. Vol. 2 is all-new: brand-new questions and surprising facts, plus a “Curiosity Level” page where kids color in a star for every wow fact. Nothing repeats from Vol. 1.</p>",
+            "open": false
+          }
+        },
+        "question_6": {
+          "type": "question",
+          "settings": {
+            "question": "Do they need Vol. 1 first?",
+            "answer": "<p>No. Each book stands on its own, so kids can start with either one.</p>",
+            "open": false
+          }
+        },
+        "question_7": {
+          "type": "question",
+          "settings": {
+            "question": "What ages is it for?",
+            "answer": "<p>Ages 6–12.</p>",
+            "open": false
+          }
+        },
+        "question_8": {
+          "type": "question",
+          "settings": {
+            "question": "What if they don’t love it?",
+            "answer": "<p>Every order is covered by our 30-day money-back guarantee.</p>",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "group_1",
+        "question_1",
+        "question_2",
+        "question_3",
+        "question_4",
+        "group_2",
+        "question_5",
+        "question_6",
+        "question_7",
+        "question_8"
+      ],
+      "settings": {
+        "heading": "Questions, answered",
+        "background": "#f3f3f3",
+        "desktop_padding_top": 88,
+        "desktop_padding_bottom": 88,
+        "mobile_padding_top": 56,
+        "mobile_padding_bottom": 56
+      }
     }
   },
   "order": [
@@ -679,6 +761,6 @@
     "get_the_set",
     "results",
     "review_list",
-    "178791830636e97774"
+    "faq"
   ]
 }

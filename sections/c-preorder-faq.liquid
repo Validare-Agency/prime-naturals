@@ -1,0 +1,260 @@
+{%- comment -%}
+  "Questions, answered" — grouped FAQ accordion for the Vol. 2 pre-order PDP
+  (templates/product.vol2-preorder.json). Blocks: "Group heading" starts a
+  group, "Question" is an accordion item (native <details>, no JS needed).
+{%- endcomment -%}
+
+{%- style -%}
+  #c-pre-faq-{{ section.id }} {
+    background: {{ section.settings.background }};
+    padding: {{ section.settings.mobile_padding_top }}px 20px {{ section.settings.mobile_padding_bottom }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #c-pre-faq-{{ section.id }} {
+      padding: {{ section.settings.desktop_padding_top }}px 40px {{ section.settings.desktop_padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div id="c-pre-faq-{{ section.id }}" class="c-pre-faq">
+  <div class="c-pre-faq__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="c-pre-faq__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'group' -%}
+          <p class="c-pre-faq__group c-pre-faq__group--{{ block.settings.color }}{% unless forloop.first %} c-pre-faq__group--spaced{% endunless %}" {{ block.shopify_attributes }}>
+            {{- block.settings.title -}}
+          </p>
+        {%- when 'question' -%}
+          <details class="c-pre-faq__item"{% if block.settings.open %} open{% endif %} {{ block.shopify_attributes }}>
+            <summary class="c-pre-faq__question">
+              <span>{{ block.settings.question }}</span>
+              <span class="c-pre-faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="c-pre-faq__answer">{{ block.settings.answer }}</div>
+          </details>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+<style>
+  .c-pre-faq__inner {
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .c-pre-faq__heading {
+    margin: 0 0 4px;
+    font-family: var(--font-heading-family);
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    text-align: center;
+    color: #0d1b3e;
+  }
+  .c-pre-faq__group {
+    margin: 0;
+    font-family: var(--font-body-family);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.2;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .c-pre-faq__group--red { color: #c0392b; }
+  .c-pre-faq__group--grey { color: #4b5563; }
+  .c-pre-faq__group--spaced { margin-top: 12px; }
+  .c-pre-faq__item {
+    border: 2px solid #d9e0e6;
+    border-radius: 14px;
+    background: #fff;
+    overflow: hidden;
+    transition: border-color 0.15s ease;
+  }
+  .c-pre-faq__item[open] { border-color: #0d1b3e; }
+  .c-pre-faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px;
+    list-style: none;
+    cursor: pointer;
+    font-family: var(--font-heading-family);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.35;
+    color: #0d1b3e;
+  }
+  .c-pre-faq__question::-webkit-details-marker { display: none; }
+  .c-pre-faq__question:focus-visible { outline: 2px solid #0d1b3e; outline-offset: -4px; border-radius: 12px; }
+  .c-pre-faq__icon {
+    position: relative;
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #f3f3f3;
+  }
+  .c-pre-faq__icon::before,
+  .c-pre-faq__icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 11px;
+    height: 2.5px;
+    border-radius: 2px;
+    background: #0d1b3e;
+    transform: translate(-50%, -50%);
+  }
+  .c-pre-faq__icon::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .c-pre-faq__item[open] .c-pre-faq__icon { background: #0d1b3e; }
+  .c-pre-faq__item[open] .c-pre-faq__icon::before { background: #fff; }
+  .c-pre-faq__item[open] .c-pre-faq__icon::after { display: none; }
+  .c-pre-faq__answer {
+    padding: 0 16px 18px;
+    font-family: var(--font-body-family);
+    font-size: 15px;
+    line-height: 1.6;
+    color: #4b5563;
+  }
+  .c-pre-faq__answer > :first-child { margin-top: 0; }
+  .c-pre-faq__answer > :last-child { margin-bottom: 0; }
+
+  @media screen and (min-width: 750px) {
+    .c-pre-faq__heading { font-size: 40px; }
+    .c-pre-faq__question { padding: 20px 22px; font-size: 18px; }
+    .c-pre-faq__answer { padding: 0 22px 20px; font-size: 16px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Pre-order: FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Questions, answered"
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#f3f3f3"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop top padding",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop bottom padding",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile top padding",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile bottom padding",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "group",
+      "name": "Group heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Pre-order"
+        },
+        {
+          "type": "select",
+          "id": "color",
+          "label": "Color",
+          "options": [
+            { "value": "red", "label": "Red" },
+            { "value": "grey", "label": "Grey" }
+          ],
+          "default": "red"
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "When am I charged?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>At checkout, like any order. Your copy is reserved as soon as you order.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Open by default",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pre-order: FAQ",
+      "blocks": [
+        { "type": "group" },
+        { "type": "question", "settings": { "open": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}
