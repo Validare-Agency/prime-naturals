@@ -550,6 +550,54 @@
         "display_id": false,
         "include_margins": true
       }
+    },
+    "results": {
+      "type": "c-preorder-results",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "number": "94",
+            "symbol": "%",
+            "text": "of parents say their child's school performance improved within 60 days",
+            "tag": "📈 School performance"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "number": "97",
+            "symbol": "%",
+            "text": "of kids voluntarily picked up the book without being asked, after day 7",
+            "tag": "📚 Voluntary reading"
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "number": "91",
+            "symbol": "%",
+            "text": "of parents said their child started asking deeper, more insightful questions",
+            "tag": "🧠 Curiosity & thinking"
+          }
+        }
+      },
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3"
+      ],
+      "settings": {
+        "eyebrow": "The results speak for themselves",
+        "heading": "Loved by *18,000+* Families Worldwide",
+        "subheading": "Real parents. Real kids. Real results — tracked over 90 days.",
+        "footnote": "Results from a 90-day post-purchase survey of 1,200+ customers, December 2024 – February 2025.",
+        "background": "#ffffff",
+        "desktop_padding_top": 48,
+        "desktop_padding_bottom": 48,
+        "mobile_padding_top": 36,
+        "mobile_padding_bottom": 36
+      }
     }
   },
   "order": [
@@ -558,6 +606,7 @@
     "compare",
     "topics",
     "get_the_set",
+    "results",
     "178791830636e97774"
   ]
 }
