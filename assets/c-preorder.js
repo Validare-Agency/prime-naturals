@@ -219,7 +219,61 @@
     updateAtcLabel(getScope(button));
   }
 
+  // Per-visitor stock count: a random start (e.g. 300–350) saved in
+  // localStorage, lowered by a random 1–5 for every full hour since it was
+  // last updated, never below the floor.
+  var HOUR = 3600000;
+
+  function randomInt(min, max) {
+    return min + Math.floor(Math.random() * (max - min + 1));
+  }
+
+  function initStock(root) {
+    if (root.dataset.cPreInit) return;
+    root.dataset.cPreInit = 'true';
+
+    var d = root.dataset;
+    var total = parseInt(d.total, 10);
+    var startMin = parseInt(d.startMin, 10);
+    var startMax = parseInt(d.startMax, 10);
+    var dropMin = parseInt(d.dropMin, 10);
+    var dropMax = parseInt(d.dropMax, 10);
+    var floor = parseInt(d.floor, 10) || 0;
+    var now = Date.now();
+    var state = null;
+
+    try {
+      state = JSON.parse(localStorage.getItem(d.key));
+    } catch (e) {}
+
+    if (!state || typeof state.left !== 'number' || typeof state.ts !== 'number' || state.left > total) {
+      state = { left: randomInt(startMin, startMax), ts: now };
+    } else {
+      var hours = Math.floor((now - state.ts) / HOUR);
+      for (var i = 0; i < hours && state.left > floor; i++) {
+        state.left -= randomInt(dropMin, dropMax);
+      }
+      state.left = Math.max(floor, state.left);
+      if (hours > 0) state.ts += hours * HOUR;
+    }
+
+    try {
+      localStorage.setItem(d.key, JSON.stringify(state));
+    } catch (e) {}
+
+    var text = root.querySelector('[data-c-pre-stock-text]');
+    var bar = root.querySelector('[data-c-pre-stock-bar]');
+    if (text) text.textContent = d.text.replace('[left]', state.left);
+    if (bar) {
+      bar.setAttribute('aria-valuenow', state.left);
+      var fill = bar.querySelector('span');
+      if (fill) fill.style.width = (state.left * 100) / total + '%';
+    }
+    root.classList.add('is-ready');
+  }
+
   function run() {
+    document.querySelectorAll('[data-c-pre-stock]').forEach(initStock);
     document.querySelectorAll('[data-c-pre-reviews]').forEach(initReviews);
     document.querySelectorAll('[data-c-pre-countdown]').forEach(initCountdown);
     document.querySelectorAll('[data-c-pre-offer]').forEach(initOffer);

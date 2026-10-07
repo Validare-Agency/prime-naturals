@@ -1880,6 +1880,48 @@
         },
         {
           "type": "select",
+          "id": "count_mode",
+          "label": "Copies left count",
+          "options": [
+            { "value": "manual", "label": "Same number for everyone (Copies left)" },
+            { "value": "visitor", "label": "Per visitor, drops every hour" }
+          ],
+          "default": "manual",
+          "info": "Per visitor: each visitor gets a random start number (saved in their browser) that drops by a random amount every hour."
+        },
+        {
+          "type": "number",
+          "id": "visitor_start_min",
+          "label": "Per visitor: start from",
+          "default": 300
+        },
+        {
+          "type": "number",
+          "id": "visitor_start_max",
+          "label": "Per visitor: start up to",
+          "default": 350
+        },
+        {
+          "type": "number",
+          "id": "visitor_drop_min",
+          "label": "Per visitor: hourly drop from",
+          "default": 1
+        },
+        {
+          "type": "number",
+          "id": "visitor_drop_max",
+          "label": "Per visitor: hourly drop up to",
+          "default": 5
+        },
+        {
+          "type": "number",
+          "id": "visitor_floor",
+          "label": "Per visitor: never below",
+          "default": 20,
+          "info": "The count stops dropping at this number."
+        },
+        {
+          "type": "select",
           "id": "when_zero",
           "label": "When it reaches 0",
           "options": [

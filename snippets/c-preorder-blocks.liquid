@@ -244,8 +244,36 @@
         assign stock_show = false
       endif
     -%}
+    {%- liquid
+      # Per-visitor mode: assets/c-preorder.js picks a start number for each
+      # visitor, keeps it in localStorage and lowers it every hour.
+      assign stock_visitor = false
+      if bs.count_mode == 'visitor' and pre_counted
+        assign stock_visitor = true
+        assign stock_v_min = bs.visitor_start_min | at_least: 1 | at_most: pre_total
+        assign stock_v_max = bs.visitor_start_max | at_least: stock_v_min | at_most: pre_total
+        assign stock_v_drop_min = bs.visitor_drop_min | at_least: 0
+        assign stock_v_drop_max = bs.visitor_drop_max | at_least: stock_v_drop_min
+        assign pre_left = stock_v_min | plus: stock_v_max | divided_by: 2
+      endif
+    -%}
     {%- if stock_show -%}
-      <div class="c-pre-stock{% if pre_counted and pre_left == 0 %} c-pre-stock--out{% endif %}" style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;" {{ block.shopify_attributes }}>
+      <div
+        class="c-pre-stock{% if pre_counted and pre_left == 0 %} c-pre-stock--out{% endif %}"
+        style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;"
+        {%- if stock_visitor %}
+          data-c-pre-stock
+          data-key="c-pre-stock-{{ product.id }}"
+          data-total="{{ pre_total }}"
+          data-start-min="{{ stock_v_min }}"
+          data-start-max="{{ stock_v_max }}"
+          data-drop-min="{{ stock_v_drop_min }}"
+          data-drop-max="{{ stock_v_drop_max }}"
+          data-floor="{{ bs.visitor_floor | at_least: 0 }}"
+          data-text="{{ bs.left_text | replace: '[total]', pre_total | escape }}"
+        {%- endif %}
+        {{ block.shopify_attributes }}
+      >
         <p class="c-pre-stock__heading"><span class="c-pre-stock__dot" aria-hidden="true"></span>{{ bs.heading }}</p>
         {%- if pre_counted -%}
           {%- liquid
@@ -256,8 +284,8 @@
               assign stock_label = bs.left_text | replace: '[left]', pre_left | replace: '[total]', pre_total
             endif
           -%}
-          {%- if stock_label != blank -%}<p class="c-pre-stock__left">{{ stock_label }}</p>{%- endif -%}
-          <div class="c-pre-stock__bar" role="progressbar" aria-valuemin="0" aria-valuemax="{{ pre_total }}" aria-valuenow="{{ pre_left }}">
+          {%- if stock_label != blank -%}<p class="c-pre-stock__left" data-c-pre-stock-text>{{ stock_label }}</p>{%- endif -%}
+          <div class="c-pre-stock__bar" role="progressbar" aria-valuemin="0" aria-valuemax="{{ pre_total }}" aria-valuenow="{{ pre_left }}" data-c-pre-stock-bar>
             <span style="width: {{ stock_pct }}%;"></span>
           </div>
         {%- elsif request.design_mode -%}

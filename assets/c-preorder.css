@@ -257,6 +257,10 @@ slider-component:has(> .c-pre-media-badges) { position: relative; }
 }
 .c-pre-stock__bar span { display: block; height: 100%; border-radius: 6px; background: #c0392b; }
 .c-pre-stock--out .c-pre-stock__dot { animation: none; }
+/* Per-visitor count: hide the placeholder number until c-preorder.js sets it */
+.c-pre-stock[data-c-pre-stock]:not(.is-ready) .c-pre-stock__left { visibility: hidden; }
+.c-pre-stock[data-c-pre-stock]:not(.is-ready) .c-pre-stock__bar span { width: 0 !important; }
+.c-pre-stock[data-c-pre-stock] .c-pre-stock__bar span { transition: width 0.4s ease; }
 
 /* ───── Countdown ───── */
 .c-pre-countdown {

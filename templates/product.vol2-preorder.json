@@ -105,7 +105,13 @@
             "when_zero": "stop",
             "sold_out_text": "Pre-order stock is sold out",
             "margin_top": 0,
-            "margin_bottom": 16
+            "margin_bottom": 16,
+            "count_mode": "visitor",
+            "visitor_start_min": 300,
+            "visitor_start_max": 350,
+            "visitor_drop_min": 1,
+            "visitor_drop_max": 5,
+            "visitor_floor": 20
           }
         },
         "countdown_pre": {
@@ -212,7 +218,7 @@
           "type": "preorder_specs",
           "settings": {
             "eyebrow": "EXACTLY WHAT ARRIVES",
-            "rows": "Size | 17.6 x 25 cm · B5\nThickness | 1.8 cm · half a thumb\nPages | 174 pages\nWeight | 680 g\nBinding | Hardcover · stays open flat",
+            "rows": "Size | 21 x 29.7 cm · A4\nThickness | 1.8 cm · half a thumb\nPages | 174 pages\nWeight | 680 g\nBinding | Hardcover · stays open flat",
             "margin_top": 0,
             "margin_bottom": 16
           }
@@ -378,10 +384,10 @@
           "type": "row",
           "settings": {
             "label": "How big is it?",
-            "text_a": "Small hardcover (A4 size)",
+            "text_a": "Small hardcover (B5 size)",
             "check_a": false,
             "muted_a": false,
-            "text_b": "Big hardcover (B5 size)",
+            "text_b": "Big hardcover (A4 size)",
             "check_b": true,
             "muted_b": false
           }
