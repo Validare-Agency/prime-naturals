@@ -1313,7 +1313,13 @@
           "step": 1,
           "unit": "s",
           "label": "Autoplay (0 = off)",
-          "default": 6
+          "default": 0
+        },
+        {
+          "type": "checkbox",
+          "id": "show_arrows",
+          "label": "Show arrows",
+          "default": false
         },
         {
           "type": "header",
@@ -1343,6 +1349,13 @@
           "label": "Avatar"
         },
         {
+          "type": "text",
+          "id": "review_1_avatar_url",
+          "label": "Avatar URL",
+          "info": "Used when no avatar image is picked.",
+          "default": "https://i.pravatar.cc/150?img=47"
+        },
+        {
           "type": "header",
           "content": "Review 2"
         },
@@ -1370,6 +1383,13 @@
           "label": "Avatar"
         },
         {
+          "type": "text",
+          "id": "review_2_avatar_url",
+          "label": "Avatar URL",
+          "info": "Used when no avatar image is picked.",
+          "default": "https://i.pravatar.cc/150?img=12"
+        },
+        {
           "type": "header",
           "content": "Review 3"
         },
@@ -1395,6 +1415,13 @@
           "type": "image_picker",
           "id": "review_3_avatar",
           "label": "Avatar"
+        },
+        {
+          "type": "text",
+          "id": "review_3_avatar_url",
+          "label": "Avatar URL",
+          "info": "Used when no avatar image is picked.",
+          "default": "https://i.pravatar.cc/150?img=32"
         },
         {
           "type": "header",

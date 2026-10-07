@@ -15,7 +15,7 @@
         "reviews_pre": {
           "type": "preorder_reviews",
           "settings": {
-            "autoplay_seconds": 6,
+            "autoplay_seconds": 0,
             "review_1_text": "\"Best money I've spent on my kids' education outside of school. The conversations it starts are priceless.\"",
             "review_1_name": "Jennifer L.",
             "review_1_meta": "Mom of three",
@@ -26,7 +26,11 @@
             "review_3_name": "Rachel M.",
             "review_3_meta": "Mom of two",
             "margin_top": 0,
-            "margin_bottom": 16
+            "margin_bottom": 16,
+            "show_arrows": false,
+            "review_1_avatar_url": "https://i.pravatar.cc/150?img=47",
+            "review_2_avatar_url": "https://i.pravatar.cc/150?img=12",
+            "review_3_avatar_url": "https://i.pravatar.cc/150?img=32"
           }
         },
         "pills_pre": {

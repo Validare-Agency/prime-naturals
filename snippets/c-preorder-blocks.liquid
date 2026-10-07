@@ -57,12 +57,13 @@
     -%}
     {%- if review_count > 0 -%}
       <div
-        class="c-pre-reviews"
+        class="c-pre-reviews{% if bs.show_arrows and review_count > 1 %} c-pre-reviews--arrows{% endif %}"
         data-c-pre-reviews
         data-autoplay="{{ bs.autoplay_seconds }}"
         style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;"
         {{ block.shopify_attributes }}
       >
+        <div class="c-pre-reviews__bg-quote" aria-hidden="true">"</div>
         <div class="c-pre-reviews__slides">
           {%- assign slide_index = 0 -%}
           {%- for i in (1..3) -%}
@@ -71,6 +72,7 @@
               assign n_key = 'review_' | append: i | append: '_name'
               assign m_key = 'review_' | append: i | append: '_meta'
               assign a_key = 'review_' | append: i | append: '_avatar'
+              assign u_key = 'review_' | append: i | append: '_avatar_url'
             -%}
             {%- if bs[t_key] != blank -%}
               <div class="c-pre-reviews__slide{% if slide_index == 0 %} is-active{% endif %}" data-index="{{ slide_index }}">
@@ -79,6 +81,8 @@
                   <span class="c-pre-reviews__avatar">
                     {%- if bs[a_key] != blank -%}
                       {{ bs[a_key] | image_url: width: 72 | image_tag: width: 36, height: 36, loading: 'lazy', alt: bs[n_key] }}
+                    {%- elsif bs[u_key] != blank -%}
+                      <img src="{{ bs[u_key] }}" alt="{{ bs[n_key] | escape }}" width="36" height="36" loading="lazy">
                     {%- endif -%}
                   </span>
                   <span class="c-pre-reviews__who">
@@ -95,12 +99,14 @@
           {%- endfor -%}
         </div>
         {%- if review_count > 1 -%}
+          {%- if bs.show_arrows -%}
           <button type="button" class="c-pre-reviews__arrow c-pre-reviews__arrow--prev" data-c-pre-reviews-prev aria-label="Previous review">
             <img src="{{ 'c-preorder-review-arrow.svg' | asset_url }}" alt="" width="23" height="23">
           </button>
           <button type="button" class="c-pre-reviews__arrow c-pre-reviews__arrow--next" data-c-pre-reviews-next aria-label="Next review">
             <img src="{{ 'c-preorder-review-arrow.svg' | asset_url }}" alt="" width="23" height="23">
           </button>
+          {%- endif -%}
           <div class="c-pre-reviews__dots">
             {%- for i in (1..review_count) -%}
               <button type="button" class="c-pre-reviews__dot{% if forloop.first %} is-active{% endif %}" data-c-pre-reviews-dot="{{ forloop.index0 }}" aria-label="Show review {{ i }}"></button>
