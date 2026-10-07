@@ -74,7 +74,7 @@
           "settings": {
             "rating": "4.9",
             "count_text": "2,847 reviews",
-            "link": "#judgeme_product_reviews",
+            "link": "#reviews",
             "margin_top": 0,
             "margin_bottom": 16
           }
@@ -378,10 +378,10 @@
           "type": "row",
           "settings": {
             "label": "How big is it?",
-            "text_a": "Small hardcover (B5 size)",
+            "text_a": "Small hardcover (A4 size)",
             "check_a": false,
             "muted_a": false,
-            "text_b": "Big hardcover (A4 size)",
+            "text_b": "Big hardcover (B5 size)",
             "check_b": true,
             "muted_b": false
           }
@@ -661,7 +661,8 @@
         "desktop_padding_top": 40,
         "desktop_padding_bottom": 52,
         "mobile_padding_top": 24,
-        "mobile_padding_bottom": 56
+        "mobile_padding_bottom": 56,
+        "anchor_id": "reviews"
       }
     },
     "faq": {

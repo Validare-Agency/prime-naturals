@@ -16,6 +16,10 @@
 {%- endstyle -%}
 
 <div id="c-pre-reviews-{{ section.id }}" class="c-pre-revlist">
+  {%- if section.settings.anchor_id != blank -%}
+    {%- comment -%} Jump target for the rating link under the product title (default #reviews) {%- endcomment -%}
+    <span id="{{ section.settings.anchor_id | handleize }}" class="c-pre-revlist__anchor" aria-hidden="true"></span>
+  {%- endif -%}
   <div class="c-pre-revlist__inner">
     {%- if section.settings.heading != blank -%}
       <h2 class="c-pre-revlist__heading">{{ section.settings.heading }}</h2>
@@ -59,6 +63,8 @@
     color: #0d1b3e;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
+  /* Clears the sticky header when jumped to */
+  .c-pre-revlist__anchor { display: block; scroll-margin-top: 90px; }
   .c-pre-revlist__inner {
     max-width: 640px;
     margin: 0 auto;
@@ -161,6 +167,13 @@
       "id": "heading",
       "label": "Heading",
       "default": "What parents say about Vol. 2"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor ID",
+      "info": "Links to #this-id jump here. The rating under the product title links to #reviews.",
+      "default": "reviews"
     },
     {
       "type": "text",
