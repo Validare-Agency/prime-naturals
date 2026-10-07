@@ -1,0 +1,141 @@
+{%- comment -%}
+  Pre-order announcement bar. Lives in the header group (above the header)
+  but only renders on product pages using the template set below
+  (default: templates/product.vol2-preorder.json). There it hides the
+  site-wide .ann-bar (custom liquid in the header group). Hidden when the
+  product metafield custom.preorder_enabled is false — the site-wide bar
+  then shows again.
+{%- endcomment -%}
+
+{%- liquid
+  assign pre_on = false
+  if template.name == 'product' and template.suffix == section.settings.template_suffix
+    assign pre_on = true
+    if section.settings.preorder_only and product.metafields.custom.preorder_enabled.value == false
+      assign pre_on = false
+    endif
+  endif
+-%}
+
+{%- if pre_on -%}
+  {%- style -%}
+    #c-pre-ann-{{ section.id }} {
+      background: {{ section.settings.background }};
+      color: {{ section.settings.text_color }};
+    }
+    #c-pre-ann-{{ section.id }} .c-pre-ann__icon { color: {{ section.settings.icon_color }}; }
+    {%- if section.settings.hide_site_bar %}
+      .shopify-section-group-header-group:has(.ann-bar),
+      .ann-bar { display: none !important; }
+    {%- endif %}
+  {%- endstyle -%}
+
+  <{% if section.settings.link != blank %}a href="{{ section.settings.link }}"{% else %}div{% endif %}
+    id="c-pre-ann-{{ section.id }}"
+    class="c-pre-ann"
+  >
+    <svg class="c-pre-ann__icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" focusable="false">
+      <path d="M14.25 3H3.75c-.828 0-1.5.672-1.5 1.5V15c0 .828.672 1.5 1.5 1.5h10.5c.828 0 1.5-.672 1.5-1.5V4.5c0-.828-.672-1.5-1.5-1.5ZM12 1.5v3M6 1.5v3M2.25 7.5h13.5" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="c-pre-ann__text">{{ section.settings.text }}</span>
+  </{% if section.settings.link != blank %}a{% else %}div{% endif %}>
+
+  <style>
+    .c-pre-ann {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 32px;
+      padding: 7px 16px;
+      text-decoration: none;
+    }
+    .c-pre-ann__icon { flex: 0 0 18px; }
+    .c-pre-ann__text {
+      font-family: var(--font-body-family);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: normal;
+      text-align: center;
+      color: inherit;
+    }
+    a.c-pre-ann:hover .c-pre-ann__text { text-decoration: underline; }
+    @media screen and (max-width: 480px) {
+      .c-pre-ann { padding: 7px 12px; }
+      .c-pre-ann__text { font-size: 13px; }
+    }
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Pre-order: Ann. bar",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Vol. 2 ships October 11 — pre-order now"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "template_suffix",
+      "label": "Show on product template",
+      "info": "Template name after \"product.\", e.g. vol2-preorder. The bar shows only on products using it.",
+      "default": "vol2-preorder"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_site_bar",
+      "label": "Hide the site-wide announcement bar on this page",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "preorder_only",
+      "label": "Hide when pre-order is off",
+      "info": "Uses the product metafield custom.preorder_enabled. When hidden, the site-wide bar shows again.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#0d1b3e"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon",
+      "default": "#f5a623"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pre-order: Ann. bar"
+    }
+  ]
+}
+{% endschema %}

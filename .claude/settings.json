@@ -15,7 +15,8 @@
       "Bash(grep -n \"how_show\\\\|endif -%}$\" sections/c-preorder-how-it-works.liquid)",
       "mcp__claude_ai_Shopify__get-shop-info",
       "Bash(curl -sfL -o assets/c-preorder-cart-bonus.png \"https://www.figma.com/api/mcp/asset/1babe8f6-0d35-4211-a88d-a8a2143ae758.png\")",
-      "Bash(sips -Z 192 c-preorder-cart-bonus.jpg)"
+      "Bash(sips -Z 192 c-preorder-cart-bonus.jpg)",
+      "Bash(curl -sfL \"https://www.figma.com/api/mcp/asset/9901a433-bb6a-49e8-b7f1-e642a2a134ac.svg\")"
     ],
     "additionalDirectories": [
       "/Users/mac/Documents/Validare/prime-naturals/sections"
