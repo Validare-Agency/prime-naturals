@@ -1,0 +1,279 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "media_badges_pre": {
+          "type": "preorder_media_badges",
+          "settings": {
+            "badge_text": "PRE-ORDER",
+            "badge_bg": "#c0392b",
+            "badge_color": "#ffffff",
+            "sub_text": "Ships October 11"
+          }
+        },
+        "reviews_pre": {
+          "type": "preorder_reviews",
+          "settings": {
+            "autoplay_seconds": 6,
+            "review_1_text": "\"Best money I've spent on my kids' education outside of school. The conversations it starts are priceless.\"",
+            "review_1_name": "Jennifer L.",
+            "review_1_meta": "Mom of three",
+            "review_2_text": "\"My son is a screen kid. He read this until 9pm without me saying a word. I bought two more for his cousins.\"",
+            "review_2_name": "David K.",
+            "review_2_meta": "Father of two",
+            "review_3_text": "\"My daughter explained tectonic plates to my mother-in-law. She's 8. We were completely speechless.\"",
+            "review_3_name": "Rachel M.",
+            "review_3_meta": "Mom of two",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "pills_pre": {
+          "type": "preorder_pills",
+          "settings": {
+            "pill_1_text": "Pre-order",
+            "pill_1_icon": "pill-preorder",
+            "pill_1_style": "red",
+            "pill_2_text": "All-new Volume 2",
+            "pill_2_icon": "pill-book",
+            "pill_2_style": "green",
+            "pill_3_icon": "none",
+            "pill_3_style": "cream",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "title_pre": {
+          "type": "preorder_title",
+          "settings": {
+            "title": "Kid’s Encyclopedia “10,000 Whys” Vol. 2",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "rating_pre": {
+          "type": "preorder_rating",
+          "settings": {
+            "rating": "4.9",
+            "count_text": "2,847 reviews",
+            "link": "#judgeme_product_reviews",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "price_pre": {
+          "type": "preorder_price",
+          "settings": {
+            "badge_text": "[percent]% OFF",
+            "ships_text": "Ships October 11",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "bullets_pre": {
+          "type": "preorder_bullets",
+          "settings": {
+            "bullets": "All-new questions and answers for ages 6–12\nReal “wait, what?!” facts — like the man who hiccuped for 68 years straight\nA “Curiosity Level” page: color in a star for every wow moment\nThe follow-up to 10,000 Whys, in the same gift-ready hardcover",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "stock_pre": {
+          "type": "preorder_stock",
+          "settings": {
+            "heading": "Limited stock – available on pre-order only",
+            "left_text": "[left] of [total] left",
+            "left": 312,
+            "total": 500,
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "countdown_pre": {
+          "type": "preorder_countdown",
+          "settings": {
+            "label": "Ships in",
+            "end_datetime": "2026-10-11T00:00:00-04:00",
+            "expired_text": "Shipping now",
+            "days_label": "Days",
+            "hours_label": "Hrs",
+            "minutes_label": "Min",
+            "seconds_label": "Sec",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "offer_pre": {
+          "type": "preorder_offer",
+          "settings": {
+            "heading": "Reserve your copies before pre-order stock runs out",
+            "ships_text": "Ships October 11",
+            "reference_price": "39.90",
+            "default_tier": "1",
+            "save_text": "Save [amount]",
+            "free_shipping_text": "FREE shipping",
+            "tier_1_enable": true,
+            "tier_1_quantity": 1,
+            "tier_1_title": "1 Book",
+            "tier_1_subtitle": "For 1 child",
+            "tier_1_free_shipping": false,
+            "tier_2_enable": true,
+            "tier_2_quantity": 3,
+            "tier_2_price": "79.90",
+            "tier_2_title": "Buy 2, Get 1 Free",
+            "tier_2_subtitle": "3 books — best for siblings",
+            "tier_2_perk": "1 full book, on us",
+            "tier_2_free_shipping": true,
+            "tier_2_badge": "Most popular",
+            "tier_3_enable": true,
+            "tier_3_quantity": 5,
+            "tier_3_price": "99.90",
+            "tier_3_title": "Buy 3, Get 2 Free",
+            "tier_3_subtitle": "5 books — best gift pack",
+            "tier_3_perk": "2 full books, on us",
+            "tier_3_free_shipping": true,
+            "tier_3_badge": "One for every grandchild",
+            "addon_title": "Complete the set with Vol. 1",
+            "addon_subtitle": "The original 10,000 Whys",
+            "margin_top": 0,
+            "margin_bottom": 16,
+            "addon_product": "kidss-encyclopedia-10-000-whys"
+          }
+        },
+        "gifts_pre": {
+          "type": "preorder_gifts",
+          "settings": {
+            "eyebrow": "EXCLUSIVE PRE-ORDER GIFTS",
+            "heading": "3 free gifts with every pre-order",
+            "total_value": "$30.40",
+            "free_label": "FREE",
+            "gift_1_name": "Sticker Puzzle",
+            "gift_1_value": "$15.80",
+            "gift_2_name": "Stickers",
+            "gift_2_value": "$4.80",
+            "gift_3_name": "Mystery Gift",
+            "gift_3_value": "$9.80",
+            "margin_top": 16,
+            "margin_bottom": 16
+          }
+        },
+        "atc_pre": {
+          "type": "preorder_atc",
+          "settings": {
+            "label": "Pre-order — [price]",
+            "button_color": "#c0392b",
+            "add_gifts": false,
+            "property_name": "Pre-order",
+            "property_value": "Ships October 11",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "trust_pre": {
+          "type": "preorder_trust",
+          "settings": {
+            "items": "🛡️ 30-day money-back guarantee\n🔒 Secure checkout\n📦 Free shipping",
+            "payments": "VISA, MC, AMEX, PayPal, Apple Pay, Shop Pay",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "specs_pre": {
+          "type": "preorder_specs",
+          "settings": {
+            "eyebrow": "EXACTLY WHAT ARRIVES",
+            "rows": "Size | 17.6 x 25 cm · B5\nThickness | 1.8 cm · half a thumb\nPages | 174 pages\nWeight | 680 g\nBinding | Hardcover · stays open flat",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        }
+      },
+      "block_order": [
+        "media_badges_pre",
+        "reviews_pre",
+        "pills_pre",
+        "title_pre",
+        "rating_pre",
+        "price_pre",
+        "bullets_pre",
+        "stock_pre",
+        "countdown_pre",
+        "offer_pre",
+        "gifts_pre",
+        "atc_pre",
+        "trust_pre",
+        "specs_pre"
+      ],
+      "settings": {
+        "display_id": false,
+        "enable_sticky_info": true,
+        "display_variant_image_first": false,
+        "disable_prepend": false,
+        "hide_variants": false,
+        "variant_image_filtering": "none",
+        "image_zoom": "none",
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "video_player": "play_btn",
+        "enable_video_looping": false,
+        "autoplay_videos_pause_btn": false,
+        "video_sound_btn": false,
+        "video_timeline": false,
+        "play_btn_color_scheme": "accent-1",
+        "sound_btn_color_scheme": "inverse",
+        "timeline_color": "accent-1",
+        "media_size": "medium",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "desktop_thumbnails_count": 5,
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "desktop_arrows_position": "sides",
+        "mobile_media_corner_radius": 0,
+        "mobile_spacing_pixels": 0,
+        "mobile_arrows_position": "sides",
+        "mobile_pagination": "hidden",
+        "mobile_thumbnails": "show",
+        "mobile_thumbnails_count": 8,
+        "mobile_scroll_padding_percentage": 0,
+        "mobile_scroll_padding_pixels": 0,
+        "enable_mobile_outher_spacing": false,
+        "mobile_slides_container_width": 100,
+        "mobile_slides_inner_width": 100,
+        "trust_badge_position": "top-right",
+        "trust_badge_size": "medium",
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 16,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36
+      }
+    },
+    "178791830636e97774": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_FbtBRQ": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "no_reviews",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_FbtBRQ"
+      ],
+      "settings": {
+        "display_id": false,
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "178791830636e97774"
+  ]
+}

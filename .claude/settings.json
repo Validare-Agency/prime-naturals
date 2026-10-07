@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(awk '/{% schema %}/,0' sections/main-product.liquid)",
+      "Bash(python3 -c ' *)",
+      "mcp__claude_ai_Shopify__search_products",
+      "mcp__claude_ai_Figma__get_design_context",
+      "Bash(grep -n \"<media-gallery\\\\|<slider-component\\\\|id=\\\\\"GalleryViewer\\\\|class=\\\\\"product__media-list\\\\|</slider-component>\\\\|product__media-wrapper\" snippets/product-media-gallery.liquid | head; sed -n 1,30p snippets/product-media-gallery.liquid; grep -n \"\\\\\"type\\\\\": \\\\\"divider\\\\\"\" -A3 sections/main-product.liquid | head -5; sed -n '/\"type\": \"urgency\"/,/^    },/p' sections/main-product.liquid | head -70)"
+    ],
+    "additionalDirectories": [
+      "/Users/mac/Documents/Validare/prime-naturals/sections"
+    ]
+  }
+}

@@ -84,6 +84,13 @@
         {{ 'accessibility.skip_to_product_info' | t }}
       </a>
     {%- endunless -%}
+    {%- comment -%} Pre-order PDP — main-product "Pre-order: Image badges" block overlays the main image {%- endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'preorder_media_badges' -%}
+        {% render 'c-preorder-blocks', block: block, product: product, section: section %}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
     <ul
       id="Slider-Gallery-{{ section.id }}{{ id_append }}"
       class="product__media-list contains-media grid grid--peek list-unstyled slider slider--mobile{% if section.settings.gallery_layout == 'thumbnail' or section.settings.gallery_layout == 'thumbnail_slider'%} gallery-slider--desktop{% endif %}{% if section.settings.enable_mobile_outher_spacing %} product__media-list--outer-spacing{% else %} product__media-list--no-outer-spacing{% endif %}"
