@@ -745,12 +745,22 @@
             "open": false,
             "preorder_only": false
           }
+        },
+        "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "Can I cancel my pre-order?",
+            "answer": "<p>Yes, within 24 hours of placing your order. Contact our support team and we'll cancel it and give you a full refund. After 24 hours, your order can't be cancelled.</p>",
+            "open": false,
+            "preorder_only": true
+          }
         }
       },
       "block_order": [
         "group_1",
         "question_1",
         "question_2",
+        "question_3",
         "question_4",
         "group_2",
         "question_5",
