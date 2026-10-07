@@ -445,10 +445,75 @@
         "mobile_padding_top": 56,
         "mobile_padding_bottom": 56
       }
+    },
+    "topics": {
+      "type": "c-preorder-topics",
+      "blocks": {
+        "topic_1": {
+          "type": "topic",
+          "settings": {
+            "text": "Science experiments",
+            "dot_color": "#c0392b"
+          }
+        },
+        "topic_2": {
+          "type": "topic",
+          "settings": {
+            "text": "Animals & wildlife",
+            "dot_color": "#f5a623"
+          }
+        },
+        "topic_3": {
+          "type": "topic",
+          "settings": {
+            "text": "Space & planets",
+            "dot_color": "#166534"
+          }
+        },
+        "topic_4": {
+          "type": "topic",
+          "settings": {
+            "text": "Weather & nature",
+            "dot_color": "#1f3a5f"
+          }
+        },
+        "topic_5": {
+          "type": "topic",
+          "settings": {
+            "text": "Explorers & adventure",
+            "dot_color": "#c0392b"
+          }
+        },
+        "topic_6": {
+          "type": "topic",
+          "settings": {
+            "text": "Records & oddities",
+            "dot_color": "#f5a623"
+          }
+        }
+      },
+      "block_order": [
+        "topic_1",
+        "topic_2",
+        "topic_3",
+        "topic_4",
+        "topic_5",
+        "topic_6"
+      ],
+      "settings": {
+        "heading": "What’s inside",
+        "highlight": "Vol. 2",
+        "background": "#0d1b3e",
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
     }
   },
   "order": [
     "main",
+    "topics",
     "how_it_works",
     "compare",
     "178791830636e97774"
