@@ -40,16 +40,17 @@
   assign pre_variant = product.selected_or_first_available_variant
 
   assign pre_stock_block = section.blocks | where: 'type', 'preorder_stock' | first
+  # Manual numbers, not live inventory: product metafields first, block settings as fallback
   assign pre_total = product.metafields.custom.preorder_total.value | default: pre_stock_block.settings.total | at_least: 0
+  assign pre_left = product.metafields.custom.preorder_left.value
+  if pre_left == blank
+    assign pre_left = pre_stock_block.settings.left
+  endif
+  assign pre_left = pre_left | default: 0 | at_least: 0 | at_most: pre_total
   assign pre_counted = false
-  if pre_variant.inventory_management == 'shopify' and pre_total > 0
+  if pre_total > 0
     assign pre_counted = true
   endif
-  assign pre_sold = 0
-  if pre_variant.inventory_quantity < 0
-    assign pre_sold = pre_variant.inventory_quantity | times: -1
-  endif
-  assign pre_left = pre_total | minus: pre_sold | at_least: 0
   assign pre_sold_out = false
   if pre_on and pre_counted and pre_left == 0 and pre_stock_block.settings.when_zero == 'stop'
     assign pre_sold_out = true
@@ -260,7 +261,7 @@
             <span style="width: {{ stock_pct }}%;"></span>
           </div>
         {%- elsif request.design_mode -%}
-          <p class="c-pre-stock__left">Set the product metafield custom.preorder_total and track inventory to show the real count.</p>
+          <p class="c-pre-stock__left">Set the total copies (product metafield custom.preorder_total or the block setting) to show the bar.</p>
         {%- endif -%}
       </div>
     {%- endif -%}

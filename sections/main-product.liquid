@@ -1849,7 +1849,7 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "Copies left = product metafield custom.preorder_total minus copies sold. Sold is read from inventory: keep inventory at 0 with \"Continue selling when out of stock\" on — each pre-order takes it below 0. Hidden when pre-order is off."
+          "content": "Numbers are set by hand, not read from inventory. Product metafields custom.preorder_total and custom.preorder_left win over the settings below. Hidden when pre-order is off."
         },
         {
           "type": "text",
@@ -1867,9 +1867,16 @@
         {
           "type": "number",
           "id": "total",
-          "label": "Fallback total copies",
+          "label": "Total copies",
           "default": 500,
-          "info": "Used only if the product has no custom.preorder_total metafield. Copies left are counted from the product inventory."
+          "info": "Used if the product has no custom.preorder_total metafield."
+        },
+        {
+          "type": "number",
+          "id": "left",
+          "label": "Copies left",
+          "default": 312,
+          "info": "Used if the product has no custom.preorder_left metafield. Update it as pre-orders come in."
         },
         {
           "type": "select",

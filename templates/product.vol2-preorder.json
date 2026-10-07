@@ -48,17 +48,17 @@
             "pill_1_text": "Pre-order",
             "pill_1_icon": "pill-preorder",
             "pill_1_style": "red",
+            "pill_1_preorder_only": true,
             "pill_2_text": "All-new Volume 2",
             "pill_2_icon": "pill-book",
             "pill_2_style": "green",
+            "pill_2_preorder_only": false,
             "pill_3_text": "",
             "pill_3_icon": "none",
             "pill_3_style": "cream",
+            "pill_3_preorder_only": false,
             "margin_top": 0,
-            "margin_bottom": 16,
-            "pill_1_preorder_only": true,
-            "pill_2_preorder_only": false,
-            "pill_3_preorder_only": false
+            "margin_bottom": 16
           }
         },
         "title_pre": {
@@ -102,10 +102,10 @@
             "heading": "Limited stock – available on pre-order only",
             "left_text": "[left] of [total] left",
             "total": 500,
-            "margin_top": 0,
-            "margin_bottom": 16,
             "when_zero": "stop",
-            "sold_out_text": "Pre-order stock is sold out"
+            "sold_out_text": "Pre-order stock is sold out",
+            "margin_top": 0,
+            "margin_bottom": 16
           }
         },
         "countdown_pre": {
@@ -126,6 +126,7 @@
           "type": "preorder_offer",
           "settings": {
             "heading": "Reserve your copies before pre-order stock runs out",
+            "heading_off": "Choose your bundle",
             "ships_text": "Ships October 11",
             "reference_price": "39.90",
             "default_tier": "1",
@@ -159,13 +160,13 @@
             "addon_title": "Complete the set with Vol. 1",
             "addon_subtitle": "The original 10,000 Whys",
             "margin_top": 0,
-            "margin_bottom": 16,
-            "heading_off": "Choose your bundle"
+            "margin_bottom": 16
           }
         },
         "gifts_pre": {
           "type": "preorder_gifts",
           "settings": {
+            "preorder_only": true,
             "eyebrow": "EXCLUSIVE PRE-ORDER GIFTS",
             "heading": "3 free gifts with every pre-order",
             "total_value": "$30.40",
@@ -180,23 +181,22 @@
             "gift_3_value": "$9.80",
             "gift_3_product": "",
             "margin_top": 16,
-            "margin_bottom": 16,
-            "preorder_only": true
+            "margin_bottom": 16
           }
         },
         "atc_pre": {
           "type": "preorder_atc",
           "settings": {
             "label": "Pre-order — [price]",
+            "label_off": "Add to cart — [price]",
+            "sold_out_label": "Pre-order sold out",
+            "note": "Ships October 11 — arrives well before the holidays",
             "button_color": "#c0392b",
             "add_gifts": false,
             "property_name": "Pre-order",
             "property_value": "Ships October 11",
             "margin_top": 0,
-            "margin_bottom": 16,
-            "label_off": "Add to cart — [price]",
-            "sold_out_label": "Pre-order sold out",
-            "note": "Ships October 11 — arrives well before the holidays"
+            "margin_bottom": 16
           }
         },
         "trust_pre": {
@@ -327,12 +327,12 @@
       ],
       "settings": {
         "heading": "How pre-order works",
+        "preorder_only": true,
         "background": "#f3f3f3",
         "desktop_padding_top": 88,
         "desktop_padding_bottom": 88,
         "mobile_padding_top": 56,
-        "mobile_padding_bottom": 56,
-        "preorder_only": true
+        "mobile_padding_bottom": 56
       }
     },
     "compare": {
