@@ -693,15 +693,6 @@
             "preorder_only": true
           }
         },
-        "question_3": {
-          "type": "question",
-          "settings": {
-            "question": "Can I cancel my pre-order?",
-            "answer": "<p>[Add your cancellation policy here.]</p>",
-            "open": false,
-            "preorder_only": true
-          }
-        },
         "question_4": {
           "type": "question",
           "settings": {
@@ -760,7 +751,6 @@
         "group_1",
         "question_1",
         "question_2",
-        "question_3",
         "question_4",
         "group_2",
         "question_5",
