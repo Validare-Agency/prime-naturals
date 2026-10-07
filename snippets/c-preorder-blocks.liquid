@@ -352,15 +352,13 @@
             assign t_qty = bs[k_qty] | at_least: 1
             if bs[k_price] != blank
               assign t_price_cents = bs[k_price] | times: 100 | round
-              assign t_price = pre_base_cents | times: 1.0 | times: t_price_cents | divided_by: ref_cents | divided_by: 100.0 | ceil | times: 100 | minus: 10
+              # Same ratio to the live price, kept to the cent (79.80 / 39.90 = exactly 2 × price)
+              assign t_price = pre_base_cents | times: 1.0 | times: t_price_cents | divided_by: ref_cents | round
             else
               assign t_price = pre_base_cents | times: t_qty
             endif
-            if t_qty == 1
-              assign t_compare = pre_compare_cents
-            else
-              assign t_compare = pre_base_cents | times: t_qty
-            endif
+            # Compare-at scales by the same multiple as the price (2 × 39.90 → 2 × 79.80)
+            assign t_compare = pre_compare_cents | times: 1.0 | times: t_price | divided_by: pre_base_cents | round
             assign t_save = t_compare | minus: t_price
 
             assign t_checked = false
