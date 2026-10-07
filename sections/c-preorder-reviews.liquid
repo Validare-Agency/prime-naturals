@@ -33,6 +33,8 @@
             <span class="c-pre-revlist__avatar">
               {%- if bs.avatar != blank -%}
                 {{ bs.avatar | image_url: width: 84 | image_tag: width: 42, height: 42, loading: 'lazy', alt: bs.name }}
+              {%- elsif bs.avatar_url != blank -%}
+                <img src="{{ bs.avatar_url }}" alt="{{ bs.name | escape }}" width="42" height="42" loading="lazy">
               {%- endif -%}
             </span>
             <span class="c-pre-revlist__who">
@@ -259,6 +261,12 @@
           "type": "image_picker",
           "id": "avatar",
           "label": "Avatar"
+        },
+        {
+          "type": "text",
+          "id": "avatar_url",
+          "label": "Avatar URL",
+          "info": "Used when no avatar image is picked."
         }
       ]
     }

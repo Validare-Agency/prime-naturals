@@ -520,6 +520,10 @@ slider-component:has(> .c-pre-media-badges) { position: relative; }
 .c-pre-specs__row dt { font-weight: 400; }
 
 /* ───── Gallery (only on pages using the Image badges block) ───── */
+/* The pre-order badges replace the metafield labels (snippets/custom-product-labels.liquid) */
+.product:has(.c-pre-media-badges) .custom-product-labels {
+  display: none;
+}
 .product:has(.c-pre-media-badges) .thumbnail {
   border: 3px solid #d9e0e6;
   border-radius: 10px;

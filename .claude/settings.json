@@ -8,7 +8,9 @@
       "Bash(grep -n \"<media-gallery\\\\|<slider-component\\\\|id=\\\\\"GalleryViewer\\\\|class=\\\\\"product__media-list\\\\|</slider-component>\\\\|product__media-wrapper\" snippets/product-media-gallery.liquid | head; sed -n 1,30p snippets/product-media-gallery.liquid; grep -n \"\\\\\"type\\\\\": \\\\\"divider\\\\\"\" -A3 sections/main-product.liquid | head -5; sed -n '/\"type\": \"urgency\"/,/^    },/p' sections/main-product.liquid | head -70)",
       "Bash(curl -sfL https://www.figma.com/api/mcp/asset/328d7922-e1db-4a70-b8c1-2cd3659ba061.svg)",
       "Bash(curl -sfL https://www.figma.com/api/mcp/asset/2b037047-d509-42f6-8295-ec8b8418eae8.svg)",
-      "Bash(curl -sfL https://www.figma.com/api/mcp/asset/328d7922-e1db-4a70-b8c1-2cd3659ba061.svg -o assets/c-preorder-truck-green.svg)"
+      "Bash(curl -sfL https://www.figma.com/api/mcp/asset/328d7922-e1db-4a70-b8c1-2cd3659ba061.svg -o assets/c-preorder-truck-green.svg)",
+      "Bash(python3 -m pip --version)",
+      "Bash(curl -sfL https://randomuser.me/api/portraits/women/14.jpg -o w14.jpg)"
     ],
     "additionalDirectories": [
       "/Users/mac/Documents/Validare/prime-naturals/sections"
