@@ -1,0 +1,104 @@
+{%- comment -%}
+  "Your order includes a pre-order" notice for the cart drawer. Shown when
+  any cart line has the hidden _preorder property (see c-preorder-cart-badge).
+  Mentions in-stock items only when the cart also has lines without it.
+  Followed by the "Early-bird bonus added" banner.
+{%- endcomment -%}
+
+{%- liquid
+  assign pre_item = blank
+  assign has_in_stock = false
+  for item in cart.items
+    if item.properties._preorder != blank
+      if pre_item == blank
+        assign pre_item = item
+      endif
+    else
+      assign has_in_stock = true
+    endif
+  endfor
+-%}
+
+{%- if pre_item != blank -%}
+  {%- liquid
+    if pre_item.product.title contains 'Vol. 2'
+      assign pre_name = 'Vol. 2'
+    else
+      assign pre_name = pre_item.product.title
+    endif
+    if pre_item.properties._preorder == 'true'
+      assign pre_ship = 'ships on its release date'
+    else
+      assign pre_ship = pre_item.properties._preorder | replace_first: 'Ships', 'ships'
+    endif
+  -%}
+  <div class="c-pre-cart-notice">
+    <svg width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
+      <path d="M12.667 2.666H3.333C2.597 2.666 2 3.263 2 3.999v9.334c0 .736.597 1.333 1.333 1.333h9.334c.736 0 1.333-.597 1.333-1.333V3.999c0-.736-.597-1.333-1.333-1.333ZM10.667 1.334v2.667M5.333 1.334v2.667M2 6.667h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <p>
+      <strong>Your order includes a pre-order.</strong>
+      {{ pre_name | escape }} {{ pre_ship | escape }}.
+      {%- if has_in_stock %} In-stock books ship right away.{% endif %}
+    </p>
+  </div>
+  <div class="c-pre-cart-bonus">
+    <img
+      src="{{ 'c-preorder-cart-bonus.jpg' | asset_url }}"
+      alt="Bookmark Set"
+      width="48"
+      height="48"
+      loading="lazy"
+    >
+    <p><strong>Early-bird bonus added:</strong> free Bookmark Set ships with {{ pre_name | escape }}.</p>
+  </div>
+  <style>
+    .c-pre-cart-notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 16px 0 4px;
+      padding: 14px;
+      border: 1px solid rgba(13, 27, 62, 0.1);
+      border-radius: 12px;
+      background: #f8f6f0;
+      color: #c0392b;
+    }
+    .c-pre-cart-notice svg { flex: 0 0 20px; }
+    .c-pre-cart-notice p {
+      margin: 0;
+      font-family: var(--font-body-family);
+      font-size: 14px;
+      line-height: 21px;
+      letter-spacing: normal;
+      color: #0d1b3e;
+    }
+    .c-pre-cart-notice strong { font-weight: 700; }
+    .c-pre-cart-bonus {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 12px 0 4px;
+      padding: 12px;
+      border: 2px solid #f5a623;
+      border-radius: 12px;
+      background: #fff6e5;
+    }
+    .c-pre-cart-bonus img {
+      flex: 0 0 48px;
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .c-pre-cart-bonus p {
+      margin: 0;
+      font-family: var(--font-body-family);
+      font-size: 14px;
+      line-height: 20.3px;
+      letter-spacing: normal;
+      color: #0d1b3e;
+    }
+    .c-pre-cart-bonus strong { font-weight: 700; }
+  </style>
+{%- endif -%}

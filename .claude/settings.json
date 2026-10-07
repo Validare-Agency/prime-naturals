@@ -12,7 +12,10 @@
       "Bash(python3 -m pip --version)",
       "Bash(curl -sfL https://randomuser.me/api/portraits/women/14.jpg -o w14.jpg)",
       "Bash(grep -n \"gifts_show\\\\|endif -%}$\" snippets/c-preorder-blocks.liquid)",
-      "Bash(grep -n \"how_show\\\\|endif -%}$\" sections/c-preorder-how-it-works.liquid)"
+      "Bash(grep -n \"how_show\\\\|endif -%}$\" sections/c-preorder-how-it-works.liquid)",
+      "mcp__claude_ai_Shopify__get-shop-info",
+      "Bash(curl -sfL -o assets/c-preorder-cart-bonus.png \"https://www.figma.com/api/mcp/asset/1babe8f6-0d35-4211-a88d-a8a2143ae758.png\")",
+      "Bash(sips -Z 192 c-preorder-cart-bonus.jpg)"
     ],
     "additionalDirectories": [
       "/Users/mac/Documents/Validare/prime-naturals/sections"
