@@ -1,45 +1,6 @@
 {%- render 'cart-drawer' -%}
 
 {%- comment -%}
-  V_PRIME_PDP_35 | Unlock Bonus Free Gifts
-
-  This section renders sitewide (layout/theme.liquid always includes it), so
-  it's the one place that can wire up gift-line reconciliation everywhere the
-  cart drawer's quantity inputs / remove buttons can appear — including on
-  the cart page itself. The inline block below is data only (gift variant
-  ids), read by assets/c-prime-pdp-35.js — keep it in sync with the same
-  lookups in snippets/c-prime-pdp-35-bundle.liquid.
-{%- endcomment -%}
-<script>
-  window.pdp35GiftVariants = {
-    mystery: { id: {{ all_products['mystery-gift'].selected_or_first_available_variant.id | json }} },
-    bookmark: { id: {{ all_products['bookmark'].selected_or_first_available_variant.id | json }} },
-    stickers: { id: {{ all_products['stickers'].selected_or_first_available_variant.id | json }} }
-  };
-</script>
-<script src="{{ 'c-prime-pdp-35.js' | asset_url }}" defer></script>
-
-{%- comment -%} Hides the quantity selector on gift lines (c-pdp35-gift-line,
-  set in snippets/cart-drawer.liquid) — gift quantity stays entirely driven
-  by the bundle tier, not directly editable here. Remove button is
-  untouched. {%- endcomment -%}
-{%- if section.index > 3 -%}
-  <link rel="stylesheet" href="{{ 'c-prime-pdp-35.css' | asset_url }}" media="print" onload="this.media='all'">
-{%- else -%}
-  {{ 'c-prime-pdp-35.css' | asset_url | stylesheet_tag }}
-{%- endif -%}
-
-{%- comment -%} V_PRIME_CART_32 | Charity Donation Minicart Add-On — donation card
-  (snippets/c-prime-cart-32-donation.liquid) + totals row, both rendered from
-  snippets/cart-drawer.liquid. {%- endcomment -%}
-{%- if section.index > 3 -%}
-  <link rel="stylesheet" href="{{ 'c-prime-cart-32.css' | asset_url }}" media="print" onload="this.media='all'">
-{%- else -%}
-  {{ 'c-prime-cart-32.css' | asset_url | stylesheet_tag }}
-{%- endif -%}
-<script src="{{ 'c-prime-cart-32.js' | asset_url }}" defer></script>
-
-{%- comment -%}
   V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM) — free gift lines
   auto-added/removed by cart total (assets/c-prime-mix-30-gifts.js). Gift
   products are $0 with their unlock threshold as the compare-at price. A
