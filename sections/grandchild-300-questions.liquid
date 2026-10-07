@@ -623,9 +623,7 @@
   </div>
 
   {%- comment -%} ═══ OFFER CARD ═══ {%- endcomment -%}
-  {%- render 'offer-card',
-    cta_url: section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys'
-  -%}
+  {%- render 'offer-card', cta_url: section.settings.cta_url, default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' -%}
 
   {%- comment -%} ═══ FOOTER ═══ {%- endcomment -%}
   <footer class="pn-footer">
@@ -658,3 +656,17 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%- render 'offer-card',
+        cta_url: section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys'
+      -%}
+  to: "{%- render 'offer-card', cta_url: section.settings.cta_url, default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys'
+    -%}"
+  position: 18969..19111
+{% endcomment %}
