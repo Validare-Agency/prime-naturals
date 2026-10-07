@@ -598,6 +598,77 @@
         "mobile_padding_top": 36,
         "mobile_padding_bottom": 36
       }
+    },
+    "review_list": {
+      "type": "c-preorder-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "\"My 9-year-old asked me 'Mom, why do we have two eyes instead of one?' I didn't know the answer. He went straight to this book, found it, and spent 45 minutes reading about vision, brains and evolution. He came back and explained it to me. I almost cried. His teacher called two weeks later to say he was the most engaged student in class.\"",
+            "name": "Rachel M.",
+            "meta": "Mom of two · Texas",
+            "verified": true
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "\"I was skeptical. My son doesn't read. He's a screen kid. I put this on the coffee table and didn't say a word. Day 3, I found him on the floor reading about black holes at 9pm when I thought he was asleep. He's read it cover to cover twice. That is not a normal thing for him. Buy it — it competes with screens and wins.\"",
+            "name": "David K.",
+            "meta": "Father of one · California",
+            "verified": true
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "\"Bought 3 copies — one for each of my kids and one for my nephew's birthday. The dinner table conversations we've had because of this book are priceless. My 7-year-old explained tectonic plates to my mother-in-law. She was completely speechless. This book changes how kids think, not just what they know.\"",
+            "name": "Jennifer L.",
+            "meta": "Mom of three · Florida",
+            "verified": true
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "\"My daughter has never once picked up a book without being forced. I left this on the coffee table on a Friday. By Sunday she had read half of it and was explaining to her grandfather why the moon doesn't fall out of the sky. He's a retired engineer. He was impressed. I was speechless. This book is something else entirely.\"",
+            "name": "Lisa W.",
+            "meta": "Mom of two · Ohio",
+            "verified": true
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "\"Bought this for my grandson's birthday not knowing what to expect. He opened it, looked at the cover for about thirty seconds, and said 'is this actually mine?' He read it at his own party. His mum called me two months later to say he'd read it three times and was asking if there was a second one. Best gift I've given in years.\"",
+            "name": "Margaret T.",
+            "meta": "Grandmother of four · Illinois",
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5"
+      ],
+      "settings": {
+        "heading": "What parents say about Vol. 2",
+        "verified_label": "Verified buyer",
+        "background": "#fcfcfc",
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 24,
+        "mobile_padding_bottom": 56
+      }
     }
   },
   "order": [
@@ -607,6 +678,7 @@
     "topics",
     "get_the_set",
     "results",
+    "review_list",
     "178791830636e97774"
   ]
 }
