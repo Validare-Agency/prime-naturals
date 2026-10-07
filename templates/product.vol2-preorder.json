@@ -329,11 +329,128 @@
         "mobile_padding_top": 56,
         "mobile_padding_bottom": 56
       }
+    },
+    "compare": {
+      "type": "c-preorder-compare",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "label": "What’s inside?",
+            "text_a": "Answers to the everyday “why?” questions kids ask",
+            "check_a": false,
+            "muted_a": false,
+            "text_b": "Brand-new, surprising facts that make kids say “Wait, what?!”",
+            "check_b": true,
+            "muted_b": false
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "label": "Who is it best for?",
+            "text_a": "A child who asks “why?” about everything",
+            "check_a": false,
+            "muted_a": false,
+            "text_b": "A child who loves surprising facts — perfect if they already have Vol. 1",
+            "check_b": true,
+            "muted_b": false
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "label": "Does it have the star “Curiosity Level” page?",
+            "text_a": "No",
+            "check_a": false,
+            "muted_a": true,
+            "text_b": "Yes — kids color in a star for every wow fact",
+            "check_b": true,
+            "muted_b": false
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "label": "How big is it?",
+            "text_a": "Small hardcover (B5 size)",
+            "check_a": false,
+            "muted_a": false,
+            "text_b": "Big hardcover (A4 size)",
+            "check_b": true,
+            "muted_b": false
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "label": "Have families tried it?",
+            "text_a": "18,000+ families, rated 4.9 ★",
+            "check_a": false,
+            "muted_a": false,
+            "text_b": "Brand new — out October 11",
+            "check_b": true,
+            "muted_b": false
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "label": "When will it arrive?",
+            "text_a": "Ships today",
+            "check_a": false,
+            "muted_a": false,
+            "text_b": "Ships October 11 (pre-order now)",
+            "check_b": true,
+            "muted_b": false
+          }
+        },
+        "price_row": {
+          "type": "price_row",
+          "settings": {
+            "label": "Price"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6",
+        "price_row"
+      ],
+      "settings": {
+        "heading": "Not sure which one to get? *Here’s the simple difference.*",
+        "subheading": "Both are big, sturdy hardcovers that kids pick up on their own. Here’s what makes each one different.",
+        "corner_label": "Side by side",
+        "product_a": "kidss-encyclopedia-10-000-whys",
+        "title_a": "Vol. 1",
+        "badge_a": "THE ORIGINAL",
+        "title_b": "Vol. 2",
+        "badge_b": "NEW · PRE-ORDER",
+        "show_tip": true,
+        "tip_eyebrow": "OUR TIP",
+        "tip_heading": "Can’t decide? Get both.",
+        "tip_text": "They’re two different books, so nothing repeats. Vol. 1 arrives now, and Vol. 2 follows on October 11 — two surprises instead of one.",
+        "button_label": "Get both",
+        "button_action": "add_both",
+        "button_caption": "Free gifts included",
+        "property_name": "Pre-order",
+        "property_value": "Ships October 11",
+        "background": "#ffffff",
+        "desktop_padding_top": 88,
+        "desktop_padding_bottom": 88,
+        "mobile_padding_top": 56,
+        "mobile_padding_bottom": 56
+      }
     }
   },
   "order": [
     "main",
     "how_it_works",
+    "compare",
     "178791830636e97774"
   ]
 }

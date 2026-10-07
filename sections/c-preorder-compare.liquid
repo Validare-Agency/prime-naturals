@@ -1,0 +1,713 @@
+{%- comment -%}
+  "Not sure which one to get?" — Vol. 1 vs Vol. 2 comparison for the
+  Vol. 2 pre-order PDP (templates/product.vol2-preorder.json).
+  Rows are blocks; the "Price" row reads both products' live prices.
+  The tip box button can add both books to the cart, or link anywhere.
+{%- endcomment -%}
+
+{%- liquid
+  assign product_a = section.settings.product_a
+  assign product_b = section.settings.product_b | default: product
+  assign variant_a = product_a.selected_or_first_available_variant
+  assign variant_b = product_b.selected_or_first_available_variant
+
+  assign heading_parts = section.settings.heading | split: '*'
+-%}
+
+{%- capture cover_a -%}
+  {%- if section.settings.image_a != blank -%}
+    {{ section.settings.image_a | image_url: width: 400 }}
+  {%- else -%}
+    {{ 'c-preorder-compare-vol1.png' | asset_img_url: '400x' }}
+  {%- endif -%}
+{%- endcapture -%}
+{%- capture cover_b -%}
+  {%- if section.settings.image_b != blank -%}
+    {{ section.settings.image_b | image_url: width: 460 }}
+  {%- else -%}
+    {{ 'c-preorder-compare-vol2.png' | asset_img_url: '460x' }}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- style -%}
+  #c-pre-cmp-{{ section.id }} {
+    background: {{ section.settings.background }};
+    padding: {{ section.settings.mobile_padding_top }}px 20px {{ section.settings.mobile_padding_bottom }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #c-pre-cmp-{{ section.id }} {
+      padding: {{ section.settings.desktop_padding_top }}px 40px {{ section.settings.desktop_padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div id="c-pre-cmp-{{ section.id }}" class="c-pre-cmp">
+  <div class="c-pre-cmp__inner">
+    <div class="c-pre-cmp__intro">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="c-pre-cmp__heading">
+          {%- for part in heading_parts -%}
+            {%- assign odd = forloop.index0 | modulo: 2 -%}
+            {%- if odd == 1 -%}<mark>{{ part }}</mark>{%- else -%}{{ part }}{%- endif -%}
+          {%- endfor -%}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="c-pre-cmp__sub">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="c-pre-cmp__table">
+      <div class="c-pre-cmp__row c-pre-cmp__row--head">
+        <div class="c-pre-cmp__label"><span>{{ section.settings.corner_label }}</span></div>
+        <div class="c-pre-cmp__cell c-pre-cmp__cell--a">
+          <span class="c-pre-cmp__cover-wrap">
+            <img class="c-pre-cmp__cover c-pre-cmp__cover--a" src="{{ cover_a | strip }}" alt="{{ section.settings.title_a | escape }}" loading="lazy" width="108" height="172">
+          </span>
+          <span class="c-pre-cmp__title">{{ section.settings.title_a }}</span>
+          {%- if section.settings.badge_a != blank -%}<span class="c-pre-cmp__badge c-pre-cmp__badge--a">{{ section.settings.badge_a }}</span>{%- endif -%}
+        </div>
+        <div class="c-pre-cmp__cell c-pre-cmp__cell--b">
+          <span class="c-pre-cmp__cover-wrap">
+            <img class="c-pre-cmp__cover c-pre-cmp__cover--b" src="{{ cover_b | strip }}" alt="{{ section.settings.title_b | escape }}" loading="lazy" width="151" height="206">
+          </span>
+          <span class="c-pre-cmp__title">{{ section.settings.title_b }}</span>
+          {%- if section.settings.badge_b != blank -%}<span class="c-pre-cmp__badge c-pre-cmp__badge--b">{{ section.settings.badge_b }}</span>{%- endif -%}
+        </div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- assign bs = block.settings -%}
+        <div class="c-pre-cmp__row" {{ block.shopify_attributes }}>
+          <div class="c-pre-cmp__label">{{ bs.label }}</div>
+          {%- if block.type == 'price_row' -%}
+            <div class="c-pre-cmp__cell c-pre-cmp__cell--a"><span class="c-pre-cmp__price">{{ variant_a.price | money }}</span></div>
+            <div class="c-pre-cmp__cell c-pre-cmp__cell--b"><span class="c-pre-cmp__price">{{ variant_b.price | money }}</span></div>
+          {%- else -%}
+            <div class="c-pre-cmp__cell c-pre-cmp__cell--a">
+              {%- if bs.check_a -%}<span class="c-pre-cmp__check"><img src="{{ 'c-preorder-compare-check.svg' | asset_url }}" alt="" width="17" height="17"></span>{%- endif -%}
+              <span class="c-pre-cmp__value{% if bs.muted_a %} c-pre-cmp__value--muted{% endif %}">{{ bs.text_a }}</span>
+            </div>
+            <div class="c-pre-cmp__cell c-pre-cmp__cell--b">
+              {%- if bs.check_b -%}<span class="c-pre-cmp__check"><img src="{{ 'c-preorder-compare-check.svg' | asset_url }}" alt="" width="17" height="17"></span>{%- endif -%}
+              <span class="c-pre-cmp__value{% if bs.muted_b %} c-pre-cmp__value--muted{% endif %}">{{ bs.text_b }}</span>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+
+      <div class="c-pre-cmp__row c-pre-cmp__row--end" aria-hidden="true">
+        <div class="c-pre-cmp__label"></div>
+        <div class="c-pre-cmp__cell c-pre-cmp__cell--a"></div>
+        <div class="c-pre-cmp__cell c-pre-cmp__cell--b"></div>
+      </div>
+    </div>
+
+    {%- if section.settings.show_tip -%}
+      <div class="c-pre-cmp__tip">
+        <div class="c-pre-cmp__books" aria-hidden="true">
+          <img class="c-pre-cmp__book c-pre-cmp__book--a" src="{{ cover_a | strip }}" alt="" loading="lazy" width="71" height="112">
+          <img class="c-pre-cmp__book c-pre-cmp__book--b" src="{{ cover_b | strip }}" alt="" loading="lazy" width="103" height="140">
+        </div>
+        <div class="c-pre-cmp__tip-body">
+          {%- if section.settings.tip_eyebrow != blank -%}<span class="c-pre-cmp__eyebrow">{{ section.settings.tip_eyebrow }}</span>{%- endif -%}
+          {%- if section.settings.tip_heading != blank -%}<p class="c-pre-cmp__tip-heading">{{ section.settings.tip_heading }}</p>{%- endif -%}
+          {%- if section.settings.tip_text != blank -%}<p class="c-pre-cmp__tip-text">{{ section.settings.tip_text }}</p>{%- endif -%}
+        </div>
+        <div class="c-pre-cmp__cta">
+          {%- if section.settings.button_action == 'add_both' and variant_a and variant_b -%}
+            <button
+              type="button"
+              class="c-pre-cmp__button"
+              data-c-pre-cmp-add
+              data-variant-a="{{ variant_a.id }}"
+              data-variant-b="{{ variant_b.id }}"
+              data-property-name="{{ section.settings.property_name | escape }}"
+              data-property-value="{{ section.settings.property_value | escape }}"
+            >
+              {{- section.settings.button_label -}}
+            </button>
+          {%- else -%}
+            <a class="c-pre-cmp__button" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label }}</a>
+          {%- endif -%}
+          {%- if section.settings.button_caption != blank -%}<p class="c-pre-cmp__caption">{{ section.settings.button_caption }}</p>{%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  .c-pre-cmp {
+    color: #0d1b3e;
+    font-family: var(--font-body-family);
+  }
+  .c-pre-cmp__inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .c-pre-cmp__intro { display: flex; flex-direction: column; gap: 24px; text-align: center; }
+  .c-pre-cmp__heading {
+    margin: 0;
+    font-family: var(--font-heading-family);
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    color: #0d1b3e;
+  }
+  .c-pre-cmp__heading mark {
+    background: #f5a623;
+    color: inherit;
+    padding: 1px 7px;
+    border-radius: 6px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  .c-pre-cmp__sub { margin: 0; font-size: 17px; line-height: 1.6; color: #4b5563; }
+
+  /* ───── Table ───── */
+  .c-pre-cmp__table {
+    border: 2px solid #0d1b3e;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .c-pre-cmp__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .c-pre-cmp__row + .c-pre-cmp__row:not(.c-pre-cmp__row--end) { border-top: 2px solid #d9e0e6; }
+  .c-pre-cmp__label {
+    grid-column: 1 / -1;
+    padding: 14px 16px 6px;
+    font-family: var(--font-heading-family);
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.35;
+    color: #0d1b3e;
+  }
+  .c-pre-cmp__row--head .c-pre-cmp__label,
+  .c-pre-cmp__row--end { display: none; }
+  .c-pre-cmp__cell {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    padding: 6px 14px 16px;
+    font-size: 16px;
+    line-height: 1.45;
+    min-width: 0;
+  }
+  .c-pre-cmp__cell--b { background: #fff3ec; }
+  .c-pre-cmp__value { color: #0d1b3e; }
+  .c-pre-cmp__value--muted { color: #4b5563; }
+  .c-pre-cmp__check {
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #166534;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .c-pre-cmp__check + .c-pre-cmp__value { padding-top: 3px; }
+  .c-pre-cmp__price {
+    font-family: var(--font-heading-family);
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.45;
+    color: #c0392b;
+  }
+
+  .c-pre-cmp__row--head .c-pre-cmp__cell {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 8px 14px;
+  }
+  .c-pre-cmp__cover-wrap { height: 150px; display: flex; align-items: flex-end; }
+  .c-pre-cmp__cover { display: block; height: auto; box-shadow: 0 12px 40px rgba(13, 27, 62, 0.25); }
+  .c-pre-cmp__cover--a { width: 77px; }
+  .c-pre-cmp__cover--b { width: 107px; }
+  .c-pre-cmp__title {
+    font-family: var(--font-heading-family);
+    font-weight: 700;
+    font-size: 20px;
+    color: #0d1b3e;
+  }
+  .c-pre-cmp__badge {
+    padding: 4px 10px;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    text-align: center;
+  }
+  .c-pre-cmp__badge--a { background: #0d1b3e; }
+  .c-pre-cmp__badge--b { background: #c0392b; }
+
+  /* ───── Tip box ───── */
+  .c-pre-cmp__tip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 22px 20px;
+    border-radius: 22px;
+    background: #0d1b3e;
+    text-align: center;
+  }
+  .c-pre-cmp__books { position: relative; flex: none; width: 130px; height: 120px; }
+  .c-pre-cmp__book {
+    position: absolute;
+    display: block;
+    height: auto;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+  }
+  .c-pre-cmp__book--a { width: 55px; left: 0; top: 28px; transform: rotate(-9deg); }
+  .c-pre-cmp__book--b { width: 81px; left: 49px; top: 10px; transform: rotate(6deg); }
+  .c-pre-cmp__tip-body { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .c-pre-cmp__eyebrow {
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: #f5a623;
+    color: #0d1b3e;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+  }
+  .c-pre-cmp__tip-heading {
+    margin: 0;
+    font-family: var(--font-heading-family);
+    font-weight: 700;
+    font-size: 23px;
+    line-height: 1.2;
+    color: #fff;
+  }
+  .c-pre-cmp__tip-text { margin: 0; font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, 0.9); }
+  .c-pre-cmp__cta { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 320px; }
+  .c-pre-cmp__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 60px;
+    border: 0;
+    border-radius: 10px;
+    background: #c0392b;
+    color: #fff;
+    font-family: var(--font-heading-family);
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: filter 0.15s ease, opacity 0.15s ease;
+  }
+  .c-pre-cmp__button:hover { filter: brightness(0.93); }
+  .c-pre-cmp__button[disabled] { opacity: 0.7; cursor: progress; }
+  .c-pre-cmp__caption { margin: 0; font-size: 18px; line-height: 1.5; color: #fff; text-transform: capitalize; }
+
+  @media screen and (min-width: 750px) {
+    .c-pre-cmp__inner { gap: 30px; }
+    .c-pre-cmp__intro { gap: 30px; }
+    .c-pre-cmp__heading { font-size: 40px; padding: 0 110px; }
+    .c-pre-cmp__sub { font-size: 20px; }
+
+    .c-pre-cmp__table { border-radius: 22px; }
+    .c-pre-cmp__row { grid-template-columns: 300fr 408fr 408fr; }
+    .c-pre-cmp__row--end { display: grid; height: 19px; }
+    .c-pre-cmp__label {
+      grid-column: auto;
+      display: flex;
+      align-items: center;
+      padding: 20px 28px;
+      font-size: 18px;
+    }
+    .c-pre-cmp__row--head .c-pre-cmp__label {
+      display: flex;
+      align-items: flex-end;
+      padding: 24px 28px;
+      font-size: 22px;
+    }
+    .c-pre-cmp__cell {
+      align-items: center;
+      gap: 10px;
+      padding: 20px 26px;
+      font-size: 19px;
+    }
+    .c-pre-cmp__row--end .c-pre-cmp__cell,
+    .c-pre-cmp__row--end .c-pre-cmp__label { padding: 0; }
+    .c-pre-cmp__cell--b { border-left: 3px solid #c0392b; }
+    .c-pre-cmp__check + .c-pre-cmp__value { padding-top: 0; }
+    .c-pre-cmp__row--head .c-pre-cmp__cell { padding: 24px 8px 20px; }
+    .c-pre-cmp__cover-wrap { height: 210px; }
+    .c-pre-cmp__cover--a { width: 108px; }
+    .c-pre-cmp__cover--b { width: 151px; }
+    .c-pre-cmp__title { font-size: 24px; }
+
+    .c-pre-cmp__tip {
+      flex-direction: row;
+      gap: 32px;
+      padding: 30px 36px;
+      text-align: left;
+    }
+    .c-pre-cmp__books { width: 170px; height: 150px; }
+    .c-pre-cmp__book--a { width: 71px; left: 0; top: 34px; }
+    .c-pre-cmp__book--b { width: 103px; left: 67px; top: 10px; }
+    .c-pre-cmp__tip-body { flex: 1 1 auto; align-items: flex-start; min-width: 0; }
+    .c-pre-cmp__tip-heading { font-size: 30px; }
+    .c-pre-cmp__tip-text { font-size: 18px; max-width: 494px; }
+    .c-pre-cmp__cta { flex: 0 0 320px; }
+    .c-pre-cmp__button { min-height: 66px; font-size: 19px; }
+    .c-pre-cmp__caption { text-align: center; }
+  }
+</style>
+
+<script>
+  (function () {
+    function init(button) {
+      if (button.dataset.cPreCmpInit) return;
+      button.dataset.cPreCmpInit = 'true';
+      button.addEventListener('click', function () {
+        var properties = {};
+        if (button.dataset.propertyName && button.dataset.propertyValue) {
+          properties[button.dataset.propertyName] = button.dataset.propertyValue;
+        }
+        var items = [
+          { id: button.dataset.variantA, quantity: 1 },
+          { id: button.dataset.variantB, quantity: 1, properties: properties }
+        ];
+        button.disabled = true;
+        fetch(window.routes.cart_add_url + '.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ items: items })
+        })
+          .then(function (response) {
+            if (!response.ok) return Promise.reject(response);
+            return Promise.all([
+              fetch(window.routes.cart_url + '?section_id=cart-drawer').then(function (r) { return r.text(); }),
+              fetch(window.routes.cart_url + '?section_id=cart-icon-bubble').then(function (r) { return r.text(); })
+            ]);
+          })
+          .then(function (html) {
+            var parser = new DOMParser();
+            var freshDrawer = parser.parseFromString(html[0], 'text/html').querySelector('cart-drawer');
+            var liveDrawer = document.querySelector('cart-drawer');
+            if (freshDrawer && liveDrawer) {
+              liveDrawer.replaceWith(freshDrawer);
+              freshDrawer.classList.add('active');
+            } else {
+              window.location.href = window.routes.cart_url;
+              return;
+            }
+            var freshBubble = parser.parseFromString(html[1], 'text/html').querySelector('.shopify-section');
+            var liveBubble = document.getElementById('cart-icon-bubble');
+            if (freshBubble && liveBubble) liveBubble.innerHTML = freshBubble.innerHTML;
+          })
+          .catch(function () {})
+          .finally(function () {
+            button.disabled = false;
+          });
+      });
+    }
+    function run() {
+      document.querySelectorAll('[data-c-pre-cmp-add]').forEach(init);
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', run);
+    } else {
+      run();
+    }
+    document.addEventListener('shopify:section:load', run);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Pre-order: Comparison",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Wrap words in *asterisks* to highlight them.",
+      "default": "Not sure which one to get? *Here’s the simple difference.*"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Both are big, sturdy hardcovers that kids pick up on their own. Here’s what makes each one different."
+    },
+    {
+      "type": "text",
+      "id": "corner_label",
+      "label": "Table corner label",
+      "info": "Desktop only.",
+      "default": "Side by side"
+    },
+    {
+      "type": "header",
+      "content": "Left column (Vol. 1)"
+    },
+    {
+      "type": "product",
+      "id": "product_a",
+      "label": "Product",
+      "info": "Price row and \"Get both\" use this product."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_a",
+      "label": "Cover image",
+      "info": "Defaults to the Vol. 1 cover."
+    },
+    {
+      "type": "text",
+      "id": "title_a",
+      "label": "Title",
+      "default": "Vol. 1"
+    },
+    {
+      "type": "text",
+      "id": "badge_a",
+      "label": "Badge",
+      "default": "THE ORIGINAL"
+    },
+    {
+      "type": "header",
+      "content": "Right column (Vol. 2, highlighted)"
+    },
+    {
+      "type": "product",
+      "id": "product_b",
+      "label": "Product",
+      "info": "Defaults to the product on the page."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_b",
+      "label": "Cover image",
+      "info": "Defaults to the Vol. 2 cover."
+    },
+    {
+      "type": "text",
+      "id": "title_b",
+      "label": "Title",
+      "default": "Vol. 2"
+    },
+    {
+      "type": "text",
+      "id": "badge_b",
+      "label": "Badge",
+      "default": "NEW · PRE-ORDER"
+    },
+    {
+      "type": "header",
+      "content": "Tip box"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tip",
+      "label": "Show tip box",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tip_eyebrow",
+      "label": "Eyebrow",
+      "default": "OUR TIP"
+    },
+    {
+      "type": "text",
+      "id": "tip_heading",
+      "label": "Heading",
+      "default": "Can’t decide? Get both."
+    },
+    {
+      "type": "textarea",
+      "id": "tip_text",
+      "label": "Text",
+      "default": "They’re two different books, so nothing repeats. Vol. 1 arrives now, and Vol. 2 follows on October 11 — two surprises instead of one."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Get both"
+    },
+    {
+      "type": "select",
+      "id": "button_action",
+      "label": "Button action",
+      "options": [
+        { "value": "add_both", "label": "Add both books to cart" },
+        { "value": "link", "label": "Go to link" }
+      ],
+      "default": "add_both"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Used when the action is \"Go to link\"."
+    },
+    {
+      "type": "text",
+      "id": "button_caption",
+      "label": "Caption under button",
+      "default": "Free gifts included"
+    },
+    {
+      "type": "text",
+      "id": "property_name",
+      "label": "Vol. 2 line item property name",
+      "default": "Pre-order"
+    },
+    {
+      "type": "text",
+      "id": "property_value",
+      "label": "Vol. 2 line item property value",
+      "default": "Ships October 11"
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop top padding",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop bottom padding",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile top padding",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile bottom padding",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "What’s inside?"
+        },
+        {
+          "type": "textarea",
+          "id": "text_a",
+          "label": "Left column text",
+          "default": "Answers to the everyday “why?” questions kids ask"
+        },
+        {
+          "type": "checkbox",
+          "id": "check_a",
+          "label": "Left: show check",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "muted_a",
+          "label": "Left: grey text",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "text_b",
+          "label": "Right column text",
+          "default": "Brand-new, surprising facts that make kids say “Wait, what?!”"
+        },
+        {
+          "type": "checkbox",
+          "id": "check_b",
+          "label": "Right: show check",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "muted_b",
+          "label": "Right: grey text",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "price_row",
+      "name": "Price row",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Price"
+        },
+        {
+          "type": "paragraph",
+          "content": "Shows each column product's current price."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pre-order: Comparison",
+      "blocks": [
+        { "type": "row" },
+        { "type": "price_row" }
+      ]
+    }
+  ]
+}
+{% endschema %}
