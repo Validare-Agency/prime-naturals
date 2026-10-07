@@ -256,6 +256,7 @@ slider-component:has(> .c-pre-media-badges) { position: relative; }
   overflow: hidden;
 }
 .c-pre-stock__bar span { display: block; height: 100%; border-radius: 6px; background: #c0392b; }
+.c-pre-stock--out .c-pre-stock__dot { animation: none; }
 
 /* ───── Countdown ───── */
 .c-pre-countdown {
@@ -467,6 +468,20 @@ slider-component:has(> .c-pre-media-badges) { position: relative; }
 .c-pre-atc[disabled] { opacity: 0.6; cursor: not-allowed; }
 .c-pre-atc.is-loading { opacity: 0.75; cursor: progress; }
 .c-pre-atc__error { margin: 8px 0 0; font-size: 14px; color: #b42318; }
+.c-pre-atc__note {
+  margin: 10px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-body-family);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #0d1b3e;
+  text-align: center;
+}
+.c-pre-atc__note img { flex: none; }
 
 /* ───── Trust strip ───── */
 .c-pre-trust { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }

@@ -55,7 +55,10 @@
             "pill_3_icon": "none",
             "pill_3_style": "cream",
             "margin_top": 0,
-            "margin_bottom": 16
+            "margin_bottom": 16,
+            "pill_1_preorder_only": true,
+            "pill_2_preorder_only": false,
+            "pill_3_preorder_only": false
           }
         },
         "title_pre": {
@@ -98,10 +101,11 @@
           "settings": {
             "heading": "Limited stock – available on pre-order only",
             "left_text": "[left] of [total] left",
-            "left": 312,
             "total": 500,
             "margin_top": 0,
-            "margin_bottom": 16
+            "margin_bottom": 16,
+            "when_zero": "stop",
+            "sold_out_text": "Pre-order stock is sold out"
           }
         },
         "countdown_pre": {
@@ -155,7 +159,8 @@
             "addon_title": "Complete the set with Vol. 1",
             "addon_subtitle": "The original 10,000 Whys",
             "margin_top": 0,
-            "margin_bottom": 16
+            "margin_bottom": 16,
+            "heading_off": "Choose your bundle"
           }
         },
         "gifts_pre": {
@@ -175,7 +180,8 @@
             "gift_3_value": "$9.80",
             "gift_3_product": "",
             "margin_top": 16,
-            "margin_bottom": 16
+            "margin_bottom": 16,
+            "preorder_only": true
           }
         },
         "atc_pre": {
@@ -187,7 +193,10 @@
             "property_name": "Pre-order",
             "property_value": "Ships October 11",
             "margin_top": 0,
-            "margin_bottom": 16
+            "margin_bottom": 16,
+            "label_off": "Add to cart — [price]",
+            "sold_out_label": "Pre-order sold out",
+            "note": "Ships October 11 — arrives well before the holidays"
           }
         },
         "trust_pre": {
@@ -322,7 +331,8 @@
         "desktop_padding_top": 88,
         "desktop_padding_bottom": 88,
         "mobile_padding_top": 56,
-        "mobile_padding_bottom": 56
+        "mobile_padding_bottom": 56,
+        "preorder_only": true
       }
     },
     "compare": {
@@ -661,7 +671,8 @@
           "type": "group",
           "settings": {
             "title": "Pre-order",
-            "color": "red"
+            "color": "red",
+            "preorder_only": true
           }
         },
         "question_1": {
@@ -669,7 +680,8 @@
           "settings": {
             "question": "When am I charged?",
             "answer": "<p>At checkout, like any order. Your copy is reserved as soon as you order.</p>",
-            "open": true
+            "open": true,
+            "preorder_only": true
           }
         },
         "question_2": {
@@ -677,7 +689,8 @@
           "settings": {
             "question": "When does it ship?",
             "answer": "<p>Vol. 2 ships on October 11, straight from our warehouse. It usually arrives about 7 days after it ships.</p>",
-            "open": false
+            "open": false,
+            "preorder_only": true
           }
         },
         "question_3": {
@@ -685,7 +698,8 @@
           "settings": {
             "question": "Can I cancel my pre-order?",
             "answer": "<p>[Add your cancellation policy here.]</p>",
-            "open": false
+            "open": false,
+            "preorder_only": true
           }
         },
         "question_4": {
@@ -693,14 +707,16 @@
           "settings": {
             "question": "Will it arrive before the holidays?",
             "answer": "<p>Yes. Vol. 2 ships October 11 and usually arrives about 7 days later — well ahead of the holidays.</p>",
-            "open": false
+            "open": false,
+            "preorder_only": true
           }
         },
         "group_2": {
           "type": "group",
           "settings": {
             "title": "About the book",
-            "color": "grey"
+            "color": "grey",
+            "preorder_only": false
           }
         },
         "question_5": {
@@ -708,7 +724,8 @@
           "settings": {
             "question": "Is Vol. 2 different from Vol. 1?",
             "answer": "<p>Yes. Vol. 2 is all-new: brand-new questions and surprising facts, plus a “Curiosity Level” page where kids color in a star for every wow fact. Nothing repeats from Vol. 1.</p>",
-            "open": false
+            "open": false,
+            "preorder_only": false
           }
         },
         "question_6": {
@@ -716,7 +733,8 @@
           "settings": {
             "question": "Do they need Vol. 1 first?",
             "answer": "<p>No. Each book stands on its own, so kids can start with either one.</p>",
-            "open": false
+            "open": false,
+            "preorder_only": false
           }
         },
         "question_7": {
@@ -724,7 +742,8 @@
           "settings": {
             "question": "What ages is it for?",
             "answer": "<p>Ages 6–12.</p>",
-            "open": false
+            "open": false,
+            "preorder_only": false
           }
         },
         "question_8": {
@@ -732,7 +751,8 @@
           "settings": {
             "question": "What if they don’t love it?",
             "answer": "<p>Every order is covered by our 30-day money-back guarantee.</p>",
-            "open": false
+            "open": false,
+            "preorder_only": false
           }
         }
       },

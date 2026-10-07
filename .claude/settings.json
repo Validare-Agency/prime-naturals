@@ -10,7 +10,9 @@
       "Bash(curl -sfL https://www.figma.com/api/mcp/asset/2b037047-d509-42f6-8295-ec8b8418eae8.svg)",
       "Bash(curl -sfL https://www.figma.com/api/mcp/asset/328d7922-e1db-4a70-b8c1-2cd3659ba061.svg -o assets/c-preorder-truck-green.svg)",
       "Bash(python3 -m pip --version)",
-      "Bash(curl -sfL https://randomuser.me/api/portraits/women/14.jpg -o w14.jpg)"
+      "Bash(curl -sfL https://randomuser.me/api/portraits/women/14.jpg -o w14.jpg)",
+      "Bash(grep -n \"gifts_show\\\\|endif -%}$\" snippets/c-preorder-blocks.liquid)",
+      "Bash(grep -n \"how_show\\\\|endif -%}$\" sections/c-preorder-how-it-works.liquid)"
     ],
     "additionalDirectories": [
       "/Users/mac/Documents/Validare/prime-naturals/sections"

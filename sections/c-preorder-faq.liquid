@@ -4,6 +4,13 @@
   group, "Question" is an accordion item (native <details>, no JS needed).
 {%- endcomment -%}
 
+{%- liquid
+  assign pre_on = true
+  if product.metafields.custom.preorder_enabled.value == false
+    assign pre_on = false
+  endif
+-%}
+
 {%- style -%}
   #c-pre-faq-{{ section.id }} {
     background: {{ section.settings.background }};
@@ -23,6 +30,7 @@
     {%- endif -%}
 
     {%- for block in section.blocks -%}
+      {%- if pre_on == false and block.settings.preorder_only -%}{%- continue -%}{%- endif -%}
       {%- case block.type -%}
         {%- when 'group' -%}
           <p class="c-pre-faq__group c-pre-faq__group--{{ block.settings.color }}{% unless forloop.first %} c-pre-faq__group--spaced{% endunless %}" {{ block.shopify_attributes }}>
@@ -219,6 +227,12 @@
             { "value": "grey", "label": "Grey" }
           ],
           "default": "red"
+        },
+        {
+          "type": "checkbox",
+          "id": "preorder_only",
+          "label": "Hide when pre-order is off",
+          "default": false
         }
       ]
     },
@@ -242,6 +256,12 @@
           "type": "checkbox",
           "id": "open",
           "label": "Open by default",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "preorder_only",
+          "label": "Hide when pre-order is off",
           "default": false
         }
       ]

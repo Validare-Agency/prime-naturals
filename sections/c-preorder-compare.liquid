@@ -10,6 +10,11 @@
   assign product_b = section.settings.product_b | default: product
   assign variant_a = product_a.selected_or_first_available_variant
   assign variant_b = product_b.selected_or_first_available_variant
+  # Pre-order switch: Vol. 2 product metafield custom.preorder_enabled (missing = on)
+  assign pre_on = true
+  if product_b.metafields.custom.preorder_enabled.value == false
+    assign pre_on = false
+  endif
 
   assign heading_parts = section.settings.heading | split: '*'
 -%}
@@ -116,8 +121,10 @@
               data-c-pre-add-both
               data-variant-a="{{ variant_a.id }}"
               data-variant-b="{{ variant_b.id }}"
+              {%- if pre_on %}
               data-property-name="{{ section.settings.property_name | escape }}"
               data-property-value="{{ section.settings.property_value | escape }}"
+              {%- endif %}
             >
               {{- section.settings.button_label -}}
             </button>

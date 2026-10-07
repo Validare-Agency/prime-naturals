@@ -199,7 +199,8 @@
                                     <{% if block.settings.title_link %}a href="{{ item.url }}"{% else %}h4{% endif %} class="cart-item__name h4 break">
                                       {{- item.product.title | escape -}}
                                     </{% if block.settings.title_link %}a{% else %}h4{% endif %}>
-        
+                                    {%- render 'c-preorder-cart-badge', item: item -%}
+
                                     {%- if item.original_price != item.final_price and block.settings.display_single_item_prices -%}
                                       {% assign has_props = true %}
                                       <div class="cart-item__discounted-prices cart-drawer-item__single-item-prices">
@@ -254,6 +255,8 @@
         
                                         {%- for property in item.properties -%}
                                           {%- assign property_first_char = property.first | slice: 0 -%}
+                                          {%- comment -%} Pre-order note is already shown by the c-preorder-cart-badge label {%- endcomment -%}
+                                          {%- if item.properties._preorder != blank and property.last == item.properties._preorder -%}{%- continue -%}{%- endif -%}
                                           {%- if property.last != blank and property_first_char != '_' -%}
                                             <div class="product-option">
                                               <dt>{{ property.first }}:</dt>

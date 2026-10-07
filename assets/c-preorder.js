@@ -136,6 +136,10 @@
     var errorEl = button.parentElement.querySelector('[data-c-pre-atc-error]');
 
     var properties = {};
+    if (button.dataset.preorder === 'true') {
+      // Hidden flag — drives the "Pre-order" badge in the cart drawer / cart page.
+      properties._preorder = button.dataset.propertyValue || 'true';
+    }
     if (button.dataset.propertyName && button.dataset.propertyValue) {
       properties[button.dataset.propertyName] = button.dataset.propertyValue;
     }

@@ -5,8 +5,11 @@
     if (button.dataset.cPreAddBothInit) return;
     button.dataset.cPreAddBothInit = 'true';
     button.addEventListener('click', function () {
+      // Pre-order properties are only rendered while pre-order is on
+      // (product metafield custom.preorder_enabled), so none are sent after.
       var properties = {};
       if (button.dataset.propertyName && button.dataset.propertyValue) {
+        properties._preorder = button.dataset.propertyValue;
         properties[button.dataset.propertyName] = button.dataset.propertyValue;
       }
       var items = [

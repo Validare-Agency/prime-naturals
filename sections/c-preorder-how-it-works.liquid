@@ -6,6 +6,17 @@
   currentColor so highlighted / regular steps share them.
 {%- endcomment -%}
 
+{%- liquid
+  assign pre_on = true
+  if product.metafields.custom.preorder_enabled.value == false
+    assign pre_on = false
+  endif
+  assign how_show = true
+  if pre_on == false and section.settings.preorder_only
+    assign how_show = false
+  endif
+-%}
+{%- if how_show -%}
 {%- style -%}
   #c-pre-how-{{ section.id }} {
     background: {{ section.settings.background }};
@@ -175,6 +186,7 @@
     }
   }
 </style>
+{%- endif -%}
 
 {% schema %}
 {
@@ -187,6 +199,13 @@
       "id": "heading",
       "label": "Heading",
       "default": "How pre-order works"
+    },
+    {
+      "type": "checkbox",
+      "id": "preorder_only",
+      "label": "Hide when pre-order is off",
+      "info": "Pre-order switch: product metafield custom.preorder_enabled.",
+      "default": true
     },
     {
       "type": "color",

@@ -1512,6 +1512,12 @@
           "default": "red"
         },
         {
+          "type": "checkbox",
+          "id": "pill_1_preorder_only",
+          "label": "Hide when pre-order is off",
+          "default": true
+        },
+        {
           "type": "header",
           "content": "Pill 2"
         },
@@ -1570,6 +1576,12 @@
           "default": "green"
         },
         {
+          "type": "checkbox",
+          "id": "pill_2_preorder_only",
+          "label": "Hide when pre-order is off",
+          "default": false
+        },
+        {
           "type": "header",
           "content": "Pill 3"
         },
@@ -1625,6 +1637,12 @@
             }
           ],
           "default": "cream"
+        },
+        {
+          "type": "checkbox",
+          "id": "pill_3_preorder_only",
+          "label": "Hide when pre-order is off",
+          "default": false
         },
         {
           "type": "header",
@@ -1759,7 +1777,8 @@
           "type": "text",
           "id": "ships_text",
           "label": "Shipping pill",
-          "default": "Ships October 11"
+          "default": "Ships October 11",
+          "info": "Hidden when pre-order is off."
         },
         {
           "type": "header",
@@ -1829,6 +1848,10 @@
       "name": "Pre-order: Stock bar",
       "settings": [
         {
+          "type": "paragraph",
+          "content": "Copies left = product metafield custom.preorder_total minus copies sold. Sold is read from inventory: keep inventory at 0 with \"Continue selling when out of stock\" on — each pre-order takes it below 0. Hidden when pre-order is off."
+        },
+        {
           "type": "text",
           "id": "heading",
           "label": "Heading",
@@ -1843,15 +1866,36 @@
         },
         {
           "type": "number",
-          "id": "left",
-          "label": "Copies left",
-          "default": 312
+          "id": "total",
+          "label": "Fallback total copies",
+          "default": 500,
+          "info": "Used only if the product has no custom.preorder_total metafield. Copies left are counted from the product inventory."
         },
         {
-          "type": "number",
-          "id": "total",
-          "label": "Total copies",
-          "default": 500
+          "type": "select",
+          "id": "when_zero",
+          "label": "When it reaches 0",
+          "options": [
+            {
+              "value": "stop",
+              "label": "Stop pre-orders (button disabled)"
+            },
+            {
+              "value": "keep",
+              "label": "Keep selling, show sold-out text"
+            },
+            {
+              "value": "hide",
+              "label": "Keep selling, hide the stock bar"
+            }
+          ],
+          "default": "stop"
+        },
+        {
+          "type": "text",
+          "id": "sold_out_text",
+          "label": "Text at 0",
+          "default": "Pre-order stock is sold out"
         },
         {
           "type": "header",
@@ -1965,9 +2009,16 @@
         },
         {
           "type": "text",
+          "id": "heading_off",
+          "label": "Heading when pre-order is off",
+          "default": "Choose your bundle"
+        },
+        {
+          "type": "text",
           "id": "ships_text",
           "label": "Shipping text",
-          "default": "Ships October 11"
+          "default": "Ships October 11",
+          "info": "Hidden when pre-order is off."
         },
         {
           "type": "paragraph",
@@ -2238,6 +2289,12 @@
       "limit": 1,
       "settings": [
         {
+          "type": "checkbox",
+          "id": "preorder_only",
+          "label": "Hide when pre-order is off",
+          "default": true
+        },
+        {
           "type": "text",
           "id": "eyebrow",
           "label": "Eyebrow",
@@ -2375,11 +2432,36 @@
       "limit": 1,
       "settings": [
         {
+          "type": "paragraph",
+          "content": "Pre-order switch: product metafield custom.preorder_enabled (true/false, missing = on). Turn it off to switch this page to a normal product page."
+        },
+        {
           "type": "text",
           "id": "label",
           "label": "Label",
           "info": "[price] is replaced with the selected total.",
           "default": "Pre-order — [price]"
+        },
+        {
+          "type": "text",
+          "id": "label_off",
+          "label": "Label when pre-order is off",
+          "info": "[price] is replaced with the selected total.",
+          "default": "Add to cart — [price]"
+        },
+        {
+          "type": "text",
+          "id": "sold_out_label",
+          "label": "Label when pre-order stock hits 0",
+          "info": "Used when the Stock bar block is set to \"Stop pre-orders\".",
+          "default": "Pre-order sold out"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Note under button",
+          "info": "Pre-order only.",
+          "default": "Ships October 11 — arrives well before the holidays"
         },
         {
           "type": "color",
@@ -2626,7 +2708,7 @@
           "id": "icon_1",
           "default": "check_circle",
           "label": "Icon #1",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -2644,7 +2726,7 @@
           "id": "icon_2",
           "default": "check_circle",
           "label": "Icon #2",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -2662,7 +2744,7 @@
           "id": "icon_3",
           "default": "check_circle",
           "label": "Icon #3",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -3194,7 +3276,7 @@
           "id": "icon_1",
           "default": "redeem",
           "label": "Icon #1",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -3212,7 +3294,7 @@
           "id": "icon_2",
           "default": "check_circle",
           "label": "Icon #2",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -3389,7 +3471,7 @@
           "id": "icon_1",
           "label": "Icon",
           "default": "sell",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -3437,7 +3519,7 @@
           "id": "icon_2",
           "label": "Icon",
           "default": "sell",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -4768,7 +4850,7 @@
           ],
           "label": "Swatches custom colors",
           "default": "disabled",
-          "info": "Disabled displays the variant images in swatches. Varaint images alt text displays CSS values from each image's alt text. Custom colors list takes the list of the custom CSS values from the setting bellow. Watch the tutorial for CSS values [here](https:\/\/youtu.be\/Xo_ZFzRCk3o)"
+          "info": "Disabled displays the variant images in swatches. Varaint images alt text displays CSS values from each image's alt text. Custom colors list takes the list of the custom CSS values from the setting bellow. Watch the tutorial for CSS values [here](https://youtu.be/Xo_ZFzRCk3o)"
         },
         {
           "type": "text",
@@ -5292,7 +5374,7 @@
           "default": 24
         }
       ]
-    }, 
+    },
     {
       "type": "sticky_atc",
       "name": "Sticky Add To Cart",
@@ -5309,19 +5391,19 @@
             {
               "value": "add_to_cart",
               "label": "Add to Cart"
-            }, 
+            },
             {
               "value": "scroll_#ProductInfo-id",
               "label": "Scroll to Product information"
-            }, 
+            },
             {
               "value": "scroll_#variant-selects-id",
               "label": "Scroll to Variant picker"
-            }, 
+            },
             {
               "value": "scroll_#quantity-breaks-id",
               "label": "Scroll to Quantity breaks"
-            }, 
+            },
             {
               "value": "scroll_.pricing-table",
               "label": "Scroll to Pricing table"
@@ -5337,7 +5419,7 @@
             {
               "value": "always",
               "label": "Always"
-            }, 
+            },
             {
               "value": "after_scroll",
               "label": "After scrolling past regular ATC button"
@@ -5412,7 +5494,7 @@
             {
               "value": "combined",
               "label": "Combined"
-            }, 
+            },
             {
               "value": "separate",
               "label": "Separate"
@@ -5572,9 +5654,9 @@
               "value": "background-2",
               "label": "t:sections.all.colors.background_2.label"
             },
-            { 
-              "value": "inverse", 
-              "label": "t:sections.all.colors.inverse.label" 
+            {
+              "value": "inverse",
+              "label": "t:sections.all.colors.inverse.label"
             }
           ],
           "default": "background-1",
@@ -5945,7 +6027,7 @@
           "id": "icon",
           "default": "check_box",
           "label": "Icon",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -6482,7 +6564,7 @@
           "id": "button_icon",
           "default": "straighten",
           "label": "Button icon",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -6581,7 +6663,7 @@
           "type": "select",
           "id": "color_scheme",
           "options": [
-            { 
+            {
               "value": "accent-1",
               "label": "t:sections.all.colors.accent_1.label"
             },
@@ -6620,7 +6702,7 @@
           "type": "select",
           "id": "table_header_color_scheme",
           "options": [
-            { 
+            {
               "value": "accent-1",
               "label": "t:sections.all.colors.accent_1.label"
             },
@@ -6821,7 +6903,7 @@
           "type": "inline_richtext",
           "id": "add_btn_label",
           "label": "Classic add button label",
-          "default":  "<strong>Add</strong>"
+          "default": "<strong>Add</strong>"
         },
         {
           "type": "select",
@@ -6872,7 +6954,7 @@
           "type": "select",
           "id": "color_scheme",
           "options": [
-            { 
+            {
               "value": "accent-1",
               "label": "t:sections.all.colors.accent_1.label"
             },
@@ -7948,7 +8030,7 @@
           "type": "select",
           "id": "color_scheme",
           "options": [
-            { 
+            {
               "value": "accent-1",
               "label": "t:sections.all.colors.accent_1.label"
             },
@@ -8762,7 +8844,7 @@
           "id": "icon",
           "default": "local_shipping",
           "label": "Icon",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -8926,7 +9008,7 @@
           "id": "icon_1",
           "default": "add_shopping_cart",
           "label": "#1 Icon",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -8972,7 +9054,7 @@
           "id": "icon_2",
           "default": "local_shipping",
           "label": "#2 Icon",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -9018,7 +9100,7 @@
           "id": "icon_3",
           "default": "redeem",
           "label": "#3 Icon",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -9063,7 +9145,7 @@
           "type": "text",
           "id": "icon_4",
           "label": "#4 Icon",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -9608,7 +9690,7 @@
           "id": "icon_1",
           "default": "favorite",
           "label": "t:sections.main-product.blocks.icon_with_text.settings.icon_1.label",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -9633,7 +9715,7 @@
           "id": "icon_2",
           "default": "undo",
           "label": "t:sections.main-product.blocks.icon_with_text.settings.icon_2.label",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -9658,7 +9740,7 @@
           "id": "icon_3",
           "default": "local_shipping",
           "label": "t:sections.main-product.blocks.icon_with_text.settings.icon_3.label",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
