@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(sed -e 's/\"formId\": \"RByxN6\"/\"formId\": \"X8rRRs\"/' -e 's/hide the elements for the VOL 2/hide the elements for the Bible book waiting list/' templates/product.vol2.json)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(grep -o -E '.{0,80}pib-\\(title|subtitle\\)\\\\\\\\?\"?>.{0,200}' templates/product.10000-why-bible-book-waiting-list.json)",
+      "Bash(python3 -c \"import sys,re;[print\\(re.sub\\(r'\\(.{0,120}pib-title.{0,300}\\).*',r'\\\\1',l\\)[:600]\\) for l in sys.stdin if l[:1] in '+-' and 'pib-title' in l]\")"
     ]
   }
 }
