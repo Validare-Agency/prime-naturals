@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -16,21 +25,21 @@
           "type": "preorder_reviews",
           "settings": {
             "autoplay_seconds": 0,
+            "show_arrows": false,
             "review_1_text": "\"Best money I've spent on my kids' education outside of school. The conversations it starts are priceless.\"",
             "review_1_name": "Jennifer L.",
             "review_1_meta": "Mom of three",
+            "review_1_avatar_url": "https://i.pravatar.cc/150?img=47",
             "review_2_text": "\"My son is a screen kid. He read this until 9pm without me saying a word. I bought two more for his cousins.\"",
             "review_2_name": "David K.",
             "review_2_meta": "Father of two",
+            "review_2_avatar_url": "https://i.pravatar.cc/150?img=12",
             "review_3_text": "\"My daughter explained tectonic plates to my mother-in-law. She's 8. We were completely speechless.\"",
             "review_3_name": "Rachel M.",
             "review_3_meta": "Mom of two",
+            "review_3_avatar_url": "https://i.pravatar.cc/150?img=32",
             "margin_top": 0,
-            "margin_bottom": 16,
-            "show_arrows": false,
-            "review_1_avatar_url": "https://i.pravatar.cc/150?img=47",
-            "review_2_avatar_url": "https://i.pravatar.cc/150?img=12",
-            "review_3_avatar_url": "https://i.pravatar.cc/150?img=32"
+            "margin_bottom": 16
           }
         },
         "pills_pre": {
@@ -42,6 +51,7 @@
             "pill_2_text": "All-new Volume 2",
             "pill_2_icon": "pill-book",
             "pill_2_style": "green",
+            "pill_3_text": "",
             "pill_3_icon": "none",
             "pill_3_style": "cream",
             "margin_top": 0,
@@ -119,9 +129,12 @@
             "free_shipping_text": "FREE shipping",
             "tier_1_enable": true,
             "tier_1_quantity": 1,
+            "tier_1_price": "",
             "tier_1_title": "1 Book",
             "tier_1_subtitle": "For 1 child",
+            "tier_1_perk": "",
             "tier_1_free_shipping": false,
+            "tier_1_badge": "",
             "tier_2_enable": true,
             "tier_2_quantity": 3,
             "tier_2_price": "79.90",
@@ -138,11 +151,11 @@
             "tier_3_perk": "2 full books, on us",
             "tier_3_free_shipping": true,
             "tier_3_badge": "One for every grandchild",
+            "addon_product": "kidss-encyclopedia-10-000-whys",
             "addon_title": "Complete the set with Vol. 1",
             "addon_subtitle": "The original 10,000 Whys",
             "margin_top": 0,
-            "margin_bottom": 16,
-            "addon_product": "kidss-encyclopedia-10-000-whys"
+            "margin_bottom": 16
           }
         },
         "gifts_pre": {
@@ -154,10 +167,13 @@
             "free_label": "FREE",
             "gift_1_name": "Sticker Puzzle",
             "gift_1_value": "$15.80",
+            "gift_1_product": "",
             "gift_2_name": "Stickers",
             "gift_2_value": "$4.80",
+            "gift_2_product": "",
             "gift_3_name": "Mystery Gift",
             "gift_3_value": "$9.80",
+            "gift_3_product": "",
             "margin_top": 16,
             "margin_bottom": 16
           }
@@ -252,27 +268,6 @@
         "mobile_padding_bottom": 44,
         "desktop_padding_top": 36,
         "desktop_padding_bottom": 36
-      }
-    },
-    "178791830636e97774": {
-      "type": "apps",
-      "blocks": {
-        "judge_me_reviews_review_widget_FbtBRQ": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "no_reviews",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_FbtBRQ"
-      ],
-      "settings": {
-        "display_id": false,
-        "include_margins": true
       }
     },
     "how_it_works": {
@@ -428,6 +423,7 @@
         "product_a": "kidss-encyclopedia-10-000-whys",
         "title_a": "Vol. 1",
         "badge_a": "THE ORIGINAL",
+        "product_b": "",
         "title_b": "Vol. 2",
         "badge_b": "NEW · PRE-ORDER",
         "show_tip": true,
@@ -436,6 +432,7 @@
         "tip_text": "They’re two different books, so nothing repeats. Vol. 1 arrives now, and Vol. 2 follows on October 11 — two surprises instead of one.",
         "button_label": "Get both",
         "button_action": "add_both",
+        "button_link": "",
         "button_caption": "Free gifts included",
         "property_name": "Pre-order",
         "property_value": "Ships October 11",
@@ -509,13 +506,58 @@
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
+    },
+    "get_the_set": {
+      "type": "c-preorder-set",
+      "settings": {
+        "image": "shopify://shop_images/Image_Vol._1_and_Vol._2_side_by_side.png",
+        "image_position": "right",
+        "heading": "Get the 10,000 Whys set",
+        "text": "Start with the original, keep the curiosity going with Vol. 2. Two hardcovers that look beautiful side by side on their shelf.",
+        "pill_1": "Vol. 1 ships today",
+        "pill_2": "Vol. 2 ships Oct 11",
+        "button_label": "Add both volumes",
+        "button_action": "add_both",
+        "button_link": "",
+        "product_a": "kidss-encyclopedia-10-000-whys",
+        "product_b": "",
+        "property_name": "Pre-order",
+        "property_value": "Ships October 11",
+        "background": "#f8f6f0",
+        "desktop_padding_top": 88,
+        "desktop_padding_bottom": 88,
+        "mobile_padding_top": 56,
+        "mobile_padding_bottom": 56
+      }
+    },
+    "178791830636e97774": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_FbtBRQ": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "no_reviews",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_FbtBRQ"
+      ],
+      "settings": {
+        "display_id": false,
+        "include_margins": true
+      }
     }
   },
   "order": [
     "main",
-    "topics",
     "how_it_works",
     "compare",
+    "topics",
+    "get_the_set",
     "178791830636e97774"
   ]
 }
