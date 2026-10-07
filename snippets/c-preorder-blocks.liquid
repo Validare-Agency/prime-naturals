@@ -357,8 +357,10 @@
             else
               assign t_price = pre_base_cents | times: t_qty
             endif
-            # Compare-at scales by the same multiple as the price (2 × 39.90 → 2 × 79.80)
-            assign t_compare = pre_compare_cents | times: 1.0 | times: t_price | divided_by: pre_base_cents | round
+            # Compare = N x the per-book compare-at (79.80), the same way the cart
+            # drawer totals its savings (compare-at x qty − paid), so "Save" on the
+            # page matches "Savings" in the cart (5 books: 399.00 − 119.70 = 279.30)
+            assign t_compare = pre_compare_cents | times: t_qty
             assign t_save = t_compare | minus: t_price
 
             assign t_checked = false

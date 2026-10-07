@@ -4,18 +4,18 @@
 {%- endcomment -%}
 
 {%- style -%}
-  #c-pre-reviews-{{ section.id }} {
+  #c-pre-reviews {
     background: {{ section.settings.background }};
     padding: {{ section.settings.mobile_padding_top }}px 20px {{ section.settings.mobile_padding_bottom }}px;
   }
   @media screen and (min-width: 750px) {
-    #c-pre-reviews-{{ section.id }} {
+    #c-pre-reviews {
       padding: {{ section.settings.desktop_padding_top }}px 20px {{ section.settings.desktop_padding_bottom }}px;
     }
   }
 {%- endstyle -%}
 
-<div id="c-pre-reviews-{{ section.id }}" class="c-pre-revlist">
+<div id="c-pre-reviews" class="c-pre-revlist">
   {%- if section.settings.anchor_id != blank -%}
     {%- comment -%} Jump target for the rating link under the product title (default #reviews) {%- endcomment -%}
     <span id="{{ section.settings.anchor_id | handleize }}" class="c-pre-revlist__anchor" aria-hidden="true"></span>
