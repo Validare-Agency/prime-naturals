@@ -406,7 +406,10 @@
   {%- render 'guarantee-box' -%}
 
   {%- comment -%} ═══ OFFER CARD ═══ {%- endcomment -%}
-  {%- render 'offer-card', cta_url: section.settings.cta_url, default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' -%}
+  {%- assign offer_cta_url = section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' -%}
+  {%- render 'offer-card',
+    cta_url: offer_cta_url
+  -%}
 
   {%- comment -%} ═══ FOOTER ═══ {%- endcomment -%}
   <footer class="pn-footer">
@@ -431,17 +434,3 @@
   "presets": [{ "name": "Parents Start Here" }]
 }
 {% endschema %}
-{% comment %}
-
-This file has been rewritten to preserve the original behavior.
-
----
-Changes:
-- from: |-
-    {%- render 'offer-card',
-        cta_url: section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys'
-      -%}
-  to: "{%- render 'offer-card', cta_url: section.settings.cta_url, default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys'
-    -%}"
-  position: 15693..15835
-{% endcomment %}
