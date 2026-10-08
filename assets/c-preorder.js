@@ -158,43 +158,43 @@
       items.push({ id: selection.addonVariantId, quantity: 1, properties: { _preorder_addon: 'true' } });
     }
 
+    // Free pre-order gifts: the Gifts block products (when "Add gifts to cart"
+    // is on) plus the button's own gift product. Each is its own line, added
+    // in the same request as the book and add-on, once per cart.
+    var giftVariants = [];
     if (button.dataset.addGifts === 'true') {
       scope.querySelectorAll('[data-c-pre-gift-variant]').forEach(function (gift) {
-        items.push({
-          id: gift.getAttribute('data-c-pre-gift-variant'),
-          quantity: 1,
-          properties: { _preorder_gift: 'true' }
-        });
+        giftVariants.push(gift.getAttribute('data-c-pre-gift-variant'));
       });
     }
+    if (button.dataset.giftVariant) giftVariants.push(button.dataset.giftVariant);
 
     button.disabled = true;
     button.classList.add('is-loading');
     if (errorEl) errorEl.hidden = true;
 
-    // Free pre-order gift: its own line, added in the same request as the
-    // book, add-on and gifts, once per cart. Shopify lists the last item of a
-    // multi-item add first, so the gift goes first in the request to land at
-    // the bottom of the cart.
-    var giftVariant = button.dataset.giftVariant;
-    var giftCheck = giftVariant
+    var giftCheck = giftVariants.length
       ? fetch(window.routes.cart_url + '.js', { headers: { Accept: 'application/json' } })
           .then(function (r) { return r.json(); })
           .then(function (cart) {
-            return !cart.items.some(function (line) { return String(line.variant_id) === giftVariant; });
+            return giftVariants.filter(function (id, i) {
+              if (giftVariants.indexOf(id) !== i) return false;
+              return !cart.items.some(function (line) {
+                return String(line.variant_id) === id && line.properties && line.properties._preorder_gift;
+              });
+            });
           })
-          .catch(function () { return true; })
-      : Promise.resolve(false);
+          .catch(function () { return giftVariants; })
+      : Promise.resolve([]);
 
     giftCheck
-      .then(function (addGift) {
-        if (addGift) {
-          items.unshift({
-            id: giftVariant,
-            quantity: 1,
-            properties: { _preorder_gift: 'true' }
-          });
-        }
+      .then(function (toAdd) {
+        // Shopify lists the last item of a multi-item add first, so gifts go
+        // first in the request, in reverse order ([gift 3, gift 2, gift 1,
+        // book]), to land at the bottom of the cart in the Gifts block's order.
+        toAdd.forEach(function (id) {
+          items.unshift({ id: id, quantity: 1, properties: { _preorder_gift: 'true' } });
+        });
         return fetch(window.routes.cart_add_url + '.js', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },

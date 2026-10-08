@@ -179,13 +179,13 @@
             "free_label": "FREE",
             "gift_1_name": "Sticker Puzzle",
             "gift_1_value": "$15.80",
-            "gift_1_product": "",
+            "gift_1_product": "preorder-gift-sticker-puzzle",
             "gift_2_name": "Stickers",
             "gift_2_value": "$4.80",
-            "gift_2_product": "",
+            "gift_2_product": "preorder-gift-stickers",
             "gift_3_name": "Mystery Gift",
             "gift_3_value": "$9.80",
-            "gift_3_product": "",
+            "gift_3_product": "preorder-gift-mystery",
             "margin_top": 16,
             "margin_bottom": 16
           }
@@ -198,12 +198,11 @@
             "sold_out_label": "Pre-order sold out",
             "note": "Ships October 11 — arrives well before the holidays",
             "button_color": "#c0392b",
-            "add_gifts": false,
+            "add_gifts": true,
             "property_name": "Pre-order",
             "property_value": "Ships October 11",
             "margin_top": 0,
-            "margin_bottom": 16,
-            "gift_product": "exclusive-pre-order-gifts"
+            "margin_bottom": 16
           }
         },
         "trust_pre": {

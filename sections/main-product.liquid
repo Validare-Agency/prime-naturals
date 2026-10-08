@@ -16,7 +16,11 @@
   list in sync with sections/cart-drawer.liquid.
 {%- endcomment -%}
 {%- assign c_pmb30_gift_handles = 'free-stickers,free-sticker-puzzle,free-gift-card-20,free-mystery-book' | split: ',' -%}
-{%- if c_pmb30_gift_handles contains product.handle and request.design_mode == false -%}
+{%- comment -%} Vol. 2 pre-order free gifts (tagged preorder-gift) get the same treatment {%- endcomment -%}
+{%- if c_pmb30_gift_handles contains product.handle or product.tags contains 'preorder-gift' -%}
+  {%- assign c_gift_pdp_redirect = true -%}
+{%- endif -%}
+{%- if c_gift_pdp_redirect and request.design_mode == false -%}
   <meta name="robots" content="noindex, nofollow">
   <meta http-equiv="refresh" content="0; url={{ routes.root_url }}">
   <script>window.location.replace({{ routes.root_url | json }});</script>

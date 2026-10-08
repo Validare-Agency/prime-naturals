@@ -2,7 +2,6 @@
   "Your order includes a pre-order" notice for the cart drawer. Shown when
   any cart line has the hidden _preorder property (see c-preorder-cart-badge).
   Mentions in-stock items only when the cart also has lines without it.
-  Followed by the "Early-bird bonus added" banner.
 {%- endcomment -%}
 
 {%- liquid
@@ -42,16 +41,6 @@
       {%- if has_in_stock %} In-stock books ship right away.{% endif %}
     </p>
   </div>
-  <div class="c-pre-cart-bonus">
-    <img
-      src="{{ 'c-preorder-cart-bonus.jpg' | asset_url }}"
-      alt="Bookmark Set"
-      width="48"
-      height="48"
-      loading="lazy"
-    >
-    <p><strong>Early-bird bonus added:</strong> free Bookmark Set ships with {{ pre_name | escape }}.</p>
-  </div>
   <style>
     .c-pre-cart-notice {
       display: flex;
@@ -74,31 +63,5 @@
       color: #0d1b3e;
     }
     .c-pre-cart-notice strong { font-weight: 700; }
-    .c-pre-cart-bonus {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 12px 0 4px;
-      padding: 12px;
-      border: 2px solid #f5a623;
-      border-radius: 12px;
-      background: #fff6e5;
-    }
-    .c-pre-cart-bonus img {
-      flex: 0 0 48px;
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-    .c-pre-cart-bonus p {
-      margin: 0;
-      font-family: var(--font-body-family);
-      font-size: 14px;
-      line-height: 20.3px;
-      letter-spacing: normal;
-      color: #0d1b3e;
-    }
-    .c-pre-cart-bonus strong { font-weight: 700; }
   </style>
 {%- endif -%}

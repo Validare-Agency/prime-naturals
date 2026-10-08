@@ -40,8 +40,10 @@
     return !!(item.properties && item.properties[GIFT_PROP]);
   }
 
+  // Also the Vol. 2 pre-order's free gift lines (_preorder_gift, added by
+  // assets/c-preorder.js) — same products, never ours to remove
   function isOtherTestGiftLine(item) {
-    return !!(item.properties && item.properties[OTHER_GIFT_PROP]);
+    return !!(item.properties && (item.properties[OTHER_GIFT_PROP] || item.properties._preorder_gift));
   }
 
   // Any line of a gift product, whether or not this script added it
