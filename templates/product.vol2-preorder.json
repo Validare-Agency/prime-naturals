@@ -18,7 +18,7 @@
             "badge_text": "PRE-ORDER",
             "badge_bg": "#c0392b",
             "badge_color": "#ffffff",
-            "sub_text": "Ships October 11"
+            "sub_text": "Ships October 14"
           }
         },
         "reviews_pre": {
@@ -83,7 +83,7 @@
           "type": "preorder_price",
           "settings": {
             "badge_text": "[percent]% OFF",
-            "ships_text": "Ships October 11",
+            "ships_text": "Ships October 14",
             "margin_top": 0,
             "margin_bottom": 16
           }
@@ -118,7 +118,7 @@
           "type": "preorder_countdown",
           "settings": {
             "label": "Ships in",
-            "end_datetime": "2026-10-11T00:00:00-04:00",
+            "end_datetime": "2026-10-14T00:00:00-04:00",
             "expired_text": "Shipping now",
             "days_label": "Days",
             "hours_label": "Hrs",
@@ -133,7 +133,7 @@
           "settings": {
             "heading": "Reserve your copies before pre-order stock runs out",
             "heading_off": "Choose your bundle",
-            "ships_text": "Ships October 11",
+            "ships_text": "Ships October 14",
             "reference_price": "39.90",
             "default_tier": "1",
             "save_text": "Save [amount]",
@@ -196,11 +196,11 @@
             "label": "Pre-order — [price]",
             "label_off": "Add to cart — [price]",
             "sold_out_label": "Pre-order sold out",
-            "note": "Ships October 11 — arrives well before the holidays",
+            "note": "Ships October 14 — arrives well before the holidays",
             "button_color": "#c0392b",
             "add_gifts": true,
             "property_name": "Pre-order",
-            "property_value": "Ships October 11",
+            "property_value": "Ships October 14",
             "margin_top": 0,
             "margin_bottom": 16
           }
@@ -311,7 +311,7 @@
           "settings": {
             "icon": "truck",
             "highlight": false,
-            "title": "Ships October 11",
+            "title": "Ships October 14",
             "text": "Straight from our warehouse"
           }
         },
@@ -399,7 +399,7 @@
             "text_a": "18,000+ families, rated 4.9 ★",
             "check_a": false,
             "muted_a": false,
-            "text_b": "Brand new — out October 11",
+            "text_b": "Brand new — out October 14",
             "check_b": true,
             "muted_b": false
           }
@@ -411,7 +411,7 @@
             "text_a": "Ships today",
             "check_a": false,
             "muted_a": false,
-            "text_b": "Ships October 11 (pre-order now)",
+            "text_b": "Ships October 14 (pre-order now)",
             "check_b": true,
             "muted_b": false
           }
@@ -445,13 +445,13 @@
         "show_tip": true,
         "tip_eyebrow": "OUR TIP",
         "tip_heading": "Can’t decide? Get both.",
-        "tip_text": "They’re two different books, so nothing repeats. Vol. 1 arrives now, and Vol. 2 follows on October 11 — two surprises instead of one.",
+        "tip_text": "They’re two different books, so nothing repeats. Vol. 1 arrives now, and Vol. 2 follows on October 14 — two surprises instead of one.",
         "button_label": "Get both",
         "button_action": "add_both",
         "button_link": "",
         "button_caption": "Free gifts included",
         "property_name": "Pre-order",
-        "property_value": "Ships October 11",
+        "property_value": "Ships October 14",
         "background": "#ffffff",
         "desktop_padding_top": 88,
         "desktop_padding_bottom": 88,
@@ -531,14 +531,14 @@
         "heading": "Get the 10,000 Whys set",
         "text": "Start with the original, keep the curiosity going with Vol. 2. Two hardcovers that look beautiful side by side on their shelf.",
         "pill_1": "Vol. 1 ships today",
-        "pill_2": "Vol. 2 ships Oct 11",
+        "pill_2": "Vol. 2 ships Oct 14",
         "button_label": "Add both volumes",
         "button_action": "add_both",
         "button_link": "",
         "product_a": "kidss-encyclopedia-10-000-whys",
         "product_b": "",
         "property_name": "Pre-order",
-        "property_value": "Ships October 11",
+        "property_value": "Ships October 14",
         "background": "#f8f6f0",
         "desktop_padding_top": 88,
         "desktop_padding_bottom": 88,
@@ -695,7 +695,7 @@
           "type": "question",
           "settings": {
             "question": "When does it ship?",
-            "answer": "<p>Vol. 2 ships on October 11, straight from our warehouse. It usually arrives about 7 days after it ships.</p>",
+            "answer": "<p>Vol. 2 ships on October 14, straight from our warehouse. It usually arrives about 7 days after it ships.</p>",
             "open": false,
             "preorder_only": true
           }
@@ -704,7 +704,7 @@
           "type": "question",
           "settings": {
             "question": "Will it arrive before the holidays?",
-            "answer": "<p>Yes. Vol. 2 ships October 11 and usually arrives about 7 days later — well ahead of the holidays.</p>",
+            "answer": "<p>Yes. Vol. 2 ships October 14 and usually arrives about 7 days later — well ahead of the holidays.</p>",
             "open": false,
             "preorder_only": true
           }
