@@ -1,3 +1,11 @@
+{%- comment -%}
+  V_PRIME_MIX_30 Var A shows its "Recommended books" row under the payment
+  icons instead, so PDP27 stays fully hidden there. Remove with the MIX_30
+  test cleanup.
+{%- endcomment -%}
+<style>
+  body.c-primeMix30VarA .c-pdp27 { display: none !important; }
+</style>
 {%- if section.index > 3 -%}
   {%- comment -%}
     Inlined synchronously so the variant gating applies before first paint —

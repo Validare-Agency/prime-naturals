@@ -1,29 +1,31 @@
-// V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM) — cart gift sync
+// V_PRIME_CART_37 | MiniCart Gift-Threshold Progress Bar (BFCM) — cart gift sync
 //
-// Keeps the free gift lines in the cart matching the cart total: every gift
-// whose threshold the (non-gift) subtotal clears is added once, anything it
-// no longer clears is removed. Loaded sitewide from sections/cart-drawer.liquid,
-// which also renders window.primeMix30Gifts (variant ids + thresholds from the
-// gift products' compare-at prices).
+// Duplicated from assets/c-prime-mix-30-gifts.js (V_PRIME_MIX_30) so each test
+// stays independent. Keeps the free gift lines in the cart matching the cart
+// total: every gift whose threshold the (non-gift) subtotal clears is added
+// once, anything it no longer clears is removed. Loaded sitewide from
+// sections/cart-drawer.liquid, which also renders window.primeCart37Gifts.
 //
 // Only Var A ever receives gifts. Holdout / Control / other visitors get any
-// stray gift line removed — but only once c-intelligems-tests.js has actually
-// decided the visitor's bucket (c-validareHoldout / c-validareOptimized), so a
-// slow Intelligems load never strips a Var A shopper's gifts.
+// stray CART_37 gift line removed — but only once c-intelligems-tests.js has
+// decided the visitor's bucket (c-validareHoldout / c-validareOptimized).
+//
+// A visitor in both tests' Var A gets gifts from MIX_30 only: this script
+// steps aside, and neither script ever touches the other test's gift lines.
 (function () {
-  if (window.primeMix30GiftsInit) return;
-  window.primeMix30GiftsInit = true;
+  if (window.primeCart37GiftsInit) return;
+  window.primeCart37GiftsInit = true;
 
-  var GIFT_PROP = '_pmb30_gift';
-  // V_PRIME_CART_37's gift lines — never ours to add, remove or count
-  var OTHER_GIFT_PROP = '_pc37_gift';
+  var GIFT_PROP = '_pc37_gift';
+  // V_PRIME_MIX_30's gift lines — never ours to add, remove or count
+  var OTHER_GIFT_PROP = '_pmb30_gift';
 
   // Captured before this file patches fetch below, so our own cart requests
   // never re-trigger a sync.
   var rawFetch = window.fetch.bind(window);
 
   function gifts() {
-    return (window.primeMix30Gifts || []).filter(function (g) { return g && g.id; });
+    return (window.primeCart37Gifts || []).filter(function (g) { return g && g.id; });
   }
 
   function bucketDecided() {
@@ -33,11 +35,52 @@
 
   function variantActive() {
     var cl = document.body.classList;
-    return cl.contains('c-primeMix30VarA') && !cl.contains('c-validareHoldout');
+    return cl.contains('c-primeCart37VarA') &&
+      !cl.contains('c-validareHoldout') &&
+      // MIX_30 Var A already grants the same gifts
+      !cl.contains('c-primeMix30VarA');
   }
 
   function isGiftLine(item) {
     return !!(item.properties && item.properties[GIFT_PROP]);
+  }
+
+  // Gifts the shopper removed with the delete icon — never re-added for the
+  // same cart. Keyed by the Shopify cart token, so a new cart (e.g. after
+  // checkout) starts with every gift available again.
+  var DECLINED_KEY = 'c-pc37-declined-gifts';
+  var cartToken = null;
+
+  function readDeclined() {
+    try {
+      return JSON.parse(localStorage.getItem(DECLINED_KEY)) || { token: null, ids: [] };
+    } catch (e) {
+      return { token: null, ids: [] };
+    }
+  }
+
+  function writeDeclined(declined) {
+    try { localStorage.setItem(DECLINED_KEY, JSON.stringify(declined)); } catch (e) {}
+  }
+
+  function declinedIds(cart) {
+    var declined = readDeclined();
+    if (declined.token && cart.token && declined.token !== cart.token) {
+      writeDeclined({ token: cart.token, ids: [] });
+      return [];
+    }
+    if (!declined.token && cart.token && declined.ids.length) {
+      declined.token = cart.token;
+      writeDeclined(declined);
+    }
+    return declined.ids;
+  }
+
+  function declineGift(id) {
+    var declined = readDeclined();
+    if (declined.ids.indexOf(id) === -1) declined.ids.push(id);
+    if (!declined.token) declined.token = cartToken;
+    writeDeclined(declined);
   }
 
   function isOtherTestGiftLine(item) {
@@ -56,7 +99,6 @@
       return isGiftLine(item) || isGiftVariant(item) ? sum : sum + item.final_line_price;
     }, 0);
   }
-  window.primeMix30EligibleSubtotal = eligibleSubtotal;
 
   function fetchCart() {
     return rawFetch(window.routes.cart_url + '.js').then(function (r) { return r.json(); });
@@ -81,6 +123,8 @@
   function diffGifts(cart) {
     var active = variantActive();
     var subtotal = eligibleSubtotal(cart);
+    var declined = declinedIds(cart);
+    cartToken = cart.token;
     var changes = [];
     var adds = [];
 
@@ -95,7 +139,8 @@
       // product made free by an automatic discount at a $99+ cart — its $99
       // threshold is set explicitly in sections/cart-drawer.liquid, so it's
       // only ever added when that discount applies.
-      var justified = active && gift.available && subtotal >= gift.threshold;
+      var justified = active && gift.available && subtotal >= gift.threshold &&
+        declined.indexOf(gift.id) === -1;
       var lines = cart.items.filter(function (item) {
         return isGiftLine(item) && item.variant_id === gift.id;
       });
@@ -105,7 +150,7 @@
         return;
       }
       if (!lines.length) {
-        adds.push({ id: gift.id, quantity: 1, properties: { _pmb30_gift: 'true' } });
+        adds.push({ id: gift.id, quantity: 1, properties: { _pc37_gift: 'true' } });
         return;
       }
       // Exactly one line, quantity 1
@@ -118,7 +163,7 @@
     return { changes: changes, adds: adds };
   }
 
-  // --- Cart UI refresh ---
+  // --- Cart UI refresh (same fetch+swap technique as c-prime-mix-30-gifts.js) ---
   function refreshCartDrawer() {
     return rawFetch(window.routes.cart_url + '?section_id=cart-drawer')
       .then(function (r) { return r.text(); })
@@ -197,7 +242,7 @@
           })
           .then(refreshCartUI)
           .then(function () {
-            document.dispatchEvent(new CustomEvent('c-pmb30:gifts-synced'));
+            document.dispatchEvent(new CustomEvent('c-pc37:gifts-synced'));
           })
           .finally(function () { setCheckoutDisabled(false); });
       })
@@ -233,6 +278,15 @@
     if (isCartMutation(url)) this.addEventListener('loadend', scheduleSync);
     return xhrOpen.apply(this, arguments);
   };
+
+  // Delete icon on a gift line → remember it as declined before the theme's
+  // removal request lands (capture phase, so it runs before theme handlers)
+  document.addEventListener('click', function (event) {
+    var removeButton = event.target.closest && event.target.closest('cart-remove-button');
+    if (!removeButton) return;
+    var line = removeButton.closest('[data-c-pc37-gift-id]');
+    if (line) declineGift(parseInt(line.getAttribute('data-c-pc37-gift-id'), 10));
+  }, true);
 
   // Run once the visitor's bucket is known (class lands asynchronously)
   function startWhenDecided() {

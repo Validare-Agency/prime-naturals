@@ -1,45 +1,6 @@
 {%- render 'cart-drawer' -%}
 
 {%- comment -%}
-  V_PRIME_PDP_35 | Unlock Bonus Free Gifts
-
-  This section renders sitewide (layout/theme.liquid always includes it), so
-  it's the one place that can wire up gift-line reconciliation everywhere the
-  cart drawer's quantity inputs / remove buttons can appear — including on
-  the cart page itself. The inline block below is data only (gift variant
-  ids), read by assets/c-prime-pdp-35.js — keep it in sync with the same
-  lookups in snippets/c-prime-pdp-35-bundle.liquid.
-{%- endcomment -%}
-<script>
-  window.pdp35GiftVariants = {
-    mystery: { id: {{ all_products['mystery-gift'].selected_or_first_available_variant.id | json }} },
-    bookmark: { id: {{ all_products['bookmark'].selected_or_first_available_variant.id | json }} },
-    stickers: { id: {{ all_products['stickers'].selected_or_first_available_variant.id | json }} }
-  };
-</script>
-<script src="{{ 'c-prime-pdp-35.js' | asset_url }}" defer></script>
-
-{%- comment -%} Hides the quantity selector on gift lines (c-pdp35-gift-line,
-  set in snippets/cart-drawer.liquid) — gift quantity stays entirely driven
-  by the bundle tier, not directly editable here. Remove button is
-  untouched. {%- endcomment -%}
-{%- if section.index > 3 -%}
-  <link rel="stylesheet" href="{{ 'c-prime-pdp-35.css' | asset_url }}" media="print" onload="this.media='all'">
-{%- else -%}
-  {{ 'c-prime-pdp-35.css' | asset_url | stylesheet_tag }}
-{%- endif -%}
-
-{%- comment -%} V_PRIME_CART_32 | Charity Donation Minicart Add-On — donation card
-  (snippets/c-prime-cart-32-donation.liquid) + totals row, both rendered from
-  snippets/cart-drawer.liquid. {%- endcomment -%}
-{%- if section.index > 3 -%}
-  <link rel="stylesheet" href="{{ 'c-prime-cart-32.css' | asset_url }}" media="print" onload="this.media='all'">
-{%- else -%}
-  {{ 'c-prime-cart-32.css' | asset_url | stylesheet_tag }}
-{%- endif -%}
-<script src="{{ 'c-prime-cart-32.js' | asset_url }}" defer></script>
-
-{%- comment -%}
   V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM) — free gift lines
   auto-added/removed by cart total (assets/c-prime-mix-30-gifts.js). Gift
   products are $0 with their unlock threshold as the compare-at price. A
@@ -76,6 +37,63 @@
 {%- else -%}
   {{ 'c-prime-mix-30-cart.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
+
+{%- comment -%}
+  V_PRIME_CART_37 | MiniCart Gift-Threshold Progress Bar (BFCM) — gift bar
+  (snippets/c-prime-cart-37-progress-bar.liquid, rendered under the drawer's
+  countdown timer) + free gift lines auto-added/removed by cart total
+  (assets/c-prime-cart-37.js). Same gift list/threshold rules as MIX_30 above
+  — keep this list in sync with the CART_37 snippet. Remove with the CART_37
+  test cleanup.
+{%- endcomment -%}
+{%- assign c_pc37_entries = 'free-stickers,free-sticker-puzzle,free-gift-card-20:9900,free-mystery-book' | split: ',' -%}
+<script>
+  window.primeCart37Gifts = [
+    {%- for c_pc37_entry in c_pc37_entries -%}
+      {%- assign c_pc37_parts = c_pc37_entry | split: ':' -%}
+      {%- assign c_pc37_gift = all_products[c_pc37_parts[0]] -%}
+      {%- if c_pc37_gift == blank -%}{%- continue -%}{%- endif -%}
+      {%- assign c_pc37_variant = c_pc37_gift.selected_or_first_available_variant -%}
+      {%- if c_pc37_parts[1] != blank -%}
+        {%- assign c_pc37_threshold = c_pc37_parts[1] | plus: 0 -%}
+      {%- else -%}
+        {%- assign c_pc37_threshold = c_pc37_gift.compare_at_price | default: c_pc37_gift.price -%}
+      {%- endif -%}
+      {
+        id: {{ c_pc37_variant.id | json }},
+        threshold: {{ c_pc37_threshold | json }},
+        available: {{ c_pc37_variant.available | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ];
+</script>
+<script src="{{ 'c-prime-cart-37.js' | asset_url }}" defer></script>
+{%- if section.index > 3 -%}
+  <link rel="stylesheet" href="{{ 'c-prime-cart-37.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- else -%}
+  {{ 'c-prime-cart-37.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
+{%- comment -%}
+  V_PRIME_SITE_38 | Reduce 3-Book and 5-Book Bundle Prices by $10 — Var A
+  cart upsells add each book's price-test duplicate instead of the live
+  product (assets/c-prime-site-38.js), so their Kaching pricing matches the
+  PDP. Keyed by live variant id. Keep in sync with the handle map in
+  snippets/c-prime-site-38-bundle.liquid. Remove with the SITE_38 cleanup.
+{%- endcomment -%}
+{%- assign c_site38_pairs = 'kidss-encyclopedia-10-000-whys:kidss-encyclopedia-10-000-whys-price-test,murphys-law-for-kids:murphys-law-for-kids-price-test,murphys-law-for-kids-copy:leadership-enlightenment-for-kids-price-test' | split: ',' -%}
+<script>
+  window.primeSite38PriceTestVariants = {
+    {%- for c_site38_pair in c_site38_pairs -%}
+      {%- assign c_site38_handles = c_site38_pair | split: ':' -%}
+      {%- assign c_site38_live = all_products[c_site38_handles[0]].selected_or_first_available_variant -%}
+      {%- assign c_site38_test = all_products[c_site38_handles[1]].selected_or_first_available_variant -%}
+      {%- if c_site38_live == blank or c_site38_test == blank or c_site38_test.available == false -%}{%- continue -%}{%- endif -%}
+      {{ c_site38_live.id | json }}: { id: {{ c_site38_test.id | json }}, handle: {{ c_site38_handles[1] | json }} },
+    {%- endfor -%}
+  };
+</script>
+<script src="{{ 'c-prime-site-38.js' | asset_url }}" defer></script>
 
 {% schema %}
 {

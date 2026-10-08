@@ -1,10 +1,8 @@
 let domLoaded = false;
 let igReady = false;
 
-// V_PRIME_PDP_35 | Kaching product-id swap, Control only, Murphy/Leadership
-// only. Var A/B is never touched here at all — that side's cart-correctness
-// is handled directly in c-prime-pdp-35.js's addToCart(). Same mechanism as
-// the Snuggi price test on ab-test/V_PIL_PDP_04.
+// Kaching product-id swap for paid search visitors, Murphy/Leadership only.
+// Same mechanism as the Snuggi price test on ab-test/V_PIL_PDP_04.
 const KACHING_SWAP_TARGET_BY_PRODUCT_ID = {
   7568898293894: "7733150187654", // murphys-law-for-kids -> swap to this id
   7587123658886: "7733149794438", // murphys-law-for-kids-copy -> swap to this id
@@ -25,10 +23,8 @@ function kachingWaitForInit(onReady, retriesLeft = 25) {
 const KACHING_SWAP_ATTEMPT_TIMEOUT = 4000;
 const KACHING_SWAP_MAX_ATTEMPTS = 3;
 
-// Only ever called for Control (not paid search, or paid search + Var A/B,
-// never reach here at all — see the call site in handleExperiments).
-function decideKachingSwap(isControlPaidSearch) {
-  if (kachingSwapAttempted || !kachingSwapProductId || !isControlPaidSearch) {
+function decideKachingSwap(isPaidSearch) {
+  if (kachingSwapAttempted || !kachingSwapProductId || !isPaidSearch) {
     return;
   }
   kachingSwapAttempted = true;
@@ -98,21 +94,8 @@ function handleExperiments() {
     localStorage.setItem("validare_holdout", isHeldOut ? "1" : "0");
   } catch (e) {}
 
-  // Test: V_PRIME_PDP_35 | Unlock Bonus Free Gifts
-  const primePdp35 = window.igData?.user.getTestGroup(
-    "97267cf0-b33c-48dc-a5e0-195f12d5587b"
-  );
-  let primePdp35InVarAOrB = false;
-  if (primePdp35?.name === "Var A - Thumbnail unlock cards") {
-    document.body.classList.add("c-primePdp35VarA");
-    primePdp35InVarAOrB = true;
-  } else if (primePdp35?.name === "Var B - Compact status cards") {
-    document.body.classList.add("c-primePdp35VarB");
-    primePdp35InVarAOrB = true;
-  }
   decideKachingSwap(
-    document.documentElement.classList.contains("c-paidSearchVisitor") &&
-      !primePdp35InVarAOrB
+    document.documentElement.classList.contains("c-paidSearchVisitor")
   );
 
   // Test: V_PRIME_PDP_27 | Physical-Size Information - "Exactly What Arrives"
@@ -133,16 +116,6 @@ function handleExperiments() {
     document.body.classList.add("c-primePdp27VarF");
   }
 
-  // Test: V_PRIME_CART_32 | Charity Donation Minicart Add-On — Give the Gift of Reading (BFCM)
-  const primeCart32 = window.igData?.user.getTestGroup(
-    "09ae0d10-fdd8-4c8b-91e8-e282765ad1a2"
-  );
-  if (primeCart32?.id === "bc53f2c0-d5e5-4829-91b5-298e23b0a3b6") {
-    document.body.classList.add("c-primeCart32VarA");
-  } else if (primeCart32?.id === "63c92951-09f5-43e6-9cc9-656bd70479fa") {
-    document.body.classList.add("c-primeCart32VarB");
-  }
-
   // Test: V_PRIME_MIX_30 | PDP Gift-Threshold Progress Bar (BFCM)
   const primeMix30 = window.igData?.user.getTestGroup(
     "d6e0d425-a1eb-4507-9ff9-eb899b475a2f"
@@ -151,14 +124,20 @@ function handleExperiments() {
     document.body.classList.add("c-primeMix30VarA");
   }
 
-  // Test: V_PRIME_PDP_24 | Product gallery Images
-  const primePdp24 = { name: "Var A - True-size hero" }
-  if (primePdp24?.name === "Var A - True-size hero") {
-    document.body.classList.add("c-primePdp24VarA");
-  } else if (primePdp24?.name === "Var B - True-size hero alt") {
-    document.body.classList.add("c-primePdp24VarB");
-  } else if (primePdp24?.name === "Var C - Social proof hero") {
-    document.body.classList.add("c-primePdp24VarC");
+  // Test: V_PRIME_CART_37 | MiniCart Gift-Threshold Progress Bar (BFCM)
+  const primeCart37 = window.igData?.user.getTestGroup(
+    "1e564aa3-7b0c-40c6-a1c0-d538eb3b8ced"
+  );
+  if (primeCart37?.id === "bd8e7af0-8a44-4885-8d6f-f111dbfd8a10") {
+    document.body.classList.add("c-primeCart37VarA");
+  }
+
+  // Test: V_PRIME_SITE_38 | Reduce 3-Book and 5-Book Bundle Prices by $10
+  const primeSite38 = window.igData?.user.getTestGroup(
+    "cfe28cd7-d647-4cf0-9ab3-b5af8877292a"
+  );
+  if (primeSite38?.name === "Var A") {
+    document.body.classList.add("c-primeSite38VarA");
   }
 }
 
@@ -172,7 +151,8 @@ setInterval(() => {
     window.igEvents = window.igEvents || [];
     window.igEvents.push({ event: "cartDrawerOpen" });
     window.igEvents.push({ event: "view_cart" });
-    window.igEvents.push({ event: "Open_mini_cart" });
+    // V_PRIME_CART_37: mini_cart_opens — drawer opened by a PDP add-to-cart or the cart icon
+    window.igEvents.push({ event: "mini_cart_opens" });
   } else if (!isActive) {
     cartDrawerWasActive = false;
   }

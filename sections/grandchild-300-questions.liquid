@@ -623,8 +623,9 @@
   </div>
 
   {%- comment -%} ═══ OFFER CARD ═══ {%- endcomment -%}
+  {%- assign offer_cta_url = section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' -%}
   {%- render 'offer-card',
-    cta_url: section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys'
+    cta_url: offer_cta_url
   -%}
 
   {%- comment -%} ═══ FOOTER ═══ {%- endcomment -%}
