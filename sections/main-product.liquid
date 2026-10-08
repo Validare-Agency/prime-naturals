@@ -1,4 +1,15 @@
 {%- comment -%}
+  Pre-order PDP blocks — stylesheet loaded before any markup (render-blocking,
+  so blocks never paint unstyled) and preloaded via a Link header (early hints).
+{%- endcomment -%}
+{%- for c_pre_block in section.blocks -%}
+  {%- if c_pre_block.type contains 'preorder_' -%}
+    {{ 'c-preorder.css' | asset_url | stylesheet_tag: preload: true }}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- comment -%}
   V_PRIME_MIX_30 — free gift products are only ever added to the cart by
   assets/c-prime-mix-30-gifts.js, never browsable. Their PDPs redirect home
   before anything renders (Liquid can't send a real 301). Keep the handle
@@ -1250,10 +1261,9 @@
 {%- endif -%}
 <script src="{{ 'c-prime-mix-30-recommended.js' | asset_url }}" defer></script>
 
-{%- comment -%} Pre-order PDP blocks — assets for snippets/c-preorder-blocks.liquid {%- endcomment -%}
+{%- comment -%} Pre-order PDP blocks — script for snippets/c-preorder-blocks.liquid (stylesheet is at the top of this file) {%- endcomment -%}
 {%- for c_pre_block in section.blocks -%}
   {%- if c_pre_block.type contains 'preorder_' -%}
-    {{ 'c-preorder.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'c-preorder.js' | asset_url }}" defer></script>
     {%- break -%}
   {%- endif -%}
