@@ -8,6 +8,34 @@
   - item: {Object} cart line item
 {%- endcomment -%}
 
+{%- comment -%}
+  Free pre-order gift (its own cart line, added by assets/c-preorder.js with
+  the property _preorder_gift). The line carries the c-pre-gift-line class:
+  no quantity control, the remove button stays.
+{%- endcomment -%}
+{%- if item.properties._preorder_gift != blank -%}
+  <div class="c-pre-cart-badge">
+    <span class="c-pre-cart-badge__pill c-pre-cart-badge__pill--gift">Free pre-order gift</span>
+  </div>
+  <style>
+    .c-pre-cart-badge { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 6px 0 4px; }
+    .c-pre-cart-badge__pill--gift {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 100px;
+      background: #fff6e5;
+      color: #8a5a00;
+      font-family: var(--font-body-family);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .c-pre-gift-line quantity-input,
+    .c-pre-gift-line dl { display: none !important; }
+  </style>
+{%- endif -%}
+
 {%- if item.properties._preorder != blank -%}
   <div class="c-pre-cart-badge">
     <span class="c-pre-cart-badge__pill">

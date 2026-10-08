@@ -13,7 +13,7 @@
       if pre_item == blank
         assign pre_item = item
       endif
-    else
+    elsif item.properties._preorder_gift == blank and item.parent_relationship == blank
       assign has_in_stock = true
     endif
   endfor

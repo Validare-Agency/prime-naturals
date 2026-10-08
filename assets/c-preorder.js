@@ -172,11 +172,35 @@
     button.classList.add('is-loading');
     if (errorEl) errorEl.hidden = true;
 
-    fetch(window.routes.cart_add_url + '.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ items: items })
-    })
+    // Free pre-order gift: its own line, added in the same request as the
+    // book, add-on and gifts, once per cart. Shopify lists the last item of a
+    // multi-item add first, so the gift goes first in the request to land at
+    // the bottom of the cart.
+    var giftVariant = button.dataset.giftVariant;
+    var giftCheck = giftVariant
+      ? fetch(window.routes.cart_url + '.js', { headers: { Accept: 'application/json' } })
+          .then(function (r) { return r.json(); })
+          .then(function (cart) {
+            return !cart.items.some(function (line) { return String(line.variant_id) === giftVariant; });
+          })
+          .catch(function () { return true; })
+      : Promise.resolve(false);
+
+    giftCheck
+      .then(function (addGift) {
+        if (addGift) {
+          items.unshift({
+            id: giftVariant,
+            quantity: 1,
+            properties: { _preorder_gift: 'true' }
+          });
+        }
+        return fetch(window.routes.cart_add_url + '.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ items: items })
+        });
+      })
       .then(function (response) {
         return response.json().then(function (data) {
           if (!response.ok) return Promise.reject(data);

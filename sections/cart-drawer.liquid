@@ -68,6 +68,8 @@
   ];
 </script>
 <script src="{{ 'c-prime-cart-37.js' | asset_url }}" defer></script>
+{%- comment -%} Removes the free Vol. 2 pre-order gift once no pre-order book is left in the cart {%- endcomment -%}
+<script src="{{ 'c-preorder-cart.js' | asset_url }}" defer></script>
 {%- if section.index > 3 -%}
   <link rel="stylesheet" href="{{ 'c-prime-cart-37.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- else -%}

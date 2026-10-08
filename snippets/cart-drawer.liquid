@@ -132,7 +132,7 @@
                           {%- for item in cart.items -%}
                             <li
                               id="CartDrawer-Item-{{ item.index | plus: 1 }}"
-                              class="cart-drawer-item cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pmb30_gift %} c-pmb30-gift-line{% endif %}{% if item.properties._pc37_gift %} c-pc37-gift-line{% endif %}"
+                              class="cart-drawer-item cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pmb30_gift %} c-pmb30-gift-line{% endif %}{% if item.properties._pc37_gift %} c-pc37-gift-line{% endif %}{% if item.properties._preorder_gift %} c-pre-gift-line{% endif %}"
                               role="row" data-index="{{ item.index | plus: 1 }}"{% if item.properties._pc37_gift %} data-c-pc37-gift-id="{{ item.variant_id }}"{% endif %}
                             >
                               <div class="loading-overlay hidden">

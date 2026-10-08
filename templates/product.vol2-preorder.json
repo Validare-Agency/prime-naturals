@@ -102,16 +102,16 @@
             "heading": "Limited stock – available on pre-order only",
             "left_text": "[left] of [total] left",
             "total": 500,
-            "when_zero": "stop",
-            "sold_out_text": "Pre-order stock is sold out",
-            "margin_top": 0,
-            "margin_bottom": 16,
             "count_mode": "visitor",
             "visitor_start_min": 300,
             "visitor_start_max": 350,
             "visitor_drop_min": 1,
             "visitor_drop_max": 5,
-            "visitor_floor": 20
+            "visitor_floor": 20,
+            "when_zero": "stop",
+            "sold_out_text": "Pre-order stock is sold out",
+            "margin_top": 0,
+            "margin_bottom": 16
           }
         },
         "countdown_pre": {
@@ -202,7 +202,8 @@
             "property_name": "Pre-order",
             "property_value": "Ships October 11",
             "margin_top": 0,
-            "margin_bottom": 16
+            "margin_bottom": 16,
+            "gift_product": "exclusive-pre-order-gifts"
           }
         },
         "trust_pre": {
@@ -662,13 +663,13 @@
       ],
       "settings": {
         "heading": "What parents say about Vol. 2",
+        "anchor_id": "reviews",
         "verified_label": "Verified buyer",
         "background": "#fcfcfc",
         "desktop_padding_top": 40,
         "desktop_padding_bottom": 52,
         "mobile_padding_top": 24,
-        "mobile_padding_bottom": 56,
-        "anchor_id": "reviews"
+        "mobile_padding_bottom": 56
       }
     },
     "faq": {

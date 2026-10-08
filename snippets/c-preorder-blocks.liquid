@@ -543,6 +543,10 @@
         data-property-name="{{ bs.property_name | escape }}"
         data-property-value="{{ bs.property_value | escape }}"
         data-add-gifts="{{ bs.add_gifts }}"
+        {%- assign atc_gift_variant = bs.gift_product.selected_or_first_available_variant -%}
+        {%- if atc_gift_variant and atc_gift_variant.available %}
+        data-gift-variant="{{ atc_gift_variant.id }}"
+        {%- endif %}
         {%- endif %}
         style="background: {{ bs.button_color }};"
         {% unless atc_enabled %}disabled{% endunless %}
