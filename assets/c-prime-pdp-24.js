@@ -45,19 +45,19 @@
   // Var C image: social-proof hero (new slide inserted at slot 3, existing slot 3 onward shifts right)
   // Includes: 4.9 star rating, 30-Day Guarantee badge, "Trusted by 18,000+ families" bar
   var VAR_C_SLOT3_IMAGE = {
-    src: 'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp',
+    src: 'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2_2155b559-1e58-4225-94dc-927bc2c0baf9.webp?v=1791442755',
     srcset: [
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=550 550w',
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=1100 1100w',
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=1445 1445w'
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2_2155b559-1e58-4225-94dc-927bc2c0baf9.webp?v=1791442755&width=550 550w',
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2_2155b559-1e58-4225-94dc-927bc2c0baf9.webp?v=1791442755&width=1100 1100w',
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2_2155b559-1e58-4225-94dc-927bc2c0baf9.webp?v=1791442755&width=1445 1445w'
     ].join(', '),
     thumbSrcset: [
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=54 54w',
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=74 74w',
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=104 104w',
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=162 162w',
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=208 208w',
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=416 416w'
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2_2155b559-1e58-4225-94dc-927bc2c0baf9.webp?v=1791442755&width=54 54w',
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2_2155b559-1e58-4225-94dc-927bc2c0baf9.webp?v=1791442755&width=74 74w',
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2_2155b559-1e58-4225-94dc-927bc2c0baf9.webp?v=1791442755&width=104 104w',
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2_2155b559-1e58-4225-94dc-927bc2c0baf9.webp?v=1791442755&width=162 162w',
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2_2155b559-1e58-4225-94dc-927bc2c0baf9.webp?v=1791442755&width=208 208w',
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2_2155b559-1e58-4225-94dc-927bc2c0baf9.webp?v=1791442755&width=416 416w'
     ].join(', '),
     alt: 'Spark Curiosity – 10000 Whys Complete Hardcover Edition, rated 4.9 stars, 30-day guarantee, trusted by 18,000+ families'
   };
@@ -67,8 +67,13 @@
   // The gallery <img> sits in .product__media inside the modal-opener; the
   // .global-media-settings class is on the wrapper div, not the img itself.
   var MAIN_IMG_SELECTOR = '.product__modal-opener .product__media img';
-  var VARIANT_CLASSES = ['c-primePdp24VarA', 'c-primePdp24VarB', 'c-primePdp24VarC'];
-  var swapApplied = false;
+  // handleExperiments() in c-intelligems-tests.js adds one of these to body once the
+  // visitor's test groups are known, in the same pass that adds the PDP24 variant class.
+  var RESOLVED_CLASSES = ['c-validareOptimized', 'c-validareHoldout'];
+  // Removes the slot 1 anti-flicker hide (inline <style> in product-media-gallery.liquid)
+  var READY_CLASS = 'c-primePdp24Ready';
+  var READY_FALLBACK_MS = 1500;
+  var resolved = false;
   var galleryEngaged = false;
 
   // Swap src/srcset/alt on the main gallery image and matching thumbnail for a given slot.
@@ -232,27 +237,49 @@
     window.igEvents.push({ event: 'engagement_gallery' });
   }
 
-  function hasVariantClass() {
-    return VARIANT_CLASSES.some(function (cls) {
+  function isResolved() {
+    return RESOLVED_CLASSES.some(function (cls) {
       return document.body.classList.contains(cls);
     });
   }
 
-  function trySwap() {
-    if (swapApplied || !hasVariantClass()) return false;
-    swapApplied = true;
+  function reveal() {
+    document.body.classList.add(READY_CLASS);
+  }
+
+  // Var B swaps slot 1, so keep it hidden until the new image has loaded; otherwise
+  // the visitor would see the old image, a blank, then the new one.
+  function revealAfterSlot1Loads() {
+    var img = document.querySelector('media-gallery .product__media-list .product__media-item ' + MAIN_IMG_SELECTOR);
+    if (!img || img.complete) return reveal();
+    var timer = setTimeout(reveal, READY_FALLBACK_MS);
+    function done() {
+      clearTimeout(timer);
+      reveal();
+    }
+    img.addEventListener('load', done, { once: true });
+    img.addEventListener('error', done, { once: true });
+  }
+
+  function tryResolve() {
+    if (resolved || !isResolved()) return false;
+    resolved = true;
     applyImageSwap();
+    if (document.body.classList.contains('c-primePdp24VarB')) {
+      revealAfterSlot1Loads();
+    } else {
+      reveal();
+    }
     return true;
   }
 
-  // The variant body class is set by handleExperiments() in c-intelligems-tests.js once
-  // both DOM and ig:ready are in. ig:ready can fire before this deferred script runs, so
-  // instead of listening for it, check for the class now and watch body for it to appear.
+  // ig:ready can fire before this deferred script runs, so instead of listening for it,
+  // check body now and watch for handleExperiments() to mark the visitor as resolved.
   function init() {
     initGalleryEngagement();
-    if (trySwap()) return;
+    if (tryResolve()) return;
     var observer = new MutationObserver(function () {
-      if (trySwap()) observer.disconnect();
+      if (tryResolve()) observer.disconnect();
     });
     observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
   }

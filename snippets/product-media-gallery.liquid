@@ -73,6 +73,20 @@
     {{ 'c-prime-pdp-24.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
   <script src="{{ 'c-prime-pdp-24.js' | asset_url }}" defer></script>
+  {%- comment -%}
+    V_PRIME_PDP_24 anti-flicker: Var B swaps slot 1, and the variant is only known once
+    Intelligems loads. Keep slot 1 blank for everyone until c-prime-pdp-24.js adds
+    c-primePdp24Ready; the delayed animation reveals it anyway if that never happens.
+    Inline so it applies before the gallery paints.
+  {%- endcomment -%}
+  <style>
+    @keyframes c-pdp24-reveal { to { opacity: 1; } }
+    body:not(.c-primePdp24Ready) media-gallery .product__media-list > .product__media-item:first-child .product__media img,
+    body:not(.c-primePdp24Ready) media-gallery .thumbnail-list > .thumbnail-list__item:first-child img {
+      opacity: 0;
+      animation: c-pdp24-reveal 0s 3s forwards;
+    }
+  </style>
 {%- endunless -%}
 
 <media-gallery
