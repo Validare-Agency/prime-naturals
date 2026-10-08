@@ -7,7 +7,13 @@ const KACHING_SWAP_TARGET_BY_PRODUCT_ID = {
   7568898293894: "7733150187654", // murphys-law-for-kids -> swap to this id
   7587123658886: "7733149794438", // murphys-law-for-kids-copy -> swap to this id
 };
-const kachingSwapProductId =
+// V_PRIME_PDP_39 | Google Traffic Bundle Prices -$10 — Var A only.
+const PDP39_KACHING_SWAP_TARGET_BY_PRODUCT_ID = {
+  7590728794246: "15404716195974", // kidss-encyclopedia-10-000-whys -> kidss-encyclopedia-10-000-whys-paid-search
+  7568898293894: "15404725633158", // murphys-law-for-kids -> murphys-law-for-kids-paid-search-price-test
+  7587123658886: "15404724289670", // murphys-law-for-kids-copy -> leadership-enlightenment-for-kids-paid-search-price-test
+};
+let kachingSwapProductId =
   KACHING_SWAP_TARGET_BY_PRODUCT_ID[String(window.__productIdFromTemplate)];
 let kachingSwapAttempted = false;
 
@@ -93,6 +99,18 @@ function handleExperiments() {
   try {
     localStorage.setItem("validare_holdout", isHeldOut ? "1" : "0");
   } catch (e) {}
+
+  // Test: V_PRIME_PDP_39 | Google Traffic Bundle Prices -$10
+  const primePdp39 = window.igData?.user.getTestGroup(
+    "5a3c61c8-dd7b-45b6-8364-38370e761e8a"
+  );
+    if (primePdp39?.id === "b2337ea9-71b5-4247-bff1-0f192c1fbaa6") {
+    document.body.classList.add("c-primePdp39VarA");
+    kachingSwapProductId =
+      PDP39_KACHING_SWAP_TARGET_BY_PRODUCT_ID[
+        String(window.__productIdFromTemplate)
+      ] || kachingSwapProductId;
+  }
 
   decideKachingSwap(
     document.documentElement.classList.contains("c-paidSearchVisitor")
