@@ -152,13 +152,13 @@ function handleExperiments() {
   }
 
   // Test: V_PRIME_PDP_24 | Product gallery Images
-  const primePdp24 = window.igData?.user.getTestGroup(
-    "9b991598-4882-4a65-a44b-9ec73a363963"
-  );
+  const primePdp24 = { name: "Var A - True-size hero" }
   if (primePdp24?.name === "Var A - True-size hero") {
     document.body.classList.add("c-primePdp24VarA");
   } else if (primePdp24?.name === "Var B - True-size hero alt") {
     document.body.classList.add("c-primePdp24VarB");
+  } else if (primePdp24?.name === "Var C - Social proof hero") {
+    document.body.classList.add("c-primePdp24VarC");
   }
 }
 
