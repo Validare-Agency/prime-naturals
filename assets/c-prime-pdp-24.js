@@ -42,6 +42,26 @@
     alt: 'Sparks Curiosity – Complete Hardcover Edition: rewires curiosity, boosts school performance, competes with screens'
   };
 
+  // Var C image: social-proof hero (new slide inserted at slot 3, existing slot 3 onward shifts right)
+  // Includes: 4.9 star rating, 30-Day Guarantee badge, "Trusted by 18,000+ families" bar
+  var VAR_C_SLOT3_IMAGE = {
+    src: 'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp',
+    srcset: [
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=550 550w',
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=1100 1100w',
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=1445 1445w'
+    ].join(', '),
+    thumbSrcset: [
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=54 54w',
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=74 74w',
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=104 104w',
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=162 162w',
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=208 208w',
+      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=416 416w'
+    ].join(', '),
+    alt: 'Spark Curiosity – 10000 Whys Complete Hardcover Edition, rated 4.9 stars, 30-day guarantee, trusted by 18,000+ families'
+  };
+
   var VAR_C_MEDIA_KEY = 'pdp24-varc';
 
   // The gallery <img> sits in .product__media inside the modal-opener; the
@@ -191,9 +211,9 @@
       // Var B: replace slot 1 (0-indexed: 0) with the benefit-led hero image
       swapGallerySlot(0, VAR_B_SLOT1_IMAGE);
     } else if (document.body.classList.contains('c-primePdp24VarC')) {
-      // Var C: insert the Var B benefit-led image as a new slide at slot 3 (0-indexed: 2);
+      // Var C: insert the social-proof hero as a new slide at slot 3 (0-indexed: 2);
       // existing slot 3 onward shifts one place right
-      insertGallerySlot(2, VAR_B_SLOT1_IMAGE);
+      insertGallerySlot(2, VAR_C_SLOT3_IMAGE);
     }
   }
 
