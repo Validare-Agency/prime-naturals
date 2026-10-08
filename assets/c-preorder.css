@@ -44,7 +44,7 @@ slider-component:has(> .c-pre-media-badges) { position: relative; }
 .c-pre-media-badges {
   position: absolute;
   top: 16px;
-  left: 16px;
+  right: 16px;
   z-index: 2;
   display: flex;
   flex-direction: column;
