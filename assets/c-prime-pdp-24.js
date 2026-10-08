@@ -22,9 +22,9 @@
     alt: "Read it together – grandma and grandchild reading Kid's Encyclopedia 10000 Whys by the fireplace, the book kids choose over YouTube"
   };
 
-  // Var B image: benefit-led hero (slot 2 replacement)
+  // Var B image: benefit-led hero (slot 1 replacement)
   // Includes: "Sparks Curiosity" headline, "Complete Hardcover Edition" callout, 3 key benefits
-  var VAR_B_SLOT2_IMAGE = {
+  var VAR_B_SLOT1_IMAGE = {
     src: 'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_1.webp',
     srcset: [
       'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_1.webp?width=550 550w',
@@ -188,12 +188,12 @@
       // Var A: replace slot 3 (0-indexed: 2) with the corrected true-size image
       swapGallerySlot(2, VAR_A_SLOT3_IMAGE);
     } else if (document.body.classList.contains('c-primePdp24VarB')) {
-      // Var B: replace slot 2 (0-indexed: 1) with the benefit-led hero image
-      swapGallerySlot(1, VAR_B_SLOT2_IMAGE);
+      // Var B: replace slot 1 (0-indexed: 0) with the benefit-led hero image
+      swapGallerySlot(0, VAR_B_SLOT1_IMAGE);
     } else if (document.body.classList.contains('c-primePdp24VarC')) {
       // Var C: insert the Var B benefit-led image as a new slide at slot 3 (0-indexed: 2);
       // existing slot 3 onward shifts one place right
-      insertGallerySlot(2, VAR_B_SLOT2_IMAGE);
+      insertGallerySlot(2, VAR_B_SLOT1_IMAGE);
     }
   }
 
