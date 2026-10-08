@@ -620,7 +620,10 @@
   {%- render 'guarantee-box' -%}
 
   {%- comment -%} ═══ OFFER CARD ═══ {%- endcomment -%}
-  {%- render 'offer-card', cta_url: section.settings.cta_url, default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' -%}
+  {%- assign offer_cta_url = section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys' -%}
+  {%- render 'offer-card',
+    cta_url: offer_cta_url
+  -%}
 
   {%- comment -%} ═══ FOOTER ═══ {%- endcomment -%}
   <footer class="pn-footer">
