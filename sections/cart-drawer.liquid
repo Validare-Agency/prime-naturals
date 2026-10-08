@@ -95,6 +95,35 @@
 </script>
 <script src="{{ 'c-prime-site-38.js' | asset_url }}" defer></script>
 
+{%- comment -%}
+  V_PRIME_PDP_39 | Google Traffic Bundle Prices -$10 — Var A paid search
+  visitors: cart upsells add each book's -paid-search duplicate instead of
+  the live product (assets/c-prime-pdp-39.js), so their Kaching pricing
+  matches the swapped PDP bundle. Keyed by live variant id and by the
+  SITE_38 price-test variant id (in case SITE_38 swapped the upsell first).
+  Format: live:paid-search:site38-price-test. Keep in sync with
+  PDP39_KACHING_SWAP_TARGET_BY_PRODUCT_ID in assets/c-intelligems-tests.js.
+{%- endcomment -%}
+{%- assign c_pdp39_sets = 'kidss-encyclopedia-10-000-whys:kidss-encyclopedia-10-000-whys-paid-search:kidss-encyclopedia-10-000-whys-price-test,murphys-law-for-kids:murphys-law-for-kids-paid-search-price-test:murphys-law-for-kids-price-test,murphys-law-for-kids-copy:leadership-enlightenment-for-kids-paid-search-price-test:leadership-enlightenment-for-kids-price-test' | split: ',' -%}
+<script>
+  window.primePdp39PaidSearchVariants = {
+    {%- for c_pdp39_set in c_pdp39_sets -%}
+      {%- assign c_pdp39_handles = c_pdp39_set | split: ':' -%}
+      {%- assign c_pdp39_paid = all_products[c_pdp39_handles[1]].selected_or_first_available_variant -%}
+      {%- if c_pdp39_paid == blank or c_pdp39_paid.available == false -%}{%- continue -%}{%- endif -%}
+      {%- assign c_pdp39_live = all_products[c_pdp39_handles[0]].selected_or_first_available_variant -%}
+      {%- assign c_pdp39_site38 = all_products[c_pdp39_handles[2]].selected_or_first_available_variant -%}
+      {%- if c_pdp39_live != blank -%}
+        {{ c_pdp39_live.id | json }}: { id: {{ c_pdp39_paid.id | json }}, handle: {{ c_pdp39_handles[1] | json }} },
+      {%- endif -%}
+      {%- if c_pdp39_site38 != blank -%}
+        {{ c_pdp39_site38.id | json }}: { id: {{ c_pdp39_paid.id | json }}, handle: {{ c_pdp39_handles[1] | json }} },
+      {%- endif -%}
+    {%- endfor -%}
+  };
+</script>
+<script src="{{ 'c-prime-pdp-39.js' | asset_url }}" defer></script>
+
 {% schema %}
 {
   "name": "Cart drawer",
