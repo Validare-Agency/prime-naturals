@@ -1,0 +1,618 @@
+{%- comment -%}
+  Pre-order PDP blocks (Vol. 2 pre-order page — templates/product.vol2-preorder.json).
+  Every block_type below is a regular main-product block, so each piece of the
+  page is added / reordered / edited from the theme editor.
+
+  Styles: assets/c-preorder.css — Behaviour: assets/c-preorder.js
+  (review carousel, countdown, tier selection + add to cart).
+
+  Pricing: tier prices are DISPLAY prices. Same approach as
+  c-prime-pdp-17-bundle.liquid — every tier price is derived as a ratio off
+  the live (market-converted) variant price, so non-USD markets show the
+  equivalent amount, rounded to a .90 ending. The actual discount must be
+  applied at checkout (Kaching quantity-discount config / automatic discount
+  on this product), and kept in sync with the "Tier price" settings.
+
+  Pre-order switch (one toggle): product metafield custom.preorder_enabled
+  (true/false). Missing = on. When off, pre-order-only pieces hide and the
+  button switches to its "after pre-order" label — the page becomes a normal
+  PDP without editing the template.
+
+  Real stock counter: product metafield custom.preorder_total (integer, e.g.
+  500) = copies offered for pre-order. Copies sold come from the variant's
+  own inventory: it starts at 0 and goes negative as pre-orders come in
+  ("Continue selling when out of stock" on). Left = total - sold. Cancelled /
+  refunded orders restock, so the number stays real. What happens at 0 is
+  the "When it reaches 0" setting on the Stock bar block.
+
+  Accepts:
+  - block: {Object} the main-product block
+  - product: {Object}
+  - section: {Object}
+{%- endcomment -%}
+
+{%- liquid
+  assign pre_on = true
+  if product.metafields.custom.preorder_enabled.value == false
+    assign pre_on = false
+  endif
+
+  assign pre_variant = product.selected_or_first_available_variant
+
+  assign pre_stock_block = section.blocks | where: 'type', 'preorder_stock' | first
+  # Manual numbers, not live inventory: product metafields first, block settings as fallback
+  assign pre_total = product.metafields.custom.preorder_total.value | default: pre_stock_block.settings.total | at_least: 0
+  assign pre_left = product.metafields.custom.preorder_left.value
+  if pre_left == blank
+    assign pre_left = pre_stock_block.settings.left
+  endif
+  assign pre_left = pre_left | default: 0 | at_least: 0 | at_most: pre_total
+  assign pre_counted = false
+  if pre_total > 0
+    assign pre_counted = true
+  endif
+  assign pre_sold_out = false
+  if pre_on and pre_counted and pre_left == 0 and pre_stock_block.settings.when_zero == 'stop'
+    assign pre_sold_out = true
+  endif
+
+  assign pre_base_cents = pre_variant.price | divided_by: 100.0 | ceil | times: 100 | minus: 10
+  if pre_variant.price < 100
+    assign pre_base_cents = pre_variant.price
+  endif
+  assign pre_compare_cents = pre_variant.compare_at_price
+  if pre_compare_cents == blank or pre_compare_cents <= pre_base_cents
+    assign pre_compare_cents = pre_base_cents | times: 2
+  endif
+  assign bs = block.settings
+-%}
+
+{%- case block.type -%}
+  {%- comment -%} ───────── Gallery overlay (rendered from product-media-gallery) ───────── {%- endcomment -%}
+  {%- when 'preorder_media_badges' -%}
+    {%- if pre_on -%}
+    <div class="c-pre-media-badges" {{ block.shopify_attributes }}>
+      {%- if bs.badge_text != blank -%}
+        <span class="c-pre-media-badges__main" style="background: {{ bs.badge_bg }}; color: {{ bs.badge_color }};">{{ bs.badge_text }}</span>
+      {%- endif -%}
+      {%- if bs.sub_text != blank -%}
+        <span class="c-pre-media-badges__sub">{{ bs.sub_text }}</span>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+
+  {%- comment -%} ───────── Review carousel ───────── {%- endcomment -%}
+  {%- when 'preorder_reviews' -%}
+    {%- liquid
+      assign review_count = 0
+      for i in (1..3)
+        assign t_key = 'review_' | append: i | append: '_text'
+        if bs[t_key] != blank
+          assign review_count = review_count | plus: 1
+        endif
+      endfor
+    -%}
+    {%- if review_count > 0 -%}
+      <div
+        class="c-pre-reviews{% if bs.show_arrows and review_count > 1 %} c-pre-reviews--arrows{% endif %}"
+        data-c-pre-reviews
+        data-autoplay="{{ bs.autoplay_seconds }}"
+        style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;"
+        {{ block.shopify_attributes }}
+      >
+        <div class="c-pre-reviews__bg-quote" aria-hidden="true">"</div>
+        <div class="c-pre-reviews__slides">
+          {%- assign slide_index = 0 -%}
+          {%- for i in (1..3) -%}
+            {%- liquid
+              assign t_key = 'review_' | append: i | append: '_text'
+              assign n_key = 'review_' | append: i | append: '_name'
+              assign m_key = 'review_' | append: i | append: '_meta'
+              assign a_key = 'review_' | append: i | append: '_avatar'
+              assign u_key = 'review_' | append: i | append: '_avatar_url'
+            -%}
+            {%- if bs[t_key] != blank -%}
+              <div class="c-pre-reviews__slide{% if slide_index == 0 %} is-active{% endif %}" data-index="{{ slide_index }}">
+                <p class="c-pre-reviews__text">{{ bs[t_key] }}</p>
+                <div class="c-pre-reviews__author">
+                  <span class="c-pre-reviews__avatar">
+                    {%- if bs[a_key] != blank -%}
+                      {{ bs[a_key] | image_url: width: 72 | image_tag: width: 36, height: 36, loading: 'lazy', alt: bs[n_key] }}
+                    {%- elsif bs[u_key] != blank -%}
+                      <img src="{{ bs[u_key] }}" alt="{{ bs[n_key] | escape }}" width="36" height="36" loading="lazy">
+                    {%- endif -%}
+                  </span>
+                  <span class="c-pre-reviews__who">
+                    <span class="c-pre-reviews__name">{{ bs[n_key] }}</span>
+                    <span class="c-pre-reviews__meta">
+                      {%- if bs[m_key] != blank -%}{{ bs[m_key] }} ·{%- endif -%}
+                      <span class="c-pre-reviews__stars" aria-label="5 stars">★★★★★</span>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              {%- assign slide_index = slide_index | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        {%- if review_count > 1 -%}
+          {%- if bs.show_arrows -%}
+          <button type="button" class="c-pre-reviews__arrow c-pre-reviews__arrow--prev" data-c-pre-reviews-prev aria-label="Previous review">
+            <img src="{{ 'c-preorder-review-arrow.svg' | asset_url }}" alt="" width="23" height="23">
+          </button>
+          <button type="button" class="c-pre-reviews__arrow c-pre-reviews__arrow--next" data-c-pre-reviews-next aria-label="Next review">
+            <img src="{{ 'c-preorder-review-arrow.svg' | asset_url }}" alt="" width="23" height="23">
+          </button>
+          {%- endif -%}
+          <div class="c-pre-reviews__dots">
+            {%- for i in (1..review_count) -%}
+              <button type="button" class="c-pre-reviews__dot{% if forloop.first %} is-active{% endif %}" data-c-pre-reviews-dot="{{ forloop.index0 }}" aria-label="Show review {{ i }}"></button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+  {%- comment -%} ───────── Pills (Pre-order / All-new Volume 2) ───────── {%- endcomment -%}
+  {%- when 'preorder_pills' -%}
+    <div class="c-pre-pills" style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;" {{ block.shopify_attributes }}>
+      {%- for i in (1..3) -%}
+        {%- liquid
+          assign p_text = 'pill_' | append: i | append: '_text'
+          assign p_icon = 'pill_' | append: i | append: '_icon'
+          assign p_style = 'pill_' | append: i | append: '_style'
+          assign p_only = 'pill_' | append: i | append: '_preorder_only'
+          assign p_show = true
+          if bs[p_only] and pre_on == false
+            assign p_show = false
+          endif
+        -%}
+        {%- if bs[p_text] != blank and p_show -%}
+          <span class="c-pre-pill c-pre-pill--{{ bs[p_style] }}">
+            {%- if bs[p_icon] != 'none' -%}
+              <img src="{{ 'c-preorder-' | append: bs[p_icon] | append: '.svg' | asset_url }}" alt="" width="16" height="16">
+            {%- endif -%}
+            {{ bs[p_text] }}
+          </span>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  {%- comment -%} ───────── Title ───────── {%- endcomment -%}
+  {%- when 'preorder_title' -%}
+    <h1 class="c-pre-title" style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;" {{ block.shopify_attributes }}>
+      {{- bs.title | default: product.title -}}
+    </h1>
+
+  {%- comment -%} ───────── Rating row ───────── {%- endcomment -%}
+  {%- when 'preorder_rating' -%}
+    <a
+      class="c-pre-rating"
+      href="{{ bs.link | default: '#reviews' }}"
+      style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;"
+      {{ block.shopify_attributes }}
+    >
+      <span class="c-pre-rating__stars" aria-hidden="true">
+        {%- for i in (1..5) -%}
+          <img src="{{ 'c-preorder-star.svg' | asset_url }}" alt="" width="17" height="17">
+        {%- endfor -%}
+      </span>
+      <span class="c-pre-rating__score">{{ bs.rating }}</span>
+      <span class="c-pre-rating__count">{{ bs.count_text }}</span>
+    </a>
+
+  {%- comment -%} ───────── Price row ───────── {%- endcomment -%}
+  {%- when 'preorder_price' -%}
+    {%- liquid
+      assign pct_off = pre_compare_cents | minus: pre_base_cents | times: 100.0 | divided_by: pre_compare_cents | round
+      assign badge = bs.badge_text | replace: '[percent]', pct_off
+    -%}
+    <div class="c-pre-price" style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;" {{ block.shopify_attributes }}>
+      <span class="c-pre-price__current">{{ pre_base_cents | money }}</span>
+      <s class="c-pre-price__compare">{{ pre_compare_cents | money }}</s>
+      {%- if bs.badge_text != blank -%}
+        <span class="c-pre-price__badge">{{ badge }}</span>
+      {%- endif -%}
+      {%- if bs.ships_text != blank and pre_on -%}
+        <span class="c-pre-pill c-pre-pill--cream">
+          <img src="{{ 'c-preorder-calendar.svg' | asset_url }}" alt="" width="16" height="16">
+          {{ bs.ships_text }}
+        </span>
+      {%- endif -%}
+    </div>
+
+  {%- comment -%} ───────── Check bullets ───────── {%- endcomment -%}
+  {%- when 'preorder_bullets' -%}
+    {%- assign lines = bs.bullets | newline_to_br | split: '<br />' -%}
+    <ul class="c-pre-bullets" style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;" {{ block.shopify_attributes }}>
+      {%- for line in lines -%}
+        {%- assign line = line | strip -%}
+        {%- if line != blank -%}
+          <li class="c-pre-bullets__item">
+            <span class="c-pre-bullets__icon"><img src="{{ 'c-preorder-check.svg' | asset_url }}" alt="" width="15" height="15"></span>
+            <span>{{ line }}</span>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+
+  {%- comment -%} ───────── Limited stock bar ───────── {%- endcomment -%}
+  {%- when 'preorder_stock' -%}
+    {%- liquid
+      assign stock_show = pre_on
+      if pre_counted and pre_left == 0 and bs.when_zero == 'hide'
+        assign stock_show = false
+      endif
+    -%}
+    {%- liquid
+      # Per-visitor mode: assets/c-preorder.js picks a start number for each
+      # visitor, keeps it in localStorage and lowers it every hour.
+      assign stock_visitor = false
+      if bs.count_mode == 'visitor' and pre_counted
+        assign stock_visitor = true
+        assign stock_v_min = bs.visitor_start_min | at_least: 1 | at_most: pre_total
+        assign stock_v_max = bs.visitor_start_max | at_least: stock_v_min | at_most: pre_total
+        assign stock_v_drop_min = bs.visitor_drop_min | at_least: 0
+        assign stock_v_drop_max = bs.visitor_drop_max | at_least: stock_v_drop_min
+        assign pre_left = stock_v_min | plus: stock_v_max | divided_by: 2
+      endif
+    -%}
+    {%- if stock_show -%}
+      <div
+        class="c-pre-stock{% if pre_counted and pre_left == 0 %} c-pre-stock--out{% endif %}"
+        style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;"
+        {%- if stock_visitor %}
+          data-c-pre-stock
+          data-key="c-pre-stock-{{ product.id }}"
+          data-total="{{ pre_total }}"
+          data-start-min="{{ stock_v_min }}"
+          data-start-max="{{ stock_v_max }}"
+          data-drop-min="{{ stock_v_drop_min }}"
+          data-drop-max="{{ stock_v_drop_max }}"
+          data-floor="{{ bs.visitor_floor | at_least: 0 }}"
+          data-text="{{ bs.left_text | replace: '[total]', pre_total | escape }}"
+        {%- endif %}
+        {{ block.shopify_attributes }}
+      >
+        <p class="c-pre-stock__heading"><span class="c-pre-stock__dot" aria-hidden="true"></span>{{ bs.heading }}</p>
+        {%- if pre_counted -%}
+          {%- liquid
+            assign stock_pct = pre_left | times: 100.0 | divided_by: pre_total
+            if pre_left == 0
+              assign stock_label = bs.sold_out_text
+            else
+              assign stock_label = bs.left_text | replace: '[left]', pre_left | replace: '[total]', pre_total
+            endif
+          -%}
+          {%- if stock_label != blank -%}<p class="c-pre-stock__left" data-c-pre-stock-text>{{ stock_label }}</p>{%- endif -%}
+          <div class="c-pre-stock__bar" role="progressbar" aria-valuemin="0" aria-valuemax="{{ pre_total }}" aria-valuenow="{{ pre_left }}" data-c-pre-stock-bar>
+            <span style="width: {{ stock_pct }}%;"></span>
+          </div>
+        {%- elsif request.design_mode -%}
+          <p class="c-pre-stock__left">Set the total copies (product metafield custom.preorder_total or the block setting) to show the bar.</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+  {%- comment -%} ───────── Countdown ───────── {%- endcomment -%}
+  {%- when 'preorder_countdown' -%}
+    {%- if pre_on -%}
+    <div
+      class="c-pre-countdown"
+      data-c-pre-countdown
+      data-end="{{ bs.end_datetime | escape }}"
+      data-expired-text="{{ bs.expired_text | escape }}"
+      style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;"
+      {{ block.shopify_attributes }}
+    >
+      <p class="c-pre-countdown__label" data-c-pre-countdown-label>{{ bs.label }}</p>
+      <div class="c-pre-countdown__units" data-c-pre-countdown-units>
+        <span class="c-pre-countdown__unit"><span class="c-pre-countdown__num" data-unit="days">00</span><span class="c-pre-countdown__cap">{{ bs.days_label }}</span></span>
+        <span class="c-pre-countdown__unit"><span class="c-pre-countdown__num" data-unit="hours">00</span><span class="c-pre-countdown__cap">{{ bs.hours_label }}</span></span>
+        <span class="c-pre-countdown__unit"><span class="c-pre-countdown__num" data-unit="minutes">00</span><span class="c-pre-countdown__cap">{{ bs.minutes_label }}</span></span>
+        <span class="c-pre-countdown__unit"><span class="c-pre-countdown__num" data-unit="seconds">00</span><span class="c-pre-countdown__cap">{{ bs.seconds_label }}</span></span>
+      </div>
+    </div>
+    {%- endif -%}
+
+  {%- comment -%} ───────── Bundle tiers + add-on ───────── {%- endcomment -%}
+  {%- when 'preorder_offer' -%}
+    {%- liquid
+      assign ref_cents = bs.reference_price | times: 100 | round
+      if ref_cents < 1
+        assign ref_cents = pre_base_cents
+      endif
+
+      assign addon_product = bs.addon_product
+      assign addon_variant = addon_product.selected_or_first_available_variant
+      if addon_variant
+        assign addon_price = addon_variant.price
+        assign addon_compare = addon_variant.compare_at_price
+        if addon_compare == blank or addon_compare <= addon_price
+          assign addon_compare = addon_price | times: 2
+        endif
+      endif
+    -%}
+    <div
+      class="c-pre-offer"
+      data-c-pre-offer
+      style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;"
+      {{ block.shopify_attributes }}
+    >
+      {%- liquid
+        assign offer_heading = bs.heading
+        if pre_on == false
+          assign offer_heading = bs.heading_off
+        endif
+        assign offer_ships = bs.ships_text
+        if pre_on == false
+          assign offer_ships = blank
+        endif
+      -%}
+      {%- if offer_heading != blank or offer_ships != blank -%}
+        <div class="c-pre-offer__head">
+          {%- if offer_heading != blank -%}<h2 class="c-pre-offer__heading">{{ offer_heading }}</h2>{%- endif -%}
+          {%- if offer_ships != blank -%}
+            <p class="c-pre-offer__ships">
+              <img src="{{ 'c-preorder-calendar-sm.svg' | asset_url }}" alt="" width="15" height="15">
+              {{ offer_ships }}
+            </p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="c-pre-offer__tiers" role="radiogroup" aria-label="{{ offer_heading | default: 'Bundle options' | escape }}">
+        {%- for i in (1..3) -%}
+          {%- liquid
+            assign k = 'tier_' | append: i | append: '_'
+            assign k_enable = k | append: 'enable'
+          -%}
+          {%- unless bs[k_enable] -%}{%- continue -%}{%- endunless -%}
+          {%- liquid
+            assign k_qty = k | append: 'quantity'
+            assign k_price = k | append: 'price'
+            assign k_title = k | append: 'title'
+            assign k_sub = k | append: 'subtitle'
+            assign k_perk = k | append: 'perk'
+            assign k_ship = k | append: 'free_shipping'
+            assign k_badge = k | append: 'badge'
+
+            assign t_qty = bs[k_qty] | at_least: 1
+            if bs[k_price] != blank
+              assign t_price_cents = bs[k_price] | times: 100 | round
+              # Same ratio to the live price, kept to the cent (79.80 / 39.90 = exactly 2 × price)
+              assign t_price = pre_base_cents | times: 1.0 | times: t_price_cents | divided_by: ref_cents | round
+            else
+              assign t_price = pre_base_cents | times: t_qty
+            endif
+            # Compare = N x the per-book compare-at (79.80), the same way the cart
+            # drawer totals its savings (compare-at x qty − paid), so "Save" on the
+            # page matches "Savings" in the cart (5 books: 399.00 − 119.70 = 279.30)
+            assign t_compare = pre_compare_cents | times: t_qty
+            assign t_save = t_compare | minus: t_price
+
+            assign t_checked = false
+            assign i_str = i | append: ''
+            if bs.default_tier == i_str
+              assign t_checked = true
+            endif
+          -%}
+          <label class="c-pre-tier">
+            {%- if bs[k_badge] != blank -%}<span class="c-pre-tier__badge">{{ bs[k_badge] }}</span>{%- endif -%}
+            <input
+              type="radio"
+              class="c-pre-tier__radio"
+              name="c-pre-tier-{{ section.id }}"
+              value="{{ i }}"
+              data-variant-id="{{ pre_variant.id }}"
+              data-quantity="{{ t_qty }}"
+              data-money="{{ t_price | money | escape }}"
+              {%- if addon_variant %} data-money-with-addon="{{ t_price | plus: addon_price | money | escape }}"{% endif %}
+              {% if t_checked %}checked{% endif %}
+            >
+            <span class="c-pre-tier__control" aria-hidden="true"></span>
+            <span class="c-pre-tier__body">
+              <span class="c-pre-tier__title">{{ bs[k_title] }}</span>
+              {%- if bs[k_sub] != blank -%}<span class="c-pre-tier__subtitle">{{ bs[k_sub] }}</span>{%- endif -%}
+              {%- if bs[k_perk] != blank -%}
+                <span class="c-pre-tier__perk c-pre-tier__perk--gift">
+                  <img src="{{ 'c-preorder-gift.svg' | asset_url }}" alt="" width="15" height="15">{{ bs[k_perk] }}
+                </span>
+              {%- endif -%}
+              {%- if bs[k_ship] -%}
+                <span class="c-pre-tier__perk c-pre-tier__perk--ship">
+                  <img src="{{ 'c-preorder-truck.svg' | asset_url }}" alt="" width="15" height="15">{{ bs.free_shipping_text }}
+                </span>
+              {%- endif -%}
+            </span>
+            <span class="c-pre-tier__prices">
+              <span class="c-pre-tier__price">{{ t_price | money }}</span>
+              {%- if t_compare > t_price -%}<s class="c-pre-tier__compare">{{ t_compare | money }}</s>{%- endif -%}
+              {%- if t_qty > 1 and t_save > 0 and bs.save_text != blank -%}
+                {%- assign t_save_money = t_save | money -%}
+                <span class="c-pre-tier__save">{{ bs.save_text | replace: '[amount]', t_save_money }}</span>
+              {%- endif -%}
+            </span>
+          </label>
+        {%- endfor -%}
+      </div>
+
+      {%- if addon_variant -%}
+        <label class="c-pre-addon" data-variant-id="{{ addon_variant.id }}">
+          <input type="checkbox" class="c-pre-addon__checkbox" data-c-pre-addon>
+          <span class="c-pre-addon__control" aria-hidden="true">
+            <img src="{{ 'c-preorder-checkbox-check.svg' | asset_url }}" alt="" width="15" height="15">
+          </span>
+          {%- assign addon_image = bs.addon_image | default: addon_product.featured_image -%}
+          {%- if addon_image -%}
+            {{ addon_image | image_url: width: 140 | image_tag: class: 'c-pre-addon__image', width: 58, loading: 'lazy', alt: addon_product.title }}
+          {%- endif -%}
+          <span class="c-pre-addon__body">
+            <span class="c-pre-addon__title">{{ bs.addon_title | default: addon_product.title }}</span>
+            {%- if bs.addon_subtitle != blank -%}<span class="c-pre-addon__subtitle">{{ bs.addon_subtitle }}</span>{%- endif -%}
+          </span>
+          <span class="c-pre-addon__prices">
+            <span class="c-pre-addon__price">+{{ addon_price | money }}</span>
+            <s class="c-pre-addon__compare">{{ addon_compare | money }}</s>
+          </span>
+        </label>
+      {%- endif -%}
+    </div>
+
+  {%- comment -%} ───────── Pre-order gifts ───────── {%- endcomment -%}
+  {%- when 'preorder_gifts' -%}
+    {%- liquid
+      assign gifts_show = true
+      if pre_on == false and bs.preorder_only
+        assign gifts_show = false
+      endif
+    -%}
+    {%- if gifts_show -%}
+    <div class="c-pre-gifts" data-c-pre-gifts style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;" {{ block.shopify_attributes }}>
+      <div class="c-pre-gifts__head">
+        {%- if bs.eyebrow != blank -%}
+          <p class="c-pre-gifts__eyebrow">
+            <img src="{{ 'c-preorder-gift-eyebrow.svg' | asset_url }}" alt="" width="16" height="16">{{ bs.eyebrow }}
+          </p>
+        {%- endif -%}
+        <p class="c-pre-gifts__heading">
+          {{ bs.heading }}
+          {%- if bs.total_value != blank %} <s>{{ bs.total_value }}</s>{%- endif -%}
+        </p>
+      </div>
+      <div class="c-pre-gifts__grid">
+        {%- for i in (1..3) -%}
+          {%- liquid
+            assign g = 'gift_' | append: i | append: '_'
+            assign g_name = g | append: 'name'
+            assign g_value = g | append: 'value'
+            assign g_image = g | append: 'image'
+            assign g_product = g | append: 'product'
+            case i
+              when 1
+                assign g_fallback = 'c-preorder-gift-sticker-puzzle.jpg'
+              when 2
+                assign g_fallback = 'c-preorder-gift-stickers.png'
+              else
+                assign g_fallback = 'c-preorder-gift-mystery.png'
+            endcase
+            assign g_variant = bs[g_product].selected_or_first_available_variant
+          -%}
+          {%- if bs[g_name] != blank -%}
+            <div class="c-pre-gift"{% if g_variant and g_variant.available %} data-c-pre-gift-variant="{{ g_variant.id }}"{% endif %}>
+              <span class="c-pre-gift__circle">
+                {%- if bs[g_image] != blank -%}
+                  {{ bs[g_image] | image_url: width: 240 | image_tag: loading: 'lazy', alt: bs[g_name] }}
+                {%- else -%}
+                  <img src="{{ g_fallback | asset_url }}" alt="{{ bs[g_name] | escape }}" loading="lazy" width="100" height="100">
+                {%- endif -%}
+                <span class="c-pre-gift__free">{{ bs.free_label }}</span>
+              </span>
+              <span class="c-pre-gift__name">{{ bs[g_name] }}</span>
+              {%- if bs[g_value] != blank -%}<s class="c-pre-gift__value">{{ bs[g_value] }}</s>{%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- endif -%}
+
+  {%- comment -%} ───────── Pre-order button ───────── {%- endcomment -%}
+  {%- when 'preorder_atc' -%}
+    {%- liquid
+      assign atc_label = bs.label
+      if pre_on == false
+        assign atc_label = bs.label_off
+      endif
+      assign atc_enabled = pre_variant.available
+      if pre_sold_out
+        assign atc_enabled = false
+      endif
+    -%}
+    <div class="c-pre-atc-wrap" style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;" {{ block.shopify_attributes }}>
+      <button
+        type="button"
+        class="c-pre-atc"
+        data-c-pre-atc
+        data-label="{{ atc_label | escape }}"
+        data-variant-id="{{ pre_variant.id }}"
+        data-money="{{ pre_base_cents | money | escape }}"
+        {%- if pre_on %}
+        data-preorder="true"
+        data-property-name="{{ bs.property_name | escape }}"
+        data-property-value="{{ bs.property_value | escape }}"
+        data-add-gifts="{{ bs.add_gifts }}"
+        {%- assign atc_gift_variant = bs.gift_product.selected_or_first_available_variant -%}
+        {%- if atc_gift_variant and atc_gift_variant.available %}
+        data-gift-variant="{{ atc_gift_variant.id }}"
+        {%- endif %}
+        {%- endif %}
+        style="background: {{ bs.button_color }};"
+        {% unless atc_enabled %}disabled{% endunless %}
+      >
+        {%- if pre_sold_out -%}
+          {{ bs.sold_out_label }}
+        {%- elsif pre_variant.available -%}
+          {%- assign pre_base_money = pre_base_cents | money -%}
+          {{ atc_label | replace: '[price]', pre_base_money }}
+        {%- else -%}
+          {{ 'products.product.sold_out' | t }}
+        {%- endif -%}
+      </button>
+      {%- if pre_on and bs.note != blank -%}
+        <p class="c-pre-atc__note">
+          <img src="{{ 'c-preorder-calendar.svg' | asset_url }}" alt="" width="16" height="16">
+          <span>{{ bs.note }}</span>
+        </p>
+      {%- endif -%}
+      <p class="c-pre-atc__error" data-c-pre-atc-error role="alert" hidden></p>
+    </div>
+
+  {%- comment -%} ───────── Trust strip + payment chips ───────── {%- endcomment -%}
+  {%- when 'preorder_trust' -%}
+    {%- assign trust_items = bs.items | newline_to_br | split: '<br />' -%}
+    {%- assign pay_items = bs.payments | split: ',' -%}
+    <div class="c-pre-trust" style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;" {{ block.shopify_attributes }}>
+      <p class="c-pre-trust__strip">
+        {%- for item in trust_items -%}
+          {%- assign item = item | strip -%}
+          {%- if item != blank -%}
+            {%- unless forloop.first -%}<span class="c-pre-trust__sep" aria-hidden="true">|</span>{%- endunless -%}
+            <span>{{ item }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+      </p>
+      {%- if bs.payments != blank -%}
+        <p class="c-pre-trust__payments">
+          {%- for pay in pay_items -%}
+            <span class="c-pre-trust__pay">{{ pay | strip }}</span>
+          {%- endfor -%}
+        </p>
+      {%- endif -%}
+    </div>
+
+  {%- comment -%} ───────── Spec table ("Exactly what arrives") ───────── {%- endcomment -%}
+  {%- when 'preorder_specs' -%}
+    {%- assign spec_rows = bs.rows | newline_to_br | split: '<br />' -%}
+    <div class="c-pre-specs" style="--margin-top: {{ bs.margin_top }}px; --margin-bottom: {{ bs.margin_bottom }}px;" {{ block.shopify_attributes }}>
+      {%- if bs.eyebrow != blank -%}<p class="c-pre-specs__eyebrow">{{ bs.eyebrow }}</p>{%- endif -%}
+      <dl class="c-pre-specs__list">
+        {%- for row in spec_rows -%}
+          {%- assign parts = row | strip | split: '|' -%}
+          {%- if parts.size > 1 -%}
+            {%- assign values = parts[1] | split: '·' -%}
+            <div class="c-pre-specs__row">
+              <dt>{{ parts[0] | strip }}</dt>
+              <dd>
+                {%- for v in values -%}
+                  {%- unless forloop.first -%}<span class="c-pre-specs__dot" aria-hidden="true">·</span>{%- endunless -%}
+                  <span>{{ v | strip }}</span>
+                {%- endfor -%}
+              </dd>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </dl>
+    </div>
+{%- endcase -%}

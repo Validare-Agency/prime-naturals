@@ -1,0 +1,80 @@
+{%- comment -%}
+  "Pre-order" label on a cart line. Shown when the line has the hidden
+  _preorder property (added by the Vol. 2 pre-order PDP — assets/c-preorder.js
+  and assets/c-preorder-add-both.js). Its value is the shipping note, e.g.
+  "Ships October 14".
+
+  Accepts:
+  - item: {Object} cart line item
+{%- endcomment -%}
+
+{%- comment -%}
+  Free pre-order gift (its own cart line, added by assets/c-preorder.js with
+  the property _preorder_gift). The line carries the c-pre-gift-line class:
+  no quantity control, the remove button stays.
+{%- endcomment -%}
+{%- if item.properties._preorder_gift != blank -%}
+  <div class="c-pre-cart-badge">
+    <span class="c-pre-cart-badge__pill c-pre-cart-badge__pill--gift">Free pre-order gift</span>
+  </div>
+  <style>
+    .c-pre-cart-badge { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 6px 0 4px; }
+    .c-pre-cart-badge__pill--gift {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 100px;
+      background: #fff6e5;
+      color: #8a5a00;
+      font-family: var(--font-body-family);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .c-pre-gift-line quantity-input,
+    .c-pre-gift-line dl { display: none !important; }
+  </style>
+{%- endif -%}
+
+{%- if item.properties._preorder != blank -%}
+  <div class="c-pre-cart-badge">
+    <span class="c-pre-cart-badge__pill">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
+        <path d="M12.667 2.666H3.333C2.597 2.666 2 3.263 2 3.999v9.334c0 .736.597 1.333 1.333 1.333h9.334c.736 0 1.333-.597 1.333-1.333V3.999c0-.736-.597-1.333-1.333-1.333ZM10.667 1.334v2.667M5.333 1.334v2.667M2 6.667h12" stroke="currentColor" stroke-width="1.467" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Pre-order
+    </span>
+    {%- if item.properties._preorder != 'true' -%}
+      <span class="c-pre-cart-badge__ship">{{ item.properties._preorder }}</span>
+    {%- endif -%}
+  </div>
+  <style>
+    .c-pre-cart-badge {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin: 6px 0 4px;
+    }
+    .c-pre-cart-badge__pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 100px;
+      background: #fdecec;
+      color: #b42318;
+      font-family: var(--font-body-family);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .c-pre-cart-badge__pill svg { flex: 0 0 16px; }
+    .c-pre-cart-badge__ship {
+      font-family: var(--font-body-family);
+      font-size: 13px;
+      line-height: 1.2;
+      color: #4b5563;
+    }
+  </style>
+{%- endif -%}

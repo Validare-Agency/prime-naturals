@@ -707,3 +707,17 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%- render 'offer-card',
+        cta_url: section.settings.cta_url | default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys'
+      -%}
+  to: "{%- render 'offer-card', cta_url: section.settings.cta_url, default: 'https://primenaturals.store/products/kids-encyclopedia-100-000-whys'
+    -%}"
+  position: 18941..19083
+{% endcomment %}

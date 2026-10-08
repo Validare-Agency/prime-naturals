@@ -63,7 +63,7 @@
 
             <tbody>
               {%- for item in cart.items -%}
-                <tr class="cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pmb30_gift %} c-pmb30-gift-line{% endif %}{% if item.properties._pc37_gift %} c-pc37-gift-line{% endif %}" id="CartItem-{{ item.index | plus: 1 }}"{% if item.properties._pc37_gift %} data-c-pc37-gift-id="{{ item.variant_id }}"{% endif %}>
+                <tr class="cart-item cart-item--product-{{ item.product.handle }}{% if item.properties._pmb30_gift %} c-pmb30-gift-line{% endif %}{% if item.properties._pc37_gift %} c-pc37-gift-line{% endif %}{% if item.properties._preorder_gift %} c-pre-gift-line{% endif %}" id="CartItem-{{ item.index | plus: 1 }}"{% if item.properties._pc37_gift %} data-c-pc37-gift-id="{{ item.variant_id }}"{% endif %}>
                   <td class="cart-item__media">
                     {% if item.image %}
                       {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
@@ -87,6 +87,7 @@
                     {%- endif -%}
 
                     <a href="{{ item.url }}" class="cart-item__name h4 break">{{ item.product.title | escape }}</a>
+                    {%- render 'c-preorder-cart-badge', item: item -%}
 
                     {%- if item.original_price != item.final_price -%}
                       <div class="cart-item__discounted-prices">
@@ -125,6 +126,8 @@
 
                         {%- for property in item.properties -%}
                           {%- assign property_first_char = property.first | slice: 0 -%}
+                          {%- comment -%} Pre-order note is already shown by the c-preorder-cart-badge label {%- endcomment -%}
+                          {%- if item.properties._preorder != blank and property.last == item.properties._preorder -%}{%- continue -%}{%- endif -%}
                           {%- if property.last != blank and property_first_char != '_' -%}
                             <div class="product-option">
                               <dt>{{ property.first }}:</dt>

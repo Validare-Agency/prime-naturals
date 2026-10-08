@@ -1,0 +1,798 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "media_badges_pre": {
+          "type": "preorder_media_badges",
+          "settings": {
+            "badge_text": "PRE-ORDER",
+            "badge_bg": "#c0392b",
+            "badge_color": "#ffffff",
+            "sub_text": "Ships October 14"
+          }
+        },
+        "reviews_pre": {
+          "type": "preorder_reviews",
+          "settings": {
+            "autoplay_seconds": 0,
+            "show_arrows": false,
+            "review_1_text": "\"Best money I've spent on my kids' education outside of school. The conversations it starts are priceless.\"",
+            "review_1_name": "Jennifer L.",
+            "review_1_meta": "Mom of three",
+            "review_1_avatar_url": "https://i.pravatar.cc/150?img=47",
+            "review_2_text": "\"My son is a screen kid. He read this until 9pm without me saying a word. I bought two more for his cousins.\"",
+            "review_2_name": "David K.",
+            "review_2_meta": "Father of two",
+            "review_2_avatar_url": "https://i.pravatar.cc/150?img=12",
+            "review_3_text": "\"My daughter explained tectonic plates to my mother-in-law. She's 8. We were completely speechless.\"",
+            "review_3_name": "Rachel M.",
+            "review_3_meta": "Mom of two",
+            "review_3_avatar_url": "https://i.pravatar.cc/150?img=32",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "pills_pre": {
+          "type": "preorder_pills",
+          "settings": {
+            "pill_1_text": "Pre-order",
+            "pill_1_icon": "pill-preorder",
+            "pill_1_style": "red",
+            "pill_1_preorder_only": true,
+            "pill_2_text": "All-new Volume 2",
+            "pill_2_icon": "pill-book",
+            "pill_2_style": "green",
+            "pill_2_preorder_only": false,
+            "pill_3_text": "",
+            "pill_3_icon": "none",
+            "pill_3_style": "cream",
+            "pill_3_preorder_only": false,
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "title_pre": {
+          "type": "preorder_title",
+          "settings": {
+            "title": "Kid’s Encyclopedia “10,000 Whys” Vol. 2",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "rating_pre": {
+          "type": "preorder_rating",
+          "settings": {
+            "rating": "4.9",
+            "count_text": "2,847 reviews",
+            "link": "#c-pre-reviews",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "price_pre": {
+          "type": "preorder_price",
+          "settings": {
+            "badge_text": "[percent]% OFF",
+            "ships_text": "Ships October 14",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "bullets_pre": {
+          "type": "preorder_bullets",
+          "settings": {
+            "bullets": "All-new questions and answers for ages 6–12\nReal “wait, what?!” facts — like the man who hiccuped for 68 years straight\nA “Curiosity Level” page: color in a star for every wow moment\nThe follow-up to 10,000 Whys, in the same gift-ready hardcover",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "stock_pre": {
+          "type": "preorder_stock",
+          "settings": {
+            "heading": "Limited stock – available on pre-order only",
+            "left_text": "[left] of [total] left",
+            "total": 500,
+            "count_mode": "visitor",
+            "visitor_start_min": 300,
+            "visitor_start_max": 350,
+            "visitor_drop_min": 1,
+            "visitor_drop_max": 5,
+            "visitor_floor": 20,
+            "when_zero": "stop",
+            "sold_out_text": "Pre-order stock is sold out",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "countdown_pre": {
+          "type": "preorder_countdown",
+          "settings": {
+            "label": "Ships in",
+            "end_datetime": "2026-10-14T00:00:00-04:00",
+            "expired_text": "Shipping now",
+            "days_label": "Days",
+            "hours_label": "Hrs",
+            "minutes_label": "Min",
+            "seconds_label": "Sec",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "offer_pre": {
+          "type": "preorder_offer",
+          "settings": {
+            "heading": "Reserve your copies before pre-order stock runs out",
+            "heading_off": "Choose your bundle",
+            "ships_text": "Ships October 14",
+            "reference_price": "39.90",
+            "default_tier": "1",
+            "save_text": "Save [amount]",
+            "free_shipping_text": "FREE shipping",
+            "tier_1_enable": true,
+            "tier_1_quantity": 1,
+            "tier_1_price": "",
+            "tier_1_title": "1 Book",
+            "tier_1_subtitle": "For 1 child",
+            "tier_1_perk": "",
+            "tier_1_free_shipping": false,
+            "tier_1_badge": "",
+            "tier_2_enable": true,
+            "tier_2_quantity": 3,
+            "tier_2_price": "79.90",
+            "tier_2_title": "Buy 2, Get 1 Free",
+            "tier_2_subtitle": "3 books — best for siblings",
+            "tier_2_perk": "1 full book, on us",
+            "tier_2_free_shipping": true,
+            "tier_2_badge": "Most popular",
+            "tier_3_enable": true,
+            "tier_3_quantity": 5,
+            "tier_3_price": "119.90",
+            "tier_3_title": "Buy 3, Get 2 Free",
+            "tier_3_subtitle": "5 books — best gift pack",
+            "tier_3_perk": "2 full books, on us",
+            "tier_3_free_shipping": true,
+            "tier_3_badge": "One for every grandchild",
+            "addon_product": "kidss-encyclopedia-10-000-whys",
+            "addon_title": "Complete the set with Vol. 1",
+            "addon_subtitle": "The original 10,000 Whys",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "gifts_pre": {
+          "type": "preorder_gifts",
+          "settings": {
+            "preorder_only": true,
+            "eyebrow": "EXCLUSIVE PRE-ORDER GIFTS",
+            "heading": "3 free gifts with every pre-order",
+            "total_value": "$30.40",
+            "free_label": "FREE",
+            "gift_1_name": "Sticker Puzzle",
+            "gift_1_value": "$15.80",
+            "gift_1_product": "preorder-gift-sticker-puzzle",
+            "gift_2_name": "Stickers",
+            "gift_2_value": "$4.80",
+            "gift_2_product": "preorder-gift-stickers",
+            "gift_3_name": "Mystery Gift",
+            "gift_3_value": "$9.80",
+            "gift_3_product": "preorder-gift-mystery",
+            "margin_top": 16,
+            "margin_bottom": 16
+          }
+        },
+        "atc_pre": {
+          "type": "preorder_atc",
+          "settings": {
+            "label": "Pre-order — [price]",
+            "label_off": "Add to cart — [price]",
+            "sold_out_label": "Pre-order sold out",
+            "note": "Ships October 14 — arrives well before the holidays",
+            "button_color": "#c0392b",
+            "add_gifts": true,
+            "property_name": "Pre-order",
+            "property_value": "Ships October 14",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "trust_pre": {
+          "type": "preorder_trust",
+          "settings": {
+            "items": "🛡️ 30-day money-back guarantee\n🔒 Secure checkout\n📦 Free shipping",
+            "payments": "VISA, MC, AMEX, PayPal, Apple Pay, Shop Pay",
+            "margin_top": 0,
+            "margin_bottom": 20
+          }
+        },
+        "specs_pre": {
+          "type": "preorder_specs",
+          "settings": {
+            "eyebrow": "EXACTLY WHAT ARRIVES",
+            "rows": "Size | 21 x 29.7 cm · A4\nThickness | 1.8 cm · half a thumb\nPages | 174 pages\nWeight | 680 g\nBinding | Hardcover · stays open flat",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        }
+      },
+      "block_order": [
+        "media_badges_pre",
+        "reviews_pre",
+        "pills_pre",
+        "title_pre",
+        "rating_pre",
+        "price_pre",
+        "bullets_pre",
+        "stock_pre",
+        "countdown_pre",
+        "offer_pre",
+        "gifts_pre",
+        "atc_pre",
+        "trust_pre",
+        "specs_pre"
+      ],
+      "settings": {
+        "display_id": false,
+        "enable_sticky_info": true,
+        "display_variant_image_first": false,
+        "disable_prepend": false,
+        "hide_variants": false,
+        "variant_image_filtering": "none",
+        "image_zoom": "none",
+        "arrows_color_scheme": "inverse",
+        "transparent_arrows": true,
+        "dots_color_scheme": "inverse",
+        "video_player": "play_btn",
+        "enable_video_looping": false,
+        "autoplay_videos_pause_btn": false,
+        "video_sound_btn": false,
+        "video_timeline": false,
+        "play_btn_color_scheme": "accent-1",
+        "sound_btn_color_scheme": "inverse",
+        "timeline_color": "accent-1",
+        "media_size": "medium",
+        "media_position": "left",
+        "gallery_layout": "thumbnail_slider",
+        "desktop_thumbnails_count": 5,
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "desktop_arrows_position": "sides",
+        "mobile_media_corner_radius": 12,
+        "mobile_spacing_pixels": 0,
+        "mobile_arrows_position": "sides",
+        "mobile_pagination": "hidden",
+        "mobile_thumbnails": "show",
+        "mobile_thumbnails_count": 6,
+        "mobile_scroll_padding_percentage": 0,
+        "mobile_scroll_padding_pixels": 0,
+        "enable_mobile_outher_spacing": false,
+        "mobile_slides_container_width": 100,
+        "mobile_slides_inner_width": 100,
+        "trust_badge_position": "top-right",
+        "trust_badge_size": "medium",
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 44,
+        "desktop_padding_top": 36,
+        "desktop_padding_bottom": 36
+      }
+    },
+    "how_it_works": {
+      "type": "c-preorder-how-it-works",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "icon": "box",
+            "highlight": true,
+            "title": "Order today",
+            "text": "Reserve your copy"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "icon": "book",
+            "highlight": false,
+            "title": "Printing",
+            "text": "Your copy comes off the first print run"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "icon": "truck",
+            "highlight": false,
+            "title": "Ships October 14",
+            "text": "Straight from our warehouse"
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "icon": "gift",
+            "highlight": false,
+            "title": "Arrives",
+            "text": "At your door 7 days later"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ],
+      "settings": {
+        "heading": "How pre-order works",
+        "preorder_only": true,
+        "background": "#f3f3f3",
+        "desktop_padding_top": 88,
+        "desktop_padding_bottom": 88,
+        "mobile_padding_top": 56,
+        "mobile_padding_bottom": 56
+      }
+    },
+    "compare": {
+      "type": "c-preorder-compare",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "label": "What’s inside?",
+            "text_a": "Answers to the everyday “why?” questions kids ask",
+            "check_a": false,
+            "muted_a": false,
+            "text_b": "Brand-new, surprising facts that make kids say “Wait, what?!”",
+            "check_b": true,
+            "muted_b": false
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "label": "Who is it best for?",
+            "text_a": "A child who asks “why?” about everything",
+            "check_a": false,
+            "muted_a": false,
+            "text_b": "A child who loves surprising facts — perfect if they already have Vol. 1",
+            "check_b": true,
+            "muted_b": false
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "label": "Does it have the star “Curiosity Level” page?",
+            "text_a": "No",
+            "check_a": false,
+            "muted_a": true,
+            "text_b": "Yes — kids color in a star for every wow fact",
+            "check_b": true,
+            "muted_b": false
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "label": "How big is it?",
+            "text_a": "Small hardcover (B5 size)",
+            "check_a": false,
+            "muted_a": false,
+            "text_b": "Big hardcover (A4 size)",
+            "check_b": true,
+            "muted_b": false
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "label": "Have families tried it?",
+            "text_a": "18,000+ families, rated 4.9 ★",
+            "check_a": false,
+            "muted_a": false,
+            "text_b": "Brand new — out October 14",
+            "check_b": true,
+            "muted_b": false
+          }
+        },
+        "row_6": {
+          "type": "row",
+          "settings": {
+            "label": "When will it arrive?",
+            "text_a": "Ships today",
+            "check_a": false,
+            "muted_a": false,
+            "text_b": "Ships October 14 (pre-order now)",
+            "check_b": true,
+            "muted_b": false
+          }
+        },
+        "price_row": {
+          "type": "price_row",
+          "settings": {
+            "label": "Price"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6",
+        "price_row"
+      ],
+      "settings": {
+        "heading": "Not sure which one to get? *Here’s the simple difference.*",
+        "subheading": "Both are big, sturdy hardcovers that kids pick up on their own. Here’s what makes each one different.",
+        "corner_label": "Side by side",
+        "product_a": "kidss-encyclopedia-10-000-whys",
+        "title_a": "Vol. 1",
+        "badge_a": "THE ORIGINAL",
+        "product_b": "",
+        "title_b": "Vol. 2",
+        "badge_b": "NEW · PRE-ORDER",
+        "show_tip": true,
+        "tip_eyebrow": "OUR TIP",
+        "tip_heading": "Can’t decide? Get both.",
+        "tip_text": "They’re two different books, so nothing repeats. Vol. 1 arrives now, and Vol. 2 follows on October 14 — two surprises instead of one.",
+        "button_label": "Get both",
+        "button_action": "add_both",
+        "button_link": "",
+        "button_caption": "Free gifts included",
+        "property_name": "Pre-order",
+        "property_value": "Ships October 14",
+        "background": "#ffffff",
+        "desktop_padding_top": 88,
+        "desktop_padding_bottom": 88,
+        "mobile_padding_top": 56,
+        "mobile_padding_bottom": 56
+      }
+    },
+    "topics": {
+      "type": "c-preorder-topics",
+      "blocks": {
+        "topic_1": {
+          "type": "topic",
+          "settings": {
+            "text": "Science experiments",
+            "dot_color": "#c0392b"
+          }
+        },
+        "topic_2": {
+          "type": "topic",
+          "settings": {
+            "text": "Animals & wildlife",
+            "dot_color": "#f5a623"
+          }
+        },
+        "topic_3": {
+          "type": "topic",
+          "settings": {
+            "text": "Space & planets",
+            "dot_color": "#166534"
+          }
+        },
+        "topic_4": {
+          "type": "topic",
+          "settings": {
+            "text": "Weather & nature",
+            "dot_color": "#1f3a5f"
+          }
+        },
+        "topic_5": {
+          "type": "topic",
+          "settings": {
+            "text": "Explorers & adventure",
+            "dot_color": "#c0392b"
+          }
+        },
+        "topic_6": {
+          "type": "topic",
+          "settings": {
+            "text": "Records & oddities",
+            "dot_color": "#f5a623"
+          }
+        }
+      },
+      "block_order": [
+        "topic_1",
+        "topic_2",
+        "topic_3",
+        "topic_4",
+        "topic_5",
+        "topic_6"
+      ],
+      "settings": {
+        "heading": "What’s inside",
+        "highlight": "Vol. 2",
+        "background": "#0d1b3e",
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 40,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "get_the_set": {
+      "type": "c-preorder-set",
+      "settings": {
+        "image": "shopify://shop_images/Image_Vol._1_and_Vol._2_side_by_side.png",
+        "image_position": "right",
+        "heading": "Get the 10,000 Whys set",
+        "text": "Start with the original, keep the curiosity going with Vol. 2. Two hardcovers that look beautiful side by side on their shelf.",
+        "pill_1": "Vol. 1 ships today",
+        "pill_2": "Vol. 2 ships Oct 14",
+        "button_label": "Add both volumes",
+        "button_action": "add_both",
+        "button_link": "",
+        "product_a": "kidss-encyclopedia-10-000-whys",
+        "product_b": "",
+        "property_name": "Pre-order",
+        "property_value": "Ships October 14",
+        "background": "#f8f6f0",
+        "desktop_padding_top": 88,
+        "desktop_padding_bottom": 88,
+        "mobile_padding_top": 56,
+        "mobile_padding_bottom": 56
+      }
+    },
+    "results": {
+      "type": "c-preorder-results",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "number": "94",
+            "symbol": "%",
+            "text": "of parents say their child's school performance improved within 60 days",
+            "tag": "📈 School performance"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "number": "97",
+            "symbol": "%",
+            "text": "of kids voluntarily picked up the book without being asked, after day 7",
+            "tag": "📚 Voluntary reading"
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "number": "91",
+            "symbol": "%",
+            "text": "of parents said their child started asking deeper, more insightful questions",
+            "tag": "🧠 Curiosity & thinking"
+          }
+        }
+      },
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3"
+      ],
+      "settings": {
+        "eyebrow": "The results speak for themselves",
+        "heading": "Loved by *18,000+* Families Worldwide",
+        "subheading": "Real parents. Real kids. Real results — tracked over 90 days.",
+        "footnote": "Results from a 90-day post-purchase survey of 1,200+ customers, December 2024 – February 2025.",
+        "background": "#ffffff",
+        "desktop_padding_top": 48,
+        "desktop_padding_bottom": 48,
+        "mobile_padding_top": 36,
+        "mobile_padding_bottom": 36
+      }
+    },
+    "review_list": {
+      "type": "c-preorder-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "\"My 9-year-old asked me 'Mom, why do we have two eyes instead of one?' I didn't know the answer. He went straight to this book, found it, and spent 45 minutes reading about vision, brains and evolution. He came back and explained it to me. I almost cried. His teacher called two weeks later to say he was the most engaged student in class.\"",
+            "name": "Rachel M.",
+            "meta": "Mom of two · Texas",
+            "verified": true,
+            "avatar_url": "https://i.pravatar.cc/150?img=47"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "\"I was skeptical. My son doesn't read. He's a screen kid. I put this on the coffee table and didn't say a word. Day 3, I found him on the floor reading about black holes at 9pm when I thought he was asleep. He's read it cover to cover twice. That is not a normal thing for him. Buy it — it competes with screens and wins.\"",
+            "name": "David K.",
+            "meta": "Father of one · California",
+            "verified": true,
+            "avatar_url": "https://i.pravatar.cc/150?img=12"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "\"Bought 3 copies — one for each of my kids and one for my nephew's birthday. The dinner table conversations we've had because of this book are priceless. My 7-year-old explained tectonic plates to my mother-in-law. She was completely speechless. This book changes how kids think, not just what they know.\"",
+            "name": "Jennifer L.",
+            "meta": "Mom of three · Florida",
+            "verified": true,
+            "avatar_url": "https://i.pravatar.cc/150?img=32"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "\"My daughter has never once picked up a book without being forced. I left this on the coffee table on a Friday. By Sunday she had read half of it and was explaining to her grandfather why the moon doesn't fall out of the sky. He's a retired engineer. He was impressed. I was speechless. This book is something else entirely.\"",
+            "name": "Lisa W.",
+            "meta": "Mom of two · Ohio",
+            "verified": true,
+            "avatar_url": "https://i.pravatar.cc/150?img=25"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "\"Bought this for my grandson's birthday not knowing what to expect. He opened it, looked at the cover for about thirty seconds, and said 'is this actually mine?' He read it at his own party. His mum called me two months later to say he'd read it three times and was asking if there was a second one. Best gift I've given in years.\"",
+            "name": "Margaret T.",
+            "meta": "Grandmother of four · Illinois",
+            "verified": true,
+            "avatar_url": "https://randomuser.me/api/portraits/women/14.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5"
+      ],
+      "settings": {
+        "heading": "What parents say about Vol. 2",
+        "anchor_id": "reviews",
+        "verified_label": "Verified buyer",
+        "background": "#fcfcfc",
+        "desktop_padding_top": 40,
+        "desktop_padding_bottom": 52,
+        "mobile_padding_top": 24,
+        "mobile_padding_bottom": 56
+      }
+    },
+    "faq": {
+      "type": "c-preorder-faq",
+      "blocks": {
+        "group_1": {
+          "type": "group",
+          "settings": {
+            "title": "Pre-order",
+            "color": "red",
+            "preorder_only": true
+          }
+        },
+        "question_1": {
+          "type": "question",
+          "settings": {
+            "question": "When am I charged?",
+            "answer": "<p>At checkout, like any order. Your copy is reserved as soon as you order.</p>",
+            "open": true,
+            "preorder_only": true
+          }
+        },
+        "question_2": {
+          "type": "question",
+          "settings": {
+            "question": "When does it ship?",
+            "answer": "<p>Vol. 2 ships on October 14, straight from our warehouse. It usually arrives about 7 days after it ships.</p>",
+            "open": false,
+            "preorder_only": true
+          }
+        },
+        "question_4": {
+          "type": "question",
+          "settings": {
+            "question": "Will it arrive before the holidays?",
+            "answer": "<p>Yes. Vol. 2 ships October 14 and usually arrives about 7 days later — well ahead of the holidays.</p>",
+            "open": false,
+            "preorder_only": true
+          }
+        },
+        "group_2": {
+          "type": "group",
+          "settings": {
+            "title": "About the book",
+            "color": "grey",
+            "preorder_only": false
+          }
+        },
+        "question_5": {
+          "type": "question",
+          "settings": {
+            "question": "Is Vol. 2 different from Vol. 1?",
+            "answer": "<p>Yes. Vol. 2 is all-new: brand-new questions and surprising facts, plus a “Curiosity Level” page where kids color in a star for every wow fact. Nothing repeats from Vol. 1.</p>",
+            "open": false,
+            "preorder_only": false
+          }
+        },
+        "question_6": {
+          "type": "question",
+          "settings": {
+            "question": "Do they need Vol. 1 first?",
+            "answer": "<p>No. Each book stands on its own, so kids can start with either one.</p>",
+            "open": false,
+            "preorder_only": false
+          }
+        },
+        "question_7": {
+          "type": "question",
+          "settings": {
+            "question": "What ages is it for?",
+            "answer": "<p>Ages 6–12.</p>",
+            "open": false,
+            "preorder_only": false
+          }
+        },
+        "question_8": {
+          "type": "question",
+          "settings": {
+            "question": "What if they don’t love it?",
+            "answer": "<p>Every order is covered by our 30-day money-back guarantee.</p>",
+            "open": false,
+            "preorder_only": false
+          }
+        },
+        "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "Can I cancel my pre-order?",
+            "answer": "<p>Yes, within 24 hours of placing your order. Contact our support team and we'll cancel it and give you a full refund. After 24 hours, your order can't be cancelled.</p>",
+            "open": false,
+            "preorder_only": true
+          }
+        }
+      },
+      "block_order": [
+        "group_1",
+        "question_1",
+        "question_2",
+        "question_3",
+        "question_4",
+        "group_2",
+        "question_5",
+        "question_6",
+        "question_7",
+        "question_8"
+      ],
+      "settings": {
+        "heading": "Questions, answered",
+        "background": "#f3f3f3",
+        "desktop_padding_top": 88,
+        "desktop_padding_bottom": 88,
+        "mobile_padding_top": 56,
+        "mobile_padding_bottom": 56
+      }
+    }
+  },
+  "order": [
+    "main",
+    "how_it_works",
+    "compare",
+    "topics",
+    "get_the_set",
+    "results",
+    "review_list",
+    "faq"
+  ]
+}

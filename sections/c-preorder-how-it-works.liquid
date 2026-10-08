@@ -1,0 +1,320 @@
+{%- comment -%}
+  "How pre-order works" — step timeline for the Vol. 2 pre-order PDP
+  (templates/product.vol2-preorder.json). Each step is a block.
+  Desktop: steps in a row joined by a dashed line. Mobile: stacked list
+  with a vertical dashed line. Icon paths are from Figma, stroked with
+  currentColor so highlighted / regular steps share them.
+{%- endcomment -%}
+
+{%- liquid
+  assign pre_on = true
+  if product.metafields.custom.preorder_enabled.value == false
+    assign pre_on = false
+  endif
+  assign how_show = true
+  if pre_on == false and section.settings.preorder_only
+    assign how_show = false
+  endif
+-%}
+{%- if how_show -%}
+{%- style -%}
+  #c-pre-how-{{ section.id }} {
+    background: {{ section.settings.background }};
+    padding: {{ section.settings.mobile_padding_top }}px 20px {{ section.settings.mobile_padding_bottom }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #c-pre-how-{{ section.id }} {
+      padding: {{ section.settings.desktop_padding_top }}px 40px {{ section.settings.desktop_padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div id="c-pre-how-{{ section.id }}" class="c-pre-how">
+  <div class="c-pre-how__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="c-pre-how__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <ol class="c-pre-how__steps" style="--c-pre-how-count: {{ section.blocks.size | at_least: 1 }};">
+      {%- for block in section.blocks -%}
+        {%- assign bs = block.settings -%}
+        <li class="c-pre-how__step{% if bs.highlight %} c-pre-how__step--active{% endif %}" {{ block.shopify_attributes }}>
+          <span class="c-pre-how__circle" aria-hidden="true">
+            {%- if bs.image != blank -%}
+              {{ bs.image | image_url: width: 52 | image_tag: width: 26, height: 26, loading: 'lazy', alt: '' }}
+            {%- else -%}
+              {%- case bs.icon -%}
+                {%- when 'box' -%}
+                  <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22.75 8.66667L13 3.25L3.25 8.66667V17.3333L13 22.75L22.75 17.3333V8.66667Z" stroke="currentColor" stroke-width="2.38333" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.25 8.66602L13 14.0827M13 14.0827L22.75 8.66602M13 14.0827V22.7493" stroke="currentColor" stroke-width="2.38333" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {%- when 'book' -%}
+                  <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.33203 21.1243C4.33203 20.4061 4.61737 19.7172 5.12528 19.2093C5.63319 18.7014 6.32207 18.416 7.04036 18.416H21.6654V2.16602H7.04036C6.32207 2.16602 5.63319 2.45136 5.12528 2.95927C4.61737 3.46718 4.33203 4.15605 4.33203 4.87435V21.1243Z" stroke="currentColor" stroke-width="2.38333" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.33203 21.1243C4.33203 21.8426 4.61737 22.5315 5.12528 23.0394C5.63319 23.5473 6.32207 23.8327 7.04036 23.8327H21.6654V18.416" stroke="currentColor" stroke-width="2.38333" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {%- when 'truck' -%}
+                  <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.08203 4.33398H16.2487V17.334H1.08203V4.33398Z" stroke="currentColor" stroke-width="2.38333" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.25 9.75H20.5833L23.8333 13V17.3333H16.25V9.75Z" stroke="currentColor" stroke-width="2.38333" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.95964 22.2083C7.15625 22.2083 8.1263 21.2383 8.1263 20.0417C8.1263 18.845 7.15625 17.875 5.95964 17.875C4.76302 17.875 3.79297 18.845 3.79297 20.0417C3.79297 21.2383 4.76302 22.2083 5.95964 22.2083Z" stroke="currentColor" stroke-width="2.38333" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.0417 22.2083C21.2383 22.2083 22.2083 21.2383 22.2083 20.0417C22.2083 18.845 21.2383 17.875 20.0417 17.875C18.845 17.875 17.875 18.845 17.875 20.0417C17.875 21.2383 18.845 22.2083 20.0417 22.2083Z" stroke="currentColor" stroke-width="2.38333" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {%- when 'gift' -%}
+                  <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.6654 13V22.75H4.33203V13" stroke="currentColor" stroke-width="2.38333" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.16797 7.58398H23.8346V13.0007H2.16797V7.58398Z" stroke="currentColor" stroke-width="2.38333" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 22.7507V7.58398" stroke="currentColor" stroke-width="2.38333" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.0013 7.58268H8.1263C7.40801 7.58268 6.71913 7.29734 6.21122 6.78943C5.70331 6.28152 5.41797 5.59264 5.41797 4.87435C5.41797 4.15605 5.70331 3.46718 6.21122 2.95927C6.71913 2.45136 7.40801 2.16602 8.1263 2.16602C11.918 2.16602 13.0013 7.58268 13.0013 7.58268Z" stroke="currentColor" stroke-width="2.38333" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 7.58268H17.875C18.5933 7.58268 19.2822 7.29734 19.7901 6.78943C20.298 6.28152 20.5833 5.59264 20.5833 4.87435C20.5833 4.15605 20.298 3.46718 19.7901 2.95927C19.2822 2.45136 18.5933 2.16602 17.875 2.16602C14.0833 2.16602 13 7.58268 13 7.58268Z" stroke="currentColor" stroke-width="2.38333" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {%- endcase -%}
+            {%- endif -%}
+          </span>
+          <span class="c-pre-how__text">
+            {%- if bs.title != blank -%}<span class="c-pre-how__title">{{ bs.title }}</span>{%- endif -%}
+            {%- if bs.text != blank -%}<span class="c-pre-how__desc">{{ bs.text }}</span>{%- endif -%}
+          </span>
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</div>
+
+<style>
+  .c-pre-how__inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .c-pre-how__heading {
+    margin: 0;
+    font-family: var(--font-heading-family);
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    text-align: center;
+    color: #0d1b3e;
+  }
+  .c-pre-how__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .c-pre-how__step {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  /* dashed connector to the next step */
+  .c-pre-how__step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    left: 31.5px;
+    top: 50%;
+    height: calc(100% + 22px);
+    border-left: 3px dashed #0d1b3e;
+  }
+  .c-pre-how__circle {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 66px;
+    width: 66px;
+    height: 66px;
+    box-sizing: border-box;
+    border: 3px solid #c0392b;
+    border-radius: 50%;
+    background: #fff;
+    color: #c0392b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .c-pre-how__circle svg,
+  .c-pre-how__circle img {
+    width: 26px;
+    height: 26px;
+    display: block;
+  }
+  .c-pre-how__step--active .c-pre-how__circle {
+    background: #c0392b;
+    color: #fff;
+  }
+  .c-pre-how__text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .c-pre-how__title {
+    font-family: var(--font-heading-family);
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.5;
+    color: #0d1b3e;
+  }
+  .c-pre-how__desc {
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    line-height: 1.5;
+    color: #4b5563;
+  }
+
+  @media screen and (min-width: 750px) {
+    .c-pre-how__heading {
+      font-size: 40px;
+    }
+    .c-pre-how__steps {
+      display: grid;
+      grid-template-columns: repeat(var(--c-pre-how-count), minmax(0, 1fr));
+      gap: 24px;
+    }
+    .c-pre-how__step {
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+    .c-pre-how__step:not(:last-child)::after {
+      left: 50%;
+      top: 31.5px;
+      width: calc(100% + 24px);
+      height: 0;
+      border-left: 0;
+      border-top: 3px dashed #0d1b3e;
+    }
+    .c-pre-how__text {
+      align-items: center;
+    }
+    .c-pre-how__title {
+      font-size: 20px;
+    }
+    .c-pre-how__desc {
+      font-size: 15px;
+    }
+  }
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Pre-order: How it works",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How pre-order works"
+    },
+    {
+      "type": "checkbox",
+      "id": "preorder_only",
+      "label": "Hide when pre-order is off",
+      "info": "Pre-order switch: product metafield custom.preorder_enabled.",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#f3f3f3"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop top",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop bottom",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile top",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile bottom",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "box", "label": "Box" },
+            { "value": "book", "label": "Book" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "box"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom icon",
+          "info": "Replaces the icon above. 26 x 26px."
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Highlight step",
+          "info": "Filled red circle — use for the current step.",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Order today"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Reserve your copy"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Pre-order: How it works",
+      "blocks": [
+        { "type": "step", "settings": { "icon": "box", "highlight": true, "title": "Order today", "text": "Reserve your copy" } },
+        { "type": "step", "settings": { "icon": "book", "title": "Printing", "text": "Your copy comes off the first print run" } },
+        { "type": "step", "settings": { "icon": "truck", "title": "Ships October 14", "text": "Straight from our warehouse" } },
+        { "type": "step", "settings": { "icon": "gift", "title": "Arrives", "text": "At your door 7 days later" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

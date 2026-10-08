@@ -1,11 +1,26 @@
 {%- comment -%}
+  Pre-order PDP blocks — stylesheet loaded before any markup (render-blocking,
+  so blocks never paint unstyled) and preloaded via a Link header (early hints).
+{%- endcomment -%}
+{%- for c_pre_block in section.blocks -%}
+  {%- if c_pre_block.type contains 'preorder_' -%}
+    {{ 'c-preorder.css' | asset_url | stylesheet_tag: preload: true }}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- comment -%}
   V_PRIME_MIX_30 — free gift products are only ever added to the cart by
   assets/c-prime-mix-30-gifts.js, never browsable. Their PDPs redirect home
   before anything renders (Liquid can't send a real 301). Keep the handle
   list in sync with sections/cart-drawer.liquid.
 {%- endcomment -%}
 {%- assign c_pmb30_gift_handles = 'free-stickers,free-sticker-puzzle,free-gift-card-20,free-mystery-book' | split: ',' -%}
-{%- if c_pmb30_gift_handles contains product.handle and request.design_mode == false -%}
+{%- comment -%} Vol. 2 pre-order free gifts (tagged preorder-gift) get the same treatment {%- endcomment -%}
+{%- if c_pmb30_gift_handles contains product.handle or product.tags contains 'preorder-gift' -%}
+  {%- assign c_gift_pdp_redirect = true -%}
+{%- endif -%}
+{%- if c_gift_pdp_redirect and request.design_mode == false -%}
   <meta name="robots" content="noindex, nofollow">
   <meta http-equiv="refresh" content="0; url={{ routes.root_url }}">
   <script>window.location.replace({{ routes.root_url | json }});</script>
@@ -982,6 +997,9 @@
               {% render 'icon-with-text',
                 block: block
               %}
+            {%- when 'preorder_reviews', 'preorder_pills', 'preorder_title', 'preorder_rating', 'preorder_price', 'preorder_bullets', 'preorder_stock', 'preorder_countdown', 'preorder_offer', 'preorder_gifts', 'preorder_atc', 'preorder_trust', 'preorder_specs' -%}
+              {%- comment -%} Pre-order PDP blocks — preorder_media_badges renders inside product-media-gallery instead {%- endcomment -%}
+              {% render 'c-preorder-blocks', block: block, product: product, section: section %}
           {%- endcase -%}
         {%- endfor -%}
         <a href="{{ product.url }}" class="link product__view-details animate-arrow">
@@ -1247,6 +1265,14 @@
 {%- endif -%}
 <script src="{{ 'c-prime-mix-30-recommended.js' | asset_url }}" defer></script>
 
+{%- comment -%} Pre-order PDP blocks — script for snippets/c-preorder-blocks.liquid (stylesheet is at the top of this file) {%- endcomment -%}
+{%- for c_pre_block in section.blocks -%}
+  {%- if c_pre_block.type contains 'preorder_' -%}
+    <script src="{{ 'c-preorder.js' | asset_url }}" defer></script>
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
 
 {% schema %}
 {
@@ -1254,6 +1280,1404 @@
   "tag": "section",
   "class": "section",
   "blocks": [
+    {
+      "type": "preorder_media_badges",
+      "name": "Pre-order: Image badges",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Shown over the top-left of the main product image."
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge",
+          "default": "PRE-ORDER"
+        },
+        {
+          "type": "color",
+          "id": "badge_bg",
+          "label": "Badge background",
+          "default": "#c0392b"
+        },
+        {
+          "type": "color",
+          "id": "badge_color",
+          "label": "Badge text",
+          "default": "#ffffff"
+        },
+        {
+          "type": "text",
+          "id": "sub_text",
+          "label": "Sub badge",
+          "default": "Ships October 14"
+        }
+      ]
+    },
+    {
+      "type": "preorder_reviews",
+      "name": "Pre-order: Reviews",
+      "settings": [
+        {
+          "type": "range",
+          "id": "autoplay_seconds",
+          "min": 0,
+          "max": 15,
+          "step": 1,
+          "unit": "s",
+          "label": "Autoplay (0 = off)",
+          "default": 0
+        },
+        {
+          "type": "checkbox",
+          "id": "show_arrows",
+          "label": "Show arrows",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Review 1"
+        },
+        {
+          "type": "textarea",
+          "id": "review_1_text",
+          "label": "Text",
+          "default": "\"Best money I've spent on my kids' education outside of school. The conversations it starts are priceless.\""
+        },
+        {
+          "type": "text",
+          "id": "review_1_name",
+          "label": "Name",
+          "default": "Jennifer L."
+        },
+        {
+          "type": "text",
+          "id": "review_1_meta",
+          "label": "Detail",
+          "default": "Mom of three"
+        },
+        {
+          "type": "image_picker",
+          "id": "review_1_avatar",
+          "label": "Avatar"
+        },
+        {
+          "type": "text",
+          "id": "review_1_avatar_url",
+          "label": "Avatar URL",
+          "info": "Used when no avatar image is picked.",
+          "default": "https://i.pravatar.cc/150?img=47"
+        },
+        {
+          "type": "header",
+          "content": "Review 2"
+        },
+        {
+          "type": "textarea",
+          "id": "review_2_text",
+          "label": "Text",
+          "default": "\"My son is a screen kid. He read this until 9pm without me saying a word. I bought two more for his cousins.\""
+        },
+        {
+          "type": "text",
+          "id": "review_2_name",
+          "label": "Name",
+          "default": "David K."
+        },
+        {
+          "type": "text",
+          "id": "review_2_meta",
+          "label": "Detail",
+          "default": "Father of two"
+        },
+        {
+          "type": "image_picker",
+          "id": "review_2_avatar",
+          "label": "Avatar"
+        },
+        {
+          "type": "text",
+          "id": "review_2_avatar_url",
+          "label": "Avatar URL",
+          "info": "Used when no avatar image is picked.",
+          "default": "https://i.pravatar.cc/150?img=12"
+        },
+        {
+          "type": "header",
+          "content": "Review 3"
+        },
+        {
+          "type": "textarea",
+          "id": "review_3_text",
+          "label": "Text",
+          "default": "\"My daughter explained tectonic plates to my mother-in-law. She's 8. We were completely speechless.\""
+        },
+        {
+          "type": "text",
+          "id": "review_3_name",
+          "label": "Name",
+          "default": "Rachel M."
+        },
+        {
+          "type": "text",
+          "id": "review_3_meta",
+          "label": "Detail",
+          "default": "Mom of two"
+        },
+        {
+          "type": "image_picker",
+          "id": "review_3_avatar",
+          "label": "Avatar"
+        },
+        {
+          "type": "text",
+          "id": "review_3_avatar_url",
+          "label": "Avatar URL",
+          "info": "Used when no avatar image is picked.",
+          "default": "https://i.pravatar.cc/150?img=32"
+        },
+        {
+          "type": "header",
+          "content": "Block margin"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Top margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Bottom margin",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "preorder_pills",
+      "name": "Pre-order: Pills",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Pill 1"
+        },
+        {
+          "type": "text",
+          "id": "pill_1_text",
+          "label": "Text",
+          "default": "Pre-order"
+        },
+        {
+          "type": "select",
+          "id": "pill_1_icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "pill-preorder",
+              "label": "Calendar (red)"
+            },
+            {
+              "value": "pill-book",
+              "label": "Book (green)"
+            },
+            {
+              "value": "calendar",
+              "label": "Calendar (navy)"
+            }
+          ],
+          "default": "pill-preorder"
+        },
+        {
+          "type": "select",
+          "id": "pill_1_style",
+          "label": "Style",
+          "options": [
+            {
+              "value": "red",
+              "label": "Red"
+            },
+            {
+              "value": "green",
+              "label": "Green"
+            },
+            {
+              "value": "cream",
+              "label": "Cream"
+            },
+            {
+              "value": "navy",
+              "label": "Navy"
+            }
+          ],
+          "default": "red"
+        },
+        {
+          "type": "checkbox",
+          "id": "pill_1_preorder_only",
+          "label": "Hide when pre-order is off",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Pill 2"
+        },
+        {
+          "type": "text",
+          "id": "pill_2_text",
+          "label": "Text",
+          "default": "All-new Volume 2"
+        },
+        {
+          "type": "select",
+          "id": "pill_2_icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "pill-preorder",
+              "label": "Calendar (red)"
+            },
+            {
+              "value": "pill-book",
+              "label": "Book (green)"
+            },
+            {
+              "value": "calendar",
+              "label": "Calendar (navy)"
+            }
+          ],
+          "default": "pill-book"
+        },
+        {
+          "type": "select",
+          "id": "pill_2_style",
+          "label": "Style",
+          "options": [
+            {
+              "value": "red",
+              "label": "Red"
+            },
+            {
+              "value": "green",
+              "label": "Green"
+            },
+            {
+              "value": "cream",
+              "label": "Cream"
+            },
+            {
+              "value": "navy",
+              "label": "Navy"
+            }
+          ],
+          "default": "green"
+        },
+        {
+          "type": "checkbox",
+          "id": "pill_2_preorder_only",
+          "label": "Hide when pre-order is off",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Pill 3"
+        },
+        {
+          "type": "text",
+          "id": "pill_3_text",
+          "label": "Text"
+        },
+        {
+          "type": "select",
+          "id": "pill_3_icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "pill-preorder",
+              "label": "Calendar (red)"
+            },
+            {
+              "value": "pill-book",
+              "label": "Book (green)"
+            },
+            {
+              "value": "calendar",
+              "label": "Calendar (navy)"
+            }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "select",
+          "id": "pill_3_style",
+          "label": "Style",
+          "options": [
+            {
+              "value": "red",
+              "label": "Red"
+            },
+            {
+              "value": "green",
+              "label": "Green"
+            },
+            {
+              "value": "cream",
+              "label": "Cream"
+            },
+            {
+              "value": "navy",
+              "label": "Navy"
+            }
+          ],
+          "default": "cream"
+        },
+        {
+          "type": "checkbox",
+          "id": "pill_3_preorder_only",
+          "label": "Hide when pre-order is off",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Block margin"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Top margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Bottom margin",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "preorder_title",
+      "name": "Pre-order: Title",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "info": "Leave blank to use the product title.",
+          "default": "Kid’s Encyclopedia “10,000 Whys” Vol. 2"
+        },
+        {
+          "type": "header",
+          "content": "Block margin"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Top margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Bottom margin",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "preorder_rating",
+      "name": "Pre-order: Rating",
+      "settings": [
+        {
+          "type": "text",
+          "id": "rating",
+          "label": "Rating",
+          "default": "4.9"
+        },
+        {
+          "type": "text",
+          "id": "count_text",
+          "label": "Review count",
+          "default": "2,847 reviews"
+        },
+        {
+          "type": "text",
+          "id": "link",
+          "label": "Link",
+          "info": "Anchor or URL the rating scrolls to.",
+          "default": "#reviews"
+        },
+        {
+          "type": "header",
+          "content": "Block margin"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Top margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Bottom margin",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "preorder_price",
+      "name": "Pre-order: Price",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Price and compare-at price come from the product. If no compare-at price is set, it shows 2x the price."
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Discount badge",
+          "info": "[percent] is replaced with the discount percentage.",
+          "default": "[percent]% OFF"
+        },
+        {
+          "type": "text",
+          "id": "ships_text",
+          "label": "Shipping pill",
+          "default": "Ships October 14",
+          "info": "Hidden when pre-order is off."
+        },
+        {
+          "type": "header",
+          "content": "Block margin"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Top margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Bottom margin",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "preorder_bullets",
+      "name": "Pre-order: Check bullets",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "bullets",
+          "label": "Bullets",
+          "info": "One bullet per line.",
+          "default": "All-new questions and answers for ages 6–12\nReal “wait, what?!” facts — like the man who hiccuped for 68 years straight\nA “Curiosity Level” page: color in a star for every wow moment\nThe follow-up to 10,000 Whys, in the same gift-ready hardcover"
+        },
+        {
+          "type": "header",
+          "content": "Block margin"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Top margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Bottom margin",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "preorder_stock",
+      "name": "Pre-order: Stock bar",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Numbers are set by hand, not read from inventory. Product metafields custom.preorder_total and custom.preorder_left win over the settings below. Hidden when pre-order is off."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Limited stock – available on pre-order only"
+        },
+        {
+          "type": "text",
+          "id": "left_text",
+          "label": "Stock text",
+          "info": "[left] and [total] are replaced with the numbers below.",
+          "default": "[left] of [total] left"
+        },
+        {
+          "type": "number",
+          "id": "total",
+          "label": "Total copies",
+          "default": 500,
+          "info": "Used if the product has no custom.preorder_total metafield."
+        },
+        {
+          "type": "number",
+          "id": "left",
+          "label": "Copies left",
+          "default": 312,
+          "info": "Used if the product has no custom.preorder_left metafield. Update it as pre-orders come in."
+        },
+        {
+          "type": "select",
+          "id": "count_mode",
+          "label": "Copies left count",
+          "options": [
+            { "value": "manual", "label": "Same number for everyone (Copies left)" },
+            { "value": "visitor", "label": "Per visitor, drops every hour" }
+          ],
+          "default": "manual",
+          "info": "Per visitor: each visitor gets a random start number (saved in their browser) that drops by a random amount every hour."
+        },
+        {
+          "type": "number",
+          "id": "visitor_start_min",
+          "label": "Per visitor: start from",
+          "default": 300
+        },
+        {
+          "type": "number",
+          "id": "visitor_start_max",
+          "label": "Per visitor: start up to",
+          "default": 350
+        },
+        {
+          "type": "number",
+          "id": "visitor_drop_min",
+          "label": "Per visitor: hourly drop from",
+          "default": 1
+        },
+        {
+          "type": "number",
+          "id": "visitor_drop_max",
+          "label": "Per visitor: hourly drop up to",
+          "default": 5
+        },
+        {
+          "type": "number",
+          "id": "visitor_floor",
+          "label": "Per visitor: never below",
+          "default": 20,
+          "info": "The count stops dropping at this number."
+        },
+        {
+          "type": "select",
+          "id": "when_zero",
+          "label": "When it reaches 0",
+          "options": [
+            {
+              "value": "stop",
+              "label": "Stop pre-orders (button disabled)"
+            },
+            {
+              "value": "keep",
+              "label": "Keep selling, show sold-out text"
+            },
+            {
+              "value": "hide",
+              "label": "Keep selling, hide the stock bar"
+            }
+          ],
+          "default": "stop"
+        },
+        {
+          "type": "text",
+          "id": "sold_out_text",
+          "label": "Text at 0",
+          "default": "Pre-order stock is sold out"
+        },
+        {
+          "type": "header",
+          "content": "Block margin"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Top margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Bottom margin",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "preorder_countdown",
+      "name": "Pre-order: Countdown",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Ships in"
+        },
+        {
+          "type": "text",
+          "id": "end_datetime",
+          "label": "Counts down to",
+          "info": "Format: YYYY-MM-DDTHH:MM:SS±HH:MM (e.g. 2026-10-14T00:00:00-04:00 = midnight New York).",
+          "default": "2026-10-14T00:00:00-04:00"
+        },
+        {
+          "type": "text",
+          "id": "expired_text",
+          "label": "Text after it ends",
+          "default": "Shipping now"
+        },
+        {
+          "type": "text",
+          "id": "days_label",
+          "label": "Days label",
+          "default": "Days"
+        },
+        {
+          "type": "text",
+          "id": "hours_label",
+          "label": "Hours label",
+          "default": "Hrs"
+        },
+        {
+          "type": "text",
+          "id": "minutes_label",
+          "label": "Minutes label",
+          "default": "Min"
+        },
+        {
+          "type": "text",
+          "id": "seconds_label",
+          "label": "Seconds label",
+          "default": "Sec"
+        },
+        {
+          "type": "header",
+          "content": "Block margin"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Top margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Bottom margin",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "preorder_offer",
+      "name": "Pre-order: Bundle offer",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Reserve your copies before pre-order stock runs out"
+        },
+        {
+          "type": "text",
+          "id": "heading_off",
+          "label": "Heading when pre-order is off",
+          "default": "Choose your bundle"
+        },
+        {
+          "type": "text",
+          "id": "ships_text",
+          "label": "Shipping text",
+          "default": "Ships October 14",
+          "info": "Hidden when pre-order is off."
+        },
+        {
+          "type": "paragraph",
+          "content": "Tier prices are display prices only. Set up the matching quantity discount on this product (e.g. Kaching Bundles) so checkout charges the same amounts."
+        },
+        {
+          "type": "text",
+          "id": "reference_price",
+          "label": "Reference single-book price",
+          "info": "Store-currency price the tier prices below are based on. Other markets are converted by the same ratio.",
+          "default": "39.90"
+        },
+        {
+          "type": "select",
+          "id": "default_tier",
+          "label": "Selected by default",
+          "options": [
+            {
+              "value": "1",
+              "label": "Tier 1"
+            },
+            {
+              "value": "2",
+              "label": "Tier 2"
+            },
+            {
+              "value": "3",
+              "label": "Tier 3"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "text",
+          "id": "save_text",
+          "label": "Savings text",
+          "info": "[amount] is replaced with the saving.",
+          "default": "Save [amount]"
+        },
+        {
+          "type": "text",
+          "id": "free_shipping_text",
+          "label": "Free shipping text",
+          "default": "FREE shipping"
+        },
+        {
+          "type": "header",
+          "content": "Tier 1"
+        },
+        {
+          "type": "checkbox",
+          "id": "tier_1_enable",
+          "label": "Show tier",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "tier_1_quantity",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "label": "Books added to cart",
+          "default": 1
+        },
+        {
+          "type": "text",
+          "id": "tier_1_price",
+          "label": "Tier price",
+          "info": "Leave blank for price x quantity."
+        },
+        {
+          "type": "text",
+          "id": "tier_1_title",
+          "label": "Title",
+          "default": "1 Book"
+        },
+        {
+          "type": "text",
+          "id": "tier_1_subtitle",
+          "label": "Subtitle",
+          "default": "For 1 child"
+        },
+        {
+          "type": "text",
+          "id": "tier_1_perk",
+          "label": "Gift perk"
+        },
+        {
+          "type": "checkbox",
+          "id": "tier_1_free_shipping",
+          "label": "Show free shipping",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "tier_1_badge",
+          "label": "Badge"
+        },
+        {
+          "type": "header",
+          "content": "Tier 2"
+        },
+        {
+          "type": "checkbox",
+          "id": "tier_2_enable",
+          "label": "Show tier",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "tier_2_quantity",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "label": "Books added to cart",
+          "default": 3
+        },
+        {
+          "type": "text",
+          "id": "tier_2_price",
+          "label": "Tier price",
+          "info": "Leave blank for price x quantity.",
+          "default": "79.80"
+        },
+        {
+          "type": "text",
+          "id": "tier_2_title",
+          "label": "Title",
+          "default": "Buy 2, Get 1 Free"
+        },
+        {
+          "type": "text",
+          "id": "tier_2_subtitle",
+          "label": "Subtitle",
+          "default": "3 books — best for siblings"
+        },
+        {
+          "type": "text",
+          "id": "tier_2_perk",
+          "label": "Gift perk",
+          "default": "1 full book, on us"
+        },
+        {
+          "type": "checkbox",
+          "id": "tier_2_free_shipping",
+          "label": "Show free shipping",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "tier_2_badge",
+          "label": "Badge",
+          "default": "Most popular"
+        },
+        {
+          "type": "header",
+          "content": "Tier 3"
+        },
+        {
+          "type": "checkbox",
+          "id": "tier_3_enable",
+          "label": "Show tier",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "tier_3_quantity",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "label": "Books added to cart",
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "tier_3_price",
+          "label": "Tier price",
+          "info": "Leave blank for price x quantity.",
+          "default": "119.70"
+        },
+        {
+          "type": "text",
+          "id": "tier_3_title",
+          "label": "Title",
+          "default": "Buy 3, Get 2 Free"
+        },
+        {
+          "type": "text",
+          "id": "tier_3_subtitle",
+          "label": "Subtitle",
+          "default": "5 books — best gift pack"
+        },
+        {
+          "type": "text",
+          "id": "tier_3_perk",
+          "label": "Gift perk",
+          "default": "2 full books, on us"
+        },
+        {
+          "type": "checkbox",
+          "id": "tier_3_free_shipping",
+          "label": "Show free shipping",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "tier_3_badge",
+          "label": "Badge",
+          "default": "One for every grandchild"
+        },
+        {
+          "type": "header",
+          "content": "Add-on checkbox"
+        },
+        {
+          "type": "product",
+          "id": "addon_product",
+          "label": "Product",
+          "info": "e.g. 10,000 Whys Vol. 1. Leave empty to hide."
+        },
+        {
+          "type": "image_picker",
+          "id": "addon_image",
+          "label": "Image",
+          "info": "Defaults to the product image."
+        },
+        {
+          "type": "text",
+          "id": "addon_title",
+          "label": "Title",
+          "default": "Complete the set with Vol. 1"
+        },
+        {
+          "type": "text",
+          "id": "addon_subtitle",
+          "label": "Subtitle",
+          "default": "The original 10,000 Whys"
+        },
+        {
+          "type": "header",
+          "content": "Block margin"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Top margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Bottom margin",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "preorder_gifts",
+      "name": "Pre-order: Gifts",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "preorder_only",
+          "label": "Hide when pre-order is off",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "EXCLUSIVE PRE-ORDER GIFTS"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "3 free gifts with every pre-order"
+        },
+        {
+          "type": "text",
+          "id": "total_value",
+          "label": "Struck-through total",
+          "default": "$30.40"
+        },
+        {
+          "type": "text",
+          "id": "free_label",
+          "label": "Free label",
+          "default": "FREE"
+        },
+        {
+          "type": "paragraph",
+          "content": "Pick a gift product to have it added to the cart with the pre-order (turn on \"Add gifts to cart\" in the Pre-order button block)."
+        },
+        {
+          "type": "header",
+          "content": "Gift 1"
+        },
+        {
+          "type": "text",
+          "id": "gift_1_name",
+          "label": "Name",
+          "default": "Sticker Puzzle"
+        },
+        {
+          "type": "text",
+          "id": "gift_1_value",
+          "label": "Struck-through value",
+          "default": "$15.80"
+        },
+        {
+          "type": "image_picker",
+          "id": "gift_1_image",
+          "label": "Image"
+        },
+        {
+          "type": "product",
+          "id": "gift_1_product",
+          "label": "Gift product"
+        },
+        {
+          "type": "header",
+          "content": "Gift 2"
+        },
+        {
+          "type": "text",
+          "id": "gift_2_name",
+          "label": "Name",
+          "default": "Stickers"
+        },
+        {
+          "type": "text",
+          "id": "gift_2_value",
+          "label": "Struck-through value",
+          "default": "$4.80"
+        },
+        {
+          "type": "image_picker",
+          "id": "gift_2_image",
+          "label": "Image"
+        },
+        {
+          "type": "product",
+          "id": "gift_2_product",
+          "label": "Gift product"
+        },
+        {
+          "type": "header",
+          "content": "Gift 3"
+        },
+        {
+          "type": "text",
+          "id": "gift_3_name",
+          "label": "Name",
+          "default": "Mystery Gift"
+        },
+        {
+          "type": "text",
+          "id": "gift_3_value",
+          "label": "Struck-through value",
+          "default": "$9.80"
+        },
+        {
+          "type": "image_picker",
+          "id": "gift_3_image",
+          "label": "Image"
+        },
+        {
+          "type": "product",
+          "id": "gift_3_product",
+          "label": "Gift product"
+        },
+        {
+          "type": "header",
+          "content": "Block margin"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Top margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Bottom margin",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "preorder_atc",
+      "name": "Pre-order: Button",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Pre-order switch: product metafield custom.preorder_enabled (true/false, missing = on). Turn it off to switch this page to a normal product page."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "info": "[price] is replaced with the selected total.",
+          "default": "Pre-order — [price]"
+        },
+        {
+          "type": "text",
+          "id": "label_off",
+          "label": "Label when pre-order is off",
+          "info": "[price] is replaced with the selected total.",
+          "default": "Add to cart — [price]"
+        },
+        {
+          "type": "text",
+          "id": "sold_out_label",
+          "label": "Label when pre-order stock hits 0",
+          "info": "Used when the Stock bar block is set to \"Stop pre-orders\".",
+          "default": "Pre-order sold out"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Note under button",
+          "info": "Pre-order only.",
+          "default": "Ships October 14 — arrives well before the holidays"
+        },
+        {
+          "type": "color",
+          "id": "button_color",
+          "label": "Button color",
+          "default": "#c0392b"
+        },
+        {
+          "type": "checkbox",
+          "id": "add_gifts",
+          "label": "Add gifts to cart",
+          "info": "Adds the gift products picked in the Gifts block.",
+          "default": false
+        },
+        {
+          "type": "product",
+          "id": "gift_product",
+          "label": "Free pre-order gift",
+          "info": "Added once per cart as its own line, below the book. Pre-order only. Price it at $0 or discount it to free."
+        },
+        {
+          "type": "header",
+          "content": "Line item property"
+        },
+        {
+          "type": "paragraph",
+          "content": "Shown on the cart line and order, e.g. Pre-order: Ships October 14. Leave blank to skip."
+        },
+        {
+          "type": "text",
+          "id": "property_name",
+          "label": "Name",
+          "default": "Pre-order"
+        },
+        {
+          "type": "text",
+          "id": "property_value",
+          "label": "Value",
+          "default": "Ships October 14"
+        },
+        {
+          "type": "header",
+          "content": "Block margin"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Top margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Bottom margin",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "preorder_trust",
+      "name": "Pre-order: Trust strip",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "items",
+          "label": "Items",
+          "info": "One per line.",
+          "default": "🛡️ 30-day money-back guarantee\n🔒 Secure checkout\n📦 Free shipping"
+        },
+        {
+          "type": "text",
+          "id": "payments",
+          "label": "Payment chips",
+          "info": "Comma separated.",
+          "default": "VISA, MC, AMEX, PayPal, Apple Pay, Shop Pay"
+        },
+        {
+          "type": "header",
+          "content": "Block margin"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Top margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Bottom margin",
+          "default": 16
+        }
+      ]
+    },
+    {
+      "type": "preorder_specs",
+      "name": "Pre-order: Spec table",
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "EXACTLY WHAT ARRIVES"
+        },
+        {
+          "type": "textarea",
+          "id": "rows",
+          "label": "Rows",
+          "info": "One row per line: Label | Value. Separate value parts with ·",
+          "default": "Size | 17.6 x 25 cm · B5\nThickness | 1.8 cm · half a thumb\nPages | 174 pages\nWeight | 680 g\nBinding | Hardcover · stays open flat"
+        },
+        {
+          "type": "header",
+          "content": "Block margin"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Top margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Bottom margin",
+          "default": 16
+        }
+      ]
+    },
     {
       "type": "@app"
     },
@@ -1353,7 +2777,7 @@
           "id": "icon_1",
           "default": "check_circle",
           "label": "Icon #1",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -1371,7 +2795,7 @@
           "id": "icon_2",
           "default": "check_circle",
           "label": "Icon #2",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -1389,7 +2813,7 @@
           "id": "icon_3",
           "default": "check_circle",
           "label": "Icon #3",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -1921,7 +3345,7 @@
           "id": "icon_1",
           "default": "redeem",
           "label": "Icon #1",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -1939,7 +3363,7 @@
           "id": "icon_2",
           "default": "check_circle",
           "label": "Icon #2",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -2116,7 +3540,7 @@
           "id": "icon_1",
           "label": "Icon",
           "default": "sell",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -2164,7 +3588,7 @@
           "id": "icon_2",
           "label": "Icon",
           "default": "sell",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -3495,7 +4919,7 @@
           ],
           "label": "Swatches custom colors",
           "default": "disabled",
-          "info": "Disabled displays the variant images in swatches. Varaint images alt text displays CSS values from each image's alt text. Custom colors list takes the list of the custom CSS values from the setting bellow. Watch the tutorial for CSS values [here](https:\/\/youtu.be\/Xo_ZFzRCk3o)"
+          "info": "Disabled displays the variant images in swatches. Varaint images alt text displays CSS values from each image's alt text. Custom colors list takes the list of the custom CSS values from the setting bellow. Watch the tutorial for CSS values [here](https://youtu.be/Xo_ZFzRCk3o)"
         },
         {
           "type": "text",
@@ -4019,7 +5443,7 @@
           "default": 24
         }
       ]
-    }, 
+    },
     {
       "type": "sticky_atc",
       "name": "Sticky Add To Cart",
@@ -4036,19 +5460,19 @@
             {
               "value": "add_to_cart",
               "label": "Add to Cart"
-            }, 
+            },
             {
               "value": "scroll_#ProductInfo-id",
               "label": "Scroll to Product information"
-            }, 
+            },
             {
               "value": "scroll_#variant-selects-id",
               "label": "Scroll to Variant picker"
-            }, 
+            },
             {
               "value": "scroll_#quantity-breaks-id",
               "label": "Scroll to Quantity breaks"
-            }, 
+            },
             {
               "value": "scroll_.pricing-table",
               "label": "Scroll to Pricing table"
@@ -4064,7 +5488,7 @@
             {
               "value": "always",
               "label": "Always"
-            }, 
+            },
             {
               "value": "after_scroll",
               "label": "After scrolling past regular ATC button"
@@ -4139,7 +5563,7 @@
             {
               "value": "combined",
               "label": "Combined"
-            }, 
+            },
             {
               "value": "separate",
               "label": "Separate"
@@ -4299,9 +5723,9 @@
               "value": "background-2",
               "label": "t:sections.all.colors.background_2.label"
             },
-            { 
-              "value": "inverse", 
-              "label": "t:sections.all.colors.inverse.label" 
+            {
+              "value": "inverse",
+              "label": "t:sections.all.colors.inverse.label"
             }
           ],
           "default": "background-1",
@@ -4672,7 +6096,7 @@
           "id": "icon",
           "default": "check_box",
           "label": "Icon",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -5209,7 +6633,7 @@
           "id": "button_icon",
           "default": "straighten",
           "label": "Button icon",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -5308,7 +6732,7 @@
           "type": "select",
           "id": "color_scheme",
           "options": [
-            { 
+            {
               "value": "accent-1",
               "label": "t:sections.all.colors.accent_1.label"
             },
@@ -5347,7 +6771,7 @@
           "type": "select",
           "id": "table_header_color_scheme",
           "options": [
-            { 
+            {
               "value": "accent-1",
               "label": "t:sections.all.colors.accent_1.label"
             },
@@ -5548,7 +6972,7 @@
           "type": "inline_richtext",
           "id": "add_btn_label",
           "label": "Classic add button label",
-          "default":  "<strong>Add</strong>"
+          "default": "<strong>Add</strong>"
         },
         {
           "type": "select",
@@ -5599,7 +7023,7 @@
           "type": "select",
           "id": "color_scheme",
           "options": [
-            { 
+            {
               "value": "accent-1",
               "label": "t:sections.all.colors.accent_1.label"
             },
@@ -6675,7 +8099,7 @@
           "type": "select",
           "id": "color_scheme",
           "options": [
-            { 
+            {
               "value": "accent-1",
               "label": "t:sections.all.colors.accent_1.label"
             },
@@ -7489,7 +8913,7 @@
           "id": "icon",
           "default": "local_shipping",
           "label": "Icon",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -7653,7 +9077,7 @@
           "id": "icon_1",
           "default": "add_shopping_cart",
           "label": "#1 Icon",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -7699,7 +9123,7 @@
           "id": "icon_2",
           "default": "local_shipping",
           "label": "#2 Icon",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -7745,7 +9169,7 @@
           "id": "icon_3",
           "default": "redeem",
           "label": "#3 Icon",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -7790,7 +9214,7 @@
           "type": "text",
           "id": "icon_4",
           "label": "#4 Icon",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -8335,7 +9759,7 @@
           "id": "icon_1",
           "default": "favorite",
           "label": "t:sections.main-product.blocks.icon_with_text.settings.icon_1.label",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -8360,7 +9784,7 @@
           "id": "icon_2",
           "default": "undo",
           "label": "t:sections.main-product.blocks.icon_with_text.settings.icon_2.label",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -8385,7 +9809,7 @@
           "id": "icon_3",
           "default": "local_shipping",
           "label": "t:sections.main-product.blocks.icon_with_text.settings.icon_3.label",
-          "info": "[View all available icons](https:\/\/fonts.google.com\/icons?icon.set=Material+Symbols&icon.platform=web)."
+          "info": "[View all available icons](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.platform=web)."
         },
         {
           "type": "checkbox",
@@ -9077,3 +10501,15 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'product-media-gallery', variant_images: variant_images, has_filtering:
+    has_filtering, section %}"
+  to: "{% render 'product-media-gallery', variant_images: variant_images, has_filtering:
+    has_filtering %}"
+  position: 4964..5062
+{% endcomment %}

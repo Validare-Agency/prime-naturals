@@ -1,0 +1,353 @@
+{%- comment -%}
+  "Get the 10,000 Whys set" — image + text banner for the Vol. 2 pre-order
+  PDP (templates/product.vol2-preorder.json). The button can add both
+  volumes to the cart (assets/c-preorder-add-both.js) or link anywhere.
+  Shows a placeholder until an image is picked in the editor.
+{%- endcomment -%}
+
+{%- liquid
+  assign product_a = section.settings.product_a
+  assign product_b = section.settings.product_b | default: product
+  assign variant_a = product_a.selected_or_first_available_variant
+  assign variant_b = product_b.selected_or_first_available_variant
+  # Pre-order switch: Vol. 2 product metafield custom.preorder_enabled (missing = on)
+  assign pre_on = true
+  if product_b.metafields.custom.preorder_enabled.value == false
+    assign pre_on = false
+  endif
+-%}
+
+{%- style -%}
+  #c-pre-set-{{ section.id }} {
+    background: {{ section.settings.background }};
+    padding: {{ section.settings.mobile_padding_top }}px 20px {{ section.settings.mobile_padding_bottom }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #c-pre-set-{{ section.id }} {
+      padding: {{ section.settings.desktop_padding_top }}px 40px {{ section.settings.desktop_padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div id="c-pre-set-{{ section.id }}" class="c-pre-set">
+  <div class="c-pre-set__inner{% if section.settings.image_position == 'left' %} c-pre-set__inner--image-left{% endif %}">
+    <div class="c-pre-set__media">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1100
+          | image_tag:
+            class: 'c-pre-set__image',
+            loading: 'lazy',
+            sizes: '(min-width: 750px) 520px, 100vw',
+            widths: '400, 600, 800, 1100',
+            alt: section.settings.image.alt
+        }}
+      {%- else -%}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'c-pre-set__image c-pre-set__image--placeholder' }}
+      {%- endif -%}
+    </div>
+
+    <div class="c-pre-set__content">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="c-pre-set__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="c-pre-set__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.pill_1 != blank or section.settings.pill_2 != blank -%}
+        <div class="c-pre-set__pills">
+          {%- if section.settings.pill_1 != blank -%}
+            <span class="c-pre-set__pill c-pre-set__pill--green">
+              <img src="{{ 'c-preorder-truck-green.svg' | asset_url }}" alt="" width="16" height="16">
+              {{- section.settings.pill_1 -}}
+            </span>
+          {%- endif -%}
+          {%- if section.settings.pill_2 != blank -%}
+            <span class="c-pre-set__pill">
+              <img src="{{ 'c-preorder-calendar.svg' | asset_url }}" alt="" width="16" height="16">
+              {{- section.settings.pill_2 -}}
+            </span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank -%}
+        {%- if section.settings.button_action == 'add_both' and variant_a and variant_b -%}
+          <button
+            type="button"
+            class="c-pre-set__button"
+            data-c-pre-add-both
+            data-variant-a="{{ variant_a.id }}"
+            data-variant-b="{{ variant_b.id }}"
+            {%- if pre_on %}
+            data-property-name="{{ section.settings.property_name | escape }}"
+            data-property-value="{{ section.settings.property_value | escape }}"
+            {%- endif %}
+          >
+            {{- section.settings.button_label -}}
+          </button>
+        {%- else -%}
+          <a class="c-pre-set__button" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label }}</a>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'c-preorder-add-both.js' | asset_url }}" defer></script>
+
+<style>
+  .c-pre-set__inner {
+    max-width: 1152px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .c-pre-set__media {
+    position: relative;
+    height: 300px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #e9e5da;
+  }
+  .c-pre-set__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .c-pre-set__image--placeholder { fill: rgba(13, 27, 62, 0.35); }
+  .c-pre-set__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .c-pre-set__heading {
+    margin: 0;
+    font-family: var(--font-heading-family);
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    color: #0d1b3e;
+  }
+  .c-pre-set__text {
+    margin: 0;
+    font-family: var(--font-body-family);
+    font-size: 17px;
+    line-height: 1.6;
+    color: #4b5563;
+  }
+  .c-pre-set__pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .c-pre-set__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 100px;
+    background: #f8f6f0;
+    color: #0d1b3e;
+    font-family: var(--font-body-family);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .c-pre-set__pill img { flex: none; width: 16px; height: 16px; }
+  .c-pre-set__pill--green { background: #dcfce7; color: #166534; }
+  .c-pre-set__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 420px;
+    min-height: 60px;
+    border: 0;
+    border-radius: 10px;
+    background: #c0392b;
+    color: #fff;
+    font-family: var(--font-heading-family);
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: filter 0.15s ease, opacity 0.15s ease;
+  }
+  .c-pre-set__button:hover { filter: brightness(0.93); }
+  .c-pre-set__button[disabled] { opacity: 0.7; cursor: progress; }
+
+  @media screen and (min-width: 750px) {
+    .c-pre-set__inner {
+      display: grid;
+      grid-template-columns: minmax(0, 568fr) minmax(0, 520fr);
+      align-items: center;
+      gap: 64px;
+    }
+    .c-pre-set__media { order: 2; height: 460px; }
+    .c-pre-set__inner--image-left { grid-template-columns: minmax(0, 520fr) minmax(0, 568fr); }
+    .c-pre-set__inner--image-left .c-pre-set__media { order: 0; }
+    .c-pre-set__heading { font-size: 40px; }
+    .c-pre-set__text { font-size: 19px; }
+    .c-pre-set__button { min-height: 66px; font-size: 19px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Pre-order: Get the set",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Shows a placeholder until an image is picked."
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Desktop image position",
+      "options": [
+        { "value": "right", "label": "Right" },
+        { "value": "left", "label": "Left" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get the 10,000 Whys set"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Start with the original, keep the curiosity going with Vol. 2. Two hardcovers that look beautiful side by side on their shelf."
+    },
+    {
+      "type": "text",
+      "id": "pill_1",
+      "label": "Green pill",
+      "default": "Vol. 1 ships today"
+    },
+    {
+      "type": "text",
+      "id": "pill_2",
+      "label": "Second pill",
+      "default": "Vol. 2 ships Oct 14"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Label",
+      "default": "Add both volumes"
+    },
+    {
+      "type": "select",
+      "id": "button_action",
+      "label": "Action",
+      "options": [
+        { "value": "add_both", "label": "Add both books to cart" },
+        { "value": "link", "label": "Go to link" }
+      ],
+      "default": "add_both"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link",
+      "info": "Used when the action is \"Go to link\"."
+    },
+    {
+      "type": "product",
+      "id": "product_a",
+      "label": "First book (Vol. 1)"
+    },
+    {
+      "type": "product",
+      "id": "product_b",
+      "label": "Second book (Vol. 2)",
+      "info": "Defaults to the product on the page."
+    },
+    {
+      "type": "text",
+      "id": "property_name",
+      "label": "Vol. 2 line item property name",
+      "default": "Pre-order"
+    },
+    {
+      "type": "text",
+      "id": "property_value",
+      "label": "Vol. 2 line item property value",
+      "default": "Ships October 14"
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#f8f6f0"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop top padding",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop bottom padding",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile top padding",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile bottom padding",
+      "default": 56
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pre-order: Get the set"
+    }
+  ]
+}
+{% endschema %}

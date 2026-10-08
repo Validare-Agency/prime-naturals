@@ -107,6 +107,13 @@
         {{ 'accessibility.skip_to_product_info' | t }}
       </a>
     {%- endunless -%}
+    {%- comment -%} Pre-order PDP — main-product "Pre-order: Image badges" block overlays the main image {%- endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'preorder_media_badges' -%}
+        {% render 'c-preorder-blocks', block: block, product: product, section: section %}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
     <ul
       id="Slider-Gallery-{{ section.id }}{{ id_append }}"
       class="product__media-list contains-media grid grid--peek list-unstyled slider slider--mobile{% if section.settings.gallery_layout == 'thumbnail' or section.settings.gallery_layout == 'thumbnail_slider'%} gallery-slider--desktop{% endif %}{% if section.settings.enable_mobile_outher_spacing %} product__media-list--outer-spacing{% else %} product__media-list--no-outer-spacing{% endif %}"
@@ -423,3 +430,58 @@
     </slider-component>
   {%- endif -%}
 </media-gallery>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%
+                render 'product-thumbnail',
+                media: featured_media,
+                media_count: media_count,
+                position: media_position,
+                desktop_layout: section.settings.gallery_layout,
+                mobile_layout: section.settings.mobile_thumbnails,
+                loop: section.settings.enable_video_looping,
+                modal_id: section.id,
+                xr_button: true,
+                media_width: media_width,
+                media_fit: section.settings.media_fit,
+                constrain_to_viewport: section.settings.constrain_to_viewport,
+                lazy_load: false,
+                section
+              %}
+  to: "{% render 'product-thumbnail', media: featured_media, media_count: media_count,
+    position: media_position, desktop_layout: section.settings.gallery_layout, mobile_layout:
+    section.settings.mobile_thumbnails, loop: section.settings.enable_video_looping,
+    modal_id: section.id, xr_button: true, media_width: media_width, media_fit: section.settings.media_fit,
+    constrain_to_viewport: section.settings.constrain_to_viewport, lazy_load: false
+    %}"
+  position: 4921..5358
+- from: |-
+    {%
+                  render 'product-thumbnail',
+                  media: media,
+                  media_count: media_count,
+                  position: media_position,
+                  desktop_layout: section.settings.gallery_layout,
+                  mobile_layout: section.settings.mobile_thumbnails,
+                  loop: section.settings.enable_video_looping,
+                  modal_id: section.id,
+                  xr_button: true,
+                  media_width: media_width,
+                  media_fit: section.settings.media_fit,
+                  constrain_to_viewport: section.settings.constrain_to_viewport,
+                  lazy_load: lazy_load,
+                  section
+                %}
+  to: "{% render 'product-thumbnail', media: media, media_count: media_count, position:
+    media_position, desktop_layout: section.settings.gallery_layout, mobile_layout:
+    section.settings.mobile_thumbnails, loop: section.settings.enable_video_looping,
+    modal_id: section.id, xr_button: true, media_width: media_width, media_fit: section.settings.media_fit,
+    constrain_to_viewport: section.settings.constrain_to_viewport, lazy_load: lazy_load
+    %}"
+  position: 6650..7082
+{% endcomment %}

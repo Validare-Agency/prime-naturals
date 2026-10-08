@@ -8,3 +8,34 @@
     ]
   }
 }
+{
+  "permissions": {
+    "allow": [
+      "Bash(awk '/{% schema %}/,0' sections/main-product.liquid)",
+      "Bash(python3 -c ' *)",
+      "mcp__claude_ai_Shopify__search_products",
+      "mcp__claude_ai_Figma__get_design_context",
+      "Bash(grep -n \"<media-gallery\\\\|<slider-component\\\\|id=\\\\\"GalleryViewer\\\\|class=\\\\\"product__media-list\\\\|</slider-component>\\\\|product__media-wrapper\" snippets/product-media-gallery.liquid | head; sed -n 1,30p snippets/product-media-gallery.liquid; grep -n \"\\\\\"type\\\\\": \\\\\"divider\\\\\"\" -A3 sections/main-product.liquid | head -5; sed -n '/\"type\": \"urgency\"/,/^    },/p' sections/main-product.liquid | head -70)",
+      "Bash(curl -sfL https://www.figma.com/api/mcp/asset/328d7922-e1db-4a70-b8c1-2cd3659ba061.svg)",
+      "Bash(curl -sfL https://www.figma.com/api/mcp/asset/2b037047-d509-42f6-8295-ec8b8418eae8.svg)",
+      "Bash(curl -sfL https://www.figma.com/api/mcp/asset/328d7922-e1db-4a70-b8c1-2cd3659ba061.svg -o assets/c-preorder-truck-green.svg)",
+      "Bash(python3 -m pip --version)",
+      "Bash(curl -sfL https://randomuser.me/api/portraits/women/14.jpg -o w14.jpg)",
+      "Bash(grep -n \"gifts_show\\\\|endif -%}$\" snippets/c-preorder-blocks.liquid)",
+      "Bash(grep -n \"how_show\\\\|endif -%}$\" sections/c-preorder-how-it-works.liquid)",
+      "mcp__claude_ai_Shopify__get-shop-info",
+      "Bash(curl -sfL -o assets/c-preorder-cart-bonus.png \"https://www.figma.com/api/mcp/asset/1babe8f6-0d35-4211-a88d-a8a2143ae758.png\")",
+      "Bash(sips -Z 192 c-preorder-cart-bonus.jpg)",
+      "Bash(curl -sfL \"https://www.figma.com/api/mcp/asset/9901a433-bb6a-49e8-b7f1-e642a2a134ac.svg\")",
+      "Bash(grep -o \"Buy [0-9][^\\\\\"<]\\\\{0,60\\\\}\\\\|Get [0-9] Free[^\\\\\"<]\\\\{0,40\\\\}\\\\|[0-9] Books\\\\?[^\\\\\"<]\\\\{0,40\\\\}\" templates/product.vol2.json templates/product.leadership-kids.json)",
+      "Bash(mkdir -p vol1)",
+      "Bash(curl -sL -A \"Mozilla/5.0\" \"https://primenaturals.store/products/kidss-encyclopedia-10-000-whys\" -o vol1/page.html)",
+      "Bash(grep -o \"kaching[^\\\\\"']\\\\{0,80\\\\}\" vol1/page.html)",
+      "Bash(curl -sSL -A \"Mozilla/5.0\" -w \"%{http_code} %{url_effective}\\\\n\" \"https://primenaturals.store/products/kidss-encyclopedia-10-000-whys\" -o vol1/page.html)",
+      "Bash(curl -s -m 30 -A \"Mozilla/5.0\" \"https://primenaturals.store/products/kidss-encyclopedia-10-000-whys-vol-2?view=vol2-preorder\" -o pv.html)"
+    ],
+    "additionalDirectories": [
+      "/Users/mac/Documents/Validare/prime-naturals/sections"
+    ]
+  }
+}
