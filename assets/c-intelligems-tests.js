@@ -139,6 +139,18 @@ function handleExperiments() {
   if (primeSite38?.name === "Var A") {
     document.body.classList.add("c-primeSite38VarA");
   }
+
+  // Test: V_PRIME_PDP_24 | Product gallery Images
+  const primePdp24 = window.igData?.user.getTestGroup(
+    "9b991598-4882-4a65-a44b-9ec73a363963"
+  );
+  if (primePdp24?.id === "b9d01572-c89b-4040-8fe9-3e6c273816ed") {
+    document.body.classList.add("c-primePdp24VarA");
+  } else if (primePdp24?.id === "aa089d31-f24c-483d-bc47-e447bb9f0bd1") {
+    document.body.classList.add("c-primePdp24VarB");
+  } else if (primePdp24?.id === "6ea5a811-3db3-4f4d-80c9-8bcfccd30f68") {
+    document.body.classList.add("c-primePdp24VarC");
+  }
 }
 
 let cartDrawerWasActive = false;
