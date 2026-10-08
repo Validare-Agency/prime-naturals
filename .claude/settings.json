@@ -21,7 +21,8 @@
       "Bash(mkdir -p vol1)",
       "Bash(curl -sL -A \"Mozilla/5.0\" \"https://primenaturals.store/products/kidss-encyclopedia-10-000-whys\" -o vol1/page.html)",
       "Bash(grep -o \"kaching[^\\\\\"']\\\\{0,80\\\\}\" vol1/page.html)",
-      "Bash(curl -sSL -A \"Mozilla/5.0\" -w \"%{http_code} %{url_effective}\\\\n\" \"https://primenaturals.store/products/kidss-encyclopedia-10-000-whys\" -o vol1/page.html)"
+      "Bash(curl -sSL -A \"Mozilla/5.0\" -w \"%{http_code} %{url_effective}\\\\n\" \"https://primenaturals.store/products/kidss-encyclopedia-10-000-whys\" -o vol1/page.html)",
+      "Bash(curl -s -m 30 -A \"Mozilla/5.0\" \"https://primenaturals.store/products/kidss-encyclopedia-10-000-whys-vol-2?view=vol2-preorder\" -o pv.html)"
     ],
     "additionalDirectories": [
       "/Users/mac/Documents/Validare/prime-naturals/sections"
