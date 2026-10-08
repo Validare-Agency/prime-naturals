@@ -19,12 +19,12 @@
       'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376.webp?width=208 208w',
       'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376.webp?width=416 416w'
     ].join(', '),
-    alt: "Kid's Encyclopedia 10,000 Whys shown at true B5 size (17.6×25 cm) with grandma and grandchild reading together"
+    alt: "Read it together – grandma and grandchild reading Kid's Encyclopedia 10000 Whys by the fireplace, the book kids choose over YouTube"
   };
 
-  // Var B image: benefit-led hero (slot 1 replacement)
+  // Var B image: benefit-led hero (slot 2 replacement)
   // Includes: "Sparks Curiosity" headline, "Complete Hardcover Edition" callout, 3 key benefits
-  var VAR_B_SLOT1_IMAGE = {
+  var VAR_B_SLOT2_IMAGE = {
     src: 'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_1.webp',
     srcset: [
       'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_1.webp?width=550 550w',
@@ -42,30 +42,13 @@
     alt: 'Sparks Curiosity – Complete Hardcover Edition: rewires curiosity, boosts school performance, competes with screens'
   };
 
-  // Var C image: social-proof hero (new slide inserted at slot 3, existing slot 3 shifts to 4)
-  // Includes: 4.9 star rating, 30-Day Guarantee badge, "Trusted by 18,000+ families" bar
-  var VAR_C_SLOT3_IMAGE = {
-    src: 'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp',
-    srcset: [
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=550 550w',
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=1100 1100w',
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=1445 1445w'
-    ].join(', '),
-    thumbSrcset: [
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=54 54w',
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=74 74w',
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=104 104w',
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=162 162w',
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=208 208w',
-      'https://cdn.shopify.com/s/files/1/0610/1463/8726/files/Frame_1948756376_2.webp?width=416 416w'
-    ].join(', '),
-    alt: 'Spark Curiosity – 10000 Whys Complete Hardcover Edition, rated 4.9 stars, 30-day guarantee, trusted by 18,000+ families'
-  };
-
   var VAR_C_MEDIA_KEY = 'pdp24-varc';
 
-  var domReady = false;
-  var igReady = false;
+  // The gallery <img> sits in .product__media inside the modal-opener; the
+  // .global-media-settings class is on the wrapper div, not the img itself.
+  var MAIN_IMG_SELECTOR = '.product__modal-opener .product__media img';
+  var VARIANT_CLASSES = ['c-primePdp24VarA', 'c-primePdp24VarB', 'c-primePdp24VarC'];
+  var swapApplied = false;
   var galleryEngaged = false;
 
   // Swap src/srcset/alt on the main gallery image and matching thumbnail for a given slot.
@@ -76,7 +59,7 @@
       var slides = gallery.querySelectorAll('.product__media-list .product__media-item');
       var targetSlide = slides[slotIndex];
       if (targetSlide) {
-        var img = targetSlide.querySelector('img.global-media-settings');
+        var img = targetSlide.querySelector(MAIN_IMG_SELECTOR);
         if (img) {
           img.src = imageData.src;
           img.srcset = imageData.srcset;
@@ -126,7 +109,7 @@
       newSlide.querySelectorAll('.product__media-toggle, .product__media-icon').forEach(function (el) {
         el.remove();
       });
-      var img = newSlide.querySelector('img.global-media-settings');
+      var img = newSlide.querySelector(MAIN_IMG_SELECTOR);
       if (img) {
         img.src = imageData.src;
         img.srcset = imageData.srcset;
@@ -205,11 +188,12 @@
       // Var A: replace slot 3 (0-indexed: 2) with the corrected true-size image
       swapGallerySlot(2, VAR_A_SLOT3_IMAGE);
     } else if (document.body.classList.contains('c-primePdp24VarB')) {
-      // Var B: replace slot 1 (0-indexed: 0) with the benefit-led hero image
-      swapGallerySlot(0, VAR_B_SLOT1_IMAGE);
+      // Var B: replace slot 2 (0-indexed: 1) with the benefit-led hero image
+      swapGallerySlot(1, VAR_B_SLOT2_IMAGE);
     } else if (document.body.classList.contains('c-primePdp24VarC')) {
-      // Var C: insert a new slide at slot 3 (0-indexed: 2); existing slot 3 moves to 4
-      insertGallerySlot(2, VAR_C_SLOT3_IMAGE);
+      // Var C: insert the Var B benefit-led image as a new slide at slot 3 (0-indexed: 2);
+      // existing slot 3 onward shifts one place right
+      insertGallerySlot(2, VAR_B_SLOT2_IMAGE);
     }
   }
 
@@ -228,23 +212,34 @@
     window.igEvents.push({ event: 'engagement_gallery' });
   }
 
-  // Mirror the double-gate pattern used in c-intelligems-tests.js.
-  // handleExperiments() in that file sets the body class; our ig:ready listener
-  // fires after theirs (scripts load in DOM order), so the class is already
-  // present by the time tryInit() runs here.
-  function tryInit() {
-    if (!domReady || !igReady) return;
-    applyImageSwap();
-    initGalleryEngagement();
+  function hasVariantClass() {
+    return VARIANT_CLASSES.some(function (cls) {
+      return document.body.classList.contains(cls);
+    });
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    domReady = true;
-    tryInit();
-  });
+  function trySwap() {
+    if (swapApplied || !hasVariantClass()) return false;
+    swapApplied = true;
+    applyImageSwap();
+    return true;
+  }
 
-  window.addEventListener('ig:ready', function () {
-    igReady = true;
-    tryInit();
-  });
+  // The variant body class is set by handleExperiments() in c-intelligems-tests.js once
+  // both DOM and ig:ready are in. ig:ready can fire before this deferred script runs, so
+  // instead of listening for it, check for the class now and watch body for it to appear.
+  function init() {
+    initGalleryEngagement();
+    if (trySwap()) return;
+    var observer = new MutationObserver(function () {
+      if (trySwap()) observer.disconnect();
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
