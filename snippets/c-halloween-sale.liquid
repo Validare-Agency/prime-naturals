@@ -268,11 +268,11 @@
         var REPLACE = {{ sale_name | upcase | json }};
 
         function retitle() {
-          var eyebrow = document.querySelector("[class*='eyebrow']");
-          if (!eyebrow) return;
-          var text = eyebrow.innerText;
-          if (text.indexOf(FIND) === -1 || text.indexOf(REPLACE) !== -1) return;
-          eyebrow.innerText = text.replace(FIND, REPLACE);
+          document.querySelectorAll("[class*='eyebrow']").forEach(function (eyebrow) {
+            var text = eyebrow.innerText;
+            if (text.indexOf(FIND) === -1 || text.indexOf(REPLACE) !== -1) return;
+            eyebrow.innerText = text.replace(FIND, REPLACE);
+          });
         }
 
         retitle();
