@@ -2805,5 +2805,65 @@
         "info": "If empty, a link to all products will be applied."
       }
     ]
+  },
+  {
+    "name": "Halloween sale",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Seasonal wording for the running flash sale: announcement bar with countdown, text and % badge on PDP prices, Kaching bundle title. The offer itself doesn't change. After the end date the site goes back to the original flash sale bar on its own."
+      },
+      {
+        "type": "checkbox",
+        "id": "halloween_enabled",
+        "label": "Enable Halloween sale",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "halloween_end",
+        "label": "Sale ends",
+        "default": "2026-11-01 00:00",
+        "info": "Store timezone, format YYYY-MM-DD HH:MM. 2026-11-01 00:00 = last sale day is Oct 31."
+      },
+      {
+        "type": "text",
+        "id": "halloween_name",
+        "label": "Sale name",
+        "default": "Flash Halloween Sale",
+        "info": "Announcement bar, text above the PDP price and Kaching bundle title."
+      },
+      {
+        "type": "text",
+        "id": "halloween_icon",
+        "label": "Announcement bar icon",
+        "default": "🎃",
+        "info": "Emoji before the sale name. Leave empty for none."
+      },
+      {
+        "type": "text",
+        "id": "halloween_badge",
+        "label": "PDP price badge",
+        "default": "[percent]% OFF TODAY",
+        "info": "[percent] is replaced with the product's % off (compare-at vs price)."
+      },
+      {
+        "type": "range",
+        "id": "halloween_timer_hours",
+        "label": "Countdown restarts every",
+        "min": 1,
+        "max": 24,
+        "step": 1,
+        "unit": "h",
+        "default": 2
+      },
+      {
+        "type": "text",
+        "id": "halloween_kaching_find",
+        "label": "Kaching title text to replace",
+        "default": "FLASH SALE",
+        "info": "This text in the Kaching bundle title is replaced with the sale name."
+      }
+    ]
   }
 ]

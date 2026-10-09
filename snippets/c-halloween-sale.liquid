@@ -1,0 +1,283 @@
+{%- comment -%}
+  Flash Halloween Sale — every Halloween change on the site is controlled
+  from Theme settings → Halloween sale. Same offer, seasonal wording only.
+
+  While enabled and before "Sale ends" (store timezone) the site shows the
+  sale wording; otherwise every part renders nothing / its fallback, so the
+  site goes back to the original flash-sale setup on its own.
+
+  Used by:
+  - snippets/c-ann-bar.liquid            → part: 'bar'           (announcement bar + 2h timer)
+  - layout/theme.liquid                  → part: 'active'        (keeps the bar on vstd- landing pages)
+  - snippets/price.liquid                → part: 'label', 'badge' (theme price block)
+  - templates king-nitric, leadership-kids, glp1-sup → part: 'label', 'badge_text' (pib price block)
+  - sections/main-product.liquid         → part: 'kaching_title' (Kaching bundle title)
+
+  Accepts:
+  - part: 'active'        → outputs "1" while the sale runs (capture it)
+          'bar'           → announcement bar with countdown
+          'label'         → small sale name text (place above the price)
+          'badge'         → "X% OFF TODAY" badge span
+          'badge_text'    → just the badge text; outputs `default` after the sale
+          'kaching_title' → script that renames the Kaching bundle title
+  - product: {Object} for the % (selected/first available variant, compare-at vs price)
+  - fallback_compare: {Number} cents to use when the variant has no compare-at price (optional)
+  - default: {String} badge_text output when the sale is over or there is no discount (optional)
+{%- endcomment -%}
+
+{%- liquid
+  # Settings live in Theme settings → Halloween sale (config/settings_schema.json).
+  # Sale ends: store timezone, 'YYYY-MM-DD HH:MM'; empty = sale off.
+  assign sale_end = settings.halloween_end | strip
+  assign sale_name = settings.halloween_name | default: 'Flash Halloween Sale'
+  assign sale_icon = settings.halloween_icon
+  assign sale_badge = settings.halloween_badge | default: '[percent]% OFF TODAY'
+  assign timer_hours = settings.halloween_timer_hours | default: 2
+  assign kaching_find = settings.halloween_kaching_find | default: 'FLASH SALE'
+
+  assign hw_on = false
+  if settings.halloween_enabled and sale_end != blank
+    assign hw_end = sale_end | remove: '-' | remove: ' ' | remove: ':' | plus: 0
+    assign hw_now = 'now' | date: '%Y%m%d%H%M' | plus: 0
+    if hw_now < hw_end
+      assign hw_on = true
+    endif
+  endif
+
+  assign hw_pct = 0
+  if product and part contains 'badge'
+    assign hw_variant = product.selected_or_first_available_variant
+    assign hw_price = hw_variant.price
+    assign hw_compare = hw_variant.compare_at_price | default: 0
+    if hw_compare <= hw_price and fallback_compare
+      assign hw_compare = fallback_compare
+    endif
+    if hw_compare > hw_price
+      assign hw_pct = hw_compare | minus: hw_price | times: 100.0 | divided_by: hw_compare | round
+    endif
+  endif
+  assign hw_badge_text = sale_badge | replace: '[percent]', hw_pct
+-%}
+
+{%- case part -%}
+  {%- when 'active' -%}
+    {%- if hw_on -%}1{%- endif -%}
+
+  {%- when 'bar' -%}
+    {%- if hw_on -%}
+      <div class="ann-bar ann-bar--hw">
+        <div class="ann-bar__inner">
+
+          <div class="ann-bar__title">
+            {%- if sale_icon != blank -%}
+              <span class="ann-bar__icon" aria-hidden="true">{{ sale_icon }}</span>
+            {%- endif -%}
+            <span class="ann-bar__text">{{ sale_name }}</span>
+          </div>
+
+          <div class="ann-bar__timer" role="timer" aria-label="Time left in this sale window">
+            <div class="ann-bar__unit">
+              <span class="ann-bar__num" data-hw-hours>00</span>
+              <span class="ann-bar__label">HRS</span>
+            </div>
+            <span class="ann-bar__sep">:</span>
+            <div class="ann-bar__unit">
+              <span class="ann-bar__num" data-hw-mins>00</span>
+              <span class="ann-bar__label">MIN</span>
+            </div>
+            <span class="ann-bar__sep">:</span>
+            <div class="ann-bar__unit">
+              <span class="ann-bar__num" data-hw-secs>00</span>
+              <span class="ann-bar__label">SEC</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <style>
+        .ann-bar--hw *, .ann-bar--hw *::before, .ann-bar--hw *::after {
+          box-sizing: border-box; margin: 0; padding: 0;
+        }
+
+        .ann-bar--hw {
+          background: linear-gradient(90deg, #3d1510 0%, #6e2618 50%, #93351f 100%);
+          width: 100%;
+          padding: 7px 16px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          color: #fff;
+        }
+
+        .ann-bar--hw .ann-bar__inner {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 28px;
+          max-width: 960px;
+          margin: 0 auto;
+        }
+
+        .ann-bar--hw .ann-bar__title {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-shrink: 0;
+        }
+
+        .ann-bar--hw .ann-bar__icon {
+          font-size: 20px;
+          line-height: 1;
+        }
+
+        .ann-bar--hw .ann-bar__text {
+          font-size: 19px;
+          font-weight: 900;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+          line-height: 1;
+          white-space: nowrap;
+        }
+
+        .ann-bar--hw .ann-bar__timer {
+          display: flex;
+          align-items: flex-start;
+          gap: 4px;
+          flex-shrink: 0;
+        }
+
+        .ann-bar--hw .ann-bar__unit {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 3px;
+          min-width: 28px;
+        }
+
+        .ann-bar--hw .ann-bar__num {
+          font-size: 21px;
+          font-weight: 900;
+          line-height: 1;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .ann-bar--hw .ann-bar__label {
+          font-size: 10px;
+          font-weight: 600;
+          letter-spacing: 0.06em;
+          line-height: 1;
+          color: rgba(255,255,255,0.75);
+        }
+
+        .ann-bar--hw .ann-bar__sep {
+          font-size: 19px;
+          font-weight: 900;
+          line-height: 1;
+          color: rgba(255,255,255,0.6);
+        }
+
+        @media (max-width: 480px) {
+          .ann-bar--hw { padding: 7px 12px; }
+          .ann-bar--hw .ann-bar__inner { gap: 14px; }
+          .ann-bar--hw .ann-bar__icon { font-size: 16px; }
+          .ann-bar--hw .ann-bar__text { font-size: 14px; }
+          .ann-bar--hw .ann-bar__num { font-size: 17px; }
+          .ann-bar--hw .ann-bar__sep { font-size: 16px; }
+          .ann-bar--hw .ann-bar__label { font-size: 9px; }
+          .ann-bar--hw .ann-bar__unit { min-width: 22px; }
+        }
+
+        @media (max-width: 340px) {
+          .ann-bar--hw .ann-bar__icon { display: none; }
+        }
+      </style>
+
+      <script>
+      (function() {
+        // Count down to the next N-hour mark of the clock, then roll over.
+        // Every visitor and every refresh lands on the same countdown.
+        var PERIOD = {{ timer_hours | times: 3600000 }};
+        var bar = document.querySelector('.ann-bar--hw');
+        var hours = bar.querySelector('[data-hw-hours]');
+        var mins  = bar.querySelector('[data-hw-mins]');
+        var secs  = bar.querySelector('[data-hw-secs]');
+
+        function pad(n) { return String(n).padStart(2, '0'); }
+
+        function tick() {
+          var remaining = PERIOD - (Date.now() % PERIOD);
+          hours.textContent = pad(Math.floor(remaining / 3600000));
+          mins.textContent  = pad(Math.floor((remaining % 3600000) / 60000));
+          secs.textContent  = pad(Math.floor((remaining % 60000) / 1000));
+        }
+
+        tick();
+        setInterval(tick, 1000);
+      })();
+      </script>
+    {%- endif -%}
+
+  {%- when 'label' -%}
+    {%- if hw_on -%}
+      <p class="c-hw-label">{{ sale_name }}</p>
+      <style>
+        .c-hw-label {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          font-size: 12px;
+          font-weight: 800;
+          line-height: 1.2;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #c0392b;
+          margin: 0 0 8px;
+        }
+      </style>
+    {%- endif -%}
+
+  {%- when 'badge' -%}
+    {%- if hw_on and hw_pct > 0 -%}
+      <span class="c-hw-badge">{{ hw_badge_text }}</span>
+      <style>
+        .c-hw-badge {
+          display: inline-block;
+          align-self: center;
+          background: #c0392b;
+          color: #fff;
+          border-radius: 5px;
+          padding: 5px 10px;
+          font-size: 12px;
+          font-weight: 900;
+          letter-spacing: 0.07em;
+          line-height: 1;
+          white-space: nowrap;
+        }
+      </style>
+    {%- endif -%}
+
+  {%- when 'badge_text' -%}
+    {%- if hw_on and hw_pct > 0 -%}{{ hw_badge_text }}{%- else -%}{{ default }}{%- endif -%}
+
+  {%- when 'kaching_title' -%}
+    {%- comment -%}
+      Kaching's bundle title lives in its eyebrow and is set in the app, so
+      rename it client-side once Kaching renders (and again if it re-renders).
+    {%- endcomment -%}
+    {%- if hw_on -%}
+      <script>
+      (function () {
+        var FIND = {{ kaching_find | json }};
+        var REPLACE = {{ sale_name | upcase | json }};
+
+        function retitle() {
+          var eyebrow = document.querySelector("[class*='eyebrow']");
+          if (!eyebrow) return;
+          var text = eyebrow.innerText;
+          if (text.indexOf(FIND) === -1 || text.indexOf(REPLACE) !== -1) return;
+          eyebrow.innerText = text.replace(FIND, REPLACE);
+        }
+
+        retitle();
+        new MutationObserver(retitle).observe(document.body, { childList: true, subtree: true });
+      })();
+      </script>
+    {%- endif -%}
+{%- endcase -%}

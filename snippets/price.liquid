@@ -35,6 +35,12 @@
   endif
 -%}
 
+{%- comment -%} Flash Halloween Sale — main-product price only. Remove after the sale. {%- endcomment -%}
+{%- if halloween_callout -%}
+  {%- render 'c-halloween-sale', part: 'label' -%}
+  {%- capture hw_badge -%}{%- render 'c-halloween-sale', part: 'badge', product: product -%}{%- endcapture -%}
+{%- endif -%}
+
 <div
   class="
     price
@@ -95,7 +101,9 @@
     {% capture money_saved %}
       {{ compare_at_price | minus: price | money_without_trailing_zeros }}
     {% endcapture %}
-    {% if main_price != true or block.settings.displayed_badge == 'sale' %}
+    {% if hw_badge != blank %}
+      {{ hw_badge }}
+    {% elsif main_price != true or block.settings.displayed_badge == 'sale' %}
       <span class="badge price__badge-sale color-{{ settings.sale_badge_color_scheme }}">
         {% if settings.sale_basge_discount_icon %}{% render 'icon-discount' %}{% endif %}<span class='nowrap'>{{ settings.sale_badge_text | replace: '[percentage]', percentage_saved | replace: '[amount]', money_saved }}</span>
       </span>

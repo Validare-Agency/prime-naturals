@@ -172,7 +172,8 @@
                   hide_sale_badge: block.settings.hide_sale_badge,
                   price_class: 'price--large',
                   price_second: price_second,
-                  main_price: true
+                  main_price: true,
+                  halloween_callout: true
                 -%}
               </div>
               <div {{ block.shopify_attributes }}>
@@ -1007,6 +1008,8 @@
           {% render 'icon-arrow' %}
         </a>
       </product-info>
+      {%- comment -%} Flash Halloween Sale — renames the Kaching bundle title. Remove after the sale. {%- endcomment -%}
+      {%- render 'c-halloween-sale', part: 'kaching_title' -%}
     </div>
     {%- if section.settings.media_position == 'right' -%}
       {% comment %} Duplicate gallery to display after product content on tablet/desktop breakpoint {% endcomment %}

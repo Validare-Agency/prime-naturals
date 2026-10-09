@@ -563,8 +563,10 @@
     </script>
   {%- comment -%} vystodian agent: hide theme chrome on cloned-site page templates (render-blocking, no flash) {%- endcomment -%}
 {% if template.suffix contains 'vstd-' %}
+{%- comment -%} Flash Halloween Sale: the announcement bar stays on landing pages too — see snippets/c-halloween-sale.liquid {%- endcomment -%}
+{%- capture hw_on -%}{%- render 'c-halloween-sale', part: 'active' -%}{%- endcapture -%}
 <style>
-.shopify-section-group-header-group,
+.shopify-section-group-header-group{% if hw_on != blank %}:not(:has(.ann-bar)){% endif %},
 .shopify-section-group-footer-group,
 a.skip-to-content-link,
 #shopify-section-cart-drawer,

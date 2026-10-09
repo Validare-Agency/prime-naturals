@@ -1,0 +1,133 @@
+{%- comment -%}
+  Site-wide announcement bar, rendered from the custom-liquid section in
+  sections/header-group.json. Keep the .ann-bar class: pre-order pages hide
+  the bar through it (sections/c-preorder-ann-bar.liquid, product.vol2,
+  product.10000-why-bible-book-waiting-list).
+
+  While a sale is set up in snippets/c-halloween-sale.liquid (text, end date,
+  timer), that snippet renders the bar. Otherwise the original flash-sale
+  bar below shows, unchanged.
+{%- endcomment -%}
+
+{%- capture sale_bar -%}{%- render 'c-halloween-sale', part: 'bar' -%}{%- endcapture -%}
+
+{%- if sale_bar != blank -%}
+{{ sale_bar }}
+{%- else -%}
+<div class="ann-bar">
+  <div class="ann-bar__inner">
+
+    <span class="ann-bar__bunny">🔥</span>
+
+    <span class="ann-bar__text">FLASH SALE ENDS IN</span>
+
+    <div class="ann-bar__timer">
+      <span class="ann-bar__num" id="ann-hours">00</span>
+      <span class="ann-bar__sep">:</span>
+      <span class="ann-bar__num" id="ann-mins">00</span>
+      <span class="ann-bar__sep">:</span>
+      <span class="ann-bar__num" id="ann-secs">00</span>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .ann-bar *, .ann-bar *::before, .ann-bar *::after {
+    box-sizing: border-box; margin: 0; padding: 0;
+  }
+
+  .ann-bar {
+    background: #0d1b3e;
+    width: 100%;
+    padding: 10px 16px;
+  }
+
+  .ann-bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    max-width: 960px;
+    margin: 0 auto;
+    flex-wrap: nowrap;
+  }
+
+  .ann-bar__bunny {
+    font-size: 18px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .ann-bar__text {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .ann-bar__timer {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+
+  .ann-bar__num {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    font-weight: 900;
+    color: #ffffff;
+    background: rgba(255,255,255,0.1);
+    border-radius: 5px;
+    padding: 4px 7px;
+    min-width: 30px;
+    text-align: center;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .ann-bar__sep {
+    font-size: 14px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.3);
+    line-height: 1;
+  }
+
+  @media (max-width: 480px) {
+    .ann-bar { padding: 9px 12px; }
+    .ann-bar__bunny { font-size: 16px; }
+    .ann-bar__text { font-size: 12px; }
+    .ann-bar__num { font-size: 14px; min-width: 27px; padding: 3px 6px; }
+  }
+</style>
+
+<script>
+(function() {
+  var deadline = new Date();
+  deadline.setHours(deadline.getHours() + 4);
+  deadline.setMinutes(deadline.getMinutes() + 00);
+  deadline.setSeconds(deadline.getSeconds() + 00);
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    var remaining = deadline.getTime() - new Date().getTime();
+    if (remaining <= 0) {
+      document.getElementById('ann-hours').textContent = '00';
+      document.getElementById('ann-mins').textContent  = '00';
+      document.getElementById('ann-secs').textContent  = '00';
+      return;
+    }
+    document.getElementById('ann-hours').textContent = pad(Math.floor(remaining / 3600000));
+    document.getElementById('ann-mins').textContent  = pad(Math.floor((remaining % 3600000) / 60000));
+    document.getElementById('ann-secs').textContent  = pad(Math.floor((remaining % 60000) / 1000));
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
+{%- endif -%}
