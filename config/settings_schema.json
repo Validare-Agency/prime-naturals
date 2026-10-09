@@ -2855,7 +2855,7 @@
         "max": 24,
         "step": 1,
         "unit": "h",
-        "default": 2
+        "default": 4
       },
       {
         "type": "text",
