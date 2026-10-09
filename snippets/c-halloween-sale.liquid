@@ -34,6 +34,7 @@
   assign sale_badge = settings.halloween_badge | default: '[percent]% OFF TODAY'
   assign timer_hours = settings.halloween_timer_hours | default: 2
   assign kaching_find = settings.halloween_kaching_find | default: 'FLASH SALE'
+  assign kaching_hours_find = settings.halloween_kaching_hours_find | default: '4 HOURS'
 
   assign hw_on = false
   if settings.halloween_enabled and sale_end != blank
@@ -266,12 +267,17 @@
       (function () {
         var FIND = {{ kaching_find | json }};
         var REPLACE = {{ sale_name | upcase | json }};
+        // "4 HOURS" → the announcement bar timer, e.g. "2 HOURS"
+        var HOURS_FIND = {{ kaching_hours_find | json }};
+        var HOURS_REPLACE = {% if timer_hours == 1 %}'1 HOUR'{% else %}'{{ timer_hours }} HOURS'{% endif %};
 
         function retitle() {
           document.querySelectorAll("[class*='eyebrow']").forEach(function (eyebrow) {
             var text = eyebrow.innerText;
-            if (text.indexOf(FIND) === -1 || text.indexOf(REPLACE) !== -1) return;
-            eyebrow.innerText = text.replace(FIND, REPLACE);
+            var next = text;
+            if (next.indexOf(FIND) !== -1 && next.indexOf(REPLACE) === -1) next = next.replace(FIND, REPLACE);
+            if (next.indexOf(HOURS_FIND) !== -1 && next.indexOf(HOURS_REPLACE) === -1) next = next.replace(HOURS_FIND, HOURS_REPLACE);
+            if (next !== text) eyebrow.innerText = next;
           });
         }
 

@@ -2855,7 +2855,7 @@
         "max": 24,
         "step": 1,
         "unit": "h",
-        "default": 4
+        "default": 2
       },
       {
         "type": "text",
@@ -2863,6 +2863,13 @@
         "label": "Kaching title text to replace",
         "default": "FLASH SALE",
         "info": "This text in the Kaching bundle title is replaced with the sale name."
+      },
+      {
+        "type": "text",
+        "id": "halloween_kaching_hours_find",
+        "label": "Kaching title hours to replace",
+        "default": "4 HOURS",
+        "info": "This text in the Kaching bundle title is replaced with the countdown hours above, e.g. \"2 HOURS\"."
       }
     ]
   }
