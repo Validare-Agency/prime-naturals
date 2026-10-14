@@ -92,6 +92,7 @@
           "settings": {
             "heading": "⚡ Flash sale — prices increase in 4 hours",
             "heading_off": "⚡ Flash sale — prices increase in 4 hours",
+            "heading_style": "large",
             "ships_text": "",
             "reference_price": "39.90",
             "default_tier": "1",
@@ -122,27 +123,28 @@
             "tier_3_free_shipping": true,
             "tier_3_badge": "One for every grandchild",
             "addon_product": "kidss-encyclopedia-10-000-whys",
+            "addon_image": "shopify://shop_images/9c131523d2a94cbbe809626abc2044c6726277bb.png",
             "addon_title": "Complete the set with Vol. 1",
             "addon_subtitle": "The original 10,000 Whys",
             "margin_top": 0,
-            "margin_bottom": 16,
-            "heading_style": "small"
+            "margin_bottom": 16
           }
         },
         "atc_pre": {
           "type": "preorder_atc",
           "settings": {
+            "force_off": false,
             "label": "[price] Add to cart",
             "label_off": "[price] Add to cart",
             "sold_out_label": "Sold out",
             "note": "",
             "button_color": "#c0392b",
             "add_gifts": false,
+            "gift_product": "",
             "property_name": "",
             "property_value": "",
             "margin_top": 0,
-            "margin_bottom": 16,
-            "force_off": true
+            "margin_bottom": 16
           }
         },
         "trust_pre": {
@@ -589,7 +591,7 @@
       ],
       "settings": {
         "heading": "Questions, answered",
-        "background": "#ffffff",
+        "background": "#f3f3f3",
         "desktop_padding_top": 88,
         "desktop_padding_bottom": 88,
         "mobile_padding_top": 56,
