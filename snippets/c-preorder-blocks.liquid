@@ -390,12 +390,10 @@
             else
               assign t_price = pre_base_cents | times: t_qty
             endif
-            # Compare = N x the per-book compare-at (79.80), the same way the cart
-            # drawer totals its savings (compare-at x qty − paid), so "Save" on the
-            # page matches "Savings" in the cart (5 books: 399.00 − 119.70 = 279.30)
-            assign t_compare = pre_compare_cents | times: t_qty
-            # "Price × books" (evergreen Figma): 3 books = 3 × 39.90 = 119.70
-            if t_qty > 1 and bs.bundle_compare_basis == 'price'
+            # Single book: compare-at (79.80). Multi-book: price x N, the same way the
+            # cart drawer strikes through multi-qty lines (3 books: 3 x 39.90 = 119.70)
+            assign t_compare = pre_compare_cents
+            if t_qty > 1
               assign t_compare = pre_base_cents | times: t_qty
             endif
             assign t_save = t_compare | minus: t_price

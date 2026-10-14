@@ -97,7 +97,6 @@
             "reference_price": "39.90",
             "default_tier": "1",
             "save_text": "Save [amount]",
-            "bundle_compare_basis": "price",
             "free_shipping_text": "FREE shipping",
             "tier_1_enable": true,
             "tier_1_quantity": 1,
