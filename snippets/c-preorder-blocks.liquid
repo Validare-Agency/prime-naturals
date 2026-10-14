@@ -394,6 +394,10 @@
             # drawer totals its savings (compare-at x qty − paid), so "Save" on the
             # page matches "Savings" in the cart (5 books: 399.00 − 119.70 = 279.30)
             assign t_compare = pre_compare_cents | times: t_qty
+            # "Price × books" (evergreen Figma): 3 books = 3 × 39.90 = 119.70
+            if t_qty > 1 and bs.bundle_compare_basis == 'price'
+              assign t_compare = pre_base_cents | times: t_qty
+            endif
             assign t_save = t_compare | minus: t_price
 
             assign t_checked = false
