@@ -2077,6 +2077,16 @@
           "default": "Choose your bundle"
         },
         {
+          "type": "select",
+          "id": "heading_style",
+          "label": "Heading style",
+          "options": [
+            { "value": "large", "label": "Large" },
+            { "value": "small", "label": "Small caps" }
+          ],
+          "default": "large"
+        },
+        {
           "type": "text",
           "id": "ships_text",
           "label": "Shipping text",
@@ -2497,6 +2507,13 @@
         {
           "type": "paragraph",
           "content": "Pre-order switch: product metafield custom.preorder_enabled (true/false, missing = on). Turn it off to switch this page to a normal product page."
+        },
+        {
+          "type": "checkbox",
+          "id": "force_off",
+          "label": "Always off on this template",
+          "info": "Ignores the metafield: every block on this page behaves as if pre-order is off (evergreen template).",
+          "default": false
         },
         {
           "type": "text",
