@@ -16,7 +16,7 @@
           "type": "preorder_reviews",
           "settings": {
             "autoplay_seconds": 0,
-            "show_arrows": false,
+            "show_arrows": true,
             "review_1_text": "\"Best money I've spent on my kids' education outside of school. The conversations it starts are priceless.\"",
             "review_1_name": "Jennifer L.",
             "review_1_meta": "Mom of three",
