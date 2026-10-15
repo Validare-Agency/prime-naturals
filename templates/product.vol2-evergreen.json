@@ -92,7 +92,7 @@
           "settings": {
             "heading": "⚡ Flash sale — prices increase in 4 hours",
             "heading_off": "⚡ Flash sale — prices increase in 4 hours",
-            "heading_style": "large",
+            "heading_style": "compact",
             "ships_text": "",
             "reference_price": "39.90",
             "default_tier": "1",
@@ -133,7 +133,6 @@
         "atc_pre": {
           "type": "preorder_atc",
           "settings": {
-            "force_off": false,
             "label": "[price] Add to cart",
             "label_off": "[price] Add to cart",
             "sold_out_label": "Sold out",

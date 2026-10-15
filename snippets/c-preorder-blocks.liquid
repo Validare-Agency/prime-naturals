@@ -356,7 +356,7 @@
       -%}
       {%- if offer_heading != blank or offer_ships != blank -%}
         <div class="c-pre-offer__head">
-          {%- if offer_heading != blank -%}<h2 class="c-pre-offer__heading{% if bs.heading_style == 'small' %} c-pre-offer__heading--small{% endif %}">{{ offer_heading }}</h2>{%- endif -%}
+          {%- if offer_heading != blank -%}<h2 class="c-pre-offer__heading{% if bs.heading_style == 'small' %} c-pre-offer__heading--small{% elsif bs.heading_style == 'compact' %} c-pre-offer__heading--compact{% endif %}">{{ offer_heading }}</h2>{%- endif -%}
           {%- if offer_ships != blank -%}
             <p class="c-pre-offer__ships">
               <img src="{{ 'c-preorder-calendar-sm.svg' | asset_url }}" alt="" width="15" height="15">
