@@ -291,7 +291,7 @@ slider-component:has(> .c-pre-media-badges) { position: relative; }
 /* ───── Offer tiers ───── */
 .c-pre-offer__head { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
 .c-pre-offer__heading { margin: 0; font-size: 26px; line-height: 1.25; color: #0d1b3e; }
-.c-pre-offer__heading.c-pre-offer__heading--compact { font-size: 17px; }
+.c-pre-offer__heading.c-pre-offer__heading--compact { font-size: 17px; text-transform: uppercase; }
 .c-pre-offer__heading.c-pre-offer__heading--small { font-size: 15px; letter-spacing: 0.02em; text-transform: uppercase; }
 .c-pre-offer__ships { margin: 0; display: flex; align-items: center; gap: 6px; font-size: 15px; color: #4b5563; }
 .c-pre-offer__tiers { display: flex; flex-direction: column; gap: 16px; }
