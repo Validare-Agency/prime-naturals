@@ -461,8 +461,8 @@
         "background": "#ffffff",
         "desktop_padding_top": 48,
         "desktop_padding_bottom": 48,
-        "mobile_padding_top": 36,
-        "mobile_padding_bottom": 36
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 16
       }
     },
     "review_list": {
@@ -538,8 +538,8 @@
         "background": "#fcfcfc",
         "desktop_padding_top": 40,
         "desktop_padding_bottom": 52,
-        "mobile_padding_top": 24,
-        "mobile_padding_bottom": 56
+        "mobile_padding_top": 12,
+        "mobile_padding_bottom": 24
       }
     },
     "faq": {
@@ -593,7 +593,7 @@
         "background": "#f3f3f3",
         "desktop_padding_top": 88,
         "desktop_padding_bottom": 88,
-        "mobile_padding_top": 56,
+        "mobile_padding_top": 16,
         "mobile_padding_bottom": 56
       }
     }
