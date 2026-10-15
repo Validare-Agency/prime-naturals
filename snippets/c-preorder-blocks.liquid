@@ -36,6 +36,11 @@
   if product.metafields.custom.preorder_enabled.value == false
     assign pre_on = false
   endif
+  # Evergreen template: the Button block's "Always off" overrides the metafield
+  assign pre_atc_block = section.blocks | where: 'type', 'preorder_atc' | first
+  if pre_atc_block.settings.force_off
+    assign pre_on = false
+  endif
 
   assign pre_variant = product.selected_or_first_available_variant
 
@@ -351,7 +356,7 @@
       -%}
       {%- if offer_heading != blank or offer_ships != blank -%}
         <div class="c-pre-offer__head">
-          {%- if offer_heading != blank -%}<h2 class="c-pre-offer__heading">{{ offer_heading }}</h2>{%- endif -%}
+          {%- if offer_heading != blank -%}<h2 class="c-pre-offer__heading{% if bs.heading_style == 'small' %} c-pre-offer__heading--small{% elsif bs.heading_style == 'compact' %} c-pre-offer__heading--compact{% endif %}">{{ offer_heading }}</h2>{%- endif -%}
           {%- if offer_ships != blank -%}
             <p class="c-pre-offer__ships">
               <img src="{{ 'c-preorder-calendar-sm.svg' | asset_url }}" alt="" width="15" height="15">
@@ -385,10 +390,12 @@
             else
               assign t_price = pre_base_cents | times: t_qty
             endif
-            # Compare = N x the per-book compare-at (79.80), the same way the cart
-            # drawer totals its savings (compare-at x qty − paid), so "Save" on the
-            # page matches "Savings" in the cart (5 books: 399.00 − 119.70 = 279.30)
-            assign t_compare = pre_compare_cents | times: t_qty
+            # Single book: compare-at (79.80). Multi-book: price x N, the same way the
+            # cart drawer strikes through multi-qty lines (3 books: 3 x 39.90 = 119.70)
+            assign t_compare = pre_compare_cents
+            if t_qty > 1
+              assign t_compare = pre_base_cents | times: t_qty
+            endif
             assign t_save = t_compare | minus: t_price
 
             assign t_checked = false

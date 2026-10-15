@@ -17,7 +17,12 @@ if (!customElements.get('media-gallery')) {
       // square ones). Since every slide lives in the same row, the row's height would otherwise
       // be dictated by the tallest slide, leaving whitespace under shorter ones. Size the row to
       // whichever slide is currently active instead.
-      this.elements.viewer.addEventListener('slideChanged', debounce(this.syncActiveSlideHeight.bind(this), 50));
+      // Swiping doesn't move .is-active, so remember the slide the slider reports as current;
+      // sizing to .is-active snapped the row back to slide 1's height after every swipe.
+      this.elements.viewer.addEventListener('slideChanged', (event) => {
+        if (event.detail && event.detail.currentElement) this.currentSlide = event.detail.currentElement;
+        this.syncActiveSlideHeight();
+      });
       window.addEventListener('resize', debounce(this.syncActiveSlideHeight.bind(this), 100));
       requestAnimationFrame(this.syncActiveSlideHeight.bind(this));
 
@@ -48,7 +53,9 @@ if (!customElements.get('media-gallery')) {
         return;
       }
 
-      const activeSlide = slider.querySelector('.product__media-item.is-active') || slider.querySelector('.product__media-item');
+      const activeSlide = (this.currentSlide && slider.contains(this.currentSlide) && this.currentSlide)
+        || slider.querySelector('.product__media-item.is-active')
+        || slider.querySelector('.product__media-item');
       if (!activeSlide) return;
       slider.style.height = `${activeSlide.offsetHeight}px`;
     }
@@ -70,6 +77,7 @@ if (!customElements.get('media-gallery')) {
         element.classList.remove('is-active');
       });
       activeMedia.classList.add('is-active');
+      this.currentSlide = activeMedia;
       this.syncActiveSlideHeight();
 
       if (prepend && this.prependMedia) {
