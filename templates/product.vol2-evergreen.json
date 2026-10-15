@@ -326,8 +326,8 @@
         "background": "#ffffff",
         "desktop_padding_top": 88,
         "desktop_padding_bottom": 88,
-        "mobile_padding_top": 24,
-        "mobile_padding_bottom": 56
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 28
       }
     },
     "topics": {
@@ -390,8 +390,8 @@
         "background": "#0d1b3e",
         "desktop_padding_top": 40,
         "desktop_padding_bottom": 40,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40
+        "mobile_padding_top": 28,
+        "mobile_padding_bottom": 28
       }
     },
     "get_the_set": {
@@ -413,8 +413,8 @@
         "background": "#f8f6f0",
         "desktop_padding_top": 88,
         "desktop_padding_bottom": 88,
-        "mobile_padding_top": 56,
-        "mobile_padding_bottom": 56
+        "mobile_padding_top": 28,
+        "mobile_padding_bottom": 28
       }
     },
     "results": {
@@ -461,7 +461,7 @@
         "background": "#ffffff",
         "desktop_padding_top": 48,
         "desktop_padding_bottom": 48,
-        "mobile_padding_top": 16,
+        "mobile_padding_top": 28,
         "mobile_padding_bottom": 16
       }
     },
@@ -539,7 +539,7 @@
         "desktop_padding_top": 40,
         "desktop_padding_bottom": 52,
         "mobile_padding_top": 12,
-        "mobile_padding_bottom": 24
+        "mobile_padding_bottom": 28
       }
     },
     "faq": {
@@ -593,8 +593,8 @@
         "background": "#f3f3f3",
         "desktop_padding_top": 88,
         "desktop_padding_bottom": 88,
-        "mobile_padding_top": 16,
-        "mobile_padding_bottom": 56
+        "mobile_padding_top": 28,
+        "mobile_padding_bottom": 28
       }
     }
   },
