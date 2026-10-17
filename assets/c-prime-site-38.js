@@ -1,24 +1,14 @@
-// V_PRIME_SITE_38 | Reduce 3-Book and 5-Book Bundle Prices by $10
+// V_PRIME_SITE_38 | Reduce 3-Book and 5-Book Bundle Prices by $10 — winner
+// (Var A), rolled out to c-validareOptimized visitors only.
 (function () {
   // Loaded by both sections/main-product.liquid and sections/cart-drawer.liquid
   if (window.primeSite38Loaded) return;
   window.primeSite38Loaded = true;
 
-  // Intelligems custom event: bundle_selector_click — any bundle option card
-  // on the PDP, from both the Control (c-prime-pdp-17-bundle) and Var A
-  // (c-prime-site-38-bundle) selectors. Each card is a <label> wrapping its
-  // radio: a click anywhere on the card always lands exactly one click on the
-  // radio itself (the label forwards it), so listening on the radio counts
-  // each card click once.
-  document.addEventListener('click', function (event) {
-    if (!event.target.matches || !event.target.matches('.c-pdp17-variant .c-pdp17-row__radio')) return;
-    window.igEvents = window.igEvents || [];
-    window.igEvents.push({ event: 'bundle_selector_click' });
-  });
-
-  // Var A: cart drawer upsells add the price-test duplicate of each book
-  // (window.primeSite38PriceTestVariants, from sections/cart-drawer.liquid)
-  // so Kaching prices them the same as the Var A PDP bundle.
+  // c-validareOptimized: cart drawer upsells add the price-test duplicate of
+  // each book (window.primeSite38PriceTestVariants, from
+  // sections/cart-drawer.liquid) so Kaching prices them the same as the
+  // winner PDP bundle. Holdout visitors keep the live products.
   // Hide the whole upsells block (incl. its "78% of parents add these"
   // title) once every card in it is hidden — Liquid only does this for
   // cards it hid itself, not the ones hidden below.
@@ -31,7 +21,7 @@
 
   function swapCartUpsells() {
     var map = window.primeSite38PriceTestVariants;
-    if (!map || !document.body.classList.contains('c-primeSite38VarA')) return;
+    if (!map || !document.body.classList.contains('c-validareOptimized')) return;
 
     document.querySelectorAll('cart-drawer-upsell').forEach(function (upsell) {
       var entry = map[upsell.dataset.id];
@@ -50,8 +40,8 @@
     hideEmptyUpsellBlocks();
   }
 
-  // The drawer is re-rendered after every cart change, and the Var A body
-  // class can land after DOMContentLoaded (ig:ready)
+  // The drawer is re-rendered after every cart change, and the
+  // c-validareOptimized body class can land after DOMContentLoaded (ig:ready)
   var queued = false;
   function queueSwap() {
     if (queued) return;

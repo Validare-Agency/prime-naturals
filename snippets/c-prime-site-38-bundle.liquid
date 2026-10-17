@@ -1,10 +1,12 @@
 {%- comment -%}
-  V_PRIME_SITE_38 | Reduce 3-Book and 5-Book Bundle Prices by $10 — Var A.
+  V_PRIME_SITE_38 | Reduce 3-Book and 5-Book Bundle Prices by $10 — winner
+  (Var A), shown to c-validareOptimized visitors only; c-validareHoldout keeps
+  c-prime-pdp-17-bundle.liquid at the original prices.
   Forked from c-prime-pdp-17-bundle.liquid (do not merge changes back into
   that file). Only the tier 2/3 prices differ: each is $10 lower, with
   compare prices unchanged (so Save grows by $10). Keeps the .c-pdp17-variant
   root class so assets/c-prime-pdp-17.js/.css drive it unchanged; show/hide
-  vs the Control snippet lives in assets/c-prime-site-38.css.
+  vs the holdout snippet lives in assets/c-prime-site-38.css.
 
   Renders the PDP bundle/offer selector. assets/c-prime-pdp-17.css styles it;
   assets/c-prime-pdp-17.js wires row selection + Add to Cart + (encyclopedia
@@ -64,7 +66,7 @@
   # prices only — the real discount is applied at checkout by that product's
   # own native Kaching Bundles quantity-discount config (see below), so these
   # numbers must stay in sync with whatever Kaching is configured to charge.
-  # V_PRIME_SITE_38: each USD price point is $10 lower than Control's
+  # V_PRIME_SITE_38: each USD price point is $10 lower than the original (holdout) prices
   # (7990/9990 -> 6990/8990, 5990/8990 -> 4990/7990), kept as the same ratio
   # off the local base price so other markets get the equivalent reduction.
   if c_pdp17_is_encyclopedia
@@ -89,7 +91,7 @@
   endif
   # V_PRIME_SITE_38: Murphy's Law / Leadership (murphys-law-for-kids-copy) keep
   # the free shipping badge on 3 books even though $49.90 is now under the
-  # threshold — same as Control shows at $59.90.
+  # threshold — same as the holdout bundle shows at $59.90.
   if product.handle == 'murphys-law-for-kids' or product.handle == 'murphys-law-for-kids-copy'
     assign c_pdp17_d_t2_ships_free = true
   endif
@@ -108,7 +110,7 @@
   # V_PRIME_SITE_38: every tier adds each book's duplicate price-test product
   # instead — its own Kaching config charges the $10-lower tier 2/3 prices
   # above (tier 1 is the same price as the live product). Keeps the cart on
-  # one product, matching the Var A cart upsells. Falls back to the live
+  # one product, matching the winner cart upsells. Falls back to the live
   # product if the duplicate is missing/unavailable.
   # (murphys-law-for-kids-copy is the live Leadership Enlightenment product.)
   assign c_site38_price_test_handle = blank

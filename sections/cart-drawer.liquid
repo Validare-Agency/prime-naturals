@@ -77,11 +77,11 @@
 {%- endif -%}
 
 {%- comment -%}
-  V_PRIME_SITE_38 | Reduce 3-Book and 5-Book Bundle Prices by $10 — Var A
-  cart upsells add each book's price-test duplicate instead of the live
+  V_PRIME_SITE_38 | Reduce 3-Book and 5-Book Bundle Prices by $10 — winner,
+  c-validareOptimized only: cart upsells add each book's price-test duplicate instead of the live
   product (assets/c-prime-site-38.js), so their Kaching pricing matches the
   PDP. Keyed by live variant id. Keep in sync with the handle map in
-  snippets/c-prime-site-38-bundle.liquid. Remove with the SITE_38 cleanup.
+  snippets/c-prime-site-38-bundle.liquid.
 {%- endcomment -%}
 {%- assign c_site38_pairs = 'kidss-encyclopedia-10-000-whys:kidss-encyclopedia-10-000-whys-price-test,murphys-law-for-kids:murphys-law-for-kids-price-test,murphys-law-for-kids-copy:leadership-enlightenment-for-kids-price-test' | split: ',' -%}
 <script>

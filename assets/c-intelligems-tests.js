@@ -132,14 +132,6 @@ function handleExperiments() {
     document.body.classList.add("c-primeCart37VarA");
   }
 
-  // Test: V_PRIME_SITE_38 | Reduce 3-Book and 5-Book Bundle Prices by $10
-  const primeSite38 = window.igData?.user.getTestGroup(
-    "cfe28cd7-d647-4cf0-9ab3-b5af8877292a"
-  );
-  if (primeSite38?.name === "Var A") {
-    document.body.classList.add("c-primeSite38VarA");
-  }
-
   // Test: V_PRIME_PDP_24 | Product gallery Images
   const primePdp24 = window.igData?.user.getTestGroup(
     "9b991598-4882-4a65-a44b-9ec73a363963"
